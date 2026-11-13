@@ -1,23 +1,55 @@
 # FINN — end-to-end build plan
 
 > Living document. Edit freely. Every open choice points to an entry in [DECISIONS.md](DECISIONS.md) as `D-NNN`; change the decision there, then adjust the task here.
-> Last revised 2026-11-14 after audit v1 ([plan_revamp_v1/audit.md](plan_revamp_v1/audit.md), decisions D-043–D-056).
+> Last revised 2026-11-14: §0 reading guide and §2 plain-language timeline. Earlier: audit v1 ([plan_revamp_v1/audit.md](plan_revamp_v1/audit.md), decisions D-043–D-056).
 
 ## 0. How to read this file
+
+**Two questions, two kinds of section:**
+- **"What is next?"** → §2 Timeline. The order of work, day by day, across all layers. Read this first.
+- **"What exactly is this task?"** → §4–§9 task tables. The full list of every task in one layer of the app, with its done/not-done box. The timeline only names task IDs; the tables hold the detail.
+
+So the timeline is not the full pipeline: it schedules the tasks from the tables. A table like §4 "Back-end: data plumbing" is the complete to-do list for that layer, including tasks already done (BE-1 `[x]`) and optional ones (P2) the timeline may never reach.
+
+**How the file is organised**
+
+| Section | What it is |
+|---|---|
+| §1 Goal | What the reviewer must be able to do on their phone. The finish line |
+| §2 Timeline | When each task happens, in plain words, with a check at the end of each block |
+| §3 Architecture | Picture of the layers and how data flows between them |
+| §4 Back-end data plumbing (BE) | Fetching raw data: prices, filings, PDFs, documents |
+| §5 Engine / AI (EN) | The brains: classify, rank, build cards, research, call AI models |
+| §6 API (API) | The connection: web endpoints the phone screen calls to get data |
+| §7 Front-end (FE) | The screens on the phone. Current design: `design/DESIGN_1.md` |
+| §8 Deploy and infra (OPS) | Putting it online (Render), keys, GitHub |
+| §9 Quality, tests, cost (QA) | Checks that it works and what it costs |
+| §10 Cut list | What to drop, in order, if behind |
+| §11 Deliverables (DEL) | The email and everything attached to it |
+| §12 Risks | What could go wrong and the backup plan |
+| §13 Decisions index | One line per decision; full text in DECISIONS.md |
+
+**How to read a task table (§4–§11)**
+
+| Column | Meaning |
+|---|---|
+| ID | Short name used everywhere, e.g. BE-3 = back-end task 3 |
+| P | Priority: P0 must have · P1 makes it good · P2 nice to have, cut first |
+| Task | `[x]` done / `[ ]` not done, then what to build |
+| Decisions | The `D-NNN` choices this task depends on (DECISIONS.md) |
+| est | Rough hours if hand-coded; advisory only (D-057) |
+| Done when | The test that proves the task is finished |
+
+**Symbols**
 
 | Mark | Meaning |
 |---|---|
 | `[...]` | Plain-English explanation of a technical term |
 | `{...}` | Required or explicitly asked for by the ENAM brief / reference doc |
 | `D-NNN` | Link to a decision in DECISIONS.md (open = still yours to make) |
-| `P0` | Must have, or the demo fails / a brief requirement is missed |
-| `P1` | Differentiator: what makes it good, not just working |
-| `P2` | Nice to have; first to cut |
-| `[x]` / `[ ]` | Done / not done |
 | ~~struck~~ | Removed task; ID kept so references don't break |
-| est | Rough hand-coding hours, for re-planning when behind |
 
-Task IDs: **BE** back-end data · **EN** engine / AI · **API** web API · **FE** front-end · **OPS** deploy & infra · **QA** testing · **DEL** deliverables.
+Task ID prefixes: **BE** back-end data · **EN** engine / AI · **API** connection between back end and screens · **FE** front-end screens · **OPS** deploy & infra · **QA** testing · **DEL** deliverables.
 
 ---
 
@@ -40,18 +72,28 @@ Graded on {creativity, product sense, judgment, architecture}, {not completeness
 
 ## 2. Timeline (deadline {Sun 15 Nov 2026}, target send ≤17:30 IST, hard limit 18:00)
 
-| When | Milestone | Exit check |
-|---|---|---|
-| Sat 14 Nov AM | OPS-6 keys · BE-2/3 filings · BE-10 HAL swap · EN-2 rules classifier · EN-3 + EN-18 ranker/toggles · EN-4 digest | Digest prints for all portfolio stocks |
-| Sat 14 Nov PM | API-1/2/7 · FE-1/2/6/11 Today + Settings + theme tokens · OPS-1/2/3 deploy | **Deploy gate Sat 20:00**: Today opens on your phone via Render URL. If missed → stop features, fix deploy, apply second-stage cuts (§10) |
-| Sat 14 Nov night | EN-5 results card (+ bank-lite) · QA-3 · QA-4 verify 2 PDFs | Numbers match filings |
-| Sun 15 Nov 07:00–12:00 | EN-9/10/12/13/15/16 promise tracker · FE-3/4 Detail + Research · BE-9 precompute 3 research stocks | Unknown ticker works end to end |
-| Sun 15 Nov 12:00–13:00 | EN-6 management card · QA-7/8 phone + unknown-ticker tests | |
-| Sun 15 Nov 13:00 | **Code freeze** [no new features, only fixes] · BE-7 snapshot refresh, commit cache (D-053) | Final deploy tagged |
-| Sun 15 Nov 13:00–16:30 | DEL-2/3/4 README, writeup, build-history links | Draft email ready |
-| Sun 15 Nov 16:30–17:30 | DEL-5 checklist, warm Render, send | Sent; 30 min buffer to 18:00 |
+Work top to bottom. Finish a block's "Done when" check before starting the next block. Task IDs link to the tables in §4–§11.
 
-**Hours check:** P0 ≈ 53h at hand-coding estimates. Claude Code writes the code, so wall-clock should be far lower — but that is an assumption. The Sat 20:00 deploy gate is the real check. If behind, cut in the order given in §10.
+| # | When | Layer | What gets built, in plain words | Tasks | Done when |
+|---|---|---|---|---|---|
+| 0 | Fri 13 Nov | Back end + Engine | ✔ Prices for 18 stocks, price/volume alerts, tests | BE-1, EN-1 | Done |
+| 0 | Sat 14 Nov AM | Planning + Design | ✔ Plan, decisions log, front-end design v1 | FE-13 | Done |
+| 1 | Sat 14 Nov AM | Setup | Put AI keys in `.env` | OPS-6 | Keys load locally |
+| 2 | Sat 14 Nov AM | Back end (data) | Turn a ticker into its BSE code; fetch each stock's exchange filings; swap HAL for a small-cap | BE-2, BE-3, BE-10 | 7 days of filings print for every stock |
+| 3 | Sat 14 Nov AM | Engine (brains) | Label each filing with one of 17 categories (rules, no AI); rank them High / Medium / Low; apply category toggles; build the 24h / 3d / 7d digest; unit tests for ranker and classifier | EN-2, EN-3, EN-18, EN-4 | Digest prints for all portfolio stocks |
+| 4 | Sat 14 Nov PM | Connection (API) | Web endpoints so the phone can ask the server for the digest and alerts; never crash, fall back to snapshot | API-1, API-2, API-7 | Browser shows JSON from `/api/digest` |
+| 5 | Sat 14 Nov PM | Front end (screens) | App shell with bottom tabs; Today screen; Settings screen; ENAM colours and fonts | FE-1, FE-2, FE-6, FE-11 | Today and Settings work on a laptop at phone width |
+| 6 | Sat 14 Nov PM | Deploy | Push to private GitHub; put it on Render; open on a real phone | OPS-1, OPS-2, OPS-3 | **Deploy gate Sat 20:00**: Today opens on your phone. If missed → stop features, fix deploy, apply second-stage cuts (§10) |
+| 7 | Sat 14 Nov night | Engine + Testing | Results card: read the results PDF, pull Revenue / EBITDA / PBT / PAT, compute QoQ and YoY in Python; bank-lite version; check 2 cards against real PDFs; endpoint that sends a card to the phone | BE-4, EN-5, API-3, QA-3, QA-4 | Numbers match the filings |
+| 8 | Sun 15 Nov 07:00–12:00 | Back end + Engine + Front end | Promise tracker: find concall transcripts, pull management's promises, match them to actual numbers, attach quotes; Detail and Research screens; research endpoint; tests that fake AI quotes are rejected; precompute 3 research stocks | BE-5, EN-9, EN-10, EN-12, EN-13, EN-15, EN-16, API-4, QA-5, FE-3, FE-4, BE-9 | A ticker we never picked works end to end |
+| 9 | Sun 15 Nov 12:00–13:00 | Engine + Testing | Management change card with bio; keep Render awake; test offline fallback, on phone, and with an unknown ticker | EN-6, OPS-4, QA-6, QA-7, QA-8 | Both pass on the phone |
+| 10 | Sun 15 Nov 13:00 | Freeze | **Code freeze** [no new features, only fixes]; refresh the data snapshot and commit it | BE-7 | Final deploy tagged |
+| 11 | Sun 15 Nov 13:00–16:30 | Deliverables | README, writeup, AI build-history links; make repo public | DEL-2, DEL-3, DEL-4 | Draft email ready |
+| 12 | Sun 15 Nov 16:30–17:30 | Deliverables | Final checklist, wake the Render server, send the email with the deployed link | DEL-1, DEL-5 | Sent; 30 min buffer to 18:00 |
+
+**Extras only when ahead of this timeline:** P1 tasks such as "Brief me" (FE-9) and the P1 picks in `design/DESIGN_1.md`, slotted after the block they belong to. If behind, cut in the order in §10.
+
+**Hours check:** P0 ≈ 53h at hand-coding estimates. Claude Code writes the code, so wall-clock should be far lower — but that is an assumption. The Sat 20:00 deploy gate is the real check.
 
 ---
 
