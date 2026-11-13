@@ -155,7 +155,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 
 {"The frontend — the product, the interaction model, the design — is deliberately yours. That's where we most want to see how you think."} {Experiment with the interaction model; show a point of view.} {No AI slop: concise, dense, beautiful, interactive.}
 
-**Before any front-end decision, read `design/FRONTEND_BRAINSTORM.md`** (ideas, research, picks) and the latest `design/mockups_v*.html`. Chosen picks land here as FE rows and in DECISIONS.md.
+**Current design: `design/DESIGN_1.md` (D-059). Read it before building or deciding any front-end task**; it lists the picks per screen, their tier and the build order. Visual baseline: `design/mockups_v0.html`. Idea history: `design/FRONTEND_BRAINSTORM.md`. A later design change = new `design/DESIGN_N.md` + DECISIONS.md entry + update this line.
 
 | ID | P | Screen / task | Decisions | est | Done when |
 |---|---|---|---|---|---|
@@ -171,6 +171,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | FE-10 | P2 | [ ] "Seen" state: cards you've opened dim; "since you last looked" | D-046 | 1 | Stored in localStorage |
 | FE-11 | P0 | [ ] ENAM theme tokens: take colours and fonts from ENAM's website into CSS variables [named colour/font settings reused everywhere]; own FINN wordmark, no ENAM logo | D-028, D-044 | 0.5 | All screens use the tokens |
 | FE-12 | P1 | [ ] **On hold — review after the front-end brainstorm**: (a) the 6-screen set (Today, Results, Management change, Settings, Research, Promise tracker; one per brief item), (b) 17 categories → High / Medium / Low tiers. Decisions stand for the build; redesign only if the brainstorm shows a better structure | D-015, D-058 | 0.5 | Reviewed; kept or changed with a DECISIONS.md entry |
+| FE-13 | P0 | [x] Front-end design v1 decided: recommended picks + 4 M-effort picks + push→pull link → `design/DESIGN_1.md` | D-059 | 0 | Done 2026-11-14 |
 
 ---
 
@@ -283,3 +284,4 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-041 | Receipts standard | Open — verified quote + page + link | EN-15 |
 | D-043–D-056 | Audit v1 changes | Decided 2026-11-14 | see DECISIONS.md |
 | D-058 | Screen set | **Decided, on hold for review** — 6 screens, one per brief item; review in FE-12 | FE-1..6 |
+| D-059 | Front-end design v1 | **Decided** — `design/DESIGN_1.md` is the current design | FE-1..13 |

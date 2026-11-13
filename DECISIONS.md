@@ -369,3 +369,10 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Chosen: A for the build. Review after the front-end brainstorm (FE-12); change only with a new entry.
 - Why: each screen maps to one brief item ({windowed digest + alerts}, {results example}, {bio example}, {configurable thresholds}, {pull on any ticker}, {promised vs delivered worked example}); other categories live inside Today; other 7 research views skipped {thin-but-working}.
 - Trade-off: push and pull don't link yet (brainstorm idea: "Research this company" button on detail screens).
+
+### D-059 · Front-end design v1 · 2026-11-14 · Plan FE-13, all FE tasks · Status: decided
+- Options: A recommended S picks only (~2.5h) / B recommended picks + the 3–4 M-effort picks that most improve quality / C all brainstorm ideas
+- Chosen: B. Recommended picks (T1, T2, T4, T6, D2, D3, D4, M1, M2, R1, R4, R6, S2, A2, A6) + M picks R5 honest loading, S1 live threshold preview, D1 mini bars, T3 swipe triage + T7 "Research {company}" link. Written up in `design/DESIGN_1.md`; PLAN.md §7 routes there. Front-end design phase closed.
+- Why: user judgment; M picks chosen for quality gain on brief items ({any NSE ticker}, {configurable thresholds}, {results card}, {point of view}).
+- Trade-off: ≈10h extra on top of P0 FE work (advisory, D-057); build order in DESIGN_1.md puts P0 first and drops P2 then M picks if behind. 6-screen set and tiers still reviewable (FE-12).
+

@@ -1,6 +1,6 @@
 # FINN front-end brainstorm
 
-Status: options for Ahad to pick. Chosen items move to PLAN.md (FE tasks) and DECISIONS.md (one entry each).
+Status: **closed 2026-11-14. Picks are in `design/DESIGN_1.md` (D-059)** — build from that file, not this one. Kept as idea history.
 Baseline: `design/mockups_v0.html` (six screens, 13 Nov). Improve incrementally, don't redesign.
 Time budget: deploy gate Sat 14 Nov 20:00 (D-043). Every idea below has an effort tag; pick at most ~3h of extras.
 
