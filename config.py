@@ -28,3 +28,9 @@ RETRIES = 1
 
 # Frozen copy of fetched data, used if a data source is down.
 SNAPSHOT_DIR = "snapshot"
+
+# AI models (D-009, D-060: free tier only). Swap a model with a one-line change here.
+CHEAP_MODEL = "gemini-3.5-flash-lite"   # bulk: classification leftovers, PDF numbers, quotes
+STRONG_MODEL = "gemini-3.5-flash"       # reasoning (thinks before answering): promise verdicts, bull/bear
+FALLBACK_MODEL = "gemini-3.1-flash-lite"  # used if the strong model is capped or fails (D-061)
+LLM_TIMEOUT_S = 60

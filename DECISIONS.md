@@ -382,3 +382,9 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Chosen: C. One free Gemini key from Google AI Studio; no Anthropic key. Model names stay in config.py, so a paid model is a one-line swap.
 - Why: user judgment; the brief says {free tiers are enough} and rewards {cost efficiency}; the other options cost $5 in credits, and a spend-nothing prototype is the strongest cost story.
 - Trade-off: free-tier rate limits and daily caps, and weaker verdicts than Sonnet. Mitigation: cache each AI answer in SQLite, precompute the 3 research stocks (D-051), keep a snapshot for the demo. Include this decision in the email writeup.
+
+### D-061 · Free-tier model lineup · 2026-11-14 · OPS-6 (refines D-009, D-060) · Status: decided
+- Options: A Flash for bulk + Pro for reasoning, fall back to Flash / B Flash for both / C Flash for both plus a second "verify" call
+- Chosen: A in intent, adjusted to what the free key can reach. Live check on 2026-11-14: gemini-2.5-flash and gemini-2.5-pro return 404 "no longer available to new users"; no Pro model is available on this key. Working lineup in config.py: cheap = gemini-3.5-flash-lite, strong = gemini-3.5-flash (it thinks before answering), fallback = gemini-3.1-flash-lite. 3.6/3.7/3.8-flash were overloaded (503/504) during the check, so not used.
+- Why: only models that answered the smoke test are safe for a demo that must run ({a demo that doesn't run is the worst outcome}); the fallback chain (retry once, then fallback) absorbs Google's overload spikes, shown live when the strong call fell back.
+- Trade-off: no true "Pro" tier, so the strong model is a Flash with thinking; verdict quality to be checked on real promise-tracker data (EN-13). Model names change often: re-run `py smoke_test_llm.py` before the deploy gate. Writeup should say this honestly.

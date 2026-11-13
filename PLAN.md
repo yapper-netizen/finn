@@ -226,7 +226,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | OPS-3 | P0 | [ ] Ship precomputed `cache.db` / snapshot in repo (Render free disk is wiped on every restart) | D-006, D-032 | 0.5 | Fresh deploy shows full demo instantly |
 | OPS-4 | P0 | [ ] Cold-start mitigation [Render free sleeps after ~15 min idle; first visit waits ~1 min] | D-032 | 0.3 | Plan written into the email |
 | OPS-5 | P2 | [ ] Nightly refresh (GitHub Actions [free scheduled jobs on GitHub] runs refresh script, commits snapshot) | D-031 | 1 | Optional |
-| OPS-6 | P0 | [ ] API keys: Gemini key (free tier) + Anthropic key if available → `.env` locally, Render env vars; smoke test [one tiny call per model to prove the key works] | D-009, D-050 | 0.3 | Both calls return; nothing committed |
+| OPS-6 | P0 | [x] API keys: free Gemini key only (D-060) → `.env` locally; Render env var still to set at deploy; smoke test `py smoke_test_llm.py` passes (cheap via 3.5-flash-lite; strong fell back to 3.1-flash-lite under overload). `engine/llm.py` basic version (retry, fallback, token log) exists; EN-9 still owns JSON schema + SQLite cache | D-009, D-050, D-060, D-061 | 0.3 | Done 2026-11-14 |
 
 ---
 
@@ -296,7 +296,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 |---|---|---|---|
 | D-007 | Price alert threshold | Open — ±5% default, ±3% one tap away | FE-6 |
 | D-008 | Commit history | Open — real history | OPS-1 |
-| D-009 | Strong model | Open — whichever key you have; Claude Sonnet preferred | OPS-6, EN-13 |
+| D-009 | Strong model | **Decided** (D-060, D-061) — Gemini 3.5 Flash on the free tier; no Pro or Claude | OPS-6, EN-13 |
 | D-011 | Interaction model | **Decided via D-052** — cards-first + "Brief me" | FE-1, FE-9 |
 | D-012 | Filings source | Open — BSE primary, NSE backup | BE-3 |
 | D-013 | Ticker → BSE code mapping | Open — shipped scrip list + lookup | BE-2 |
@@ -327,3 +327,5 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-043–D-056 | Audit v1 changes | Decided 2026-11-14 | see DECISIONS.md |
 | D-058 | Screen set | **Decided, on hold for review** — 6 screens, one per brief item; review in FE-12 | FE-1..6 |
 | D-059 | Front-end design v1 | **Decided** — `design/DESIGN_1.md` is the current design | FE-1..13 |
+| D-060 | Free-tier-only AI keys | **Decided** — one free Gemini key, no billing, no Anthropic | OPS-6 |
+| D-061 | Free-tier model lineup | **Decided** — cheap 3.5-flash-lite, strong 3.5-flash, fallback 3.1-flash-lite | OPS-6, EN-9 |
