@@ -62,9 +62,9 @@ Entry template:
 - Why: shows the build process to reviewers.
 - Trade-off: messy commits stay visible.
 
-### D-009 · Strong model for reasoning · 2026-11-13 · Step 1 · Status: open
+### D-009 · Strong model for reasoning · 2026-11-13 · Step 1 · Status: decided (see D-060)
 - Options: Claude Sonnet / Gemini Pro / Claude Opus (best reasoning, highest cost)
-- Chosen: undecided; depends on which API key is available. Recommended: Claude Sonnet, used only for promise verdicts + bull/bear (PLAN EN-13, EN-14).
+- Chosen: Gemini Pro on the free tier, used only for promise verdicts + bull/bear (PLAN EN-13, EN-14). Decided in D-060.
 - Why: cheap model (Gemini Flash) for bulk, strong model only for promised-vs-delivered verdicts and bull/bear.
 - Trade-off: cost vs quality; to be logged in the README with token counts.
 
@@ -376,3 +376,9 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Why: user judgment; M picks chosen for quality gain on brief items ({any NSE ticker}, {configurable thresholds}, {results card}, {point of view}).
 - Trade-off: ≈10h extra on top of P0 FE work (advisory, D-057); build order in DESIGN_1.md puts P0 first and drops P2 then M picks if behind. 6-screen set and tiers still reviewable (FE-12).
 
+
+### D-060 · Free-tier-only AI keys · 2026-11-14 · OPS-6 (settles D-009, refines D-050) · Status: decided
+- Options: A Gemini Flash + Claude Sonnet (needs $5 Anthropic credits) / B Gemini Flash + Gemini Pro with prepaid billing ($5 deposit, offset by Developer Program credits) / C free tier only: Gemini Flash (cheap) + Gemini Pro free tier (strong), no billing
+- Chosen: C. One free Gemini key from Google AI Studio; no Anthropic key. Model names stay in config.py, so a paid model is a one-line swap.
+- Why: user judgment; the brief says {free tiers are enough} and rewards {cost efficiency}; the other options cost $5 in credits, and a spend-nothing prototype is the strongest cost story.
+- Trade-off: free-tier rate limits and daily caps, and weaker verdicts than Sonnet. Mitigation: cache each AI answer in SQLite, precompute the 3 research stocks (D-051), keep a snapshot for the demo. Include this decision in the email writeup.
