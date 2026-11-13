@@ -1,0 +1,103 @@
+# FINN — project context for Claude Code
+
+Act as a senior AI engineer building a production-minded prototype: clean, tested, cost-aware, and easy for a reviewer to read.
+
+## Who I am
+- Ahad Nardekar, B.Tech Civil, IIT Delhi.
+- Explain any new technical term in [square brackets] right next to it.
+- Mark anything directly required by the ENAM brief/reference doc in {curly brackets}.
+- Concise, short points. Give 2-3 options before asking me to decide. Challenge me if I'm wrong.
+
+## The assignment (ENAM Holdings AI Engineer Build Challenge)
+- Build FINN: {a mobile-first AI agent for a stock investor}. Core idea: a filter, not a feed.
+- {Push}: app tells the investor what changed, unasked. {Pull}: investor asks for research on a company.
+- {Portfolio of 15-20 NSE/BSE stocks, mixed sectors and sizes}; {3-5 extra research stocks, can be outside portfolio}.
+- {Engine must work on any NSE ticker} — they may test one we didn't pick.
+- Graded on {creativity, product sense, judgment, architecture}, not completeness. {A demo that doesn't run is the worst outcome.}
+- {Primary sources only for pull research: annual reports + concall transcripts. No news, broker notes, or model's outside knowledge.}
+- {Free tiers are enough}; {bonus for cost efficiency: cheap model for bulk, strong model for reasoning, caching}.
+- Deadline: {Sun 15 Nov 2026}. Plan to submit by 18:00 IST.
+
+## Deliverables — {one email to assessment@enam.com, subject "IIT Delhi – AI Engineer - 2027"}
+1. {Working prototype usable on a phone} (deployed link)
+2. {GitHub repo}
+3. {AI build history} (Claude Code sessions + claude.ai chat share links)
+4. {Writeup in email body: what was built, key decisions and trade-offs, what was left out, next steps}
+
+## Users and product point of view
+- Users: ENAM's own investment team. ENAM = Mumbai principal investment group, long-term, bottom-up fundamental research.
+- ENAM avoids intoxication, gambling, harm to living creatures → keep such stocks out of the demo portfolio (e.g. drop ITC).
+- App opens on "Today": max 3-5 "what matters" cards, routine filings collapsed into one row.
+- Research answers = scorecards with receipts (every claim links to its source quote/page).
+- No user accounts; settings saved in browser localStorage.
+
+## Ranking rule ("what matters")
+Test: would a long-term fund manager change a hold/buy/sell view because of this?
+- High (top card + detail): results, management_change, M&A, litigation, credit_rating, pledging
+- Medium (one-line summary): fund_raise, capex, dividend, bonus_split, insider_trading, order wins
+- Low (collapse to "Routine (N)"): call notices, investor meetings, AGM/EGM, postal ballot, unclassified
+- Boost to top if the same stock also crossed a price/volume alert that day.
+- {Alerts with user-configurable thresholds}: volume > 2x 20-day avg (default); daily price move beyond ±5% (default, ±3% still being decided).
+
+## Build scope
+Build:
+- {Windowed digest} (24h / 3d / 7d picker), prioritised, routine collapsed
+- {Triggered alerts}: volume, price, category toggles
+- {Results card: Revenue, EBITDA, PBT, PAT with QoQ and YoY}. If EBITDA isn't printed, compute PBT + finance cost + depreciation and say so. Growth % computed in Python, not by the AI.
+- {Management change card with incoming person's bio} — use the "brief profile" in the exchange filing, no LinkedIn scraping.
+- Pull: business snapshot + "Promise tracker" ({narrative vs numbers}, last 4 quarters: Delivered / Partial / Missed with quote) + bull vs bear.
+Skip (state in writeup): real push notifications, intraday data, logins, bank-specific results, the other 5 research views.
+
+## Tech stack
+- Python + FastAPI [library for building the API] — backend and serves the frontend (one deployment)
+- SQLite [single-file database] as cache: each document processed by AI once
+- Frontend: single HTML page, Tailwind CSS + Alpine.js, mobile-first
+- AI routing: Gemini Flash (cheap: classification leftovers, PDF number extraction, guidance quotes) → Claude Sonnet or Gemini Pro (strong: promised-vs-delivered verdict, bull/bear). Rules, not AI, for alerts and most classification.
+- Data: yfinance (.NS / .BO) {EOD price & volume}; BSE announcements API (NSE backup) {corporate announcements}; screener.in links {annual reports, transcripts}
+- Deploy: Render free tier. Keys in .env locally, environment variables on Render.
+- Save a JSON snapshot of fetched data so the demo works if a site blocks us.
+
+## Folder architecture
+```
+finn/
+├─ CLAUDE.md, README.md, .env, .gitignore, requirements.txt
+├─ config.py           tickers, thresholds, category weights
+├─ data/               prices.py, filings.py, docs.py   (plumbing)
+├─ engine/             alerts.py, ranker.py, cards.py, research.py, llm.py   (brains)
+├─ api.py              FastAPI endpoints
+├─ web/index.html      Today, Detail, Research, Settings screens
+├─ snapshot/           frozen data copy
+└─ cache.db            AI answer cache
+```
+
+## Draft portfolio (verify each loads in yfinance; no ITC)
+RELIANCE, HDFCBANK, TCS, INFY, PIDILITIND, LT, BHARTIARTL, SUNPHARMA, ASIANPAINT, TITAN, DMART, TRENT, POLYCAB, DIXON, PERSISTENT, HAL, DEEPAKNTR, IRCTC
+Research set: POLYCAB, PERSISTENT, DIXON, ASTRAL (outside portfolio)
+
+## Plan
+1. Repo + keys + Claude Code; prices + alerts working
+2. Filings pipeline + ranking
+3. Results card, bio card, promise tracker
+4. Frontend screens + deploy to Render, test on real phone
+5. ENAM website colours/fonts, edge cases, README, writeup
+6. Send email
+
+## Open decisions
+- Commit history: keep real history (recommended) vs clean final copy
+- Alert price threshold: ±3% or ±5%
+- Strong model: Claude Sonnet vs Gemini Pro (depends on which key I have)
+
+## Engineering standards
+- Small, single-purpose functions with type hints [labels saying what data type goes in/out] and short docstrings.
+- All settings (tickers, thresholds, model names) in config.py; secrets only in .env.
+- Every network call: timeout, retry once, clear error message, fall back to snapshot data.
+- AI outputs requested as JSON and validated before use; never trust AI for arithmetic.
+- Log [print a record of] each AI call's model and token count, to report cost in the README.
+- Unit tests [small automatic checks] for alerts, ranking and QoQ/YoY maths (pytest).
+- A step is done only when it runs end to end and its tests pass.
+
+## Working rules for Claude Code
+- One step at a time; after each step show me how to run and check it.
+- Verify at least 2 results cards against the actual filing PDF numbers.
+- Never commit .env or API keys.
+- Commit after each working step with a clear message.

@@ -1,0 +1,16 @@
+# secrets
+.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# local AI answer cache (rebuilt on demand)
+cache.db
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
