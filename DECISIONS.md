@@ -357,3 +357,9 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Chosen: A.
 - Why: CLAUDE.md is loaded into every Claude session; stale content there re-creates the same contradictions.
 - Trade-off: two files to keep in step; CLAUDE.md now points to DECISIONS.md instead of listing open decisions.
+
+### D-057 · Hours estimate is advisory · 2026-11-14 · Audit follow-up · Status: decided
+- Options: re-scope again to fit ~53h of P0 at estimates / treat estimates as advisory, re-scope only if a deliverable is at risk
+- Chosen: advisory. No further re-scoping for the hours total. Refines D-043 (which stays as written).
+- Why: user judgment; estimates are hand-coding hours and Claude Code builds faster. Avoids over-complicating the plan.
+- Trade-off: schedule risk stays hidden until the Sat 14 Nov 20:00 deploy gate; §10 cuts still apply if a deliverable is at risk.

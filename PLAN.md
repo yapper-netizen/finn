@@ -240,7 +240,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | Results PDF layouts vary; banks differ | Wrong numbers | Arithmetic checks, PDF verify, bank-lite card (D-016, D-048) |
 | Free-tier rate limits [max requests per minute] on Gemini | Live research stalls | Cache, precompute research set, back-off + clear message |
 | Python 3.14 wheels missing on Render | Deploy fails | Pin 3.12 on Render, test install early (D-034) |
-| Running out of time (P0 ≈ 53h at estimates) | Broken submission | Deploy gate Sat 20:00 · second-stage cuts · code freeze Sun 13:00 · send ≤17:30 (D-043) |
+| Running out of time | Broken submission | Deploy gate Sat 20:00 · second-stage cuts · code freeze Sun 13:00 · send ≤17:30 (D-043) |
 
 ---
 
