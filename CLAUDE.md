@@ -75,6 +75,7 @@ RELIANCE, HDFCBANK, TCS, INFY, PIDILITIND, LT, BHARTIARTL, SUNPHARMA, ASIANPAINT
 Research set: POLYCAB, PERSISTENT, DIXON, ASTRAL (outside portfolio)
 
 ## Plan
+Detailed task plan: PLAN.md. All choices (open and decided): DECISIONS.md — append an entry whenever a choice is made.
 1. Repo + keys + Claude Code; prices + alerts working
 2. Filings pipeline + ranking
 3. Results card, bio card, promise tracker
