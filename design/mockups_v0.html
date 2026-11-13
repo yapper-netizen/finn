@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FINN mockups v0</title>
+<!-- Baseline v0 (13 Nov 2026). Sample data only, not real filings. Open in any browser. -->
+<style>
+:root{--surface-1:#f5f4ef;--surface-2:#ffffff;--border:rgba(0,0,0,.1);--border-strong:rgba(0,0,0,.22);
+--text-primary:#1a1a18;--text-secondary:#5f5e5a;--text-muted:#888780;
+--bg-accent:#e6f1fb;--text-accent:#185fa5;--bg-danger:#fcebeb;--text-danger:#a32d2d;
+--bg-warning:#faeeda;--text-warning:#854f0b;--bg-success:#eaf3de;--text-success:#3b6d11}
+@media (prefers-color-scheme:dark){:root{--surface-1:#1f1f1d;--surface-2:#2a2a28;--border:rgba(255,255,255,.12);--border-strong:rgba(255,255,255,.25);
+--text-primary:#f1efe8;--text-secondary:#b4b2a9;--text-muted:#888780;--bg-accent:#0c447c;--text-accent:#b5d4f4;--bg-danger:#791f1f;--text-danger:#f7c1c1;
+--bg-warning:#633806;--text-warning:#fac775;--bg-success:#27500a;--text-success:#c0dd97}}
+body{margin:0;padding:24px 16px;background:var(--surface-1);color:var(--text-primary);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;max-width:1040px;margin:0 auto}
+.cap{font-size:12px;color:var(--text-muted);text-align:center;margin:0 0 6px}
+.ph{background:var(--surface-2);border:0.5px solid var(--border-strong);border-radius:28px;padding:16px 14px;max-width:320px;margin:0 auto;min-height:520px}
+.ph h3{margin:0 0 2px;font-size:20px;font-weight:500}
+.sub{font-size:12px;color:var(--text-secondary);margin:0 0 10px}
+.c{border:0.5px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:var(--surface-2)}
+.t{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;margin-bottom:4px}
+.r{background:var(--bg-accent);color:var(--text-accent)}.d{background:var(--bg-danger);color:var(--text-danger)}.w{background:var(--bg-warning);color:var(--text-warning)}.s{background:var(--bg-success);color:var(--text-success)}
+.h{font-size:14px;font-weight:500;margin:0 0 2px}.p{font-size:12px;color:var(--text-secondary);margin:0;line-height:1.5}
+.pill{font-size:12px;padding:3px 10px;border-radius:99px;border:0.5px solid var(--border-strong);margin-right:4px;display:inline-block}
+.on{background:var(--text-primary);color:var(--surface-2)}
+table{width:100%;font-size:12px;border-collapse:collapse}td,th{padding:5px 2px;text-align:right;border-bottom:0.5px solid var(--border);font-weight:400}th{color:var(--text-muted);font-size:11px}td:first-child,th:first-child{text-align:left}
+.up{color:var(--text-success)}.dn{color:var(--text-danger)}
+.q{font-size:11px;color:var(--text-secondary);border-left:2px solid var(--border-strong);padding-left:8px;margin:4px 0 0;font-style:italic}
+.row{display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:8px 0;border-bottom:0.5px solid var(--border)}
+.tg{width:30px;height:18px;border-radius:9px;background:var(--text-primary);position:relative}.tg:after{content:"";position:absolute;right:2px;top:2px;width:14px;height:14px;border-radius:50%;background:var(--surface-2)}.tg.off{background:var(--border-strong)}.tg.off:after{right:auto;left:2px}
+.bar{height:4px;background:var(--border);border-radius:2px;margin:6px 0 2px}.bar i{display:block;height:4px;background:var(--text-primary);border-radius:2px}
+.note{font-size:12px;color:var(--text-muted);text-align:center;margin:0 0 16px}
+</style>
+</head>
+<body>
+<p class="note">FINN baseline mockups v0. Illustrative sample numbers, not real data.</p>
+<div class="g">
+<div><p class="cap">1. Today (push digest)</p><div class="ph">
+<h3>Today</h3><p class="sub">3 things matter across your 18 stocks</p>
+<div style="margin-bottom:10px"><span class="pill on">24h</span><span class="pill">3d</span><span class="pill">7d</span></div>
+<div class="c"><span class="t r">Results</span><p class="h">HAL: Q2 profit up 18% YoY</p><p class="p">Revenue and PAT beat last quarter. Tap for the numbers.</p></div>
+<div class="c"><span class="t w">Management change</span><p class="h">INFY: new CFO appointed</p><p class="p">Joins from a large IT peer. Tap for profile.</p></div>
+<div class="c"><span class="t d">Alert</span><p class="h">PIDILITIND: volume 2.6x average</p><p class="p">Price moved -4.1%. No filing yet.</p></div>
+<div class="row" style="border:0.5px dashed var(--border-strong);border-radius:10px;padding:8px 10px;color:var(--text-secondary)"><span>Routine filings (7)</span><span>&#9662;</span></div>
+</div></div>
+
+<div><p class="cap">2. Results card</p><div class="ph">
+<h3>HAL, Q2 results</h3><p class="sub">Rs crore, vs last quarter and last year</p>
+<table><tr><th></th><th>Now</th><th>QoQ</th><th>YoY</th></tr>
+<tr><td>Revenue</td><td>6,100</td><td class="up">+9%</td><td class="up">+12%</td></tr>
+<tr><td>EBITDA*</td><td>1,900</td><td class="up">+6%</td><td class="up">+10%</td></tr>
+<tr><td>PBT</td><td>1,750</td><td class="up">+7%</td><td class="up">+16%</td></tr>
+<tr><td>PAT</td><td>1,310</td><td class="up">+7%</td><td class="up">+18%</td></tr></table>
+<p class="p" style="margin-top:10px">*Not printed in the filing. Computed as PBT + finance cost + depreciation. Growth % calculated in Python, not by AI.</p>
+<div class="c" style="margin-top:12px"><p class="p">Source: results filing, page 3 (open PDF)</p></div>
+</div></div>
+
+<div><p class="cap">3. Management change</p><div class="ph">
+<span class="t w">Management change</span><h3>INFY appoints new CFO</h3><p class="sub">Effective next month, per exchange filing</p>
+<div class="c" style="display:flex;gap:10px;align-items:center"><div style="width:40px;height:40px;border-radius:50%;background:var(--bg-accent);color:var(--text-accent);display:flex;align-items:center;justify-content:center;font-weight:500">AB</div><div><p class="h">A. Sample Name</p><p class="p">Incoming CFO</p></div></div>
+<p class="h" style="margin-top:12px">Who is this</p>
+<p class="p">25 years in finance. Previously CFO at a listed IT services peer. Chartered accountant. Led two acquisitions.</p>
+<p class="q">Brief profile from the exchange filing, no scraping.</p>
+<p class="h" style="margin-top:12px">Why it matters</p><p class="p">Outgoing CFO served 6 years. A planned handover, not a sudden exit.</p>
+</div></div>
+
+<div><p class="cap">4. Settings (alert thresholds)</p><div class="ph">
+<h3>Alerts</h3><p class="sub">You decide what unusual means</p>
+<p class="h">Price move beyond</p><div class="bar"><i style="width:50%"></i></div><p class="p">+/-5% in a day</p>
+<p class="h" style="margin-top:12px">Volume above</p><div class="bar"><i style="width:30%"></i></div><p class="p">2.0x the 20-day average</p>
+<p class="h" style="margin:14px 0 0">Categories</p>
+<div class="row"><span>Results</span><span class="tg"></span></div>
+<div class="row"><span>Management change</span><span class="tg"></span></div>
+<div class="row"><span>M&amp;A and litigation</span><span class="tg"></span></div>
+<div class="row"><span>Dividends</span><span class="tg off"></span></div>
+<div class="row"><span>Investor meetings</span><span class="tg off"></span></div>
+</div></div>
+
+<div><p class="cap">5. Research (pull, any ticker)</p><div class="ph">
+<h3>Research</h3><p class="sub">Annual reports and concalls only</p>
+<div class="c" style="display:flex;justify-content:space-between;color:var(--text-muted);font-size:14px"><span>ASTRAL</span><span>&#9906;</span></div>
+<div class="c"><p class="h">Business snapshot</p><p class="p">Pipes and adhesives. Plumbing is the larger segment by revenue.</p></div>
+<div class="c"><p class="h">Promise tracker</p><p class="p">Last 4 quarters: 2 delivered, 1 partial, 1 missed</p></div>
+<div class="c"><p class="h">Bull vs bear</p><p class="p">One tight case each way, every claim linked to a quote.</p></div>
+</div></div>
+
+<div><p class="cap">6. Promise tracker (with receipts)</p><div class="ph">
+<h3>Promised vs delivered</h3><p class="sub">Management's guidance vs actual numbers</p>
+<div class="c"><span class="t s">Delivered</span><p class="h">Q1: double-digit volume growth</p><p class="p">Actual: +13% volume.</p><p class="q">"We expect low double-digit volume growth." Concall p.4</p></div>
+<div class="c"><span class="t w">Partial</span><p class="h">Q2: margin back to 15%</p><p class="p">Actual: 14.2%.</p><p class="q">"Margins should normalise to 15%." Concall p.7</p></div>
+<div class="c"><span class="t d">Missed</span><p class="h">Q3: new plant live by quarter end</p><p class="p">Delayed by one quarter.</p><p class="q">"Commissioning this quarter." Concall p.3</p></div>
+</div></div>
+</div>
+</body>
+</html>
