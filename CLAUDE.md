@@ -30,6 +30,7 @@ Act as a senior AI engineer building a production-minded prototype: clean, teste
 - App opens on "Today": max 3-5 "what matters" cards, routine filings collapsed into one row.
 - Research answers = scorecards with receipts (every claim links to its source quote/page).
 - No user accounts; settings saved in browser localStorage.
+- {Interaction experiment}: cards-first Today + "Brief me" (3-sentence summary of Today, read aloud via the browser's free text-to-speech). See D-052.
 
 ## Ranking rule ("what matters")
 Test: would a long-term fund manager change a hold/buy/sell view because of this?
@@ -41,12 +42,12 @@ Test: would a long-term fund manager change a hold/buy/sell view because of this
 
 ## Build scope
 Build:
-- {Windowed digest} (24h / 3d / 7d picker), prioritised, routine collapsed
-- {Triggered alerts}: volume, price, category toggles
-- {Results card: Revenue, EBITDA, PBT, PAT with QoQ and YoY}. If EBITDA isn't printed, compute PBT + finance cost + depreciation and say so. Growth % computed in Python, not by the AI.
+- {Windowed digest} ({24h default} / 3d / 7d picker), prioritised, routine collapsed. If 24h is empty, widen to the last day with filings and show a banner (D-046).
+- {Triggered alerts}: volume, price, category toggles (toggle off → Routine; toggle on + High → "alert" chip, D-047)
+- {Results card: Revenue, EBITDA, PBT, PAT with QoQ and YoY}. If EBITDA isn't printed, compute PBT + finance cost + D&A − other income and label it "computed" (D-054). Growth % computed in Python, not by the AI. Banks: Total income / PBT / PAT, EBITDA "n/a for banks" (D-048).
 - {Management change card with incoming person's bio} — use the "brief profile" in the exchange filing, no LinkedIn scraping.
-- Pull: business snapshot + "Promise tracker" ({narrative vs numbers}, last 4 quarters: Delivered / Partial / Missed with quote) + bull vs bear.
-Skip (state in writeup): real push notifications, intraday data, logins, bank-specific results, the other 5 research views.
+- Pull: "Promise tracker" ({narrative vs numbers}, last 4 quarters: Delivered / Partial / Missed with quote; actual numbers from results filings, D-049) + business snapshot (if time) + bull vs bear (if time).
+Skip (state in writeup): real push notifications, intraday data, logins, full bank metrics (NII, asset quality), the other 5 research views.
 
 ## Tech stack
 - Python + FastAPI [library for building the API] — backend and serves the frontend (one deployment)
@@ -60,19 +61,22 @@ Skip (state in writeup): real push notifications, intraday data, logins, bank-sp
 ## Folder architecture
 ```
 finn/
-├─ CLAUDE.md, README.md, .env, .gitignore, requirements.txt
-├─ config.py           tickers, thresholds, category weights
-├─ data/               prices.py, filings.py, docs.py   (plumbing)
-├─ engine/             alerts.py, ranker.py, cards.py, research.py, llm.py   (brains)
+├─ CLAUDE.md, README.md, PLAN.md, DECISIONS.md, .env, .gitignore, requirements.txt, pytest.ini
+├─ config.py           tickers, thresholds, category weights, model names
+├─ data/               prices.py, filings.py, docs.py, symbols.py   (plumbing)
+├─ engine/             alerts.py, classifier.py, ranker.py, cards.py, research.py, llm.py   (brains)
 ├─ api.py              FastAPI endpoints
 ├─ web/index.html      Today, Detail, Research, Settings screens
+├─ tests/              pytest unit tests
 ├─ snapshot/           frozen data copy
+├─ plan_revamp_v1/     plan audit record
+├─ brief/              ENAM brief PDFs
 └─ cache.db            AI answer cache
 ```
 
 ## Draft portfolio (verify each loads in yfinance; no ITC)
-RELIANCE, HDFCBANK, TCS, INFY, PIDILITIND, LT, BHARTIARTL, SUNPHARMA, ASIANPAINT, TITAN, DMART, TRENT, POLYCAB, DIXON, PERSISTENT, HAL, DEEPAKNTR, IRCTC
-Research set: POLYCAB, PERSISTENT, DIXON, ASTRAL (outside portfolio)
+RELIANCE, HDFCBANK, TCS, INFY, PIDILITIND, LT, BHARTIARTL, SUNPHARMA, ASIANPAINT, TITAN, DMART, TRENT, POLYCAB, DIXON, PERSISTENT, HAL → to be replaced by a non-defence small-cap (D-055, task BE-10), DEEPAKNTR, IRCTC
+Research set (D-051): POLYCAB, PERSISTENT, ASTRAL (outside portfolio) — all precomputed
 
 ## Plan
 Detailed task plan: PLAN.md. All choices (open and decided): DECISIONS.md — append an entry whenever a choice is made.
@@ -84,9 +88,8 @@ Detailed task plan: PLAN.md. All choices (open and decided): DECISIONS.md — ap
 6. Send email
 
 ## Open decisions
-- Commit history: keep real history (recommended) vs clean final copy
-- Alert price threshold: ±3% or ±5%
-- Strong model: Claude Sonnet vs Gemini Pro (depends on which key I have)
+All open and decided choices live in DECISIONS.md (index in PLAN.md §13). Don't duplicate them here.
+Timeline (D-043): deploy gate Sat 14 Nov 20:00 · code freeze Sun 15 Nov 13:00 · send ≤17:30 IST.
 
 ## Engineering standards
 - Small, single-purpose functions with type hints [labels saying what data type goes in/out] and short docstrings.

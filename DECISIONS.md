@@ -267,3 +267,93 @@ Open entries show **Recommended**; fill **Chosen** when you decide, and set Stat
 ### D-042 · Out of scope (state in writeup) · 2026-11-13 · Status: decided
 - Chosen: no real push notifications, no intraday data, no logins, no bank-specific results card, research views beyond D-023.
 - Why: {thin-but-working beats broad-but-broken}.
+
+---
+
+## Audit v1 changes (2026-11-14)
+
+Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations approved by Ahad. Older entries are not rewritten; where a decision below settles or replaces one, it says so.
+
+### D-043 · Re-scope P0 and re-time the plan · 2026-11-14 · Audit G1 · Status: decided
+- Options: A re-scope P0 to two workflows + deploy gate / B keep scope, freeze Sun 15:00 / C precomputed research only (breaks {any NSE ticker})
+- Chosen: A. EN-11 business snapshot → P1; EN-2 rules only (AI fallback → new EN-19, P2); BE-6 removed (D-049); FE-5 merged into FE-4; QA-5 trimmed. Deploy gate Sat 14 Nov 20:00; code freeze Sun 13:00; send ≤17:30. Second-stage cuts defined in PLAN §10 if the gate is missed.
+- Why: the old timeline started Fri 13 Nov and those milestones were not done; P0 was ~54h at estimates. {Thin-but-working beats broad-but-broken}; {nail one or two workflows}.
+- Trade-off: P0 is still ~53h at hand-coding estimates (new gap tasks added ~2.5h). Relies on Claude Code speed; the deploy gate is the real check.
+
+### D-044 · ENAM theme is a P0 task · 2026-11-14 · Audit G2 · Status: decided
+- Options: A new FE-11 P0 theme tokens, FE-7 polish stays P1 / B all of FE-7 P0 / C drop the ENAM theme
+- Chosen: A. FE-11 (0.5h, never cut): ENAM website colours and fonts as CSS variables [named colour/font settings reused everywhere]; own FINN wordmark, no ENAM logo. Settles D-028.
+- Why: CLAUDE.md step 5 commits to ENAM colours/fonts; PLAN had it only as cuttable FE-7. {No AI slop: beautifully presented}.
+- Trade-off: dark mode and finer polish remain cuttable.
+
+### D-045 · 3d / 7d windows cannot be cut · 2026-11-14 · Audit G3 · Status: decided
+- Options: A remove from the cut list / B keep only 24h + 7d
+- Chosen: A.
+- Why: {"by default the last 24 hours, but let me pick the period"} is brief-required; it is only a query parameter.
+- Trade-off: none.
+
+### D-046 · Default window: 24h, auto-widen when empty · 2026-11-14 · Audit G4 · Status: decided
+- Options: A {24h} default; if empty, widen to the most recent day with filings and show a banner / B "last trading session" default (D-035 recommendation) / C strict 24h
+- Chosen: A. Supersedes the D-035 recommendation.
+- Why: keeps the brief's {default 24h} and still avoids an empty screen on Sunday 15 Nov.
+- Trade-off: the banner adds one UI state; no holiday calendar needed (BE-8 stays P2).
+
+### D-047 · Category toggles drive alerts · 2026-11-14 · Audit G5 · Status: decided
+- Options: A EN-18 engine logic (off → Routine; on + High → "alert" chip) with tests / B client-side hiding only / C drop toggles
+- Chosen: A. New task EN-18 (P0, 0.5h).
+- Why: brief's first alert type is {"a material announcement of a type I care about"}; PLAN had the toggle UI but nothing applied it.
+- Trade-off: small extra ranker complexity.
+
+### D-048 · Bank-lite results card · 2026-11-14 · Audit G6 · Status: decided
+- Options: A Total income / PBT / PAT with QoQ + YoY, EBITDA shown "n/a for banks" / B "unsupported" label + link / C replace HDFCBANK
+- Chosen: A. Settles D-018.
+- Why: banks do print PBT and PAT; an empty High card on HDFCBANK's results day looks broken. ~0.5h on EN-5.
+- Trade-off: no NII [net interest income] or asset-quality metrics; listed under "left out".
+
+### D-049 · Promise-tracker actuals come from results filings · 2026-11-14 · Audit G7 · Status: decided
+- Options: A reuse the EN-5 results-filing extractor on the last 4–5 results filings / B promote BE-6 (screener) to P0, labelled secondary / C XBRL parser
+- Chosen: A. BE-6 removed (struck through in PLAN); BE-5 also finds results-filing links.
+- Why: EN-13 (P0) depended on BE-6 (P1) — a priority contradiction; screener numbers are secondary, results filings are {primary}. One extractor serves two features.
+- Trade-off: depends on EN-5 extraction quality across PDF layouts.
+
+### D-050 · API keys task added · 2026-11-14 · Audit G8 · Status: decided
+- Options: A Gemini key + Anthropic key if available, smoke test / B Gemini only (Flash cheap, Pro strong)
+- Chosen: A. New task OPS-6 (P0, 0.3h). Final strong model still open in D-009.
+- Why: CLAUDE.md step 1 lists keys; no PLAN task covered them.
+- Trade-off: two providers to configure.
+
+### D-051 · Research set = 3 stocks, all precomputed · 2026-11-14 · Audit G9 · Status: decided
+- Options: A 3 stocks, ≥1 outside portfolio, all precomputed / B 4 (CLAUDE.md) / C 5
+- Chosen: A — POLYCAB, PERSISTENT, ASTRAL (outside portfolio). DIXON dropped from the set. New task BE-9 (verify ASTRAL loads, precompute).
+- Why: {3–5} minimum met; every demo stock loads instantly; {any NSE ticker} is shown by the live path, not by a bigger set.
+- Trade-off: fewer showcase companies.
+
+### D-052 · Interaction experiment: "Brief me" · 2026-11-14 · Audit G10 · Status: decided
+- Options: A FE-9 → P1 with "Brief me" (3-sentence summary of Today, read aloud via Web Speech API [browser's built-in, free text-to-speech]) / B keep FE-9 at P2 / C chat as the core interface
+- Chosen: A. Settles D-011 as cards-first + "Brief me".
+- Why: brief: {"strongly encourage you to experiment… show a point of view"}; PLAN cut it first. Reuses digest data, no extra AI cost.
+- Trade-off: ~1.5h; still cuttable (cut list item 4).
+
+### D-053 · Snapshot refresh scheduled before submission · 2026-11-14 · Audit G11 · Status: decided
+- Options: A run BE-7 at Sun 13:00 code freeze and commit, plus DEL-5 checkbox / B GitHub Action (OPS-5)
+- Chosen: A.
+- Why: D-006 said the snapshot must be refreshed before submission; nothing scheduled it.
+- Trade-off: data is frozen as of Sun afternoon.
+
+### D-054 · EBITDA fallback excludes other income · 2026-11-14 · Audit G12 · Status: decided
+- Options: A PBT + finance cost + D&A − other income, labelled "computed" / B CLAUDE.md formula (PBT + finance cost + depreciation), labelled "incl. other income" / C show both
+- Chosen: A. CLAUDE.md updated to match.
+- Why: the reference doc defines EBITDA as a proxy for {core-business operating profitability}; other income [e.g. interest on treasury cash] is not core and would overstate it.
+- Trade-off: companies that print EBITDA may define it differently; the printed figure is used when present.
+
+### D-055 · Replace HAL with a non-defence small-cap · 2026-11-14 · Audit G13 · Status: decided
+- Options: A replace with a non-defence small-cap / B keep HAL / C replace with a large-cap
+- Chosen: A. Settles D-033. Specific stock chosen in task BE-10 (must load in yfinance); log the name here when picked.
+- Why: ENAM avoids harm to living creatures (same reasoning as D-010); portfolio has no small-cap despite {"different sectors and sizes"}.
+- Trade-off: lose a defence/PSU name.
+
+### D-056 · CLAUDE.md synced with PLAN.md · 2026-11-14 · Audit G14 · Status: decided
+- Options: A update CLAUDE.md (folder tree, decisions pointer, "(if time)" marks, D-046/D-048/D-051/D-054/D-055) / B record differences only in DECISIONS.md
+- Chosen: A.
+- Why: CLAUDE.md is loaded into every Claude session; stale content there re-creates the same contradictions.
+- Trade-off: two files to keep in step; CLAUDE.md now points to DECISIONS.md instead of listing open decisions.
