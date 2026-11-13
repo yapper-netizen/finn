@@ -155,6 +155,8 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 
 {"The frontend — the product, the interaction model, the design — is deliberately yours. That's where we most want to see how you think."} {Experiment with the interaction model; show a point of view.} {No AI slop: concise, dense, beautiful, interactive.}
 
+**Before any front-end decision, read `design/FRONTEND_BRAINSTORM.md`** (ideas, research, picks) and the latest `design/mockups_v*.html`. Chosen picks land here as FE rows and in DECISIONS.md.
+
 | ID | P | Screen / task | Decisions | est | Done when |
 |---|---|---|---|---|---|
 | FE-1 | P0 | [ ] Shell: bottom tab bar (Today · Research · Settings), routing [switching screens without reloading], loading skeletons [grey placeholder shapes while data loads], error and empty states | D-011, D-027 | 1.5 | Usable one-handed at 375px width |
@@ -168,6 +170,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | FE-9 | P1 | [ ] Interaction experiment: **"Brief me"** — 3-sentence summary of Today, shown and read aloud via Web Speech API [browser's built-in, free text-to-speech]; built from digest data, no extra AI call | D-011, D-052 | 1.5 | Demo-able in 15 seconds |
 | FE-10 | P2 | [ ] "Seen" state: cards you've opened dim; "since you last looked" | D-046 | 1 | Stored in localStorage |
 | FE-11 | P0 | [ ] ENAM theme tokens: take colours and fonts from ENAM's website into CSS variables [named colour/font settings reused everywhere]; own FINN wordmark, no ENAM logo | D-028, D-044 | 0.5 | All screens use the tokens |
+| FE-12 | P1 | [ ] **On hold — review after the front-end brainstorm**: (a) the 6-screen set (Today, Results, Management change, Settings, Research, Promise tracker; one per brief item), (b) 17 categories → High / Medium / Low tiers. Decisions stand for the build; redesign only if the brainstorm shows a better structure | D-015, D-058 | 0.5 | Reviewed; kept or changed with a DECISIONS.md entry |
 
 ---
 
@@ -255,7 +258,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-012 | Filings source | Open — BSE primary, NSE backup | BE-3 |
 | D-013 | Ticker → BSE code mapping | Open — shipped scrip list + lookup | BE-2 |
 | D-014 | Classification method | **Rules only for P0 (D-043)**; AI fallback = EN-19 | EN-2 |
-| D-015 | Category tiers | Open — as CLAUDE.md + `order_win` | EN-3 |
+| D-015 | Category tiers | **Decided** — adapt: 17 categories → High / Medium / Low; review in FE-12 | EN-3 |
 | D-016 | Results numbers source | Open — PDF extraction with arithmetic checks; screener option dropped (D-049) | EN-5 |
 | D-017 | Consolidated vs standalone | Open — consolidated, fallback standalone, labelled | EN-5 |
 | D-018 | Bank results | **Decided via D-048** — bank-lite card | EN-5 |
@@ -279,3 +282,4 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-040 | Alerts placement | Open — merged into Today cards | FE-2 |
 | D-041 | Receipts standard | Open — verified quote + page + link | EN-15 |
 | D-043–D-056 | Audit v1 changes | Decided 2026-11-14 | see DECISIONS.md |
+| D-058 | Screen set | **Decided, on hold for review** — 6 screens, one per brief item; review in FE-12 | FE-1..6 |

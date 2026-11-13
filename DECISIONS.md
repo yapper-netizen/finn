@@ -104,10 +104,10 @@ Open entries show **Recommended**; fill **Chosen** when you decide, and set Stat
 - Chosen: —
 - Trade-off: keyword rules miss odd wording; measure on a hand-labelled sample of 50.
 
-### D-015 · Category tiers · 2026-11-13 · Plan EN-3 · Status: open
+### D-015 · Category tiers · 2026-11-13 · Plan EN-3 · Status: decided
 - Options: use the {reference-doc categories} as-is / adapt (split `order_win` out of press_release; earnings_call and investor_meetings → Low) / per-user weights in Settings
 - Recommended: adapt. High: results, management_change, M&A, litigation, credit_rating, pledging. Medium: fund_raise, capex, dividend, bonus_split, insider_trading, order_win. Low (collapsed): earnings_call, investor_meetings, agm_egm, postal_ballot, press_release (non-order), unclassified. Test: "would a long-term fund manager change a hold/buy/sell view?"
-- Chosen: —
+- Chosen: adapt, as recommended (2026-11-14). All 17 reference-doc categories mapped; review after the front-end brainstorm (PLAN FE-12).
 - Trade-off: a fixed order may under-rank a large press release; user category toggles mitigate.
 
 ### D-016 · Source of results numbers · 2026-11-13 · Plan EN-5, BE-6 · Status: open
@@ -363,3 +363,9 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Chosen: advisory. No further re-scoping for the hours total. Refines D-043 (which stays as written).
 - Why: user judgment; estimates are hand-coding hours and Claude Code builds faster. Avoids over-complicating the plan.
 - Trade-off: schedule risk stays hidden until the Sat 14 Nov 20:00 deploy gate; §10 cuts still apply if a deliverable is at risk.
+
+### D-058 · Screen set: 6 screens · 2026-11-14 · Plan FE-1..6, FE-12 · Status: decided, on hold for review
+- Options: A 6 screens, one per brief item (Today, Results, Management change, Settings, Research, Promise tracker) / B fewer (merge detail screens into Today) / C more (one screen per research view)
+- Chosen: A for the build. Review after the front-end brainstorm (FE-12); change only with a new entry.
+- Why: each screen maps to one brief item ({windowed digest + alerts}, {results example}, {bio example}, {configurable thresholds}, {pull on any ticker}, {promised vs delivered worked example}); other categories live inside Today; other 7 research views skipped {thin-but-working}.
+- Trade-off: push and pull don't link yet (brainstorm idea: "Research this company" button on detail screens).
