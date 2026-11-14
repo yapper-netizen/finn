@@ -140,7 +140,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | BE-7 | P0 | [ ] Snapshot refresh script: one command re-freezes prices, filings, docs; **run Sun 13:00 and commit** | D-031, D-053 | 0.5 | `python refresh_snapshot.py` runs clean |
 | BE-8 | P2 | [ ] Market-holiday calendar (exact last trading day) — not needed for D-046 fallback, which uses "last day with filings" | D-046 | 0.5 | Optional |
 | BE-9 | P0 | [ ] Finalise research set of 3 {3–5, may be outside portfolio}: POLYCAB, PERSISTENT, ASTRAL (outside); verify ASTRAL loads; precompute all 3 after EN-16 | D-051 | 0.2 | 3 research views load instantly from cache |
-| BE-10 | P0 | [ ] Replace HAL in `config.py` with a non-defence small-cap that loads in yfinance (adds {"sizes"} mix; ENAM values) | D-055 | 0.2 | 18 still load; choice logged in DECISIONS |
+| BE-10 | P0 | [x] Replace HAL in `config.py` with a non-defence small-cap that loads in yfinance (adds {"sizes"} mix; ENAM values) → VIJAYA; all 19 tickers load | D-055, D-062 | 0.2 | Done 2026-11-15 |
 
 ---
 
@@ -326,6 +326,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-041 | Receipts standard | Open — verified quote + page + link | EN-15 |
 | D-043–D-056 | Audit v1 changes | Decided 2026-11-14 | see DECISIONS.md |
 | D-058 | Screen set | **Decided, on hold for review** — 6 screens, one per brief item; review in FE-12 | FE-1..6 |
+| D-063 | BSE filings API blocks scripts | **Open** — blocks BE-2, BE-3; options A NSE API / B snapshot from your browser / C snapshot-only | BE-2, BE-3 |
 | D-059 | Front-end design v1 | **Decided** — `design/DESIGN_1.md` is the current design | FE-1..13 |
 | D-060 | Free-tier-only AI keys | **Decided** — one free Gemini key, no billing, no Anthropic | OPS-6 |
 | D-061 | Free-tier model lineup | **Decided** — cheap 3.5-flash-lite, strong 3.5-flash, fallback 3.1-flash-lite | OPS-6, EN-9 |
