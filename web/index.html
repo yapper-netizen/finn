@@ -202,109 +202,81 @@
     html[data-look] .tab { min-height: 54px; border-radius: 20px; }
     html[data-look] .tab[aria-current="page"] { background: var(--primary-tint); box-shadow: inset 0 0 0 1px rgba(0,93,163,.12); }
 
-    /* ======================= H0 · HERO CARD (standard) ======================= */
-    html[data-look="h0"] .card { grid-template-areas: "tile who chips" "r1 r1 r1" "title title title" "stat stat stat" "gauge gauge gauge" "why why why" "r2 r2 r2" "when when link"; }
-    html[data-look="h0"] .card .link { background: var(--primary-tint); padding: 0 14px; border-radius: 99px; min-height: 38px; box-shadow: inset 0 0 0 1px rgba(0,93,163,.14); font-weight: 700; color: var(--primary-deep); gap: 6px; display: inline-flex; align-items: center; }
+    /* ======================= H1 FAMILY: ribbon cards, five ways to place "Open filing" =======================
+       h1a header button   h1b split footer   h1c tappable card
+       h1d day block (header button, same-day cards clubbed under one day header)
+       h1e day rail  (split footer, same-day cards under a day header on a rail)               */
+    html[data-look^="h1"] .rel { display: none; }
+    html[data-look^="h1"] .card { overflow: hidden; padding-bottom: 16px; grid-template-areas: "strip strip strip" "tile who who" "title title title" "stat stat stat" "gauge gauge gauge" "why why why"; }
+    html[data-look^="h1"] .card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 46px; background: linear-gradient(180deg, #e8f2fa, #f3f8fc); border-bottom: 1px solid rgba(0,93,163,.14); }
+    html[data-look^="h1"] .card.alert::before { background: linear-gradient(180deg, #fbe7e5, #fdf1f0); border-bottom-color: rgba(179,38,30,.16); }
+    html[data-look^="h1"] .card .when, html[data-look^="h1"] .card .chips { position: relative; z-index: 1; }
+    html[data-look^="h1"] .card .chips { grid-area: strip; justify-self: start; margin: 0; align-self: center; justify-content: flex-start; gap: 0; }
+    html[data-look^="h1"] .card .chips .chip { margin: 0 -6px 0 0; height: 32px; display: inline-flex; align-items: center; border-radius: 0; box-shadow: none; padding: 0 20px 0 14px; color: #fff; font-weight: 700; letter-spacing: .01em; background: linear-gradient(90deg, var(--primary-deep), var(--primary)); clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 0 100%); }
+    html[data-look^="h1"] .card .chips .chip.alert { background: linear-gradient(90deg, #8f1f19, var(--alert)); box-shadow: none; }
+    html[data-look^="h1"] .card .when { grid-area: strip; justify-self: end; margin: 0 var(--px) 0 8px; min-height: 46px; display: inline-flex; align-items: center; }
+    html[data-look^="h1"] .card .tile { margin-top: 16px; }
+    html[data-look^="h1"] .card .who { margin-top: 16px; }
+    html[data-look^="h1"] .card .r1, html[data-look^="h1"] .card .r2 { display: none; }
+    @media (max-width: 372px) { html:is([data-look="h1a"],[data-look="h1b"],[data-look="h1c"]) .card:not(.alertonly) :is(.wsep, .wt) { display: none; } }
 
-    /* ======================= H1 · HERO CARD + RIBBON TAG, ATTACHMENT ROW ======================= */
-    html[data-look="h1"] .card { overflow: hidden; grid-template-areas: "chips chips when" "tile who who" "title title title" "stat stat stat" "gauge gauge gauge" "why why why" "link link link"; }
-    html[data-look="h1"] .card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 46px; background: linear-gradient(180deg, #e8f2fa, #f3f8fc); border-bottom: 1px solid rgba(0,93,163,.14); }
-    html[data-look="h1"] .card.alert::before { background: linear-gradient(180deg, #fbe7e5, #fdf1f0); border-bottom-color: rgba(179,38,30,.16); }
-    html[data-look="h1"] .card > * , html[data-look="h1"] .card .when, html[data-look="h1"] .card .chips { position: relative; z-index: 1; }
-    html[data-look="h1"] .card .chips { margin: 0; align-self: center; justify-content: flex-start; gap: 0; }
-    html[data-look="h1"] .card .chips .chip { margin: 0; height: 32px; display: inline-flex; align-items: center; border-radius: 0; box-shadow: none; padding: 0 20px 0 14px; color: #fff; font-weight: 700; letter-spacing: .01em; background: linear-gradient(90deg, var(--primary-deep), var(--primary)); clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 0 100%); margin-right: -6px; }
-    html[data-look="h1"] .card .chips .chip.alert { background: linear-gradient(90deg, #8f1f19, var(--alert)); box-shadow: none; }
-    html[data-look="h1"] .card .when { margin: 0 var(--px) 0 8px; min-height: 46px; display: inline-flex; align-items: center; }
-    html[data-look="h1"] .card .tile { margin-top: 16px; }
-    html[data-look="h1"] .card .who { margin-top: 16px; }
-    html[data-look="h1"] .card .r1, html[data-look="h1"] .card .r2 { display: none; }
-    html[data-look="h1"] .card .link { justify-self: stretch; margin: 14px var(--px) 14px; min-height: 50px; padding: 0 8px 0 12px; display: flex; align-items: center; gap: 10px; border: 1.5px dashed rgba(0,93,163,.4); border-radius: 14px; background: #f7fbfe; color: var(--primary-deep); font-weight: 700; }
-    html[data-look="h1"] .card .link .ico-doc { display: inline-grid; width: 32px; height: 32px; border-radius: 9px; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; }
-    html[data-look="h1"] .card .link .ico-doc svg { width: 18px; height: 18px; }
-    html[data-look="h1"] .card .link .arr { margin-left: auto; width: 34px; height: 34px; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1px rgba(0,93,163,.25), 0 3px 6px -2px rgba(0,60,120,.3); }
-    html[data-look="h1"] .card.alert .link { border-color: rgba(179,38,30,.4); background: #fffafa; color: var(--alert); }
-    html[data-look="h1"] .card.alert .link .ico-doc { background: linear-gradient(145deg, #e0584c, var(--alert)); }
-    html[data-look="h1"] .card.alert .link .arr { box-shadow: inset 0 0 0 1px rgba(179,38,30,.3), 0 3px 6px -2px rgba(179,38,30,.3); }
-    @media (max-width: 372px) { html[data-look="h1"] .card .wsep, html[data-look="h1"] .card .wt { display: none; } }
+    /* ---------- A · header button: a compact, labelled file button beside the ticker; no footer row ---------- */
+    html:is([data-look="h1a"],[data-look="h1d"]) .card { grid-template-areas: "strip strip strip" "tile who link" "title title title" "stat stat stat" "gauge gauge gauge" "why why why"; }
+    html:is([data-look="h1a"],[data-look="h1d"]) .card .link { grid-area: link; position: relative; justify-self: end; align-self: start; margin: 14px var(--px) 0 0; width: 62px; height: 62px; padding: 0; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; font-weight: 700; box-shadow: 0 10px 16px -8px rgba(0,65,114,.7), inset 0 1px 0 rgba(255,255,255,.32); }
+    html:is([data-look="h1a"],[data-look="h1d"]) .card .link .lbl { display: none; }
+    html:is([data-look="h1a"],[data-look="h1d"]) .card .link .ico-doc { display: inline-grid; }
+    html:is([data-look="h1a"],[data-look="h1d"]) .card .link .ico-doc svg { width: 24px; height: 24px; }
+    html:is([data-look="h1a"],[data-look="h1d"]) .card .link::after { content: "Filing"; font-size: 13px; line-height: 1; }
+    html:is([data-look="h1a"],[data-look="h1d"]) .card.alertonly .link::after { content: "Limit"; }
+    html:is([data-look="h1a"],[data-look="h1d"]) .card .link .arr { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: #fff; color: var(--primary-deep); box-shadow: 0 3px 6px -1px rgba(0,60,120,.45), inset 0 0 0 1px rgba(0,93,163,.2); }
+    html:is([data-look="h1a"],[data-look="h1d"]) .card .link .arr svg { width: 13px; height: 13px; }
+    html:is([data-look="h1a"],[data-look="h1d"]) .card.alert .link { background: linear-gradient(145deg, #e0584c, var(--alert)); box-shadow: 0 10px 16px -8px rgba(179,38,30,.65), inset 0 1px 0 rgba(255,255,255,.32); }
+    html:is([data-look="h1a"],[data-look="h1d"]) .card.alert .link .arr { color: var(--alert); }
 
-    /* ======================= H2 · HERO CARD + ICON SPINE, ROUND ACTION ======================= */
-    html[data-look="h2"] .card { overflow: hidden; grid-template-columns: 58px minmax(0,1fr) auto; grid-template-areas: "tile chips chips" "tile who who" "tile title title" "tile stat stat" "tile gauge gauge" "tile why why" "tile when link"; }
-    html[data-look="h2"] .card .tile { margin: 0; width: 58px; height: auto; align-self: stretch; border-radius: 0; box-shadow: none; display: flex; justify-content: center; align-items: flex-start; padding-top: 18px; color: #fff; background: linear-gradient(180deg, var(--primary-bright), var(--primary-deep)); }
-    html[data-look="h2"] .card .tile svg { width: 26px; height: 26px; }
-    html[data-look="h2"] .card.alert .tile { background: linear-gradient(180deg, #e0584c, #9d1f18); color: #fff; box-shadow: none; }
-    html[data-look="h2"] .card .chips { margin: 14px var(--px) 0 14px; justify-content: flex-start; gap: 12px; }
-    html[data-look="h2"] .card .chips .chip { background: none; box-shadow: none; padding: 0; border-radius: 0; font-size: 13px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--primary); display: inline-flex; align-items: center; gap: 7px; }
-    html[data-look="h2"] .card .chips .chip::before { content: ""; width: 9px; height: 9px; border-radius: 3px; background: currentColor; }
-    html[data-look="h2"] .card .chips .chip.alert { color: var(--alert); box-shadow: none; }
-    html[data-look="h2"] .card .who { margin: 6px var(--px) 0 14px; }
-    html[data-look="h2"] .card h3 { margin: 8px var(--px) 0 14px; }
-    html[data-look="h2"] .card .stat, html[data-look="h2"] .card .why { margin-left: 14px; }
-    html[data-look="h2"] .card .stat { margin-top: 12px; }
-    html[data-look="h2"] .card .gauge-wrap { margin-left: 14px; }
-    html[data-look="h2"] .card .r1, html[data-look="h2"] .card .r2 { display: none; }
-    html[data-look="h2"] .card .when { margin: 14px 0 14px 14px; }
-    html[data-look="h2"] .card .link { margin: 8px var(--px) 12px 0; display: inline-flex; align-items: center; gap: 10px; color: var(--primary-deep); font-weight: 700; }
-    html[data-look="h2"] .card .link .arr { width: 40px; height: 40px; border-radius: 50%; color: #fff; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); box-shadow: 0 8px 14px -6px rgba(0,65,114,.7), inset 0 1px 0 rgba(255,255,255,.35); }
-    html[data-look="h2"] .card .link .arr svg { width: 18px; height: 18px; }
-    html[data-look="h2"] .card .link .lbl { display: none; }
-    html[data-look="h2"] .card.alert .link .arr { background: linear-gradient(145deg, #e0584c, var(--alert)); box-shadow: 0 8px 14px -6px rgba(179,38,30,.6), inset 0 1px 0 rgba(255,255,255,.35); }
+    /* ---------- B · split footer: a bar in two cells (when it was filed | open), with a divider ---------- */
+    html:is([data-look="h1b"],[data-look="h1e"]) .card { padding-bottom: 0; grid-template-areas: "strip strip strip" "tile who who" "title title title" "stat stat stat" "gauge gauge gauge" "why why why" "rel rel link"; }
+    html:is([data-look="h1b"],[data-look="h1e"]) .card .rel { display: flex; grid-area: rel; align-self: stretch; align-items: center; gap: 8px; margin: 16px 0 0; padding: 0 14px; min-height: 56px; font-size: 14px; line-height: 1.3; color: var(--text-muted); background: linear-gradient(180deg, #f6fafd, #eef5fb); border-top: 1px solid rgba(0,93,163,.14); }
+    html:is([data-look="h1b"],[data-look="h1e"]) .card .link { grid-area: link; align-self: stretch; justify-self: stretch; margin: 16px 0 0; padding: 0 16px 0 14px; min-height: 56px; border-radius: 0; display: flex; align-items: center; gap: 9px; color: var(--primary-deep); font-weight: 700; background: linear-gradient(180deg, #e9f2fa, #dbe9f6); border-top: 1px solid rgba(0,93,163,.16); border-left: 1px solid rgba(0,93,163,.22); }
+    html:is([data-look="h1b"],[data-look="h1e"]) .card .link .ico-doc { display: inline-grid; color: var(--primary); }
+    html:is([data-look="h1b"],[data-look="h1e"]) .card .link .arr { margin-left: 2px; }
+    html:is([data-look="h1b"],[data-look="h1e"]) .card.alert .rel { background: linear-gradient(180deg, #fffafa, #fcf0ef); border-top-color: rgba(179,38,30,.16); }
+    html:is([data-look="h1b"],[data-look="h1e"]) .card.alert .link { color: var(--alert); background: linear-gradient(180deg, #fbe9e7, #f6d9d6); border-top-color: rgba(179,38,30,.18); border-left-color: rgba(179,38,30,.25); }
+    html:is([data-look="h1b"],[data-look="h1e"]) .card.alert .link .ico-doc { color: var(--alert); }
 
-    /* ======================= T1 · HERO CARD + TIMELINE (icon nodes) ======================= */
-    html[data-look="t1"] .stack { position: relative; padding-left: 48px; }
-    html[data-look="t1"] .stack::before { content: ""; position: absolute; left: 18px; top: 18px; bottom: 36px; width: 3px; border-radius: 3px; background: linear-gradient(var(--primary-bright), rgba(0,93,163,.12)); }
-    html[data-look="t1"] .dayhead { display: flex; align-items: center; gap: 10px; position: relative; margin: 2px 0 12px; }
-    html[data-look="t1"] .dnode { display: grid; place-items: center; position: absolute; left: -48px; top: -3px; width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; box-shadow: 0 0 0 4px #e3edf7, 0 6px 10px -3px rgba(0,65,114,.5); }
-    html[data-look="t1"] .dnode svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-    html[data-look="t1"] .dlabel { font-size: 15px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--primary-deep); }
-    html[data-look="t1"] .dcount { font-size: 14px; color: var(--text-muted); }
-    html[data-look="t1"] .card { grid-template-areas: "tile who chips" "r1 r1 r1" "title title title" "stat stat stat" "gauge gauge gauge" "why why why" "r2 r2 r2" "when when link"; }
-    html[data-look="t1"] .stack .card { grid-template-columns: minmax(0,1fr) auto; grid-template-areas: "who chips" "r1 r1" "title title" "why why" "r2 r2" "when link"; }
-    html[data-look="t1"] .stack .card .tile { position: absolute; left: -48px; top: 12px; margin: 0; width: 38px; height: 38px; border-radius: 50%; background: #fff; color: var(--primary); box-shadow: 0 0 0 3px #e3edf7, 0 0 0 4.5px rgba(0,93,163,.3), 0 6px 10px -3px rgba(0,60,120,.4); }
-    html[data-look="t1"] .stack .card .tile svg { width: 20px; height: 20px; }
-    html[data-look="t1"] .stack .card.alert .tile { background: #fff; color: var(--alert); box-shadow: 0 0 0 3px #f6e1df, 0 0 0 4.5px rgba(179,38,30,.35), 0 6px 10px -3px rgba(179,38,30,.4); }
-    html[data-look="t1"] .stack .card::before { content: ""; position: absolute; left: -10px; top: 30px; width: 10px; height: 2px; background: rgba(0,93,163,.35); }
-    html[data-look="t1"] .stack .card.alert::before { background: rgba(179,38,30,.4); }
-    html[data-look="t1"] .stack .card .ico-cal, html[data-look="t1"] .stack .card .wd, html[data-look="t1"] .stack .card .wsep { display: none; }
-    html[data-look="t1"] .stack .card .ico-clock { display: inline-grid; }
-    html[data-look="t1"] .stack .card .who { margin-left: var(--px); }
-    html[data-look="t1"] .card .chips .chip { border-radius: 7px; background: #fff; color: var(--primary-deep); font-weight: 700; padding: 4px 10px 4px 8px; border-left: 4px solid var(--primary); box-shadow: 0 0 0 1px rgba(0,93,163,.14); }
-    html[data-look="t1"] .card .chips .chip.alert { color: var(--alert); border-left-color: var(--alert); box-shadow: 0 0 0 1px rgba(179,38,30,.18); }
-    html[data-look="t1"] .card .chips { flex-direction: column; align-items: flex-end; gap: 5px; }
-    html[data-look="t1"] .card .link { position: relative; min-height: 42px; padding: 0 16px 0 12px; border-radius: 10px; color: #fff; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); clip-path: polygon(0 0, calc(100% - 13px) 0, 100% 13px, 100% 100%, 0 100%); }
-    html[data-look="t1"] .card .link::after { content: ""; position: absolute; top: 0; right: 0; width: 13px; height: 13px; background: rgba(255,255,255,.4); clip-path: polygon(0 0, 100% 100%, 0 100%); }
-    html[data-look="t1"] .card .link .ico-doc { display: inline-grid; }
-    html[data-look="t1"] .card .link .arr { display: none; }
-    html[data-look="t1"] .card.alert .link { background: linear-gradient(145deg, #e0584c, var(--alert)); }
+    /* ---------- C · tappable card: the whole card opens the filing; a chevron circle is the cue ---------- */
+    html[data-look="h1c"] .card { grid-template-areas: "strip strip strip" "tile who link" "title title title" "stat stat stat" "gauge gauge gauge" "why why why"; }
+    html[data-look="h1c"] .card .link { grid-area: link; justify-self: end; align-self: start; margin: 16px var(--px) 0 0; width: 42px; height: 42px; min-height: 0; padding: 0; border-radius: 50%; display: inline-grid; place-items: center; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; box-shadow: 0 8px 14px -6px rgba(0,65,114,.7), inset 0 1px 0 rgba(255,255,255,.35); }
+    html[data-look="h1c"] .card .link .lbl, html[data-look="h1c"] .card .link .ico-doc { display: none; }
+    html[data-look="h1c"] .card .link .arr svg { width: 18px; height: 18px; }
+    html[data-look="h1c"] .card:not(.alertonly) .link::after { content: ""; position: absolute; inset: 0; z-index: 2; }
+    html[data-look="h1c"] .card:not(.alertonly) { cursor: pointer; transition: transform .12s; }
+    html[data-look="h1c"] .card:not(.alertonly):active { transform: scale(.99); }
+    html[data-look="h1c"] .card.alert .link { background: linear-gradient(145deg, #e0584c, var(--alert)); box-shadow: 0 8px 14px -6px rgba(179,38,30,.6), inset 0 1px 0 rgba(255,255,255,.35); }
 
-    /* ======================= T2 · HERO CARD + TIMELINE (day blocks) ======================= */
-    html[data-look="t2"] .stack { position: relative; padding-left: 38px; }
-    html[data-look="t2"] .stack::before { content: ""; position: absolute; left: 13px; top: 20px; bottom: 40px; width: 3px; border-radius: 3px; background: linear-gradient(var(--primary-bright), rgba(0,93,163,.12)); }
-    html[data-look="t2"] .daygroup { display: block; position: relative; margin-bottom: 18px; background: #fff; border: 1px solid rgba(0,60,120,.07); border-radius: 20px; box-shadow: 0 1px 0 #fff inset, 0 1px 2px rgba(0,40,80,.06), 0 10px 18px -8px rgba(0,40,80,.14), 0 28px 42px -22px rgba(0,40,80,.28); }
-    html[data-look="t2"] .dayhead { display: flex; align-items: center; gap: 10px; padding: 13px var(--px); border-bottom: 1px solid var(--rule); background: linear-gradient(180deg, #eef5fb, #f8fbfe); border-radius: 20px 20px 0 0; }
-    html[data-look="t2"] .dnode { display: grid; place-items: center; position: absolute; left: -38px; top: 8px; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; box-shadow: 0 0 0 4px #e3edf7; }
-    html[data-look="t2"] .dnode svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-    html[data-look="t2"] .dlabel { font-size: 15px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--primary-deep); }
-    html[data-look="t2"] .dcount { margin-left: auto; font-size: 14px; color: var(--text-muted); }
-    html[data-look="t2"] .card { grid-template-areas: "tile who chips" "r1 r1 r1" "title title title" "stat stat stat" "gauge gauge gauge" "why why why" "r2 r2 r2" "when when link"; }
-    html[data-look="t2"] .daygroup .card { margin: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; grid-template-areas: "tile who who" "chips chips chips" "title title title" "why why why" "when when link"; }
-    html[data-look="t2"] .daygroup .card .chips { flex-direction: row; justify-content: flex-start; align-items: center; margin: 12px var(--px) 0; align-self: start; gap: 12px; }
-    html[data-look="t2"] .daygroup .card + .card, html[data-look="t2"] .daygroup .card { border-top: 0; }
-    html[data-look="t2"] .daygroup article.card:not(:last-of-type) { border-bottom: 1px solid var(--rule); }
-    html[data-look="t2"] .daygroup article.card:last-of-type { border-radius: 0 0 20px 20px; }
-    html[data-look="t2"] .daygroup .card.lead { background: linear-gradient(180deg, #f1f8fe, #fff 60%); }
-    html[data-look="t2"] .daygroup .card .r1, html[data-look="t2"] .daygroup .card .r2 { display: none; }
-    html[data-look="t2"] .card .ico-cal { display: none; } html[data-look="t2"] .card .ico-clock { display: inline-grid; }
-    html[data-look="t2"] .card .wd, html[data-look="t2"] .card .wsep { display: none; }
-    html[data-look="t2"] .card.alertonly .ico-cal { display: inline-grid; } html[data-look="t2"] .card.alertonly .ico-clock { display: none; } html[data-look="t2"] .card.alertonly .wd { display: inline; }
-        html[data-look="t2"] .card .chips .chip { background: none; box-shadow: none; padding: 0; border-radius: 0; font-weight: 700; color: var(--primary-deep); display: inline-flex; align-items: center; gap: 7px; }
-    html[data-look="t2"] .card .chips .chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--primary); }
-    html[data-look="t2"] .card .chips .chip.alert { color: var(--alert); }
-    html[data-look="t2"] .card .chips .chip.alert::before { background: var(--alert); }
-    html[data-look="t2"] .card .link { min-height: 40px; padding: 0 12px; border-radius: 11px; background: #fff; color: var(--primary-deep); font-weight: 700; display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid rgba(0,93,163,.35); box-shadow: 0 4px 8px -4px rgba(0,60,120,.3); }
-    html[data-look="t2"] .card .link .ico-doc { display: inline-grid; color: var(--primary); }
-    html[data-look="t2"] .card .link .arr { display: none; }
-    html[data-look="t2"] .card.alertonly .link { border-color: rgba(179,38,30,.4); color: var(--alert); }
-    html[data-look="t2"] .card.alertonly .link .ico-doc { color: var(--alert); }
+    /* ---------- same-day clubbing (D, E): day header, time-only strips ---------- */
+    html:is([data-look="h1d"],[data-look="h1e"]) .stack { position: relative; padding-left: 38px; }
+    html:is([data-look="h1d"],[data-look="h1e"]) .stack::before { content: ""; position: absolute; left: 13px; top: 20px; bottom: 40px; width: 3px; border-radius: 3px; background: linear-gradient(var(--primary-bright), rgba(0,93,163,.12)); }
+    html:is([data-look="h1d"],[data-look="h1e"]) .dayhead { display: flex; align-items: center; gap: 10px; position: relative; }
+    html:is([data-look="h1d"],[data-look="h1e"]) .dnode { display: grid; place-items: center; position: absolute; left: -38px; top: 50%; margin-top: -15px; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; box-shadow: 0 0 0 4px #e3edf7; }
+    html:is([data-look="h1d"],[data-look="h1e"]) .dnode svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+    html:is([data-look="h1d"],[data-look="h1e"]) .dlabel { font-size: 15px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--primary-deep); }
+    html:is([data-look="h1d"],[data-look="h1e"]) .dcount { margin-left: auto; font-size: 14px; color: var(--text-muted); }
+    html:is([data-look="h1d"],[data-look="h1e"]) .stack .card .ico-cal, html:is([data-look="h1d"],[data-look="h1e"]) .stack .card .wd, html:is([data-look="h1d"],[data-look="h1e"]) .stack .card .wsep { display: none; }
+    html:is([data-look="h1d"],[data-look="h1e"]) .stack .card .ico-clock { display: inline-grid; }
+    @media (max-width: 372px) {
+      html:is([data-look="h1d"],[data-look="h1e"]) .stack .card .ico-clock { display: none; }
+      html[data-look^="h1"] .card .chips .chip { padding: 0 17px 0 11px; font-size: 12.5px; }
+      html[data-look^="h1"] .card .when { margin-left: 6px; }
+    }
+    /* D: one container per day */
+    html[data-look="h1d"] .daygroup { display: block; position: relative; margin-bottom: 18px; background: #fff; border: 1px solid rgba(0,60,120,.07); border-radius: 20px; box-shadow: 0 1px 0 #fff inset, 0 1px 2px rgba(0,40,80,.06), 0 10px 18px -8px rgba(0,40,80,.14), 0 28px 42px -22px rgba(0,40,80,.28); }
+    html[data-look="h1d"] .dayhead { padding: 13px var(--px); background: linear-gradient(180deg, #eef5fb, #f8fbfe); border-bottom: 1px solid var(--rule); border-radius: 20px 20px 0 0; }
+    html[data-look="h1d"] .daygroup .card { margin: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
+    html[data-look="h1d"] .daygroup article.card:not(:last-of-type) { border-bottom: 1px solid var(--rule); }
+    html[data-look="h1d"] .daygroup article.card:last-of-type { border-radius: 0 0 20px 20px; }
+    /* E: separate cards under a day header on the rail */
+    html[data-look="h1e"] .daygroup { display: block; margin-bottom: 6px; }
+    html[data-look="h1e"] .dayhead { margin: 2px 0 12px; }
 
     .topbar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--primary-bright); transform-origin: left; animation: load 1.2s ease-in-out infinite; z-index: 30; }
     @keyframes load { 0% { transform: scaleX(0); } 70% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
@@ -409,6 +381,7 @@
                     <p class="why alert" x-show="c.moved_same_day">The stock also moved on the day of this filing.</p>
                     <i class="rule r2"></i>
                     <div class="card-foot">
+                      <span class="rel dt"><span class="ico" aria-hidden="true" x-html="iconFor('clock')"></span><span x-text="ago(c.date)"></span></span>
                       <a class="link filebtn" x-show="c.pdf_url" :href="c.pdf_url" target="_blank" rel="noopener" aria-label="Open filing"><span class="ico ico-doc" aria-hidden="true" x-html="iconFor('doc')"></span><span class="lbl">Open filing</span><span class="arr" aria-hidden="true" x-html="iconFor('arrow')"></span></a>
                     </div>
                   </article>
@@ -444,6 +417,7 @@
               <p class="why">No filing explains this move.</p>
               <i class="rule r2"></i>
               <div class="card-foot">
+                <span class="rel dt"><span class="ico" aria-hidden="true" x-html="iconFor('sliders')"></span><span x-text="ruleText(a)"></span></span>
                 <a class="link filebtn" href="#" @click.prevent="go('settings')"><span class="ico ico-doc" aria-hidden="true" x-html="iconFor('sliders')"></span><span class="lbl">Adjust limit</span><span class="arr" aria-hidden="true" x-html="iconFor('arrow')"></span></a>
               </div>
             </article>
@@ -677,16 +651,16 @@ function finn() {
     _timer: null,
     // EXPERIMENT: switchable looks (same markup, different skin). Removed once one is chosen.
     looks: [
-      { id: 'h0', label: 'Hero standard' },
-      { id: 'h1', label: 'Hero · Ribbon' },
-      { id: 'h2', label: 'Hero · Spine' },
-      { id: 't1', label: 'Timeline 1' },
-      { id: 't2', label: 'Timeline 2' },
+      { id: 'h1a', label: 'A · Header button' },
+      { id: 'h1b', label: 'B · Split footer' },
+      { id: 'h1c', label: 'C · Tappable card' },
+      { id: 'h1d', label: 'D · Day block' },
+      { id: 'h1e', label: 'E · Day rail' },
     ],
-    lookId: 'h0',
+    lookId: 'h1a',
     get look() { return this.looks.find(l => l.id === this.lookId) || this.looks[0]; },
     setLook(id) {
-      this.lookId = this.looks.some(l => l.id === id) ? id : 'h0';
+      this.lookId = this.looks.some(l => l.id === id) ? id : 'h1a';
       document.documentElement.dataset.look = this.lookId;
       this.persist();
     },
@@ -698,7 +672,7 @@ function finn() {
     init() {
       const s = readStore();
       const asked = new URLSearchParams(location.search).get('look');
-      this.setLook(asked || s.look || 'h0');
+      this.setLook(asked || s.look || 'h1a');
       if (s.window && ['24h', '3d', '7d'].includes(s.window)) this.period = s.window;
       if (s.settings) this.settings = { ...DEFAULTS, ...s.settings, off: Array.isArray(s.settings.off) ? s.settings.off : [] };
       this.$watch('settings', () => { this.persist(); this.scheduleLoad(); }, { deep: true });
@@ -743,6 +717,14 @@ function finn() {
     // ---------- derived text ----------
     get nMatter() { return this.data ? this.data.cards.length + this.data.alert_only.length : 0; },
     get isQuiet() { return !!this.data && this.nMatter === 0 && this.data.summaries.length === 0; },
+    ago(iso) {
+      const ref = new Date(this.data.generated_at), t = new Date(iso);
+      const day = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+      const days = Math.round((day(ref) - day(t)) / 864e5);
+      if (days <= 0) { const h = Math.floor((ref - t) / 36e5); return h < 1 ? 'Just now' : h + ' hour' + (h === 1 ? '' : 's') + ' ago'; }
+      return days === 1 ? 'Yesterday' : days + ' days ago';
+    },
+    ruleText(a) { return a.type === 'price' ? 'Rule: ±' + this.data.thresholds.price + '% a day' : 'Rule: over ' + this.data.thresholds.volume + '× avg'; },
     get cardGroups() {
       const groups = [];
       this.data.cards.forEach((c, i) => {
