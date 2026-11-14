@@ -315,14 +315,14 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-026 | Cache key design | Open — (doc hash, prompt version, model) | EN-9 |
 | D-028 | Visual identity | **Decided via D-044** — ENAM colours/fonts as tokens, own wordmark | FE-11 |
 | D-030 | Push delivery | Open — in-app + PWA | FE-8 |
-| D-031 | Data refresh | Open — on request with TTL + manual script | BE-7 |
+| D-031 | Data refresh | **Decided for requests via D-067** — live + 15-min cache + snapshot; BE-7 refresh script still due | BE-7 |
 | D-032 | Hosting | Open — Render free + shipped cache | OPS-2 |
 | D-033 | HAL in portfolio | **Decided via D-055** — replace with non-defence small-cap | BE-10 |
 | D-034 | Python version on deploy | Open — 3.12 | OPS-2 |
 | D-035 | Default window | **Superseded by D-046** — 24h + auto-widen | EN-4 |
 | D-037 | Build-history format | Open — export + share links | DEL-3 |
 | D-038 | Repo visibility | **Decided via D-066** — private for now; make public or invite reviewers before sending | OPS-1 |
-| D-040 | Alerts placement | Open — merged into Today cards | FE-2 |
+| D-040 | Alerts placement | **Decided via D-067** — chip on card + alert-only list | FE-2 |
 | D-041 | Receipts standard | Open — verified quote + page + link | EN-15 |
 | D-043–D-056 | Audit v1 changes | Decided 2026-11-14 | see DECISIONS.md |
 | D-058 | Screen set | **Decided, on hold for review** — 6 screens, one per brief item; review in FE-12 | FE-1..6 |
