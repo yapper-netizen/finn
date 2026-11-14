@@ -221,7 +221,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 
 | ID | P | Task | Decisions | est | Done when |
 |---|---|---|---|---|---|
-| OPS-1 | P0 | [ ] GitHub repo (push existing history), `.env.example` [template listing key names without values] | D-008, D-038 | 0.3 | Repo visible, no secrets in history |
+| OPS-1 | P0 | [x] GitHub repo (push existing history), `.env.example` [template listing key names without values] | D-008, D-038 | 0.3 | Repo visible, no secrets in history |
 | OPS-2 | P0 | [ ] Render web service: build `pip install -r requirements.txt`, start `uvicorn api:app` [uvicorn = the server program that runs FastAPI], env vars for keys, Python version pinned | D-032, D-034 | 1 | Public URL loads on phone |
 | OPS-3 | P0 | [ ] Ship precomputed `cache.db` / snapshot in repo (Render free disk is wiped on every restart) | D-006, D-032 | 0.5 | Fresh deploy shows full demo instantly |
 | OPS-4 | P0 | [ ] Cold-start mitigation [Render free sleeps after ~15 min idle; first visit waits ~1 min] | D-032 | 0.3 | Plan written into the email |
@@ -321,7 +321,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-034 | Python version on deploy | Open — 3.12 | OPS-2 |
 | D-035 | Default window | **Superseded by D-046** — 24h + auto-widen | EN-4 |
 | D-037 | Build-history format | Open — export + share links | DEL-3 |
-| D-038 | Repo visibility | Open — public | OPS-1 |
+| D-038 | Repo visibility | **Decided via D-066** — private for now; make public or invite reviewers before sending | OPS-1 |
 | D-040 | Alerts placement | Open — merged into Today cards | FE-2 |
 | D-041 | Receipts standard | Open — verified quote + page + link | EN-15 |
 | D-043–D-056 | Audit v1 changes | Decided 2026-11-14 | see DECISIONS.md |

@@ -423,3 +423,9 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Known gaps: unclassified is 38% of filings (mostly routine: ESOP, newspaper copies, trading windows); a stock's generic board outcome in results season stays Medium until EN-19. If the 24h window holds only routine filings (a quiet Sunday), the digest shows 0 cards and "Routine (N)" and does not widen: D-046 widens only when the window has no filings at all. Revisit if that looks empty on the phone.
 - Trade-off: no card cap means a heavy day is long; the tier is the filter, so the cost is length, not noise.
 - Sample review (2026-11-15): user reviewed the 50 labels in `tests/sample_labels.json` and approved them, so the 48/50 (96%) accuracy now rests on user-checked labels (D-065).
+
+### D-066 · Repo created private, visibility to revisit before sending · 2026-11-15 · OPS-1 (settles D-038 for now) · Status: decided
+- Options: public / private
+- Chosen: private, `github.com/yapper-netizen/finn`, full history pushed (no secrets in history: `.env` never committed, scanned for Gemini key pattern). Decide public vs inviting assessment@enam.com before the email (Sun 15 Nov, send ≤17:30).
+- Why: the repo holds ENAM's brief PDFs (`brief/`); keep them unpublished until the choice is made on purpose.
+- Trade-off: reviewers cannot open a private repo until it is made public or they are invited; this must not be forgotten at send time.
