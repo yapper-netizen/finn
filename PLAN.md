@@ -21,7 +21,7 @@ So the timeline is not the full pipeline: it schedules the tasks from the tables
 | §4 Back-end data plumbing (BE) | Fetching raw data: prices, filings, PDFs, documents |
 | §5 Engine / AI (EN) | The brains: classify, rank, build cards, research, call AI models |
 | §6 API (API) | The connection: web endpoints the phone screen calls to get data |
-| §7 Front-end (FE) | The screens on the phone. Current design: `design/DESIGN_1.md` |
+| §7 Front-end (FE) | The screens on the phone. Current design: `design/DESIGN_2.md` (look) + `design/DESIGN_1.md` (screens) |
 | §8 Deploy and infra (OPS) | Putting it online (Render), keys, GitHub |
 | §9 Quality, tests, cost (QA) | Checks that it works and what it costs |
 | §10 Cut list | What to drop, in order, if behind |
@@ -197,7 +197,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 
 {"The frontend — the product, the interaction model, the design — is deliberately yours. That's where we most want to see how you think."} {Experiment with the interaction model; show a point of view.} {No AI slop: concise, dense, beautiful, interactive.}
 
-**Current design: `design/DESIGN_1.md` (D-059). Read it before building or deciding any front-end task**; it lists the picks per screen, their tier and the build order. Visual baseline: `design/mockups_v0.html`. Idea history: `design/FRONTEND_BRAINSTORM.md`. A later design change = new `design/DESIGN_N.md` + DECISIONS.md entry + update this line.
+**Current design: `design/DESIGN_2.md` (look) + `design/DESIGN_1.md` (screens) (D-059). Read it before building or deciding any front-end task**; it lists the picks per screen, their tier and the build order. Visual baseline: `design/mockups_v0.html`. Idea history: `design/FRONTEND_BRAINSTORM.md`. A later design change = new `design/DESIGN_N.md` + DECISIONS.md entry + update this line.
 
 | ID | P | Screen / task | Decisions | est | Done when |
 |---|---|---|---|---|---|

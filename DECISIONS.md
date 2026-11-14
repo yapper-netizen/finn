@@ -494,3 +494,10 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - New small info: "2 days ago / Yesterday / 3 hours ago" in the B footer; on alert cards the footer shows the user's rule ("Rule: ±3% a day") next to "Adjust limit". Ribbon and date/time now share one full-width strip cell, so they cannot collide.
 - Checked at 375 px and 360 px for all five on Today, Settings and Research: no text under 12.5px, no horizontal scroll, no ribbon/date overlap (the time drops out of the strip below 373px in A, B, C; ribbon text is 12.5px there).
 - Next: user picks the final one (or a blend); then delete the other four, the Look button and `?look=`, and apply the pick to the detail screens (FE-3) and Research (FE-4).
+
+### D-074 · Final front-end look: hero card + ribbon cards + header button; no timeline · 2026-11-15 · FE-7, FE-2 (settles D-069..D-073) · Status: decided
+- Options (last round): A header button / B split footer / C tappable card (and D day block, E day rail, which add day grouping).
+- Chosen: A, header button, as a flat list. User reason: priority order is a brief deliverable, so cards must stay in ranked order; day grouping (D, E) can reorder or split the ranking (a boosted older filing jumps to the top and day headers repeat).
+- Built (final): the other four drafts, the Look switcher button, `?look=`, the Settings "Look" section, day grouping (`cardGroups`) and the split-footer helpers were removed; A's styles are now the base (`html:root` selectors, same specificity as before). Spec in `design/DESIGN_2.md`.
+- Checked at 375 and 360 px on Today, Settings and Research: no text under 12.5px, no horizontal scroll, no ribbon/date overlap; 81 tests pass.
+- Trade-off: no day grouping, so a quiet week reads as one list; the date in each ribbon gives the time context. Light mode only.

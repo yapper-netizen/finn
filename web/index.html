@@ -94,17 +94,13 @@
     @keyframes shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
     @media (prefers-reduced-motion: reduce) { .skel { animation: none; } .switch, .switch::after { transition: none; } }
     /* ======================================================================
-       LOOKS (experiment, round 4). One markup; html[data-look] swaps the skin.
-       Hero-card family, chosen by the user. Rules for every look:
-       - type scale: secondary text 14-16px, nothing under 13px (tab labels 12.5px),
-         numbers at most ~2.3x their label (no huge number beside a tiny label)
-       - cards separated by border + shadow + inner dividers; dates always carry an icon
-       h0 Hero standard   h1 Hero + ribbon   h2 Hero + spine
-       t1 Hero + timeline (icon nodes)   t2 Hero + timeline (day blocks)
+       FINN look (D-074): "hero card + ribbon cards + header button".
+       - type scale: secondary text 14-16px, nothing under 12.5px, a number is at most ~2.4x its label
+       - every card is separated by border + shadow; dates carry an icon
+       - cards keep the priority order from the API (tier, then same-day move, then newest)
        ====================================================================== */
     :root { --rule: #e3e8ef; --px: 14px; }
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-    .lookbtn { font-size: 13px; font-weight: 600; min-height: 34px; padding: 0 12px; border-radius: 99px; border: 1px dashed var(--border); background: var(--surface); color: var(--primary); margin-top: 4px; }
     .top-head { display: flex; align-items: flex-start; justify-content: space-between; padding-top: 20px; }
     .seg { display: flex; gap: 8px; margin-top: 12px; }
     .topband { position: relative; }
@@ -113,170 +109,117 @@
     .ico { display: inline-grid; place-items: center; flex: none; }
     .ico svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
     .dt { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); }
-    .ico-clock { display: none; }
     .tile { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px; flex: none; background: linear-gradient(145deg, #f6fafd, #d9eaf6); color: var(--primary-deep); box-shadow: inset 0 0 0 1px rgba(0,93,163,.14), 0 5px 9px -4px rgba(0,60,120,.3); }
     .tile svg { width: 23px; height: 23px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .tile.sm { width: 36px; height: 36px; border-radius: 11px; margin-top: 2px; }
     .tile.sm svg { width: 19px; height: 19px; }
     .card.alert .tile { background: linear-gradient(145deg, #fff6f5, #f7d6d2); color: var(--alert); box-shadow: inset 0 0 0 1px rgba(179,38,30,.16), 0 5px 9px -4px rgba(179,38,30,.3); }
 
-    /* ---------- type scale (all looks) ---------- */
-    html[data-look] .tagline { font-size: 14px; }
-    html[data-look] .meta { font-size: 14px; }
-    html[data-look] .banner { font-size: 14px; }
-    html[data-look] .why { font-size: 15px; line-height: 1.4; }
-    html[data-look] .link { font-size: 15px; }
-    html[data-look] .tab { font-size: 12.5px; }
-    html[data-look] .line { font-size: 15px; gap: 12px; padding: 13px 0; }
-    html[data-look] .line-title { margin: 4px 0 0; font-size: 16px; line-height: 1.35; }
-    html[data-look] .line .meta { margin-top: 3px; }
-    html[data-look] .chip { font-size: 13px; padding: 5px 11px; border-radius: 99px; box-shadow: inset 0 0 0 1px rgba(0,93,163,.16); }
-    html[data-look] .chip.alert { box-shadow: inset 0 0 0 1px rgba(179,38,30,.2); }
-    html[data-look] .chip.muted { box-shadow: none; }
-    html[data-look] .section-label { display: flex; align-items: center; gap: 10px; margin: 26px 0 12px; font-size: 13px; letter-spacing: .07em; }
-    html[data-look] .section-label::after { content: ""; flex: 1; height: 1px; order: 3; background: linear-gradient(90deg, rgba(0,60,120,.22), transparent); }
+    /* ---------- type scale ---------- */
+    html:root .tagline { font-size: 14px; }
+    html:root .meta { font-size: 14px; }
+    html:root .banner { font-size: 14px; }
+    html:root .why { font-size: 15px; line-height: 1.4; }
+    html:root .link { font-size: 15px; }
+    html:root .tab { font-size: 12.5px; }
+    html:root .line { font-size: 15px; gap: 12px; padding: 13px 0; }
+    html:root .line-title { margin: 4px 0 0; font-size: 16px; line-height: 1.35; }
+    html:root .line .meta { margin-top: 3px; }
+    html:root .chip { font-size: 13px; padding: 5px 11px; border-radius: 99px; box-shadow: inset 0 0 0 1px rgba(0,93,163,.16); }
+    html:root .chip.alert { box-shadow: inset 0 0 0 1px rgba(179,38,30,.2); }
+    html:root .chip.muted { box-shadow: none; }
+    html:root .section-label { display: flex; align-items: center; gap: 10px; margin: 26px 0 12px; font-size: 13px; letter-spacing: .07em; }
+    html:root .section-label::after { content: ""; flex: 1; height: 1px; order: 3; background: linear-gradient(90deg, rgba(0,60,120,.22), transparent); }
     .cnt { min-width: 24px; height: 24px; padding: 0 8px; border-radius: 99px; background: var(--primary); color: #fff; font-size: 13px; letter-spacing: 0; display: inline-grid; place-items: center; }
     .cnt.alert { background: var(--alert); } .cnt.soft { background: #d9dee6; color: #3b4048; }
 
     /* ---------- page, hero card (the same in all five looks) ---------- */
-    html[data-look] { --bg: transparent; --rule: rgba(0,60,120,.1); }
-    html[data-look] body { background: radial-gradient(120% 55% at 50% -8%, rgba(46,122,180,.24), transparent 62%), linear-gradient(#f4f8fd, #e6edf6 60%) fixed; }
-    html[data-look] #app { padding-bottom: calc(112px + env(safe-area-inset-bottom)); }
-    html[data-look] .seg { background: rgba(255,255,255,.75); border-radius: 99px; padding: 4px; gap: 2px; box-shadow: inset 0 1px 3px rgba(0,40,80,.14), 0 1px 0 #fff; backdrop-filter: blur(8px); }
-    html[data-look] .seg .pill { flex: 1; border: 0; background: transparent; box-shadow: none; min-height: 38px; font-weight: 600; font-size: 15px; }
-    html[data-look] .seg .pill[aria-pressed="true"] { background: linear-gradient(180deg, var(--primary-bright), var(--primary)); color: #fff; box-shadow: 0 6px 12px -3px rgba(0,93,163,.6), inset 0 1px 0 rgba(255,255,255,.3); }
-    html[data-look] .hero { position: relative; overflow: hidden; margin-top: 16px; padding: 18px 18px 16px; border-radius: 28px; color: #fff; background: radial-gradient(120% 120% at 100% 0%, rgba(255,255,255,.26), transparent 52%), linear-gradient(155deg, var(--primary-bright), var(--primary-deep)); box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 26px 38px -18px rgba(0,65,114,.75); }
-    html[data-look] .hero::after { content: ""; position: absolute; right: -46px; top: -46px; width: 150px; height: 150px; border-radius: 50%; border: 26px solid rgba(255,255,255,.07); pointer-events: none; }
-    html[data-look] .hero > * { position: relative; z-index: 1; }
-    html[data-look] .hero-row { display: flex; align-items: center; gap: 14px; }
-    html[data-look] .hero h1 { margin: 0; }
-    html[data-look] .big-n { display: block; font-family: var(--font-head); font-weight: 900; font-size: 66px; line-height: .9; letter-spacing: -.03em; color: #fff; }
-    html[data-look] .h-all { display: none; }
-    html[data-look] .h-rest { display: block; font-size: 25px; line-height: 1.1; color: #fff; }
-    html[data-look] .hero .meta { color: rgba(255,255,255,.9); }
-    html[data-look] .sub { margin-top: 4px; }
-    html[data-look] .dots { margin-top: 16px; }
-    html[data-look] .dot { width: 13px; height: 13px; border-color: rgba(255,255,255,.45); }
-    html[data-look] .dot.on { background: #fff; border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.18); }
-    html[data-look] .dot.alert { background: #ffb4ab; border-color: #ffb4ab; box-shadow: 0 0 0 3px rgba(255,180,171,.25); }
-    html[data-look] .strip-cap { margin-top: 6px; line-height: 1.45; }
+    html:root { --bg: transparent; --rule: rgba(0,60,120,.1); }
+    html:root body { background: radial-gradient(120% 55% at 50% -8%, rgba(46,122,180,.24), transparent 62%), linear-gradient(#f4f8fd, #e6edf6 60%) fixed; }
+    html:root #app { padding-bottom: calc(112px + env(safe-area-inset-bottom)); }
+    html:root .seg { background: rgba(255,255,255,.75); border-radius: 99px; padding: 4px; gap: 2px; box-shadow: inset 0 1px 3px rgba(0,40,80,.14), 0 1px 0 #fff; backdrop-filter: blur(8px); }
+    html:root .seg .pill { flex: 1; border: 0; background: transparent; box-shadow: none; min-height: 38px; font-weight: 600; font-size: 15px; }
+    html:root .seg .pill[aria-pressed="true"] { background: linear-gradient(180deg, var(--primary-bright), var(--primary)); color: #fff; box-shadow: 0 6px 12px -3px rgba(0,93,163,.6), inset 0 1px 0 rgba(255,255,255,.3); }
+    html:root .hero { position: relative; overflow: hidden; margin-top: 16px; padding: 18px 18px 16px; border-radius: 28px; color: #fff; background: radial-gradient(120% 120% at 100% 0%, rgba(255,255,255,.26), transparent 52%), linear-gradient(155deg, var(--primary-bright), var(--primary-deep)); box-shadow: 0 1px 0 rgba(255,255,255,.35) inset, 0 26px 38px -18px rgba(0,65,114,.75); }
+    html:root .hero::after { content: ""; position: absolute; right: -46px; top: -46px; width: 150px; height: 150px; border-radius: 50%; border: 26px solid rgba(255,255,255,.07); pointer-events: none; }
+    html:root .hero > * { position: relative; z-index: 1; }
+    html:root .hero-row { display: flex; align-items: center; gap: 14px; }
+    html:root .hero h1 { margin: 0; }
+    html:root .big-n { display: block; font-family: var(--font-head); font-weight: 900; font-size: 66px; line-height: .9; letter-spacing: -.03em; color: #fff; }
+    html:root .h-all { display: none; }
+    html:root .h-rest { display: block; font-size: 25px; line-height: 1.1; color: #fff; }
+    html:root .hero .meta { color: rgba(255,255,255,.9); }
+    html:root .sub { margin-top: 4px; }
+    html:root .dots { margin-top: 16px; }
+    html:root .dot { width: 13px; height: 13px; border-color: rgba(255,255,255,.45); }
+    html:root .dot.on { background: #fff; border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.18); }
+    html:root .dot.alert { background: #ffb4ab; border-color: #ffb4ab; box-shadow: 0 0 0 3px rgba(255,180,171,.25); }
+    html:root .strip-cap { margin-top: 6px; line-height: 1.45; }
 
     /* ---------- cards: a grid whose parts each look places differently ---------- */
-    html[data-look] .daygroup { display: contents; }
-    html[data-look] .dayhead, html[data-look] .dnode { display: none; }
-    html[data-look] .card { position: relative; display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; padding: 0; margin-bottom: 16px; background: #fff; border: 1px solid rgba(0,60,120,.07); border-radius: 20px; box-shadow: 0 1px 0 #fff inset, 0 1px 2px rgba(0,40,80,.06), 0 10px 18px -8px rgba(0,40,80,.14), 0 28px 42px -22px rgba(0,40,80,.28); }
-    html[data-look] .card-strip, html[data-look] .card-top, html[data-look] .card-foot { display: contents; }
-    html[data-look] .card .tile { grid-area: tile; margin: 14px 0 0 var(--px); align-self: start; }
-    html[data-look] .card .who { grid-area: who; min-width: 0; margin: 14px 10px 0 12px; align-self: start; }
-    html[data-look] .card .who b { display: block; font-size: 17px; line-height: 1.2; letter-spacing: .01em; }
-    html[data-look] .card .who small { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: 14px; color: var(--text-muted); line-height: 1.3; margin-top: 2px; }
-    html[data-look] .card .chips { grid-area: chips; display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; margin: 14px var(--px) 0 0; align-self: start; }
-    html[data-look] .card .chips .chip { white-space: nowrap; }
-    html[data-look] .card .rule { display: block; height: 1px; border: 0; background: var(--rule); margin: 0; }
-    html[data-look] .card .r1 { grid-area: r1; margin: 14px var(--px) 0; }
-    html[data-look] .card .r2 { grid-area: r2; margin: 14px var(--px) 0; }
-    html[data-look] .card h3 { grid-area: title; margin: 12px var(--px) 0; font-size: 18px; line-height: 1.3; }
-    html[data-look] .card .stat { grid-area: stat; margin: 16px var(--px) 0; display: flex; align-items: center; gap: 12px; }
-    html[data-look] .card .gauge-wrap { grid-area: gauge; margin: 0 var(--px); }
-    html[data-look] .card .why { grid-area: why; margin: 10px var(--px) 0; }
-    html[data-look] .card .when { grid-area: when; margin: 12px 0 14px var(--px); font-size: 14px; white-space: nowrap; }
-    html[data-look] .card .link { grid-area: link; justify-self: end; margin: 8px var(--px) 12px 0; }
-    html[data-look] .card .lbl { white-space: nowrap; }
-    html[data-look] .card .arr { display: inline-grid; place-items: center; }
-    html[data-look] .card .arr svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-    html[data-look] .card .ico-doc { display: none; }
-    html[data-look] .stat .n { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--alert); flex: none; }
-    html[data-look] .stat .u { font-size: 16px; line-height: 1.25; color: var(--text-muted); flex: 1; min-width: 0; }
-    html[data-look] .gauge { position: relative; height: 12px; background: #e3e9f1; box-shadow: inset 0 1px 3px rgba(0,40,80,.18); border-radius: 99px; margin: 16px 0 8px; }
-    html[data-look] .gauge i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: linear-gradient(90deg, #ec8379, var(--alert)); box-shadow: inset 0 1px 0 rgba(255,255,255,.4); }
-    html[data-look] .gauge i::after { content: ""; position: absolute; right: -2px; top: 50%; width: 18px; height: 18px; margin-top: -9px; border-radius: 50%; background: #fff; border: 4px solid var(--alert); box-shadow: 0 3px 6px rgba(179,38,30,.4); }
-    html[data-look] .gauge em { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: rgba(22,24,29,.55); }
-    html[data-look] .gl { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted); }
-    html[data-look] .gl span:nth-child(2) { font-weight: 700; color: var(--text); }
-    html[data-look] .box { background: #fff; border: 1px solid rgba(0,60,120,.07); border-radius: 20px; box-shadow: 0 1px 0 #fff inset, 0 1px 2px rgba(0,40,80,.06), 0 12px 22px -12px rgba(0,40,80,.25); padding: 2px var(--px); }
-    html[data-look] .line .tile.sm { box-shadow: inset 0 0 0 1px rgba(0,93,163,.14); }
-    html[data-look] .card.lead { background: linear-gradient(180deg, #f1f8fe, #fff 46%); border: 1px solid rgba(0,93,163,.24); }
+    html:root .card { position: relative; display: grid; grid-template-columns: auto minmax(0,1fr) auto; align-items: center; padding: 0; margin-bottom: 16px; background: #fff; border: 1px solid rgba(0,60,120,.07); border-radius: 20px; box-shadow: 0 1px 0 #fff inset, 0 1px 2px rgba(0,40,80,.06), 0 10px 18px -8px rgba(0,40,80,.14), 0 28px 42px -22px rgba(0,40,80,.28); }
+    html:root .card-strip, html:root .card-top, html:root .card-foot { display: contents; }
+    html:root .card .tile { grid-area: tile; margin: 14px 0 0 var(--px); align-self: start; }
+    html:root .card .who { grid-area: who; min-width: 0; margin: 14px 10px 0 12px; align-self: start; }
+    html:root .card .who b { display: block; font-size: 17px; line-height: 1.2; letter-spacing: .01em; }
+    html:root .card .who small { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: 14px; color: var(--text-muted); line-height: 1.3; margin-top: 2px; }
+    html:root .card .chips { grid-area: chips; display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; margin: 14px var(--px) 0 0; align-self: start; }
+    html:root .card .chips .chip { white-space: nowrap; }
+    html:root .card h3 { grid-area: title; margin: 12px var(--px) 0; font-size: 18px; line-height: 1.3; }
+    html:root .card .stat { grid-area: stat; margin: 16px var(--px) 0; display: flex; align-items: center; gap: 12px; }
+    html:root .card .gauge-wrap { grid-area: gauge; margin: 0 var(--px); }
+    html:root .card .why { grid-area: why; margin: 10px var(--px) 0; }
+    html:root .card .when { grid-area: when; margin: 12px 0 14px var(--px); font-size: 14px; white-space: nowrap; }
+    html:root .card .link { grid-area: link; justify-self: end; margin: 8px var(--px) 12px 0; }
+    html:root .card .arr { display: inline-grid; place-items: center; }
+    html:root .card .arr svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    html:root .stat .n { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--alert); flex: none; }
+    html:root .stat .u { font-size: 16px; line-height: 1.25; color: var(--text-muted); flex: 1; min-width: 0; }
+    html:root .gauge { position: relative; height: 12px; background: #e3e9f1; box-shadow: inset 0 1px 3px rgba(0,40,80,.18); border-radius: 99px; margin: 16px 0 8px; }
+    html:root .gauge i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: linear-gradient(90deg, #ec8379, var(--alert)); box-shadow: inset 0 1px 0 rgba(255,255,255,.4); }
+    html:root .gauge i::after { content: ""; position: absolute; right: -2px; top: 50%; width: 18px; height: 18px; margin-top: -9px; border-radius: 50%; background: #fff; border: 4px solid var(--alert); box-shadow: 0 3px 6px rgba(179,38,30,.4); }
+    html:root .gauge em { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: rgba(22,24,29,.55); }
+    html:root .gl { display: flex; justify-content: space-between; font-size: 14px; color: var(--text-muted); }
+    html:root .gl span:nth-child(2) { font-weight: 700; color: var(--text); }
+    html:root .box { background: #fff; border: 1px solid rgba(0,60,120,.07); border-radius: 20px; box-shadow: 0 1px 0 #fff inset, 0 1px 2px rgba(0,40,80,.06), 0 12px 22px -12px rgba(0,40,80,.25); padding: 2px var(--px); }
+    html:root .line .tile.sm { box-shadow: inset 0 0 0 1px rgba(0,93,163,.14); }
+    html:root .card.lead { background: linear-gradient(180deg, #f1f8fe, #fff 46%); border: 1px solid rgba(0,93,163,.24); }
     /* floating tab bar */
-    html[data-look] .tabbar { left: 12px; right: 12px; bottom: calc(10px + env(safe-area-inset-bottom)); max-width: 456px; margin: 0 auto; padding: 0; border: 1px solid rgba(0,60,120,.08); border-radius: 26px; background: rgba(255,255,255,.9); backdrop-filter: blur(14px); box-shadow: 0 16px 32px -12px rgba(0,40,80,.4), 0 2px 4px rgba(0,40,80,.06); }
-    html[data-look] .tabbar nav { padding: 5px; gap: 4px; }
-    html[data-look] .tab { min-height: 54px; border-radius: 20px; }
-    html[data-look] .tab[aria-current="page"] { background: var(--primary-tint); box-shadow: inset 0 0 0 1px rgba(0,93,163,.12); }
+    html:root .tabbar { left: 12px; right: 12px; bottom: calc(10px + env(safe-area-inset-bottom)); max-width: 456px; margin: 0 auto; padding: 0; border: 1px solid rgba(0,60,120,.08); border-radius: 26px; background: rgba(255,255,255,.9); backdrop-filter: blur(14px); box-shadow: 0 16px 32px -12px rgba(0,40,80,.4), 0 2px 4px rgba(0,40,80,.06); }
+    html:root .tabbar nav { padding: 5px; gap: 4px; }
+    html:root .tab { min-height: 54px; border-radius: 20px; }
+    html:root .tab[aria-current="page"] { background: var(--primary-tint); box-shadow: inset 0 0 0 1px rgba(0,93,163,.12); }
 
-    /* ======================= H1 FAMILY: ribbon cards, five ways to place "Open filing" =======================
-       h1a header button   h1b split footer   h1c tappable card
-       h1d day block (header button, same-day cards clubbed under one day header)
-       h1e day rail  (split footer, same-day cards under a day header on a rail)               */
-    html[data-look^="h1"] .rel { display: none; }
-    html[data-look^="h1"] .card { overflow: hidden; padding-bottom: 16px; grid-template-areas: "strip strip strip" "tile who who" "title title title" "stat stat stat" "gauge gauge gauge" "why why why"; }
-    html[data-look^="h1"] .card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 46px; background: linear-gradient(180deg, #e8f2fa, #f3f8fc); border-bottom: 1px solid rgba(0,93,163,.14); }
-    html[data-look^="h1"] .card.alert::before { background: linear-gradient(180deg, #fbe7e5, #fdf1f0); border-bottom-color: rgba(179,38,30,.16); }
-    html[data-look^="h1"] .card .when, html[data-look^="h1"] .card .chips { position: relative; z-index: 1; }
-    html[data-look^="h1"] .card .chips { grid-area: strip; justify-self: start; margin: 0; align-self: center; justify-content: flex-start; gap: 0; }
-    html[data-look^="h1"] .card .chips .chip { margin: 0 -6px 0 0; height: 32px; display: inline-flex; align-items: center; border-radius: 0; box-shadow: none; padding: 0 20px 0 14px; color: #fff; font-weight: 700; letter-spacing: .01em; background: linear-gradient(90deg, var(--primary-deep), var(--primary)); clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 0 100%); }
-    html[data-look^="h1"] .card .chips .chip.alert { background: linear-gradient(90deg, #8f1f19, var(--alert)); box-shadow: none; }
-    html[data-look^="h1"] .card .when { grid-area: strip; justify-self: end; margin: 0 var(--px) 0 8px; min-height: 46px; display: inline-flex; align-items: center; }
-    html[data-look^="h1"] .card .tile { margin-top: 16px; }
-    html[data-look^="h1"] .card .who { margin-top: 16px; }
-    html[data-look^="h1"] .card .r1, html[data-look^="h1"] .card .r2 { display: none; }
-    @media (max-width: 372px) { html:is([data-look="h1a"],[data-look="h1b"],[data-look="h1c"]) .card:not(.alertonly) :is(.wsep, .wt) { display: none; } }
+    /* ---------- card: ribbon strip on top, tile + ticker + header button, title, details ---------- */
+    html:root .card { overflow: hidden; padding-bottom: 16px; grid-template-areas: "strip strip strip" "tile who link" "title title title" "stat stat stat" "gauge gauge gauge" "why why why"; }
+    html:root .card::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 46px; background: linear-gradient(180deg, #e8f2fa, #f3f8fc); border-bottom: 1px solid rgba(0,93,163,.14); }
+    html:root .card.alert::before { background: linear-gradient(180deg, #fbe7e5, #fdf1f0); border-bottom-color: rgba(179,38,30,.16); }
+    html:root .card .when, html:root .card .chips { position: relative; z-index: 1; }
+    html:root .card .chips { grid-area: strip; justify-self: start; margin: 0; align-self: center; justify-content: flex-start; gap: 0; }
+    html:root .card .chips .chip { margin: 0 -6px 0 0; height: 32px; display: inline-flex; align-items: center; border-radius: 0; box-shadow: none; padding: 0 20px 0 14px; color: #fff; font-weight: 700; letter-spacing: .01em; background: linear-gradient(90deg, var(--primary-deep), var(--primary)); clip-path: polygon(0 0, calc(100% - 11px) 0, 100% 50%, calc(100% - 11px) 100%, 0 100%); }
+    html:root .card .chips .chip.alert { background: linear-gradient(90deg, #8f1f19, var(--alert)); box-shadow: none; }
+    html:root .card .when { grid-area: strip; justify-self: end; margin: 0 var(--px) 0 8px; min-height: 46px; display: inline-flex; align-items: center; }
+    html:root .card .tile { margin-top: 16px; }
+    html:root .card .who { margin-top: 16px; }
 
-    /* ---------- A · header button: a compact, labelled file button beside the ticker; no footer row ---------- */
-    html:is([data-look="h1a"],[data-look="h1d"]) .card { grid-template-areas: "strip strip strip" "tile who link" "title title title" "stat stat stat" "gauge gauge gauge" "why why why"; }
-    html:is([data-look="h1a"],[data-look="h1d"]) .card .link { grid-area: link; position: relative; justify-self: end; align-self: start; margin: 14px var(--px) 0 0; width: 62px; height: 62px; padding: 0; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; font-weight: 700; box-shadow: 0 10px 16px -8px rgba(0,65,114,.7), inset 0 1px 0 rgba(255,255,255,.32); }
-    html:is([data-look="h1a"],[data-look="h1d"]) .card .link .lbl { display: none; }
-    html:is([data-look="h1a"],[data-look="h1d"]) .card .link .ico-doc { display: inline-grid; }
-    html:is([data-look="h1a"],[data-look="h1d"]) .card .link .ico-doc svg { width: 24px; height: 24px; }
-    html:is([data-look="h1a"],[data-look="h1d"]) .card .link::after { content: "Filing"; font-size: 13px; line-height: 1; }
-    html:is([data-look="h1a"],[data-look="h1d"]) .card.alertonly .link::after { content: "Limit"; }
-    html:is([data-look="h1a"],[data-look="h1d"]) .card .link .arr { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: #fff; color: var(--primary-deep); box-shadow: 0 3px 6px -1px rgba(0,60,120,.45), inset 0 0 0 1px rgba(0,93,163,.2); }
-    html:is([data-look="h1a"],[data-look="h1d"]) .card .link .arr svg { width: 13px; height: 13px; }
-    html:is([data-look="h1a"],[data-look="h1d"]) .card.alert .link { background: linear-gradient(145deg, #e0584c, var(--alert)); box-shadow: 0 10px 16px -8px rgba(179,38,30,.65), inset 0 1px 0 rgba(255,255,255,.32); }
-    html:is([data-look="h1a"],[data-look="h1d"]) .card.alert .link .arr { color: var(--alert); }
+    /* header button: a compact, labelled file button beside the ticker; an arrow badge marks it as a link */
+    html:root .card .link { grid-area: link; position: relative; justify-self: end; align-self: start; margin: 14px var(--px) 0 0; width: 62px; height: 62px; padding: 0; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; font-weight: 700; box-shadow: 0 10px 16px -8px rgba(0,65,114,.7), inset 0 1px 0 rgba(255,255,255,.32); }
+    html:root .card .link .lbl { display: none; }
+    html:root .card .link .ico-doc { display: inline-grid; }
+    html:root .card .link .ico-doc svg { width: 24px; height: 24px; }
+    html:root .card .link::after { content: "Filing"; font-size: 13px; line-height: 1; }
+    html:root .card.alertonly .link::after { content: "Limit"; }
+    html:root .card .link .arr { position: absolute; top: -8px; right: -8px; width: 24px; height: 24px; border-radius: 50%; background: #fff; color: var(--primary-deep); box-shadow: 0 3px 6px -1px rgba(0,60,120,.45), inset 0 0 0 1px rgba(0,93,163,.2); }
+    html:root .card .link .arr svg { width: 13px; height: 13px; }
+    html:root .card.alert .link { background: linear-gradient(145deg, #e0584c, var(--alert)); box-shadow: 0 10px 16px -8px rgba(179,38,30,.65), inset 0 1px 0 rgba(255,255,255,.32); }
+    html:root .card.alert .link .arr { color: var(--alert); }
 
-    /* ---------- B · split footer: a bar in two cells (when it was filed | open), with a divider ---------- */
-    html:is([data-look="h1b"],[data-look="h1e"]) .card { padding-bottom: 0; grid-template-areas: "strip strip strip" "tile who who" "title title title" "stat stat stat" "gauge gauge gauge" "why why why" "rel rel link"; }
-    html:is([data-look="h1b"],[data-look="h1e"]) .card .rel { display: flex; grid-area: rel; align-self: stretch; align-items: center; gap: 8px; margin: 16px 0 0; padding: 0 14px; min-height: 56px; font-size: 14px; line-height: 1.3; color: var(--text-muted); background: linear-gradient(180deg, #f6fafd, #eef5fb); border-top: 1px solid rgba(0,93,163,.14); }
-    html:is([data-look="h1b"],[data-look="h1e"]) .card .link { grid-area: link; align-self: stretch; justify-self: stretch; margin: 16px 0 0; padding: 0 16px 0 14px; min-height: 56px; border-radius: 0; display: flex; align-items: center; gap: 9px; color: var(--primary-deep); font-weight: 700; background: linear-gradient(180deg, #e9f2fa, #dbe9f6); border-top: 1px solid rgba(0,93,163,.16); border-left: 1px solid rgba(0,93,163,.22); }
-    html:is([data-look="h1b"],[data-look="h1e"]) .card .link .ico-doc { display: inline-grid; color: var(--primary); }
-    html:is([data-look="h1b"],[data-look="h1e"]) .card .link .arr { margin-left: 2px; }
-    html:is([data-look="h1b"],[data-look="h1e"]) .card.alert .rel { background: linear-gradient(180deg, #fffafa, #fcf0ef); border-top-color: rgba(179,38,30,.16); }
-    html:is([data-look="h1b"],[data-look="h1e"]) .card.alert .link { color: var(--alert); background: linear-gradient(180deg, #fbe9e7, #f6d9d6); border-top-color: rgba(179,38,30,.18); border-left-color: rgba(179,38,30,.25); }
-    html:is([data-look="h1b"],[data-look="h1e"]) .card.alert .link .ico-doc { color: var(--alert); }
-
-    /* ---------- C · tappable card: the whole card opens the filing; a chevron circle is the cue ---------- */
-    html[data-look="h1c"] .card { grid-template-areas: "strip strip strip" "tile who link" "title title title" "stat stat stat" "gauge gauge gauge" "why why why"; }
-    html[data-look="h1c"] .card .link { grid-area: link; justify-self: end; align-self: start; margin: 16px var(--px) 0 0; width: 42px; height: 42px; min-height: 0; padding: 0; border-radius: 50%; display: inline-grid; place-items: center; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; box-shadow: 0 8px 14px -6px rgba(0,65,114,.7), inset 0 1px 0 rgba(255,255,255,.35); }
-    html[data-look="h1c"] .card .link .lbl, html[data-look="h1c"] .card .link .ico-doc { display: none; }
-    html[data-look="h1c"] .card .link .arr svg { width: 18px; height: 18px; }
-    html[data-look="h1c"] .card:not(.alertonly) .link::after { content: ""; position: absolute; inset: 0; z-index: 2; }
-    html[data-look="h1c"] .card:not(.alertonly) { cursor: pointer; transition: transform .12s; }
-    html[data-look="h1c"] .card:not(.alertonly):active { transform: scale(.99); }
-    html[data-look="h1c"] .card.alert .link { background: linear-gradient(145deg, #e0584c, var(--alert)); box-shadow: 0 8px 14px -6px rgba(179,38,30,.6), inset 0 1px 0 rgba(255,255,255,.35); }
-
-    /* ---------- same-day clubbing (D, E): day header, time-only strips ---------- */
-    html:is([data-look="h1d"],[data-look="h1e"]) .stack { position: relative; padding-left: 38px; }
-    html:is([data-look="h1d"],[data-look="h1e"]) .stack::before { content: ""; position: absolute; left: 13px; top: 20px; bottom: 40px; width: 3px; border-radius: 3px; background: linear-gradient(var(--primary-bright), rgba(0,93,163,.12)); }
-    html:is([data-look="h1d"],[data-look="h1e"]) .dayhead { display: flex; align-items: center; gap: 10px; position: relative; }
-    html:is([data-look="h1d"],[data-look="h1e"]) .dnode { display: grid; place-items: center; position: absolute; left: -38px; top: 50%; margin-top: -15px; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; box-shadow: 0 0 0 4px #e3edf7; }
-    html:is([data-look="h1d"],[data-look="h1e"]) .dnode svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-    html:is([data-look="h1d"],[data-look="h1e"]) .dlabel { font-size: 15px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--primary-deep); }
-    html:is([data-look="h1d"],[data-look="h1e"]) .dcount { margin-left: auto; font-size: 14px; color: var(--text-muted); }
-    html:is([data-look="h1d"],[data-look="h1e"]) .stack .card .ico-cal, html:is([data-look="h1d"],[data-look="h1e"]) .stack .card .wd, html:is([data-look="h1d"],[data-look="h1e"]) .stack .card .wsep { display: none; }
-    html:is([data-look="h1d"],[data-look="h1e"]) .stack .card .ico-clock { display: inline-grid; }
+    /* narrow phones (360px): date only in the strip, slightly tighter ribbon */
     @media (max-width: 372px) {
-      html:is([data-look="h1d"],[data-look="h1e"]) .stack .card .ico-clock { display: none; }
-      html[data-look^="h1"] .card .chips .chip { padding: 0 17px 0 11px; font-size: 12.5px; }
-      html[data-look^="h1"] .card .when { margin-left: 6px; }
+      html:root .card:not(.alertonly) :is(.wsep, .wt) { display: none; }
+      html:root .card .chips .chip { padding: 0 17px 0 11px; font-size: 12.5px; }
+      html:root .card .when { margin-left: 6px; }
     }
-    /* D: one container per day */
-    html[data-look="h1d"] .daygroup { display: block; position: relative; margin-bottom: 18px; background: #fff; border: 1px solid rgba(0,60,120,.07); border-radius: 20px; box-shadow: 0 1px 0 #fff inset, 0 1px 2px rgba(0,40,80,.06), 0 10px 18px -8px rgba(0,40,80,.14), 0 28px 42px -22px rgba(0,40,80,.28); }
-    html[data-look="h1d"] .dayhead { padding: 13px var(--px); background: linear-gradient(180deg, #eef5fb, #f8fbfe); border-bottom: 1px solid var(--rule); border-radius: 20px 20px 0 0; }
-    html[data-look="h1d"] .daygroup .card { margin: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
-    html[data-look="h1d"] .daygroup article.card:not(:last-of-type) { border-bottom: 1px solid var(--rule); }
-    html[data-look="h1d"] .daygroup article.card:last-of-type { border-radius: 0 0 20px 20px; }
-    /* E: separate cards under a day header on the rail */
-    html[data-look="h1e"] .daygroup { display: block; margin-bottom: 6px; }
-    html[data-look="h1e"] .dayhead { margin: 2px 0 12px; }
 
     .topbar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--primary-bright); transform-origin: left; animation: load 1.2s ease-in-out infinite; z-index: 30; }
     @keyframes load { 0% { transform: scaleX(0); } 70% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
@@ -296,8 +239,6 @@
           <div class="wordmark">FINN</div>
           <p class="tagline">A filter, not a feed.</p>
         </div>
-        <!-- EXPERIMENT: look switcher, removed once a look is chosen -->
-        <button class="lookbtn" @click="nextLook()" :aria-label="'Change look, now ' + look.label"><span x-text="look.label"></span> ▸</button>
       </header>
 
       <div class="seg" role="group" aria-label="Time window">
@@ -351,51 +292,37 @@
           <div class="banner mt-4" x-show="data.widened" x-text="widenedText"></div>
           <div class="banner warn mt-4" x-show="data.fallback_used">Live data unavailable right now. Showing the last saved copy.</div>
 
-          <!-- High cards, grouped by day (days are visible in the timeline looks only) -->
+          <!-- High cards, in priority order: tier, then "stock also moved that day", then newest -->
           <div class="section-label" x-show="data.cards.length"><span>What matters</span><span class="cnt" x-text="data.cards.length"></span></div>
-          <div class="stack">
-            <template x-for="(g, gi) in cardGroups" :key="g.day + '-' + gi">
-              <section class="daygroup">
-                <div class="dayhead">
-                  <span class="dnode" aria-hidden="true" x-html="iconFor('calendar')"></span>
-                  <span class="dlabel" x-text="fmtDay(g.day)"></span>
-                  <span class="dcount" x-text="g.items.length + (g.items.length === 1 ? ' filing' : ' filings')"></span>
+          <template x-for="(c, i) in data.cards" :key="c.ticker + c.id + c.date">
+            <article class="card" :class="[c.moved_same_day ? 'alert' : '', i === 0 ? 'lead' : '']">
+              <div class="card-strip">
+                <span class="when dt"><span class="ico" aria-hidden="true" x-html="iconFor('calendar')"></span><span class="wtxt"><span class="wd" x-text="fmtDay(c.date)"></span><span class="wsep">, </span><span class="wt" x-text="fmtTime(c.date)"></span></span></span>
+                <div class="chips">
+                  <span class="chip" x-text="kindLabel(c.kind)"></span>
+                  <template x-for="a in c.alerts" :key="a.type">
+                    <span class="chip alert" x-text="alertChip(a)"></span>
+                  </template>
                 </div>
-                <template x-for="c in g.items" :key="c.ticker + c.id + c.date">
-                  <article class="card" :class="[c.moved_same_day ? 'alert' : '', c.lead ? 'lead' : '']">
-                    <div class="card-strip">
-                      <span class="when dt"><span class="ico ico-cal" aria-hidden="true" x-html="iconFor('calendar')"></span><span class="ico ico-clock" aria-hidden="true" x-html="iconFor('clock')"></span><span class="wtxt"><span class="wd" x-text="fmtDay(c.date)"></span><span class="wsep">, </span><span class="wt" x-text="fmtTime(c.date)"></span></span></span>
-                      <div class="chips">
-                        <span class="chip" x-text="kindLabel(c.kind)"></span>
-                        <template x-for="a in c.alerts" :key="a.type">
-                          <span class="chip alert" x-text="alertChip(a)"></span>
-                        </template>
-                      </div>
-                    </div>
-                    <div class="card-top">
-                      <span class="tile" aria-hidden="true" x-html="iconFor(c.kind)"></span>
-                      <div class="who"><b x-text="c.ticker"></b><small x-text="shortCompany(c.company)"></small></div>
-                    </div>
-                    <i class="rule r1"></i>
-                    <h3 x-text="cleanTitle(c)"></h3>
-                    <p class="why alert" x-show="c.moved_same_day">The stock also moved on the day of this filing.</p>
-                    <i class="rule r2"></i>
-                    <div class="card-foot">
-                      <span class="rel dt"><span class="ico" aria-hidden="true" x-html="iconFor('clock')"></span><span x-text="ago(c.date)"></span></span>
-                      <a class="link filebtn" x-show="c.pdf_url" :href="c.pdf_url" target="_blank" rel="noopener" aria-label="Open filing"><span class="ico ico-doc" aria-hidden="true" x-html="iconFor('doc')"></span><span class="lbl">Open filing</span><span class="arr" aria-hidden="true" x-html="iconFor('arrow')"></span></a>
-                    </div>
-                  </article>
-                </template>
-              </section>
-            </template>
-          </div>
+              </div>
+              <div class="card-top">
+                <span class="tile" aria-hidden="true" x-html="iconFor(c.kind)"></span>
+                <div class="who"><b x-text="c.ticker"></b><small x-text="shortCompany(c.company)"></small></div>
+              </div>
+              <h3 x-text="cleanTitle(c)"></h3>
+              <p class="why alert" x-show="c.moved_same_day">The stock also moved on the day of this filing.</p>
+              <div class="card-foot">
+                <a class="link filebtn" x-show="c.pdf_url" :href="c.pdf_url" target="_blank" rel="noopener" aria-label="Open filing"><span class="ico ico-doc" aria-hidden="true" x-html="iconFor('doc')"></span><span class="lbl">Open filing</span><span class="arr" aria-hidden="true" x-html="iconFor('arrow')"></span></a>
+              </div>
+            </article>
+          </template>
 
           <!-- alert-only (T4) -->
           <div class="section-label" x-show="data.alert_only.length"><span>Unusual moves</span><span class="cnt alert" x-text="data.alert_only.length"></span></div>
           <template x-for="a in data.alert_only" :key="a.ticker + a.type">
             <article class="card alert alertonly">
               <div class="card-strip">
-                <span class="when dt"><span class="ico ico-cal" aria-hidden="true" x-html="iconFor('calendar')"></span><span class="ico ico-clock" aria-hidden="true" x-html="iconFor('clock')"></span><span class="wtxt"><span class="wd" x-text="fmtDay(a.date) + ' close'"></span></span></span>
+                <span class="when dt"><span class="ico" aria-hidden="true" x-html="iconFor('calendar')"></span><span class="wtxt"><span class="wd" x-text="fmtDay(a.date) + ' close'"></span></span></span>
                 <div class="chips">
                   <span class="chip alert" x-text="a.type === 'price' ? 'Price move' : 'Volume spike'"></span>
                 </div>
@@ -404,7 +331,6 @@
                 <span class="tile" aria-hidden="true" x-html="iconFor(alertIcon(a))"></span>
                 <div class="who"><b x-text="a.ticker"></b><small x-text="shortCompany(a.company)"></small></div>
               </div>
-              <i class="rule r1"></i>
               <h3 class="sr-only" x-text="alertHeadline(a)"></h3>
               <div class="stat">
                 <span class="n" x-text="statText(a)"></span>
@@ -415,9 +341,7 @@
                 <div class="gl"><span x-text="a.type === 'price' ? '0%' : '0×'"></span><span x-text="'your limit ' + limitText(a)"></span><span x-text="a.type === 'price' ? '±' + (data.thresholds.price * 2) + '%' : (data.thresholds.volume * 2) + '×'"></span></div>
               </div>
               <p class="why">No filing explains this move.</p>
-              <i class="rule r2"></i>
               <div class="card-foot">
-                <span class="rel dt"><span class="ico" aria-hidden="true" x-html="iconFor('sliders')"></span><span x-text="ruleText(a)"></span></span>
                 <a class="link filebtn" href="#" @click.prevent="go('settings')"><span class="ico ico-doc" aria-hidden="true" x-html="iconFor('sliders')"></span><span class="lbl">Adjust limit</span><span class="arr" aria-hidden="true" x-html="iconFor('arrow')"></span></a>
               </div>
             </article>
@@ -499,13 +423,6 @@
     <div class="mt-5">
       <h1 class="text-2xl">Alerts</h1>
       <p class="meta mt-1">You decide what unusual means. Saved on this device.</p>
-    </div>
-
-    <div class="section-label">Look (experiment)</div>
-    <div class="flex flex-wrap gap-2">
-      <template x-for="l in looks" :key="l.id">
-        <button class="pill" :aria-pressed="lookId === l.id" @click="setLook(l.id)" x-text="l.label"></button>
-      </template>
     </div>
 
     <div class="section-label">Presets</div>
@@ -649,30 +566,8 @@ function finn() {
     ],
     _ctl: null,
     _timer: null,
-    // EXPERIMENT: switchable looks (same markup, different skin). Removed once one is chosen.
-    looks: [
-      { id: 'h1a', label: 'A · Header button' },
-      { id: 'h1b', label: 'B · Split footer' },
-      { id: 'h1c', label: 'C · Tappable card' },
-      { id: 'h1d', label: 'D · Day block' },
-      { id: 'h1e', label: 'E · Day rail' },
-    ],
-    lookId: 'h1a',
-    get look() { return this.looks.find(l => l.id === this.lookId) || this.looks[0]; },
-    setLook(id) {
-      this.lookId = this.looks.some(l => l.id === id) ? id : 'h1a';
-      document.documentElement.dataset.look = this.lookId;
-      this.persist();
-    },
-    nextLook() {
-      const i = this.looks.findIndex(l => l.id === this.lookId);
-      this.setLook(this.looks[(i + 1) % this.looks.length].id);
-    },
-
     init() {
       const s = readStore();
-      const asked = new URLSearchParams(location.search).get('look');
-      this.setLook(asked || s.look || 'h1a');
       if (s.window && ['24h', '3d', '7d'].includes(s.window)) this.period = s.window;
       if (s.settings) this.settings = { ...DEFAULTS, ...s.settings, off: Array.isArray(s.settings.off) ? s.settings.off : [] };
       this.$watch('settings', () => { this.persist(); this.scheduleLoad(); }, { deep: true });
@@ -680,7 +575,7 @@ function finn() {
       this.load();
     },
 
-    persist() { writeStore({ window: this.period, settings: this.settings, look: this.lookId }); },
+    persist() { writeStore({ window: this.period, settings: this.settings }); },
     go(t) { this.tab = t; window.scrollTo({ top: 0 }); },
     setWindow(w) { this.period = w; this.persist(); this.load(); },
     scheduleLoad() { clearTimeout(this._timer); this._timer = setTimeout(() => this.load(), 350); },
@@ -717,24 +612,6 @@ function finn() {
     // ---------- derived text ----------
     get nMatter() { return this.data ? this.data.cards.length + this.data.alert_only.length : 0; },
     get isQuiet() { return !!this.data && this.nMatter === 0 && this.data.summaries.length === 0; },
-    ago(iso) {
-      const ref = new Date(this.data.generated_at), t = new Date(iso);
-      const day = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
-      const days = Math.round((day(ref) - day(t)) / 864e5);
-      if (days <= 0) { const h = Math.floor((ref - t) / 36e5); return h < 1 ? 'Just now' : h + ' hour' + (h === 1 ? '' : 's') + ' ago'; }
-      return days === 1 ? 'Yesterday' : days + ' days ago';
-    },
-    ruleText(a) { return a.type === 'price' ? 'Rule: ±' + this.data.thresholds.price + '% a day' : 'Rule: over ' + this.data.thresholds.volume + '× avg'; },
-    get cardGroups() {
-      const groups = [];
-      this.data.cards.forEach((c, i) => {
-        const day = c.date.slice(0, 10);
-        let g = groups[groups.length - 1];
-        if (!g || g.day !== day) { g = { day, items: [] }; groups.push(g); }
-        g.items.push({ ...c, lead: i === 0 });
-      });
-      return groups;
-    },
     get headlineRest() { return this.nMatter === 1 ? 'thing matters' : 'things matter'; },
     iconFor(key) { return ICONS[key] || ICONS.unclassified; },
     alertIcon(a) { return a.type === 'price' ? (a.value < 0 ? 'price_down' : 'price_up') : 'volume'; },
