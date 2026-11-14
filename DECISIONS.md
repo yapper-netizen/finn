@@ -472,3 +472,17 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
   - 1C Timeline: everything in 1A plus filings grouped by day under date chips, linked by a vertical rail with nodes (red nodes for filings whose stock also moved).
 - Checked at 375 px for d1, d1a, d1b, d1c on Today, Settings and Research: no text under 12px, no horizontal scroll. Also fixed: chips stay on one line.
 - Next: user picks one (or a blend); then delete the other drafts and the look switcher, and apply the pick to the detail screens (FE-3) and Research (FE-4).
+
+### D-072 · Look round 4: hero card chosen; five drafts with fixed type scale · 2026-11-15 · FE-7 (refines D-071) · Status: open (user choosing)
+- User feedback on round 3: the hero card (1B) is good and goes forward; text was too small next to huge numbers with empty space beside them (e.g. "close vs previous close" beside "−3.4%", gauge labels); the "Management change" chip and "Open filing" button looked generic; dates should carry an icon.
+- Type scale fixed in all drafts: card title 18px, ticker 17px, company/meta/date 14px, chips 13px, stat number 38px with its 16px label wrapping beside it (ratio about 2.4), gauge labels 14px with "your limit" in bold, section labels 13px, tab labels 12.5px. Automated check: no text under 12.5px, no horizontal scroll at 375 and 360 px.
+- Dates carry a calendar icon (a clock icon where the day is shown elsewhere); a "doc" icon marks the filing button; alert-card footer links to Settings ("Adjust limit").
+- Drafts (all keep the 1B hero card and floating tab bar), switch with the Look button or `?look=`:
+  - h0 Hero standard: 1B with the type fixes, original pill chip and button as the baseline.
+  - h1 Hero + ribbon: tinted top strip with a ribbon tag flush left and the date right; "Open filing" as a dashed attachment row with a doc tile and an arrow circle.
+  - h2 Hero + spine: gradient icon spine down the left edge, category as a coloured kicker, round gradient arrow button.
+  - t1 Hero + timeline: rail with category-icon nodes (the icon moves out of the card, freeing width), day headers with a calendar node, left-bar label chips, folded-corner file button, time-only footer.
+  - t2 Hero + timeline 2: one card per day with rows inside, a calendar node per day on the rail, kicker label row, outlined doc button.
+- Markup change: card parts are a CSS grid (strip, header, rules, footer use `display: contents`) so each draft places chips, dates and the button differently; filings are grouped by day in `cardGroups`.
+- Bugs fixed on the way: date text gaps, rail nodes leaking onto the alert cards, category label colliding with the ticker in T2.
+- Next: user picks one; then delete the other four, the Look button and `?look=`, and apply the pick to the detail screens (FE-3) and Research (FE-4).
