@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FINN design previews v1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DotGothic16&family=IBM+Plex+Mono:wght@400;500;600&family=Lato:wght@700;900&family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* Our palette in every preview (ENAM blue, grey, white, alert red). Only layout, type and depth change. */
+:root{--blue:#005da3;--bright:#2e7ab4;--deep:#004172;--tint:#e6eff6;--grey:#6a6970;--line:#d2d2d2;--red:#b3261e;--redtint:#fbebea;--ink:#16181d;--page:#eef1f5}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);font-family:"DM Sans",system-ui,sans-serif;color:var(--ink)}
+.top{max-width:1240px;margin:0 auto;padding:28px 20px 8px}
+.top h1{font-family:Lato,sans-serif;font-weight:900;font-size:26px;margin:0;color:var(--blue);letter-spacing:.03em}
+.top p{margin:6px 0 0;color:var(--grey);font-size:14px;max-width:760px;line-height:1.5}
+.grid{max-width:1240px;margin:0 auto;padding:16px 20px 60px;display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:34px 24px;justify-items:center}
+.cell{width:100%;max-width:380px}
+.cap{margin:0 0 10px;font-size:13px;color:var(--grey);line-height:1.45}
+.cap b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px}
+.phone{width:100%;height:740px;border-radius:38px;border:9px solid #14161a;background:#fff;overflow:auto;box-shadow:0 20px 40px -16px rgba(0,30,60,.35);scrollbar-width:none}
+.phone::-webkit-scrollbar{display:none}
+.sample{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--grey)}
+svg{display:block}
+
+/* ================= A. EDITORIAL ================= */
+.A{background:#fafaf8;min-height:100%;padding:16px 18px 28px;font-family:Newsreader,Georgia,serif;color:#15181c}
+.A .mast{display:flex;align-items:baseline;justify-content:space-between;border-bottom:3px double #15181c;padding-bottom:8px}
+.A .mast b{font-family:Lato;font-weight:900;font-size:25px;color:var(--blue);letter-spacing:.05em}
+.A .mast i{font-size:13px;color:var(--grey)}
+.A .date{font-family:"DM Sans";font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);padding:7px 0;border-bottom:1px solid #15181c}
+.A h1{font-size:34px;line-height:1.05;margin:14px 0 4px;font-weight:700;letter-spacing:-.01em}
+.A .dek{font-size:15px;color:#4a4d54;margin:0 0 14px;font-style:italic}
+.A .lead{background:#fff;border-top:3px solid var(--blue);padding:14px 14px 12px;box-shadow:0 10px 24px -14px rgba(0,40,80,.45),0 1px 2px rgba(0,0,0,.06);margin-bottom:6px}
+.A .kick{font-family:"DM Sans";font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--blue)}
+.A .kick.r{color:var(--red)}
+.A .lead h2{font-size:25px;line-height:1.12;margin:6px 0 8px;font-weight:700}
+.A .by{font-family:"DM Sans";font-size:11.5px;color:var(--grey);margin:0}
+.A .by a{color:var(--blue);font-weight:700;text-decoration:none}
+.A .sec{font-family:"DM Sans";font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);border-top:1px solid #15181c;padding-top:6px;margin:20px 0 0}
+.A .story{padding:12px 0;border-bottom:1px solid var(--line)}
+.A .story h3{font-size:19px;line-height:1.2;margin:4px 0 5px;font-weight:600}
+.A .row{display:flex;gap:14px;align-items:center;justify-content:space-between}.A .row>div:last-child{flex:none}
+.A .lines{font-family:"DM Sans";font-size:13px;margin:0;padding:0;list-style:none}
+.A .lines li{display:flex;gap:8px;padding:8px 0;border-bottom:1px dotted #9a9aa0}
+.A .lines span:last-child{margin-left:auto;color:var(--grey);white-space:nowrap}
+.A .foot{margin-top:18px;border-top:3px double #15181c;padding-top:9px;font-family:"DM Sans";font-size:12px;color:var(--grey);display:flex;justify-content:space-between}
+
+/* ================= B. RECEIPT ================= */
+.B{background:#dfe4ea;min-height:100%;padding:18px 16px 24px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:#1c1f24}
+.B .paper{background:#fff;padding:16px 16px 6px;box-shadow:0 14px 26px -12px rgba(0,30,60,.4),0 2px 3px rgba(0,0,0,.08)}
+.B .tear{height:10px;background:linear-gradient(-135deg,#fff 5px,transparent 0) 0 0/10px 10px repeat-x,linear-gradient(135deg,#fff 5px,transparent 0) 0 0/10px 10px repeat-x;margin:0 16px;filter:drop-shadow(0 4px 3px rgba(0,30,60,.18))}
+.B .tear.top{transform:rotate(180deg);filter:drop-shadow(0 -2px 2px rgba(0,30,60,.1))}
+.B .c{text-align:center}
+.B .brand{font-family:Lato;font-weight:900;font-size:24px;letter-spacing:.2em;color:var(--blue)}
+.B .dash{border:0;border-top:1.5px dashed #9aa0a8;margin:10px 0}
+.B .big{font-size:15px;font-weight:600;letter-spacing:.02em}
+.B .item{margin:10px 0 12px}
+.B .item .top{display:flex;justify-content:space-between;font-weight:600}
+.B .item .top .t{color:var(--blue)}
+.B .item p{margin:3px 0 0;line-height:1.45}
+.B .item .ref{color:var(--grey);font-size:10.5px}
+.B .item.alert .top .t{color:var(--red)}
+.B .tot{display:flex;justify-content:space-between;padding:2px 0}
+.B .tot.b{font-weight:600;font-size:13px}
+.B .bar{height:34px;margin:12px auto 4px;width:86%;background:repeating-linear-gradient(90deg,#16181d 0 2px,#fff 2px 4px,#16181d 4px 5px,#fff 5px 8px,#16181d 8px 11px,#fff 11px 13px)}
+.B .stamp{display:inline-block;border:1.5px solid var(--blue);color:var(--blue);padding:1px 6px;font-size:10px;font-weight:600;letter-spacing:.08em;transform:rotate(-3deg)}
+.B .stamp.r{border-color:var(--red);color:var(--red)}
+
+/* ================= E. INSTRUMENT PANEL ================= */
+.E{background:#d9dce1;min-height:100%;padding:16px 14px 24px;font-family:"IBM Plex Mono",monospace;color:#1d2026}
+.E .hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.E .hdr b{font-family:Lato;font-weight:900;font-size:22px;letter-spacing:.18em;color:#1d2026}
+.E .led{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.E .led i{width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 2px #c6cad0,0 0 8px 1px rgba(46,122,180,.8)}
+.E .display{background:#12161c;border-radius:10px;padding:14px 14px 12px;color:#e8eef5;box-shadow:inset 0 2px 6px rgba(0,0,0,.7),0 1px 0 #fff}
+.E .display .n{font-family:DotGothic16,monospace;font-size:54px;line-height:1;color:#8fc4ee}
+.E .display .l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8d97a3;margin-top:6px}
+.E .strip{display:flex;gap:4px;margin-top:12px}
+.E .strip i{flex:1;height:8px;border-radius:2px;background:#2a313b}
+.E .strip i.on{background:#8fc4ee}.E .strip i.al{background:#ff7a6e}
+.E .mod{background:linear-gradient(#e9ebee,#dcdfe4);border-radius:12px;padding:12px 12px 11px;margin-top:12px;box-shadow:0 1px 0 #fff inset,0 -2px 0 rgba(0,0,0,.08) inset,0 8px 14px -6px rgba(20,30,50,.45),0 2px 3px rgba(20,30,50,.2);position:relative}
+.E .mod .tag{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#555b66}
+.E .mod .tag em{font-style:normal;color:var(--blue);font-weight:600}
+.E .mod.alert .tag em{color:var(--red)}
+.E .mod h3{font-family:"DM Sans";font-size:16px;line-height:1.25;margin:7px 0 6px;font-weight:700}
+.E .mod .m{font-size:10.5px;color:#555b66}
+.E .mod .screw{position:absolute;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#9aa0a8);top:7px;right:9px;display:none}
+.E .sec{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#555b66;margin:18px 0 -2px}
+
+/* ================= C. DEPTH CARDS (Copilot-style) ================= */
+.C{background:linear-gradient(#f2f6fb,#e9eff6 60%);min-height:100%;padding:18px 14px 26px;font-family:"DM Sans",sans-serif}
+.C .hi{display:flex;justify-content:space-between;align-items:center}
+.C .hi b{font-family:Lato;font-weight:900;font-size:24px;color:var(--blue);letter-spacing:.04em}
+.C .av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--bright),var(--deep));color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px}
+.C h1{font-size:28px;line-height:1.1;margin:16px 0 2px;letter-spacing:-.02em}
+.C .sub{color:var(--grey);font-size:13.5px;margin:0 0 14px}
+.C .card{background:#fff;border-radius:20px;padding:14px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,40,80,.06),0 6px 12px -4px rgba(0,40,80,.1),0 18px 32px -12px rgba(0,40,80,.18)}
+.C .card.hero{background:linear-gradient(160deg,var(--bright),var(--deep));color:#fff;box-shadow:0 18px 30px -12px rgba(0,65,114,.6)}
+.C .head{display:flex;gap:10px;align-items:center}
+.C .mono{width:38px;height:38px;border-radius:12px;background:var(--tint);color:var(--deep);display:grid;place-items:center;font-weight:700;font-size:12px;flex:none}
+.C .hero .mono{background:rgba(255,255,255,.18);color:#fff}
+.C .head b{font-size:15px}
+.C .head small{display:block;color:var(--grey);font-size:11.5px}
+.C .hero .head small{color:#cfe3f3}
+.C .chip{margin-left:auto;font-size:11px;font-weight:700;padding:5px 9px;border-radius:99px;background:var(--tint);color:var(--deep)}
+.C .hero .chip{background:rgba(255,255,255,.2);color:#fff}
+.C .chip.r{background:var(--redtint);color:var(--red)}
+.C p.t{font-size:15px;line-height:1.35;margin:10px 0 0;font-weight:500}
+.C .spark{margin-top:8px}
+.C .sechd{font-size:12px;font-weight:700;color:var(--grey);letter-spacing:.06em;text-transform:uppercase;margin:18px 4px 8px}
+.C .pillrow{display:flex;gap:8px;overflow:hidden}
+.C .pillrow span{font-size:12px;padding:6px 12px;border-radius:99px;background:#fff;box-shadow:0 1px 3px rgba(0,40,80,.12);color:var(--grey)}
+.C .pillrow span.on{background:var(--blue);color:#fff}
+
+/* ================= D. SCORECARD (Simply Wall St-style) ================= */
+.D{background:#f3f5f8;min-height:100%;padding:16px 14px 26px;font-family:"DM Sans",sans-serif}
+.D .hi{display:flex;justify-content:space-between;align-items:center}
+.D .hi b{font-family:Lato;font-weight:900;font-size:24px;color:var(--blue);letter-spacing:.04em}
+.D h1{font-size:26px;margin:14px 0 12px;letter-spacing:-.02em}
+.D .tile{background:#fff;border-radius:14px;padding:12px;margin-bottom:10px;display:flex;gap:12px;align-items:center;box-shadow:0 1px 2px rgba(0,40,80,.08),0 8px 16px -8px rgba(0,40,80,.22)}
+.D .tile .g{flex:none}
+.D .tile h3{margin:0 0 3px;font-size:15px;line-height:1.25}
+.D .tile small{color:var(--grey);font-size:11.5px}
+.D .tile .k{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.D .tile.alert .k{color:var(--red)}
+.D .score{background:#fff;border-radius:18px;padding:14px;margin-top:16px;box-shadow:0 1px 2px rgba(0,40,80,.08),0 14px 26px -12px rgba(0,40,80,.3)}
+.D .score h2{margin:0;font-size:17px}
+.D .score .row{display:flex;gap:10px;align-items:center;margin-top:6px}
+.D .legend{font-size:11.5px;color:var(--grey);line-height:1.7}
+.D .legend b{color:var(--ink)}
+.D .sq{display:flex;gap:5px;margin-top:10px}
+.D .sq i{flex:1;height:26px;border-radius:6px;display:grid;place-items:center;font-style:normal;font-size:10px;font-weight:700;color:#fff}
+.D .rc{margin-top:10px;font-size:12px;border-left:3px solid var(--bright);padding:2px 0 2px 9px;color:#3b3f47;font-style:italic}
+.D .rc small{display:block;color:var(--blue);font-style:normal;font-weight:700;margin-top:2px}
+
+/* ================= F. STAT-ON-CARD (Kalshi-style) ================= */
+.F{background:#f4f6f9;min-height:100%;padding:16px 14px 26px;font-family:"DM Sans",sans-serif}
+.F .hi{display:flex;justify-content:space-between;align-items:center}
+.F .hi b{font-family:Lato;font-weight:900;font-size:24px;color:var(--blue);letter-spacing:.04em}
+.F h1{font-size:26px;margin:14px 0 12px;letter-spacing:-.02em}
+.F .ev{background:#fff;border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,40,80,.08),0 10px 20px -10px rgba(0,40,80,.28)}
+.F .ev .q{display:flex;gap:8px;justify-content:space-between;align-items:flex-start}
+.F .ev .q span{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--grey)}
+.F .ev .q b{font-size:12px;color:var(--blue)}
+.F .ev h3{margin:6px 0 10px;font-size:15px;line-height:1.3;font-weight:600}
+.F .stat{display:flex;align-items:baseline;gap:8px}
+.F .stat .n{font-size:40px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.F .stat .u{font-size:12.5px;color:var(--grey)}
+.F .gauge{position:relative;height:10px;background:#e8ebf0;border-radius:99px;margin:12px 0 5px}
+.F .gauge i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:linear-gradient(90deg,var(--bright),var(--blue))}
+.F .gauge.r i{background:linear-gradient(90deg,#e56b60,var(--red))}
+.F .gauge em{position:absolute;top:-4px;bottom:-4px;width:2px;background:#16181d}
+.F .gl{display:flex;justify-content:space-between;font-size:11px;color:var(--grey)}
+.F .btns{display:flex;gap:8px;margin-top:12px}
+.F .btns span{flex:1;text-align:center;font-size:12.5px;font-weight:700;padding:9px 0;border-radius:10px;background:var(--tint);color:var(--deep)}
+.F .btns span.g{background:#eef0f3;color:var(--grey)}
+.F .lines{background:#fff;border-radius:16px;padding:2px 14px;box-shadow:0 1px 2px rgba(0,40,80,.08),0 8px 16px -10px rgba(0,40,80,.25)}
+.F .lines div{display:flex;gap:8px;padding:11px 0;border-bottom:1px solid #eceef2;font-size:13px}
+.F .lines div:last-child{border:0}
+.F .lines span:last-child{margin-left:auto;color:var(--grey)}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>FINN design previews</h1>
+  <p>The same real filings from Fri 13 Nov in six directions: our three picks (A, B, E) and three inspired by apps from the shortlist (C, D, F). Our colour palette throughout; only layout, type and depth change. Charts marked <b>sample</b> are illustrative until the results card exists. Scroll inside each phone.</p>
+</div>
+<div class="grid" id="grid"></div>
+
+<script>
+// Real filings (from the app's snapshot data, 7-day window, price ±3%, volume 1.5x).
+const D = {
+  results: { ticker: "IRCTC", company: "Indian Railway Catering And Tourism Corporation", title: "Financial results for the period ended 30 September 2026", when: "Thu 12 Nov, 5:32 pm", kind: "Results" },
+  mgmt: [
+    { ticker: "HDFCBANK", company: "HDFC Bank", title: "Change in Director(s) of the company", when: "Fri 13 Nov, 4:35 pm" },
+    { ticker: "DMART", company: "Avenue Supermarts", title: "Changes in Senior Management Personnel of the Company", when: "Fri 13 Nov, 1:17 pm" },
+  ],
+  alerts: [
+    { ticker: "PIDILITIND", company: "Pidilite Industries", type: "price", value: -3.42, limit: 3, when: "Fri 13 Nov" },
+    { ticker: "IRCTC", company: "IRCTC", type: "volume", value: 1.6, limit: 1.5, when: "Fri 13 Nov" },
+  ],
+  line: { ticker: "LT", kind: "Order win", title: "Bagging/Receiving of orders/contracts", when: "Mon 9 Nov" },
+  routine: 19,
+};
+const strip = [1,1,1,1,2,1,1,0,1,1,1,1,0,0,0,0,0,2]; // 0 quiet, 1 filing, 2 alert (illustrative layout of 18 stocks)
+
+const spark = (w, h, color, fill) => {
+  const pts = [38,40,39,42,41,43,42,44,43,45,44,46,45,47,38,34]; // sample shape ending in a drop
+  const max = Math.max(...pts), min = Math.min(...pts), step = w / (pts.length - 1);
+  const xy = pts.map((p, i) => [i * step, h - 3 - ((p - min) / (max - min)) * (h - 8)]);
+  const line = xy.map(p => p.join(",")).join(" ");
+  const area = `0,${h} ${line} ${w},${h}`;
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${fill ? `<polygon points="${area}" fill="${fill}"/>` : ""}<polyline points="${line}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${xy.at(-1)[0]}" cy="${xy.at(-1)[1]}" r="3.5" fill="${color}"/></svg>`;
+};
+const bars = (w, h, color, light) => {
+  const v = [58,62,60,68,76]; // sample: last five quarters
+  const bw = (w - 4 * 5) / 5;
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${v.map((x, i) => `<rect x="${i * (bw + 5)}" y="${h - x / 100 * h}" width="${bw}" height="${x / 100 * h}" rx="3" fill="${i === 4 ? color : light}"/>`).join("")}</svg>`;
+};
+const radar = (size, color) => {
+  const c = size / 2, r = size / 2 - 6, vals = [.82, .55, .7, .9, .45];
+  const pt = (i, k) => { const a = -Math.PI / 2 + i * 2 * Math.PI / 5; return [c + Math.cos(a) * r * k, c + Math.sin(a) * r * k]; };
+  const ring = k => [0,1,2,3,4].map(i => pt(i, k).join(",")).join(" ");
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><polygon points="${ring(1)}" fill="#f4f7fb" stroke="#d6dde6"/><polygon points="${ring(.5)}" fill="none" stroke="#e1e7ee"/>${[0,1,2,3,4].map(i => `<line x1="${c}" y1="${c}" x2="${pt(i,1)[0]}" y2="${pt(i,1)[1]}" stroke="#e1e7ee"/>`).join("")}<polygon points="${vals.map((k,i)=>pt(i,k).join(",")).join(" ")}" fill="${color}" fill-opacity=".28" stroke="${color}" stroke-width="2"/></svg>`;
+};
+const mono = t => t.slice(0, 2);
+const mv = a => a.type === "price" ? `${a.value.toFixed(1)}%` : `${a.value.toFixed(1)}×`;
+
+const views = {
+A: () => `<div class="A">
+  <div class="mast"><b>FINN</b><i>The Brief</i></div>
+  <div class="date">Sunday 15 November 2026 · 18 stocks · last 7 days</div>
+  <h1>Three things matter this week.</h1>
+  <p class="dek">Everything else was routine. We hid ${D.routine} filings so you don’t have to read them.</p>
+  <article class="lead">
+    <div class="kick">Results · ${D.results.ticker}</div>
+    <h2>${D.results.company} reports results for the quarter ended 30 September</h2>
+    <div class="row"><p class="by">Filed ${D.results.when}<br><a href="#">Open filing ↗</a></p><div style="text-align:right">${bars(96, 40, "#005da3", "#bcd3e6")}<div class="sample">sample</div></div></div>
+  </article>
+  <div class="sec">Unusual moves</div>
+  ${D.alerts.map(a => `<div class="story"><div class="kick r">${a.type === "price" ? "Price" : "Volume"} · ${a.ticker}</div>
+    <div class="row"><h3>${a.type === "price" ? a.ticker + " fell " + Math.abs(a.value) + "%" : a.ticker + " traded " + a.value + "× its usual volume"}</h3>${a.type === "price" ? spark(78, 34, "#b3261e") : ""}</div>
+    <p class="by">${a.when} · No filing explains this move.</p></div>`).join("")}
+  <div class="sec">Management</div>
+  ${D.mgmt.map(m => `<div class="story"><div class="kick">${m.ticker}</div><h3>${m.title}</h3><p class="by">${m.when} · <a href="#">Open filing ↗</a></p></div>`).join("")}
+  <div class="sec">Also filed</div>
+  <ul class="lines"><li><b>${D.line.ticker}</b> ${D.line.kind}: ${D.line.title}<span>${D.line.when}</span></li></ul>
+  <div class="foot"><span>That’s everything that matters.</span><span>Routine (${D.routine}) ▾</span></div>
+</div>`,
+
+B: () => `<div class="B"><div class="tear top"></div><div class="paper">
+  <div class="c brand">FINN</div>
+  <div class="c">DAILY RECEIPT</div>
+  <div class="c" style="color:#6a6970;margin-top:2px">NSE · 15 NOV 2026 · 18 STOCKS · 7 DAYS</div>
+  <hr class="dash">
+  <div class="c big">3 ITEMS MATTER</div>
+  <hr class="dash">
+  <div class="item"><div class="top"><span class="t">01 RESULTS</span><span>${D.results.ticker}</span></div>
+    <p>${D.results.title}</p>
+    <p class="ref">FILED ${D.results.when.toUpperCase()}</p>
+    <div style="margin-top:6px;display:flex;align-items:flex-end;justify-content:space-between">${bars(110, 34, "#16181d", "#c7ccd3")}<span class="stamp">VERIFIED SOURCE</span></div><div class="sample">sample</div></div>
+  <hr class="dash">
+  ${D.alerts.map((a, i) => `<div class="item alert"><div class="top"><span class="t">0${i + 2} ${a.type === "price" ? "PRICE" : "VOLUME"}</span><span>${a.ticker}</span></div>
+    <p>${a.type === "price" ? "DOWN " + Math.abs(a.value).toFixed(2) + "% (LIMIT ±" + a.limit + "%)" : a.value.toFixed(1) + "× AVG VOLUME (LIMIT " + a.limit + "×)"}</p>
+    <p class="ref">${a.when.toUpperCase()} · NO FILING EXPLAINS THIS MOVE</p>${i === 0 ? `<span class="stamp r" style="margin-top:6px">ALERT</span>` : ""}</div><hr class="dash">`).join("")}
+  <div class="item"><div class="top"><span class="t">MANAGEMENT</span><span>${D.mgmt[0].ticker}</span></div><p>${D.mgmt[0].title}</p><p class="ref">FILED ${D.mgmt[0].when.toUpperCase()}</p></div>
+  <div class="item"><div class="top"><span class="t">MANAGEMENT</span><span>${D.mgmt[1].ticker}</span></div><p>${D.mgmt[1].title}</p><p class="ref">FILED ${D.mgmt[1].when.toUpperCase()}</p></div>
+  <hr class="dash">
+  <div class="item"><div class="top"><span class="t">ALSO FILED</span><span>${D.line.ticker}</span></div><p>${D.line.kind.toUpperCase()}: ${D.line.title}</p></div>
+  <hr class="dash">
+  <div class="tot"><span>ITEMS THAT MATTER</span><span>3</span></div>
+  <div class="tot"><span>UNUSUAL MOVES</span><span>2</span></div>
+  <div class="tot b"><span>ROUTINE HIDDEN</span><span>${D.routine}</span></div>
+  <hr class="dash">
+  <div class="c" style="color:#6a6970">THANK YOU. THAT IS EVERYTHING.</div>
+  <div class="bar"></div><div class="c" style="font-size:10px;color:#6a6970;margin-bottom:10px">FINN-20261115-0001</div>
+</div><div class="tear"></div></div>`,
+
+E: () => `<div class="E">
+  <div class="hdr"><b>FINN</b><span class="led"><i></i>Live · NSE</span></div>
+  <div class="display">
+    <div class="n">03</div><div class="l">Items need you · last 7 days</div>
+    <div class="strip">${strip.map(s => `<i class="${s === 1 ? "on" : s === 2 ? "al" : ""}"></i>`).join("")}</div>
+    <div class="l" style="margin-top:8px">12 of 18 stocks active</div>
+  </div>
+  <div class="sec">Result</div>
+  <div class="mod"><div class="tag"><span>${D.results.ticker}</span><em>Results</em></div><h3>${D.results.title}</h3>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end"><div class="m">FILED ${D.results.when.toUpperCase()}</div><div>${bars(86, 32, "#005da3", "#aebccb")}</div></div><div class="sample" style="text-align:right">sample</div></div>
+  <div class="sec">Unusual moves</div>
+  ${D.alerts.map(a => `<div class="mod alert"><div class="tag"><span>${a.ticker}</span><em>${a.type === "price" ? "Price" : "Volume"}</em></div>
+    <div style="display:flex;justify-content:space-between;align-items:center"><div><h3 style="margin-bottom:2px">${a.type === "price" ? "Down " + Math.abs(a.value).toFixed(1) + "%" : a.value.toFixed(1) + "× volume"}</h3><div class="m">NO FILING EXPLAINS THIS MOVE</div></div>
+    <div style="font-family:DotGothic16;font-size:30px;color:#b3261e">${mv(a)}</div></div></div>`).join("")}
+  <div class="sec">Management</div>
+  ${D.mgmt.map(m => `<div class="mod"><div class="tag"><span>${m.ticker}</span><em>Change</em></div><h3>${m.title}</h3><div class="m">FILED ${m.when.toUpperCase()}</div></div>`).join("")}
+  <div class="sec">Also filed</div>
+  <div class="mod"><div class="tag"><span>${D.line.ticker}</span><em>${D.line.kind}</em></div><h3>${D.line.title}</h3></div>
+  <div class="mod" style="text-align:center;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#555b66">Routine · ${D.routine} filings hidden</div>
+</div>`,
+
+C: () => `<div class="C">
+  <div class="hi"><b>FINN</b><div class="av">AN</div></div>
+  <h1>3 things matter</h1><p class="sub">Across your 18 stocks, last 7 days.</p>
+  <div class="pillrow" style="margin-bottom:14px"><span>24h</span><span>3d</span><span class="on">7d</span></div>
+  <div class="card hero"><div class="head"><div class="mono">${mono(D.results.ticker)}</div><div><b>${D.results.ticker}</b><small>${D.results.when}</small></div><span class="chip">Results</span></div>
+    <p class="t">${D.results.title}</p><div style="margin-top:10px">${bars(300, 48, "#ffffff", "rgba(255,255,255,.35)")}</div><div class="sample" style="color:#cfe3f3;margin-top:3px">sample</div></div>
+  <div class="sechd">Unusual moves</div>
+  <div class="card"><div class="head"><div class="mono" style="background:var(--redtint);color:var(--red)">${mono("PIDILITIND")}</div><div><b>PIDILITIND</b><small>${D.alerts[0].when}</small></div><span class="chip r">−3.4%</span></div>
+    <div class="spark">${spark(300, 54, "#b3261e", "rgba(179,38,30,.1)")}</div><p class="t" style="font-size:13px;color:var(--grey);margin-top:4px">No filing explains this move.</p></div>
+  <div class="card"><div class="head"><div class="mono" style="background:var(--redtint);color:var(--red)">${mono("IRCTC")}</div><div><b>IRCTC</b><small>${D.alerts[1].when}</small></div><span class="chip r">1.6× volume</span></div></div>
+  <div class="sechd">Management</div>
+  ${D.mgmt.map(m => `<div class="card"><div class="head"><div class="mono">${mono(m.ticker)}</div><div><b>${m.ticker}</b><small>${m.when}</small></div><span class="chip">Change</span></div><p class="t">${m.title}</p></div>`).join("")}
+  <div class="card" style="text-align:center;color:var(--grey);font-size:13px">Routine (${D.routine}) ▾</div>
+</div>`,
+
+D: () => `<div class="D">
+  <div class="hi"><b>FINN</b><span class="sample">7d</span></div>
+  <h1>3 things matter</h1>
+  <div class="tile"><div class="g">${radar(58, "#005da3")}</div><div><div class="k">Results · ${D.results.ticker}</div><h3>${D.results.title}</h3><small>${D.results.when}</small></div></div>
+  ${D.alerts.map(a => `<div class="tile alert"><div class="g">${a.type === "price" ? spark(58, 40, "#b3261e") : bars(58, 40, "#b3261e", "#e8c0bd")}</div><div><div class="k">${a.type === "price" ? "Price" : "Volume"} · ${a.ticker}</div><h3>${a.type === "price" ? "Down " + Math.abs(a.value).toFixed(1) + "%" : a.value.toFixed(1) + "× usual volume"}</h3><small>No filing explains this move</small></div></div>`).join("")}
+  ${D.mgmt.map(m => `<div class="tile"><div class="g"><div style="width:58px;height:58px;border-radius:14px;background:var(--tint);display:grid;place-items:center;font-weight:700;color:var(--deep)">${mono(m.ticker)}</div></div><div><div class="k">Management · ${m.ticker}</div><h3>${m.title}</h3><small>${m.when}</small></div></div>`).join("")}
+  <div class="score"><div class="sample">Pull side · research scorecard · sample</div><h2>ASTRAL · Promised vs delivered</h2>
+    <div class="row">${radar(112, "#005da3")}<div class="legend"><b>Delivered 2 of 4</b><br>Margins · Capacity<br>Growth · Guidance<br>Cash conversion</div></div>
+    <div class="sq"><i style="background:#2e7ab4">D</i><i style="background:#2e7ab4">D</i><i style="background:#c98a1b">P</i><i style="background:#b3261e">M</i></div>
+    <div class="rc">“We expect low double-digit volume growth.”<small>Concall, page 4 · tap for source</small></div></div>
+</div>`,
+
+F: () => {
+  const gp = Math.min(100, Math.abs(D.alerts[0].value) / (D.alerts[0].limit * 2) * 100), gv = Math.min(100, D.alerts[1].value / (D.alerts[1].limit * 2) * 100);
+  return `<div class="F">
+  <div class="hi"><b>FINN</b><span class="sample">7d · 18 stocks</span></div>
+  <h1>3 things matter</h1>
+  <div class="ev"><div class="q"><span>Results · ${D.results.ticker}</span><b>${D.results.when}</b></div><h3>${D.results.title}</h3>
+    <div class="stat"><span class="n">Q2</span><span class="u">FY27 results filed</span></div>
+    <div style="margin-top:10px">${bars(300, 44, "#005da3", "#bcd3e6")}</div><div class="sample">sample</div>
+    <div class="btns"><span>Open filing</span><span class="g">Research ${D.results.ticker}</span></div></div>
+  <div class="ev"><div class="q"><span>Price · ${D.alerts[0].ticker}</span><b>${D.alerts[0].when}</b></div><h3>Fell past your ±${D.alerts[0].limit}% limit. No filing explains this move.</h3>
+    <div class="stat"><span class="n" style="color:var(--red)">−3.4%</span><span class="u">close vs previous close</span></div>
+    <div class="gauge r"><i style="width:${gp}%"></i><em style="left:50%"></em></div><div class="gl"><span>0%</span><span>your limit ±${D.alerts[0].limit}%</span><span>±${D.alerts[0].limit * 2}%</span></div></div>
+  <div class="ev"><div class="q"><span>Volume · ${D.alerts[1].ticker}</span><b>${D.alerts[1].when}</b></div><h3>Traded above your ${D.alerts[1].limit}× volume limit.</h3>
+    <div class="stat"><span class="n" style="color:var(--red)">1.6×</span><span class="u">20-day average volume</span></div>
+    <div class="gauge r"><i style="width:${gv}%"></i><em style="left:50%"></em></div><div class="gl"><span>0×</span><span>your limit ${D.alerts[1].limit}×</span><span>${D.alerts[1].limit * 2}×</span></div></div>
+  <div class="lines">${D.mgmt.map(m => `<div><b>${m.ticker}</b>${m.title}<span>${m.when.replace(/, .*/, "")}</span></div>`).join("")}<div><b>${D.line.ticker}</b>${D.line.kind}<span>${D.line.when}</span></div><div style="color:var(--grey)">Routine (${D.routine}) hidden<span>▾</span></div></div>
+</div>`;
+}
+};
+
+const meta = [
+  ["A", "A · Editorial front page", "Serif headlines, hairline rules, a lead story. Reads like a briefing, not a feed."],
+  ["B", "B · Receipt", "Thermal-paper ledger, mono type, stamps. Every item shows its receipt, literally."],
+  ["E", "E · Instrument panel", "Hardware modules, a dot-matrix readout and a signal strip. Feels like an instrument."],
+  ["C", "C · Depth cards (Copilot-style)", "Layered shadows, ticker monograms, one gradient hero card. Friendly and polished."],
+  ["D", "D · Scorecard glyphs (Simply Wall St-style)", "Every tile has a small visual glyph; a radar scorecard for the research side."],
+  ["F", "F · Stat on card (Kalshi-style)", "One big number per card with a gauge showing how far past your limit it went."],
+];
+document.getElementById("grid").innerHTML = meta.map(([k, t, d]) =>
+  `<div class="cell"><p class="cap"><b>${t}</b>${d}</p><div class="phone">${views[k]()}</div></div>`).join("");
+</script>
+</body>
+</html>
