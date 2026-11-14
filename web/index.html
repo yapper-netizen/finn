@@ -2,16 +2,489 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#005da3">
   <title>FINN</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23005da3'/%3E%3Ctext x='16' y='23' font-family='Arial' font-weight='700' font-size='20' text-anchor='middle' fill='white'%3EF%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
   <style>
-    body { font-family: system-ui, sans-serif; margin: 0; padding: 24px 16px; background: #0f172a; color: #e2e8f0; }
-    a { color: #7dd3fc; }
+    /* ---------- ENAM theme tokens (FE-11). Colours and fonts taken from enam.com. ---------- */
+    :root {
+      --primary: #005da3;          /* ENAM blue */
+      --primary-bright: #2e7ab4;
+      --primary-deep: #004172;
+      --primary-tint: #e6eff6;
+      --grey: #6a6970;             /* ENAM grey */
+      --border: #d2d2d2;
+      --border-soft: #e6e6ea;
+      --bg: #f4f6f9;
+      --surface: #ffffff;
+      --text: #1b1b1f;
+      --text-muted: #6a6970;
+      --alert: #b3261e;            /* price / volume alerts (not an ENAM colour; needs to read as "look") */
+      --alert-tint: #fbebea;
+      --font-head: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+      --radius: 12px;
+    }
+    html { -webkit-text-size-adjust: 100%; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-body); -webkit-tap-highlight-color: transparent; }
+    [x-cloak] { display: none !important; }
+    h1, h2, h3, .head { font-family: var(--font-head); font-weight: 700; letter-spacing: -0.01em; }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--primary-bright); outline-offset: 2px; }
+
+    #app { max-width: 480px; margin: 0 auto; min-height: 100dvh; padding: 0 16px calc(88px + env(safe-area-inset-bottom)); }
+    .wordmark { font-family: var(--font-head); font-weight: 900; font-size: 26px; color: var(--primary); letter-spacing: 0.04em; line-height: 1; }
+    .tagline { font-size: 12px; color: var(--text-muted); margin: 2px 0 0; }
+
+    /* ---------- pills, chips ---------- */
+    .pill { min-height: 36px; padding: 0 14px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface); font-size: 14px; color: var(--text); }
+    .pill[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .chip { display: inline-block; font-size: 11px; line-height: 1; padding: 4px 8px; border-radius: 6px; background: var(--primary-tint); color: var(--primary-deep); font-weight: 600; }
+    .chip.alert { background: var(--alert-tint); color: var(--alert); }
+    .chip.muted { background: #eeeef1; color: var(--grey); font-weight: 500; }
+
+    /* ---------- cards ---------- */
+    .card { background: var(--surface); border: 1px solid var(--border-soft); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 10px; }
+    .card.alert { border-left-color: var(--alert); }
+    .card h3 { margin: 6px 0 4px; font-size: 16px; line-height: 1.3; font-weight: 700; }
+    .meta { font-size: 12px; color: var(--text-muted); margin: 0; }
+    .why { font-size: 13px; color: var(--text); margin: 6px 0 0; line-height: 1.4; }
+    .why.alert { color: var(--alert); }
+    .link { font-size: 13px; color: var(--primary); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; min-height: 36px; }
+    .section-label { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); margin: 18px 0 8px; }
+    .line { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border-soft); font-size: 14px; line-height: 1.35; }
+    .line:last-child { border-bottom: 0; }
+    .box { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 4px 14px; }
+    .banner { background: var(--primary-tint); color: var(--primary-deep); border-radius: var(--radius); padding: 10px 12px; font-size: 13px; line-height: 1.4; margin-bottom: 12px; }
+    .banner.warn { background: #fdf3e1; color: #7a4a00; }
+
+    /* ---------- signal strip ---------- */
+    .dots { display: flex; justify-content: space-between; margin: 12px 0 4px; }
+    .dot { width: 12px; height: 12px; flex: none; border-radius: 50%; border: 1.5px solid var(--border); background: transparent; }
+    .dot.on { background: var(--primary); border-color: var(--primary); }
+    .dot.alert { background: var(--alert); border-color: var(--alert); }
+
+    /* ---------- tab bar ---------- */
+    .tabbar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--border-soft); padding-bottom: env(safe-area-inset-bottom); z-index: 20; }
+    .tabbar nav { max-width: 480px; margin: 0 auto; display: flex; }
+    .tab { flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; background: none; border: 0; font-size: 11px; color: var(--text-muted); }
+    .tab[aria-current="page"] { color: var(--primary); font-weight: 700; }
+    .tab svg { width: 22px; height: 22px; }
+
+    /* ---------- settings controls ---------- */
+    .setting-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--border-soft); font-size: 15px; min-height: 48px; }
+    .setting-row:last-child { border-bottom: 0; }
+    .switch { width: 46px; height: 28px; border-radius: 99px; border: 0; background: var(--border); position: relative; flex: none; transition: background .15s; }
+    .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; transition: transform .15s; box-shadow: 0 1px 2px rgba(0,0,0,.25); }
+    .switch[aria-checked="true"] { background: var(--primary); }
+    .switch[aria-checked="true"]::after { transform: translateX(18px); }
+    input[type=range] { width: 100%; accent-color: var(--primary); height: 32px; margin: 4px 0; }
+    .ticker { font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #eeeef1; color: var(--text); font-weight: 600; letter-spacing: 0.02em; }
+    .btn { min-height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid var(--primary); background: var(--surface); color: var(--primary); font-weight: 600; font-size: 14px; }
+    .btn.primary { background: var(--primary); color: #fff; }
+
+    /* ---------- skeleton ---------- */
+    .skel { border-radius: 8px; background: linear-gradient(90deg, #e9ebef 25%, #f4f5f7 37%, #e9ebef 63%); background-size: 400% 100%; animation: shimmer 1.4s ease infinite; }
+    @keyframes shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+    @media (prefers-reduced-motion: reduce) { .skel { animation: none; } .switch, .switch::after { transition: none; } }
+    .topbar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--primary-bright); transform-origin: left; animation: load 1.2s ease-in-out infinite; z-index: 30; }
+    @keyframes load { 0% { transform: scaleX(0); } 70% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
   </style>
 </head>
-<body>
-  <h1>FINN</h1>
-  <p>The Today screen is coming next. The server is running.</p>
-  <p><a href="/api/digest">/api/digest</a> · <a href="/health">/health</a></p>
+<body x-data="finn()">
+<noscript><p style="padding:24px">FINN needs JavaScript to run.</p></noscript>
+<div class="topbar" x-show="refreshing" x-cloak></div>
+
+<div id="app" x-cloak>
+
+  <!-- ================= TODAY ================= -->
+  <section x-show="tab === 'today'">
+    <header class="pt-5 pb-1 flex items-start justify-between">
+      <div>
+        <div class="wordmark">FINN</div>
+        <p class="tagline">A filter, not a feed.</p>
+      </div>
+    </header>
+
+    <div class="mt-3 flex gap-2" role="group" aria-label="Time window">
+      <template x-for="w in windows" :key="w.key">
+        <button class="pill" :aria-pressed="period === w.key" @click="setWindow(w.key)" x-text="w.key"></button>
+      </template>
+    </div>
+
+    <!-- loading skeleton -->
+    <div x-show="loading && !data" class="mt-5" aria-busy="true">
+      <div class="skel" style="height:28px;width:70%"></div>
+      <div class="skel mt-2" style="height:14px;width:45%"></div>
+      <div class="skel mt-5" style="height:104px"></div>
+      <div class="skel mt-3" style="height:104px"></div>
+      <div class="skel mt-3" style="height:64px"></div>
+      <p class="meta mt-4" x-show="slow" x-cloak>Waking the server. The first load can take up to 30 seconds.</p>
+    </div>
+
+    <!-- error -->
+    <div x-show="error && !data" x-cloak class="mt-6 text-center">
+      <h2 class="text-lg">Couldn't load Today</h2>
+      <p class="meta mt-1" x-text="error"></p>
+      <button class="btn primary mt-4" @click="load()">Try again</button>
+    </div>
+
+    <!-- content -->
+    <div x-show="data" x-cloak>
+      <template x-if="data">
+        <div>
+          <div class="mt-5">
+            <h1 class="text-2xl leading-tight" x-text="headline"></h1>
+            <p class="meta mt-1" x-text="subline"></p>
+          </div>
+
+          <div class="banner mt-3" x-show="data.widened" x-text="widenedText"></div>
+          <div class="banner warn mt-3" x-show="data.fallback_used">Live data unavailable right now. Showing the last saved copy.</div>
+
+          <!-- signal strip (T2) -->
+          <div class="dots" role="img" :aria-label="stripLabel">
+            <template x-for="s in strip" :key="s.t">
+              <span class="dot" :class="s.state" :title="s.t"></span>
+            </template>
+          </div>
+          <p class="meta" x-text="stripLabel"></p>
+
+          <!-- High cards -->
+          <div class="section-label" x-show="data.cards.length" x-text="'What matters'"></div>
+          <template x-for="c in data.cards" :key="c.ticker + c.id + c.date">
+            <article class="card" :class="c.moved_same_day ? 'alert' : ''">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="chip" x-text="kindLabel(c.kind)"></span>
+                <template x-for="a in c.alerts" :key="a.type">
+                  <span class="chip alert" x-text="alertChip(a)"></span>
+                </template>
+              </div>
+              <h3 x-text="cleanTitle(c)"></h3>
+              <p class="meta"><span class="font-bold" x-text="c.ticker"></span> · <span x-text="shortCompany(c.company)"></span> · <span x-text="fmtDateTime(c.date)"></span></p>
+              <p class="why alert" x-show="c.moved_same_day">The stock also moved on the day of this filing.</p>
+              <a class="link" x-show="c.pdf_url" :href="c.pdf_url" target="_blank" rel="noopener">Open filing ↗</a>
+            </article>
+          </template>
+
+          <!-- alert-only (T4) -->
+          <div class="section-label" x-show="data.alert_only.length">Unusual moves</div>
+          <template x-for="a in data.alert_only" :key="a.ticker + a.type">
+            <article class="card alert">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="chip alert" x-text="a.type === 'price' ? 'Price move' : 'Volume spike'"></span>
+              </div>
+              <h3 x-text="alertHeadline(a)"></h3>
+              <p class="meta"><span class="font-bold" x-text="a.ticker"></span> · <span x-text="shortCompany(a.company)"></span> · <span x-text="fmtDay(a.date)"></span></p>
+              <p class="why">No filing explains this move.</p>
+            </article>
+          </template>
+
+          <!-- Medium one-liners -->
+          <div class="section-label" x-show="data.summaries.length">Also filed</div>
+          <div class="box" x-show="data.summaries.length">
+            <template x-for="m in data.summaries" :key="m.ticker + m.id + m.date">
+              <div class="line">
+                <div class="flex-1 min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="font-bold" x-text="m.ticker"></span>
+                    <span class="chip muted" x-text="kindLabel(m.kind)"></span>
+                    <template x-for="a in m.alerts" :key="a.type"><span class="chip alert" x-text="alertChip(a)"></span></template>
+                  </div>
+                  <p class="mt-1" style="margin-bottom:0" x-text="cleanTitle(m)"></p>
+                  <p class="meta mt-1" x-text="fmtDateTime(m.date)"></p>
+                </div>
+                <a class="link self-start" x-show="m.pdf_url" :href="m.pdf_url" target="_blank" rel="noopener" aria-label="Open filing">↗</a>
+              </div>
+            </template>
+          </div>
+
+          <!-- empty state (A6) -->
+          <div class="text-center mt-8 mb-4" x-show="isQuiet">
+            <h2 class="text-lg">Behind every stock is a company.</h2>
+            <p class="meta mt-1">Nothing that matters changed at yours in this window.</p>
+          </div>
+
+          <!-- Routine (collapsed) -->
+          <button class="box w-full mt-4 flex items-center justify-between" style="min-height:48px;text-align:left;border-style:dashed"
+                  @click="routineOpen = !routineOpen" :aria-expanded="routineOpen" x-show="data.routine_count > 0">
+            <span class="text-sm" style="color:var(--text-muted)" x-text="'Routine (' + data.routine_count + ')'"></span>
+            <span aria-hidden="true" style="color:var(--text-muted)" x-text="routineOpen ? '▴' : '▾'"></span>
+          </button>
+          <div class="box mt-2" x-show="routineOpen && data.routine_count > 0" x-cloak>
+            <template x-for="r in data.routine" :key="r.ticker + r.id + r.date">
+              <div class="line" style="font-size:13px">
+                <div class="flex-1 min-w-0">
+                  <span class="font-bold" x-text="r.ticker"></span>
+                  <span class="chip muted ml-1" x-text="r.muted ? kindLabel(r.kind) + ' (off)' : kindLabel(r.kind)"></span>
+                  <p class="mt-1" style="margin-bottom:0;color:var(--text-muted)" x-text="cleanTitle(r)"></p>
+                  <p class="meta" x-text="fmtDateTime(r.date)"></p>
+                </div>
+                <a class="link self-start" x-show="r.pdf_url" :href="r.pdf_url" target="_blank" rel="noopener" aria-label="Open filing">↗</a>
+              </div>
+            </template>
+          </div>
+
+          <!-- done state (T1) -->
+          <p class="text-center meta mt-6" x-show="!isQuiet">
+            That's everything that matters.
+            <span x-show="data.routine_count > 0" x-text="data.routine_count + ' routine filing' + (data.routine_count === 1 ? '' : 's') + ' hidden.'"></span>
+          </p>
+
+          <p class="meta text-center mt-5" x-text="footer"></p>
+          <p class="meta text-center mt-1" x-show="data.errors.length && !data.fallback_used"
+             x-text="data.errors.length + ' item(s) could not refresh; saved data used where available.'"></p>
+        </div>
+      </template>
+    </div>
+  </section>
+
+  <!-- ================= RESEARCH (stub until the research build) ================= -->
+  <section x-show="tab === 'research'" x-cloak>
+    <header class="pt-5"><div class="wordmark">FINN</div></header>
+    <div class="mt-8 text-center">
+      <h1 class="text-2xl">Research</h1>
+      <p class="meta mt-2">Ask about any company. Answers come from annual reports and concall transcripts only, every claim with its source.</p>
+      <p class="meta mt-4">Coming in the next build.</p>
+    </div>
+  </section>
+
+  <!-- ================= SETTINGS ================= -->
+  <section x-show="tab === 'settings'" x-cloak>
+    <header class="pt-5"><div class="wordmark">FINN</div></header>
+    <div class="mt-5">
+      <h1 class="text-2xl">Alerts</h1>
+      <p class="meta mt-1">You decide what unusual means. Saved on this device.</p>
+    </div>
+
+    <div class="section-label">Presets</div>
+    <div class="flex flex-wrap gap-2">
+      <template x-for="p in presets" :key="p.name">
+        <button class="pill" :aria-pressed="settings.price === p.price && settings.volume === p.volume"
+                @click="settings.price = p.price; settings.volume = p.volume" x-text="p.name + ' (±' + p.price + '%, ' + p.volume + '×)'"></button>
+      </template>
+    </div>
+
+    <div class="section-label">Price move</div>
+    <div class="box" style="padding:12px 14px">
+      <label class="setting-row" style="border:0;padding:0" for="price">
+        <span>Alert when a stock moves beyond</span>
+        <strong class="head" x-text="'±' + settings.price + '%'"></strong>
+      </label>
+      <input id="price" type="range" min="1" max="10" step="0.5" x-model.number="settings.price">
+      <p class="meta">Close versus the previous close.</p>
+    </div>
+
+    <div class="section-label">Volume</div>
+    <div class="box" style="padding:12px 14px">
+      <label class="setting-row" style="border:0;padding:0" for="volume">
+        <span>Alert when volume is above</span>
+        <strong class="head" x-text="settings.volume + '× average'"></strong>
+      </label>
+      <input id="volume" type="range" min="1" max="5" step="0.5" x-model.number="settings.volume">
+      <p class="meta">Versus the average of the previous 20 trading days.</p>
+    </div>
+
+    <div class="section-label">Filing types you care about</div>
+    <p class="meta mb-2">Switch a type off and its filings go to Routine.</p>
+    <template x-for="tier in ['High', 'Medium', 'Low']" :key="tier">
+      <div>
+        <p class="meta mt-3 mb-1" style="font-weight:700" x-text="tier === 'High' ? 'Can change a view' : tier === 'Medium' ? 'Worth a line' : 'Usually routine'"></p>
+        <div class="box">
+          <template x-for="c in categoriesByTier(tier)" :key="c.key">
+            <div class="setting-row">
+              <span x-text="kindLabel(c.key)"></span>
+              <button class="switch" role="switch" :aria-checked="!settings.off.includes(c.key)" :aria-label="kindLabel(c.key)" @click="toggleCategory(c.key)"></button>
+            </div>
+          </template>
+        </div>
+      </div>
+    </template>
+
+    <div class="section-label">Your portfolio</div>
+    <div class="flex flex-wrap gap-2" x-show="cfg">
+      <template x-for="t in (cfg ? cfg.portfolio : [])" :key="t"><span class="ticker" x-text="t"></span></template>
+    </div>
+
+    <div class="mt-6">
+      <button class="btn" @click="resetSettings()">Reset to defaults</button>
+    </div>
+  </section>
+</div>
+
+<!-- ================= TAB BAR ================= -->
+<div class="tabbar">
+  <nav aria-label="Main">
+    <button class="tab" :aria-current="tab === 'today' ? 'page' : null" @click="go('today')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Today
+    </button>
+    <button class="tab" :aria-current="tab === 'research' ? 'page' : null" @click="go('research')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Research
+    </button>
+    <button class="tab" :aria-current="tab === 'settings' ? 'page' : null" @click="go('settings')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>Settings
+    </button>
+  </nav>
+</div>
+
+<script>
+const STORE = 'finn.v1';
+const DEFAULTS = { price: 5, volume: 2, off: [] };
+const KIND_LABELS = {
+  results: 'Results', management_change: 'Management change', m_and_a: 'M&A', litigation: 'Litigation',
+  credit_rating: 'Credit rating', pledging: 'Pledging', fund_raise: 'Fund raise', capex: 'Capex',
+  dividend: 'Dividend', bonus_split: 'Bonus / split', insider_trading: 'Insider trading', order_win: 'Order win',
+  board_outcome: 'Board outcome', earnings_call: 'Earnings call', investor_meetings: 'Investor meetings',
+  agm_egm: 'AGM / EGM', postal_ballot: 'Postal ballot', press_release: 'Press release', unclassified: 'Other filing',
+};
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+function readStore() {
+  try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { return {}; }
+}
+function writeStore(obj) {
+  try { localStorage.setItem(STORE, JSON.stringify(obj)); } catch (e) { /* private mode: settings just won't persist */ }
+}
+
+function finn() {
+  return {
+    tab: 'today',
+    period: '24h',
+    windows: [{ key: '24h' }, { key: '3d' }, { key: '7d' }],
+    cfg: null,
+    data: null,
+    loading: true,
+    refreshing: false,
+    slow: false,
+    error: null,
+    routineOpen: false,
+    settings: { ...DEFAULTS, off: [] },
+    presets: [
+      { name: 'Calm', price: 5, volume: 3 },
+      { name: 'Balanced', price: 5, volume: 2 },
+      { name: 'Watchful', price: 3, volume: 1.5 },
+    ],
+    _ctl: null,
+    _timer: null,
+
+    init() {
+      const s = readStore();
+      if (s.window && ['24h', '3d', '7d'].includes(s.window)) this.period = s.window;
+      if (s.settings) this.settings = { ...DEFAULTS, ...s.settings, off: Array.isArray(s.settings.off) ? s.settings.off : [] };
+      this.$watch('settings', () => { this.persist(); this.scheduleLoad(); }, { deep: true });
+      fetch('/api/config').then(r => r.json()).then(c => { this.cfg = c; }).catch(() => {});
+      this.load();
+    },
+
+    persist() { writeStore({ window: this.period, settings: this.settings }); },
+    go(t) { this.tab = t; window.scrollTo({ top: 0 }); },
+    setWindow(w) { this.period = w; this.persist(); this.load(); },
+    scheduleLoad() { clearTimeout(this._timer); this._timer = setTimeout(() => this.load(), 350); },
+    toggleCategory(key) {
+      const off = new Set(this.settings.off);
+      off.has(key) ? off.delete(key) : off.add(key);
+      this.settings.off = [...off];
+    },
+    resetSettings() { this.settings = { ...DEFAULTS, off: [] }; },
+    categoriesByTier(tier) { return this.cfg ? this.cfg.categories.filter(c => c.tier === tier) : []; },
+
+    async load() {
+      if (this._ctl) this._ctl.abort();
+      const ctl = this._ctl = new AbortController();
+      const first = !this.data;
+      this.error = null; this.slow = false;
+      if (first) this.loading = true; else this.refreshing = true;
+      const slowTimer = setTimeout(() => { this.slow = true; }, 4000);
+      const q = new URLSearchParams({ window: this.period, price: this.settings.price, volume: this.settings.volume, off: this.settings.off.join(',') });
+      try {
+        const r = await fetch('/api/digest?' + q, { signal: ctl.signal });
+        const j = await r.json();
+        if (!r.ok) throw new Error(j.error || 'Something went wrong.');
+        this.data = j;
+      } catch (e) {
+        if (e.name === 'AbortError') return;   // a newer request replaced this one
+        this.error = e.message === 'Failed to fetch' ? 'No connection to the server. Check your internet and try again.' : e.message;
+      } finally {
+        clearTimeout(slowTimer);
+        if (this._ctl === ctl) { this.loading = false; this.refreshing = false; this.slow = false; }
+      }
+    },
+
+    // ---------- derived text ----------
+    get nMatter() { return this.data ? this.data.cards.length + this.data.alert_only.length : 0; },
+    get isQuiet() { return !!this.data && this.nMatter === 0 && this.data.summaries.length === 0; },
+    get headline() {
+      const n = this.nMatter;
+      if (!this.data) return '';
+      if (n === 0) return 'Nothing needs you right now';
+      return n + (n === 1 ? ' thing matters' : ' things matter');
+    },
+    get subline() {
+      const n = this.cfg ? this.cfg.portfolio.length : 18;
+      const w = { '24h': 'the last 24 hours', '3d': 'the last 3 days', '7d': 'the last 7 days' }[this.period];
+      return 'Across your ' + n + ' stocks, ' + w + '.';
+    },
+    get widenedText() {
+      const w = { '24h': '24 hours', '3d': '3 days', '7d': '7 days' }[this.period];
+      return 'Nothing was filed in the last ' + w + '. Showing the most recent day with filings: ' + this.fmtDay(this.data.as_of) + '.';
+    },
+    get strip() {
+      if (!this.data || !this.cfg) return [];
+      const seen = new Set(), alert = new Set();
+      for (const g of ['cards', 'summaries', 'routine']) for (const i of this.data[g]) { seen.add(i.ticker); if (g !== 'routine' && i.moved_same_day) alert.add(i.ticker); }
+      for (const a of this.data.alert_only) { seen.add(a.ticker); alert.add(a.ticker); }
+      return this.cfg.portfolio.map(t => ({ t, state: alert.has(t) ? 'alert' : seen.has(t) ? 'on' : '' }));
+    },
+    get stripLabel() {
+      const active = this.strip.filter(s => s.state);
+      if (!this.strip.length) return '';
+      return active.length ? active.length + ' of ' + this.strip.length + ' stocks had activity: ' + active.map(s => s.t).join(', ') : 'No activity at any of your ' + this.strip.length + ' stocks.';
+    },
+    get footer() {
+      if (!this.data) return '';
+      const d = this.data.session_date ? 'Prices: end of day ' + this.fmtDay(this.data.session_date) + '. ' : '';
+      return d + 'Filings: NSE. Updated ' + this.fmtTime(this.data.data_as_of) + '.';
+    },
+
+    // ---------- formatting ----------
+    kindLabel(k) { return KIND_LABELS[k] || k; },
+    shortCompany(n) { return (n || '').replace(/\s+(Limited|Ltd\.?)$/i, '').replace(/\s+Private$/i, ''); },
+    cleanTitle(item) {
+      let t = (item.title || '').replace(/\s+/g, ' ').trim();
+      const titled = t.match(/titled\s+"?(.+?)"?\.?$/i);
+      if (titled) t = titled[1];
+      t = t.replace(/^.*?(informed the Exchange|submitted to the Exchange)[^A-Za-z0-9]*(about|regarding|that)?\s*/i, '');
+      t = t.replace(/^['"]+|['"]+$/g, '').replace(/\.$/, '').trim();
+      if (!t || /^general updates$/i.test(t)) t = item.category || this.kindLabel(item.kind);
+      t = t.charAt(0).toUpperCase() + t.slice(1);
+      return t.length > 150 ? t.slice(0, 147) + '…' : t;
+    },
+    alertChip(a) { return a.type === 'price' ? 'Moved ' + (a.value > 0 ? '+' : '') + a.value.toFixed(1) + '%' : 'Volume ' + a.value.toFixed(1) + '×'; },
+    alertHeadline(a) {
+      return a.type === 'price'
+        ? shortName(a) + (a.value < 0 ? ' fell ' : ' rose ') + Math.abs(a.value).toFixed(1) + '%'
+        : shortName(a) + ' traded ' + a.value.toFixed(1) + '× its usual volume';
+      function shortName(x) { return x.ticker; }
+    },
+    fmtDay(iso) {
+      if (!iso) return '';
+      const [y, m, d] = iso.slice(0, 10).split('-').map(Number);
+      return DAYS[new Date(y, m - 1, d).getDay()] + ' ' + d + ' ' + MONTHS[m - 1];
+    },
+    fmtTime(iso) {
+      if (!iso) return '';
+      const [h, mi] = iso.slice(11, 16).split(':').map(Number);
+      return (h % 12 || 12) + ':' + String(mi).padStart(2, '0') + ' ' + (h < 12 ? 'am' : 'pm');
+    },
+    fmtDateTime(iso) { return this.fmtDay(iso) + ', ' + this.fmtTime(iso); },
+  };
+}
+</script>
 </body>
 </html>

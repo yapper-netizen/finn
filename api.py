@@ -9,7 +9,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, Query, Request
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, Response
 
 import config
 from engine.feed import FeedCache
@@ -59,6 +59,12 @@ def index():
     if not WEB_INDEX.exists():
         return error_response("App page not built yet.", 404)
     return FileResponse(WEB_INDEX)
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon() -> Response:
+    """Browsers ask for this by habit; the page declares its own icon, so answer 'nothing here'."""
+    return Response(status_code=204)
 
 
 @app.get("/api/config")

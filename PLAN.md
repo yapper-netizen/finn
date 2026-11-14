@@ -201,17 +201,17 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 
 | ID | P | Screen / task | Decisions | est | Done when |
 |---|---|---|---|---|---|
-| FE-1 | P0 | [ ] Shell: bottom tab bar (Today · Research · Settings), routing [switching screens without reloading], loading skeletons [grey placeholder shapes while data loads], error and empty states | D-011, D-027 | 1.5 | Usable one-handed at 375px width |
-| FE-2 | P0 | [ ] **Today**: window picker (24h/3d/7d), ≤5 "what matters" cards, alert chips on cards, "Routine (N)" collapsed row, "widened" banner | D-040, D-045, D-046 | 2 | Reads in 10 seconds |
+| FE-1 | P0 | [x] Shell: bottom tab bar (Today · Research · Settings), routing [switching screens without reloading], loading skeletons [grey placeholder shapes while data loads], error and empty states | D-011, D-027 | 1.5 | Usable one-handed at 375px width |
+| FE-2 | P0 | [x] **Today**: window picker (24h/3d/7d), ≤5 "what matters" cards, alert chips on cards, "Routine (N)" collapsed row, "widened" banner | D-040, D-045, D-046 | 2 | Reads in 10 seconds |
 | FE-3 | P0 | [ ] **Detail**: results table (QoQ / YoY coloured), "computed" badges, bank-lite variant, link to source PDF; management card with bio | D-016, D-019, D-048 | 2 | Every number traceable |
 | FE-4 | P0 | [ ] **Research**: ticker search box → scorecard: promise tracker (Delivered / Partial / Missed chips), snapshot + bull vs bear if built; **receipts included** (tap claim → bottom sheet [panel sliding up from the bottom] with quote, page, link) | D-023, D-024, D-041 | 3 | Works for an unknown ticker; 100% of claims tappable |
 | ~~FE-5~~ | — | ~~Receipts~~ — merged into FE-4 | D-043 | 0 | — |
-| FE-6 | P0 | [ ] **Settings**: price %, volume ×, category toggles (EN-18), portfolio list; saved in localStorage | D-029, D-047 | 1 | Change persists after reload |
+| FE-6 | P0 | [x] **Settings**: price %, volume ×, category toggles (EN-18), portfolio list; saved in localStorage | D-029, D-047 | 1 | Change persists after reload |
 | FE-7 | P1 | [ ] Visual polish on top of FE-11: spacing, type scale, dark mode | D-028, D-044 | 1 | Looks deliberate, not template |
 | FE-8 | P1 | [ ] PWA [Progressive Web App: "Add to Home Screen", app icon, full-screen] manifest + icon | D-030 | 0.5 | Installs on Android/iOS |
 | FE-9 | P1 | [ ] Interaction experiment: **"Brief me"** — 3-sentence summary of Today, shown and read aloud via Web Speech API [browser's built-in, free text-to-speech]; built from digest data, no extra AI call | D-011, D-052 | 1.5 | Demo-able in 15 seconds |
 | FE-10 | P2 | [ ] "Seen" state: cards you've opened dim; "since you last looked" | D-046 | 1 | Stored in localStorage |
-| FE-11 | P0 | [ ] ENAM theme tokens: take colours and fonts from ENAM's website into CSS variables [named colour/font settings reused everywhere]; own FINN wordmark, no ENAM logo | D-028, D-044 | 0.5 | All screens use the tokens |
+| FE-11 | P0 | [x] ENAM theme tokens: take colours and fonts from ENAM's website into CSS variables [named colour/font settings reused everywhere]; own FINN wordmark, no ENAM logo | D-028, D-044 | 0.5 | All screens use the tokens |
 | FE-12 | P1 | [ ] **On hold — review after the front-end brainstorm**: (a) the 6-screen set (Today, Results, Management change, Settings, Research, Promise tracker; one per brief item), (b) 17 categories → High / Medium / Low tiers. Decisions stand for the build; redesign only if the brainstorm shows a better structure | D-015, D-058 | 0.5 | Reviewed; kept or changed with a DECISIONS.md entry |
 | FE-13 | P0 | [x] Front-end design v1 decided: recommended picks + 4 M-effort picks + push→pull link → `design/DESIGN_1.md` | D-059 | 0 | Done 2026-11-14 |
 
@@ -330,6 +330,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-064 | Filings source = NSE API | **Decided** — NSE announcements, snapshot fallback | BE-2, BE-3 |
 | D-065 | Today shows every High filing; classifier choices | **Decided** — no card cap, `board_outcome` added, sample 48/50 | EN-2, EN-3, EN-4, EN-18 |
 | D-067 | Web API: live cache + snapshot fallback; alerts merged | **Decided** — stale-while-revalidate, `off` param, alert-only list | API-1, API-2, API-7 |
+| D-068 | Front end v1: shell, Today, Settings, ENAM theme | **Decided** — DESIGN_1 P0 + 6 small picks; light only | FE-1, FE-2, FE-6, FE-11 |
 | D-059 | Front-end design v1 | **Decided** — `design/DESIGN_1.md` is the current design | FE-1..13 |
 | D-060 | Free-tier-only AI keys | **Decided** — one free Gemini key, no billing, no Anthropic | OPS-6 |
 | D-061 | Free-tier model lineup | **Decided** — cheap 3.5-flash-lite, strong 3.5-flash, fallback 3.1-flash-lite | OPS-6, EN-9 |

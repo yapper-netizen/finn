@@ -13,6 +13,7 @@ import config
 from engine.alerts import check_alerts
 from engine.digest import build_digest
 from engine.feed import FeedData, company_name
+from engine.ranker import rank_filings
 
 
 def _alerts_by_ticker(data: FeedData, price: float, volume: float) -> dict[str, list[dict]]:
@@ -36,7 +37,18 @@ def build_today(
     toggles = {c: False for c in (off or set())}
     digest = build_digest(data.filings, alerts, window, toggles, now)
 
-    filed_days = {(f["ticker"], f["date"][:10]) for f in data.filings}
+    for group in ("cards", "summaries", "routine"):
+        for item in digest[group]:
+            # Attach the same-day alert details so the card can say how the stock moved.
+            item["alerts"] = [a for a in alerts.get(item["ticker"], []) if a["date"] == item["date"][:10]]
+
+    # A routine filing (newspaper copy, trading window ...) does not explain a move, so only
+    # High/Medium filings on the alert day suppress the stock from the alert-only list.
+    filed_days = {
+        (i["ticker"], i["date"][:10])
+        for i in rank_filings(data.filings, alerts, toggles)
+        if i["tier"] != "Low"
+    }
     alert_only = [
         {**a, "company": company_name(a["ticker"])}
         for t, items in alerts.items()

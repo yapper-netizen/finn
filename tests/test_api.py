@@ -62,6 +62,8 @@ def test_today_groups_and_same_day_flag():
     assert t["counts"]["cards"] == 1 and t["counts"]["summaries"] == 1 and t["routine_count"] == 1
     card = t["cards"][0]
     assert card["ticker"] == "AAA" and card["moved_same_day"] and card["alert_chip"]
+    assert {a["type"] for a in card["alerts"]} == {"price", "volume"}     # details for the card
+    assert t["summaries"][0]["alerts"] == []
 
 
 def test_alert_only_lists_stock_without_filing_that_day():
@@ -69,6 +71,13 @@ def test_alert_only_lists_stock_without_filing_that_day():
     only = {a["ticker"] for a in t["alert_only"]}
     assert only == {"DDD"}                       # AAA also filed that day; BBB crossed nothing
     assert t["alert_only"][0]["type"] == "price" and t["session_date"] == "2026-11-13"
+
+
+def test_routine_filing_does_not_hide_an_alert():
+    d = fake_data()
+    d.prices["CCC"] = prices(7.0, 1.0)          # CCC moved; its only same-day filing is a routine investor meet
+    only = {a["ticker"] for a in build_today(d, window="7d", now=NOW)["alert_only"]}
+    assert "CCC" in only and "AAA" not in only
 
 
 def test_thresholds_change_alerts():
@@ -93,6 +102,10 @@ def test_health_and_root(client):
     assert h["status"] == "ok" and h["data_ready"] is True
     r = client.get("/")
     assert r.status_code == 200 and "FINN" in r.text
+
+
+def test_favicon_is_quiet_204(client):
+    assert client.get("/favicon.ico").status_code == 204
 
 
 def test_digest_default_ok(client):
