@@ -151,14 +151,14 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | ID | P | Task | Decisions | est | Done when |
 |---|---|---|---|---|---|
 | EN-1 | P0 | [x] {Triggered alerts}: price ±X%, volume > N× 20-day avg | D-004, D-007 | done | 7 tests pass |
-| EN-2 | P0 | [ ] Classifier, **rules only**: filing → one of {reference-doc categories} (+ `order_win`) using BSE category + keywords; unmatched → `unclassified` | D-014, D-015, D-043 | 1.5 | ≥90% of a hand-checked sample of 50 correct |
-| EN-3 | P0 | [ ] Ranker: tier (High / Medium / Low) from category weights in config; boost if same stock has a price/volume alert that day | D-015, D-040 | 1 | Unit tests: tiers, boost, ties |
-| EN-4 | P0 | [ ] {Windowed digest} {24h default} / 3d / 7d: top 3–5 cards + "Routine (N)"; if 24h is empty, widen to the most recent day with filings and return a `widened` flag for the banner | D-045, D-046 | 1 | Tests: counts per window; empty-24h case widens |
+| EN-2 | P0 | [x] Classifier, **rules only**: filing → one of {reference-doc categories} (+ `order_win`) using BSE category + keywords; unmatched → `unclassified` | D-014, D-015, D-043 | 1.5 | ≥90% of a hand-checked sample of 50 correct |
+| EN-3 | P0 | [x] Ranker: tier (High / Medium / Low) from category weights in config; boost if same stock has a price/volume alert that day | D-015, D-040 | 1 | Unit tests: tiers, boost, ties |
+| EN-4 | P0 | [x] {Windowed digest} {24h default} / 3d / 7d: top 3–5 cards + "Routine (N)"; if 24h is empty, widen to the most recent day with filings and return a `widened` flag for the banner | D-045, D-046 | 1 | Tests: counts per window; empty-24h case widens |
 | EN-5 | P0 | [ ] {Results card}: Revenue, EBITDA, PBT, PAT, {QoQ, YoY}; growth % in Python. EBITDA if not printed = PBT + finance cost + D&A − other income, labelled "computed". Banks: Total income / PBT / PAT, EBITDA "n/a for banks". Extractor reused by EN-13 | D-016, D-017, D-048, D-049, D-054 | 4.5 | {Verified vs 2 actual filing PDFs} + 1 bank card |
 | EN-6 | P0 | [ ] {Management change card with incoming person's background} | D-019 | 2 | 1 real example card with source link |
 | EN-7 | P1 | [ ] One-line summary for Medium-tier filings (dividend amount + record date, order value, capex size) — cheap model, cached | D-015 | 1.5 | One line per Medium card |
 | EN-8 | P1 | [ ] "Why it matters" line per top card (rule template first, AI only if needed) | D-011 | 1 | No generic filler text |
-| EN-18 | P0 | [ ] Category toggles {"a material announcement of a type I care about"}: toggled-off category → Routine; toggled-on High category → "alert" chip; toggles passed from localStorage via API-2 | D-047 | 0.5 | Ranker tests cover on/off |
+| EN-18 | P0 | [x] Category toggles {"a material announcement of a type I care about"}: toggled-off category → Routine; toggled-on High category → "alert" chip; toggles passed from localStorage via API-2 | D-047 | 0.5 | Ranker tests cover on/off |
 | EN-19 | P2 | [ ] Cheap-model fallback for `unclassified` filings, cached (was part of EN-2) | D-014, D-043 | 1 | Unclassified share drops on sample |
 
 ### 5b. Pull side (research)
@@ -328,6 +328,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-058 | Screen set | **Decided, on hold for review** — 6 screens, one per brief item; review in FE-12 | FE-1..6 |
 | D-063 | BSE filings API blocks scripts | **Decided via D-064** | BE-2, BE-3 |
 | D-064 | Filings source = NSE API | **Decided** — NSE announcements, snapshot fallback | BE-2, BE-3 |
+| D-065 | Today shows every High filing; classifier choices | **Decided** — no card cap, `board_outcome` added, sample 48/50 | EN-2, EN-3, EN-4, EN-18 |
 | D-059 | Front-end design v1 | **Decided** — `design/DESIGN_1.md` is the current design | FE-1..13 |
 | D-060 | Free-tier-only AI keys | **Decided** — one free Gemini key, no billing, no Anthropic | OPS-6 |
 | D-061 | Free-tier model lineup | **Decided** — cheap 3.5-flash-lite, strong 3.5-flash, fallback 3.1-flash-lite | OPS-6, EN-9 |

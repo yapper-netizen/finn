@@ -27,7 +27,7 @@ Act as a senior AI engineer building a production-minded prototype: clean, teste
 ## Users and product point of view
 - Users: ENAM's own investment team. ENAM = Mumbai principal investment group, long-term, bottom-up fundamental research.
 - ENAM avoids intoxication, gambling, harm to living creatures → keep such stocks out of the demo portfolio (e.g. drop ITC).
-- App opens on "Today": max 3-5 "what matters" cards, routine filings collapsed into one row.
+- App opens on "Today": every High-tier filing as a card (uncapped, D-065), Medium as one-liners, routine filings collapsed into one row.
 - Research answers = scorecards with receipts (every claim links to its source quote/page).
 - No user accounts; settings saved in browser localStorage.
 - {Interaction experiment}: cards-first Today + "Brief me" (3-sentence summary of Today, read aloud via the browser's free text-to-speech). See D-052.

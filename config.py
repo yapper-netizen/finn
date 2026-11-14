@@ -35,6 +35,26 @@ NSE_REFERER = "https://www.nseindia.com/companies-listing/corporate-filings-anno
 FILINGS_DAYS = 7                       # default look-back window (days)
 EQUITY_LIST_CSV = "data/equity_list.csv"  # NSE's list of listed symbols, refreshed by hand
 
+# Filing categories -> tier (D-015, D-065). High = card + detail; Medium = one-line summary;
+# Low = collapsed into "Routine (N)". Test: would a long-term fund manager change a view?
+CATEGORY_TIER: dict[str, str] = {
+    "results": "High", "management_change": "High", "m_and_a": "High",
+    "litigation": "High", "credit_rating": "High", "pledging": "High",
+    "fund_raise": "Medium", "capex": "Medium", "dividend": "Medium", "bonus_split": "Medium",
+    "insider_trading": "Medium", "order_win": "Medium",
+    "board_outcome": "Medium",  # board outcome with no detail in the title: never hide it (D-065)
+    "earnings_call": "Low", "investor_meetings": "Low", "agm_egm": "Low",
+    "postal_ballot": "Low", "press_release": "Low", "unclassified": "Low",
+}
+TIER_ORDER: dict[str, int] = {"High": 0, "Medium": 1, "Low": 2}
+# Per-category toggles (D-047): every category is on by default; the Settings screen overrides.
+DEFAULT_TOGGLES: dict[str, bool] = {c: True for c in CATEGORY_TIER}
+
+# Digest windows (hours) and the default shown on Today (D-046).
+WINDOWS_HOURS: dict[str, int] = {"24h": 24, "3d": 72, "7d": 168}
+DEFAULT_WINDOW = "24h"
+IST_OFFSET_HOURS = 5.5  # filing timestamps are India time; servers (Render) run UTC
+
 # AI models (D-009, D-060: free tier only). Swap a model with a one-line change here.
 CHEAP_MODEL = "gemini-3.5-flash-lite"   # bulk: classification leftovers, PDF numbers, quotes
 STRONG_MODEL = "gemini-3.5-flash"       # reasoning (thinks before answering): promise verdicts, bull/bear

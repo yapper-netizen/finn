@@ -10,6 +10,7 @@ from typing import Any
 import requests
 
 import config
+from data.clock import ist_now
 from data.symbols import resolve
 
 _HEADERS = {
@@ -97,7 +98,7 @@ def fetch_filings(
     Raises ValueError for an invalid ticker, RuntimeError if NSE fails and no snapshot exists.
     """
     symbol = resolve(ticker).symbol
-    end = today or date.today()
+    end = today or ist_now().date()
     start = end - timedelta(days=days)
     errors: list[str] = []
     for attempt in range(1 + config.RETRIES):

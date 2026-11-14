@@ -409,3 +409,16 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Result: `py run_filings.py` prints 7 days for all 19 stocks (25 filings; 6 stocks had none that week, which the empty-window banner D-046 handles). Fields: date, title, category (NSE's own label, e.g. "Change in Director(s)"), pdf_url; no sub-category, so the classifier (EN-2) refines from category + title.
 - Why: {corporate announcements} drive Push, and a live source that works beats snapshot-only. NSE categories are finer than BSE's for ranking.
 - Trade-off: unofficial API, can block or change (or block Render's IPs at deploy: test early at the Sat 20:00 gate); BSE-only listings are not supported; the symbol list goes stale for new listings (refresh by re-downloading the CSV).
+
+### D-065 · Today shows every High filing; classifier and ranker choices · 2026-11-15 · EN-2, EN-3, EN-4, EN-18 · Status: decided
+- Options (card count): A cap at 5 cards, rest under "More (N)" / B show every High filing, no cap / C cap at 3
+- Chosen: B (user pick, overrides the 3–5 card limit in CLAUDE.md and the 3–5 wording of EN-4). Digest = `cards` (all High), `summaries` (Medium, one line), `routine` (Low, "Routine (N)"). Over 90 days the 19 stocks had ~142 High of 717 filings (about 1.6 a day), so a normal day stays short; a results-season day will not.
+- Sample check (D-A): 50 varied filings from the 90-day pull, labelled by Claude from the titles alone, to be reviewed by the user (`tests/sample_labels.json`). Rules score 48/50 (96%); the 2 misses are Low-vs-Low (Infosys client-news "Updates" read as press releases) and change no ranking. Pytest enforces ≥90%.
+- Classifier choices made while building (all in `engine/classifier.py`, tiers in `config.py`):
+  - NSE has no "Financial Results" label; results arrive as "Outcome of Board Meeting" with "financial results" in the title, so the classifier reads title keywords for vague labels (Updates, General Updates, Press Release, Outcome ...), ~40% of filings.
+  - New category `board_outcome` (Medium): a board outcome with no detail in the title (e.g. "Outcome of Board Meeting held on ...") is never hidden as Low, since it might be results.
+  - Generic "Action(s) taken or orders passed" (mostly GST/tax notices, Bharti filed many) go to Routine unless the title shows NCLT/court/penalty/show-cause; otherwise High cards would flood. AI fallback EN-19 stays P2.
+  - Press releases about results are Low (the results filing is the High card; avoids a duplicate).
+  - "alert" chip = High category that is toggled on (D-047 literal); price/volume boost reorders within a tier and sets `moved_same_day`, it never changes the tier.
+- Known gaps: unclassified is 38% of filings (mostly routine: ESOP, newspaper copies, trading windows); a stock's generic board outcome in results season stays Medium until EN-19. If the 24h window holds only routine filings (a quiet Sunday), the digest shows 0 cards and "Routine (N)" and does not widen: D-046 widens only when the window has no filings at all. Revisit if that looks empty on the phone.
+- Trade-off: no card cap means a heavy day is long; the tier is the filter, so the cost is length, not noise.
