@@ -197,17 +197,17 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 
 {"The frontend — the product, the interaction model, the design — is deliberately yours. That's where we most want to see how you think."} {Experiment with the interaction model; show a point of view.} {No AI slop: concise, dense, beautiful, interactive.}
 
-**Current design: `design/DESIGN_2.md` (look) + `design/DESIGN_1.md` (screens) (D-059). Read it before building or deciding any front-end task**; it lists the picks per screen, their tier and the build order. Visual baseline: `design/mockups_v0.html`. Idea history: `design/FRONTEND_BRAINSTORM.md`. A later design change = new `design/DESIGN_N.md` + DECISIONS.md entry + update this line.
+**Current design: `design/DESIGN_2.md` (the look, D-074) and `design/DESIGN_1.md` (screens, picks and build order, D-059). Read both before building or deciding any front-end task.** Visual baseline: `design/mockups_v0.html`. Idea history: `design/FRONTEND_BRAINSTORM.md`. A later design change = new `design/DESIGN_N.md` + DECISIONS.md entry + update this line.
 
 | ID | P | Screen / task | Decisions | est | Done when |
 |---|---|---|---|---|---|
 | FE-1 | P0 | [x] Shell: bottom tab bar (Today · Research · Settings), routing [switching screens without reloading], loading skeletons [grey placeholder shapes while data loads], error and empty states | D-011, D-027 | 1.5 | Usable one-handed at 375px width |
-| FE-2 | P0 | [x] **Today**: window picker (24h/3d/7d), ≤5 "what matters" cards, alert chips on cards, "Routine (N)" collapsed row, "widened" banner | D-040, D-045, D-046 | 2 | Reads in 10 seconds |
+| FE-2 | P0 | [x] **Today**: window picker (24h/3d/7d), every High filing as a ranked card in priority order (D-065, D-074), alert chips on cards, "Routine (N)" collapsed row, "widened" banner | D-040, D-045, D-046 | 2 | Reads in 10 seconds |
 | FE-3 | P0 | [ ] **Detail**: results table (QoQ / YoY coloured), "computed" badges, bank-lite variant, link to source PDF; management card with bio | D-016, D-019, D-048 | 2 | Every number traceable |
 | FE-4 | P0 | [ ] **Research**: ticker search box → scorecard: promise tracker (Delivered / Partial / Missed chips), snapshot + bull vs bear if built; **receipts included** (tap claim → bottom sheet [panel sliding up from the bottom] with quote, page, link) | D-023, D-024, D-041 | 3 | Works for an unknown ticker; 100% of claims tappable |
 | ~~FE-5~~ | — | ~~Receipts~~ — merged into FE-4 | D-043 | 0 | — |
 | FE-6 | P0 | [x] **Settings**: price %, volume ×, category toggles (EN-18), portfolio list; saved in localStorage | D-029, D-047 | 1 | Change persists after reload |
-| FE-7 | P1 | [ ] Visual polish on top of FE-11: spacing, type scale, dark mode | D-028, D-044 | 1 | Looks deliberate, not template |
+| FE-7 | P1 | [x] Visual polish: final look decided and built in light mode (`design/DESIGN_2.md`); dark mode not built | D-028, D-044, D-074 | 1 | Looks deliberate, not template |
 | FE-8 | P1 | [ ] PWA [Progressive Web App: "Add to Home Screen", app icon, full-screen] manifest + icon | D-030 | 0.5 | Installs on Android/iOS |
 | FE-9 | P1 | [ ] Interaction experiment: **"Brief me"** — 3-sentence summary of Today, shown and read aloud via Web Speech API [browser's built-in, free text-to-speech]; built from digest data, no extra AI call | D-011, D-052 | 1.5 | Demo-able in 15 seconds |
 | FE-10 | P2 | [ ] "Seen" state: cards you've opened dim; "since you last looked" | D-046 | 1 | Stored in localStorage |
