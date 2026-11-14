@@ -429,3 +429,14 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Chosen: private, `github.com/yapper-netizen/finn`, full history pushed (no secrets in history: `.env` never committed, scanned for Gemini key pattern). Decide public vs inviting assessment@enam.com before the email (Sun 15 Nov, send ≤17:30).
 - Why: the repo holds ENAM's brief PDFs (`brief/`); keep them unpublished until the choice is made on purpose.
 - Trade-off: reviewers cannot open a private repo until it is made public or they are invited; this must not be forgotten at send time.
+
+### D-067 · Web API: live cache with snapshot fallback; alerts merged into Today · 2026-11-15 · API-1, API-2, API-7 (settles D-031 for requests, D-040) · Status: decided
+- Options (freshness): A live fetch + 15-min in-memory cache, parallel, snapshot fallback / B snapshot only / C live on every request
+- Options (alerts): A chip on the filing card + separate "alert-only" list / B chips only / C separate Alerts tab
+- Chosen: A and A (user picks).
+- How it works: `engine/feed.py` loads all 18 stocks in parallel (4 workers) at server start and keeps the result in memory. After 15 minutes the stale copy is still served instantly while a background thread refreshes it (stale-while-revalidate). If the first load is not ready in 25 s or fails, the saved snapshots answer with `fallback_used: true`. `engine/today.py` builds the payload; `api.py` is thin.
+- Endpoints: `GET /` (app page), `GET /health` (also says whether data is loaded), `GET /api/digest?window=24h|3d|7d&price=5&volume=2&off=cat1,cat2`, `GET /api/config` (defaults, ranges, categories, portfolio, for Settings). Thresholds and toggles ride in the URL from the phone's localStorage, so the server stores nothing per user (D-029).
+- Choices made while building: toggles are sent as `off` (categories switched OFF) instead of `cats`, so new categories added later default to on for old clients; price 0.1–50 % and volume 1–20x are validated; unknown window or category gets a clear 400. Every error is JSON `{error, fallback_used}`, including unexpected ones (never a crash page).
+- Alert logic: alerts come from the latest trading session in the price data and are shown whatever the filing window, labelled with `session_date`, so a Sunday visit still shows Friday's move. A stock with an alert and a filing the same day gets `moved_same_day` on that card; a stock with an alert and no filing that day goes in `alert_only` (sorted by size of move).
+- Checked: live server answers in ~240 ms warm; with the network killed, `load_all` returns the same 4 cards / 1 line / 19 routine from snapshots in 0.5 s. 79 tests pass.
+- Trade-off: after Render's free tier sleeps, the first visit waits for the warm-up (up to 25 s, then snapshots); the snapshot is only as fresh as the last commit (BE-7 refresh script).

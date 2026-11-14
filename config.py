@@ -55,6 +55,13 @@ WINDOWS_HOURS: dict[str, int] = {"24h": 24, "3d": 72, "7d": 168}
 DEFAULT_WINDOW = "24h"
 IST_OFFSET_HOURS = 5.5  # filing timestamps are India time; servers (Render) run UTC
 
+# Live data cache and API limits (D-067, D-031).
+CACHE_TTL_S = 900          # data older than this is refreshed in the background (15 min)
+FEED_WORKERS = 4           # parallel fetches; low on purpose, the exchange is not ours
+WARM_WAIT_S = 25           # how long a first request waits for the initial load before using snapshots
+PRICE_PCT_RANGE = (0.1, 50.0)   # allowed values for the price-move threshold (percent)
+VOLUME_X_RANGE = (1.0, 20.0)    # allowed values for the volume multiple
+
 # AI models (D-009, D-060: free tier only). Swap a model with a one-line change here.
 CHEAP_MODEL = "gemini-3.5-flash-lite"   # bulk: classification leftovers, PDF numbers, quotes
 STRONG_MODEL = "gemini-3.5-flash"       # reasoning (thinks before answering): promise verdicts, bull/bear

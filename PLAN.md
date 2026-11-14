@@ -183,13 +183,13 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 
 | ID | P | Endpoint / task | est | Done when |
 |---|---|---|---|---|
-| API-1 | P0 | [ ] `GET /` serves `web/index.html`; `GET /health` | 0.3 | Render health check green |
-| API-2 | P0 | [ ] `GET /api/digest?window=24h&price=5&volume=2&cats=...` → cards + routine bucket + alerts + `widened` flag (thresholds and toggles come from the client's localStorage) | 1 | JSON matches the screen |
+| API-1 | P0 | [x] `GET /` serves `web/index.html`; `GET /health` | 0.3 | Render health check green |
+| API-2 | P0 | [x] `GET /api/digest?window=24h&price=5&volume=2&off=...` (off = categories switched off; D-067) → cards + routine bucket + alerts + `widened` flag (thresholds and toggles come from the client's localStorage) | 1 | JSON matches the screen |
 | API-3 | P0 | [ ] `GET /api/card/{filing_id}` → results / bank-lite / management / generic detail | 1 | Lazy: AI runs only on first open, then cached |
 | API-4 | P0 | [ ] `GET /api/research/{ticker}` → research JSON; `status: pending/ready/error` for slow live runs | 1.5 | Polling [the page re-asks every few seconds] works |
 | API-5 | P1 | [ ] `GET /api/portfolio`, `GET /api/resolve/{ticker}` (validate a ticker) | 0.5 | Bad ticker → friendly error |
 | API-6 | P1 | [ ] `GET /api/costs` → token totals per model (for the README and an "about" panel) | 0.5 | Numbers match logs |
-| API-7 | P0 | [ ] Error handling: every endpoint returns `{error, fallback_used}` instead of a 500 [server crash code] | 0.5 | Kill network → app still renders snapshot |
+| API-7 | P0 | [x] Error handling: every endpoint returns `{error, fallback_used}` instead of a 500 [server crash code] | 0.5 | Kill network → app still renders snapshot |
 
 ---
 
@@ -329,6 +329,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-063 | BSE filings API blocks scripts | **Decided via D-064** | BE-2, BE-3 |
 | D-064 | Filings source = NSE API | **Decided** — NSE announcements, snapshot fallback | BE-2, BE-3 |
 | D-065 | Today shows every High filing; classifier choices | **Decided** — no card cap, `board_outcome` added, sample 48/50 | EN-2, EN-3, EN-4, EN-18 |
+| D-067 | Web API: live cache + snapshot fallback; alerts merged | **Decided** — stale-while-revalidate, `off` param, alert-only list | API-1, API-2, API-7 |
 | D-059 | Front-end design v1 | **Decided** — `design/DESIGN_1.md` is the current design | FE-1..13 |
 | D-060 | Free-tier-only AI keys | **Decided** — one free Gemini key, no billing, no Anthropic | OPS-6 |
 | D-061 | Free-tier model lineup | **Decided** — cheap 3.5-flash-lite, strong 3.5-flash, fallback 3.1-flash-lite | OPS-6, EN-9 |
