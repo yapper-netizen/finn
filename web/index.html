@@ -40,12 +40,12 @@
 
     #app { max-width: 480px; margin: 0 auto; min-height: 100dvh; padding: 0 16px calc(88px + env(safe-area-inset-bottom)); }
     .wordmark { font-family: var(--font-head); font-weight: 900; font-size: 26px; color: var(--primary); letter-spacing: 0.04em; line-height: 1; }
-    .tagline { font-size: 12px; color: var(--text-muted); margin: 2px 0 0; }
+    .tagline { font-size: 13px; color: var(--text-muted); margin: 2px 0 0; }
 
     /* ---------- pills, chips ---------- */
     .pill { min-height: 36px; padding: 0 14px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface); font-size: 14px; color: var(--text); }
     .pill[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: #fff; }
-    .chip { display: inline-block; font-size: 11px; line-height: 1; padding: 4px 8px; border-radius: 6px; background: var(--primary-tint); color: var(--primary-deep); font-weight: 600; }
+    .chip { display: inline-block; font-size: 12px; line-height: 1; padding: 4px 8px; border-radius: 6px; background: var(--primary-tint); color: var(--primary-deep); font-weight: 600; }
     .chip.alert { background: var(--alert-tint); color: var(--alert); }
     .chip.muted { background: #eeeef1; color: var(--grey); font-weight: 500; }
 
@@ -53,7 +53,7 @@
     .card { background: var(--surface); border: 1px solid var(--border-soft); border-left: 4px solid var(--primary); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 10px; }
     .card.alert { border-left-color: var(--alert); }
     .card h3 { margin: 6px 0 4px; font-size: 16px; line-height: 1.3; font-weight: 700; }
-    .meta { font-size: 12px; color: var(--text-muted); margin: 0; }
+    .meta { font-size: 13px; color: var(--text-muted); margin: 0; }
     .why { font-size: 13px; color: var(--text); margin: 6px 0 0; line-height: 1.4; }
     .why.alert { color: var(--alert); }
     .link { font-size: 13px; color: var(--primary); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; min-height: 36px; }
@@ -73,7 +73,7 @@
     /* ---------- tab bar ---------- */
     .tabbar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--surface); border-top: 1px solid var(--border-soft); padding-bottom: env(safe-area-inset-bottom); z-index: 20; }
     .tabbar nav { max-width: 480px; margin: 0 auto; display: flex; }
-    .tab { flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; background: none; border: 0; font-size: 11px; color: var(--text-muted); }
+    .tab { flex: 1; min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; background: none; border: 0; font-size: 12px; color: var(--text-muted); }
     .tab[aria-current="page"] { color: var(--primary); font-weight: 700; }
     .tab svg { width: 22px; height: 22px; }
 
@@ -85,7 +85,7 @@
     .switch[aria-checked="true"] { background: var(--primary); }
     .switch[aria-checked="true"]::after { transform: translateX(18px); }
     input[type=range] { width: 100%; accent-color: var(--primary); height: 32px; margin: 4px 0; }
-    .ticker { font-size: 12px; padding: 5px 9px; border-radius: 6px; background: #eeeef1; color: var(--text); font-weight: 600; letter-spacing: 0.02em; }
+    .ticker { font-size: 13px; padding: 5px 9px; border-radius: 6px; background: #eeeef1; color: var(--text); font-weight: 600; letter-spacing: 0.02em; }
     .btn { min-height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid var(--primary); background: var(--surface); color: var(--primary); font-weight: 600; font-size: 14px; }
     .btn.primary { background: var(--primary); color: #fff; }
 
@@ -94,144 +94,182 @@
     @keyframes shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
     @media (prefers-reduced-motion: reduce) { .skel { animation: none; } .switch, .switch::after { transition: none; } }
     /* ======================================================================
-       LOOKS (experiment). Same markup everywhere; html[data-look] swaps the skin.
-       classic = what we had. Elements added for the looks (avatar, who, stat, gauge)
-       are hidden in classic.
+       LOOKS (experiment, round 2). One markup; html[data-look] swaps the skin.
+       Rules for every look: no text under 12px (meta 13px), clear card separation
+       (border + shadow + inner dividers), tap targets >= 36px.
+       c1 Classic: clean lines   c2 Classic: banner
+       d1 Depth: soft            d2 Depth: gradient header
+       b1 Briefing: readable     b2 Briefing: magazine
        ====================================================================== */
-    .lookbtn { font-size: 12px; font-weight: 600; min-height: 32px; padding: 0 11px; border-radius: 99px; border: 1px dashed var(--border); background: var(--surface); color: var(--primary); margin-top: 4px; }
-    .mono, .who, .stat, .gauge-wrap { display: none; }
-    .stat { align-items: baseline; gap: 8px; margin: 8px 0 0; }
-    .stat .n { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--alert); }
-    .stat .u { font-size: 12.5px; color: var(--text-muted); }
-    .gauge { position: relative; height: 10px; background: #e8ebf0; border-radius: 99px; margin: 12px 0 5px; }
+    :root { --rule: #e3e8ef; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .lookbtn { font-size: 13px; font-weight: 600; min-height: 34px; padding: 0 12px; border-radius: 99px; border: 1px dashed var(--border); background: var(--surface); color: var(--primary); margin-top: 4px; }
+
+    /* ---------- shared structure ---------- */
+    .top-head { display: flex; align-items: flex-start; justify-content: space-between; padding-top: 20px; }
+    .seg { display: flex; gap: 8px; margin-top: 12px; }
+    .hero { margin-top: 18px; }
+    .hero-row { display: flex; align-items: center; gap: 14px; }
+    .hero h1 { font-size: 28px; line-height: 1.15; margin: 0; }
+    .big-n, .h-rest { display: none; }
+    .sub { margin-top: 4px; }
+    .dots { margin-top: 14px; }
+    .strip-cap { margin-top: 4px; }
+
+    .card { position: relative; margin-bottom: 16px; padding: 14px; }
+    .card-top { display: flex; align-items: center; gap: 12px; }
+    .who { min-width: 0; flex: 1; }
+    .who b { display: block; font-size: 16px; line-height: 1.2; letter-spacing: .01em; }
+    .who small { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: 13px; color: var(--text-muted); line-height: 1.3; margin-top: 1px; }
+    .chips { flex: none; max-width: 46%; display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+    .card h3 { margin: 12px 0 0; font-size: 17px; line-height: 1.3; }
+    .card .why { margin-top: 8px; font-size: 14px; }
+    .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--text-muted); }
+    .card-foot b { color: var(--text); }
+    .card-foot .link { min-height: 32px; font-size: 14px; }
+
+    .tile { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--primary-tint); color: var(--primary-deep); flex: none; }
+    .tile svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .tile.sm { width: 34px; height: 34px; border-radius: 10px; margin-top: 2px; }
+    .tile.sm svg { width: 18px; height: 18px; }
+    .card.alert .tile { background: var(--alert-tint); color: var(--alert); }
+
+    .stat { display: flex; align-items: baseline; gap: 8px; margin: 14px 0 0; }
+    .stat .n { font-size: 40px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--alert); }
+    .stat .u { font-size: 13px; color: var(--text-muted); }
+    .gauge { position: relative; height: 10px; background: #e8ebf0; border-radius: 99px; margin: 14px 0 6px; }
     .gauge i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: linear-gradient(90deg, #e56b60, var(--alert)); }
     .gauge em { position: absolute; left: 50%; top: -4px; bottom: -4px; width: 2px; background: #16181d; }
-    .gl { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); }
-    /* every look except classic shows the big number and the gauge on alert cards */
-    html:not([data-look="classic"]) .alertonly .alert-h, html:not([data-look="classic"]) .alertonly .meta { display: none; }
-    html:not([data-look="classic"]) .stat { display: flex; }
-    html:not([data-look="classic"]) .gauge-wrap { display: block; }
-    html:not([data-look="classic"]) .alertonly .who { display: block; }
-    .who b { display: block; font-size: 15px; line-height: 1.2; }
-    .who small { display: block; color: var(--text-muted); font-size: 11.5px; }
+    .gl { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); }
 
-    /* ---------------- PAPER: editorial front page ---------------- */
-    html[data-look="paper"] { --bg: #fafaf8; --text: #15181c; --font-head: "Newsreader", Georgia, serif; --font-body: "DM Sans", "Helvetica Neue", Arial, sans-serif; }
-    html[data-look="paper"] header { border-bottom: 3px double #15181c; padding-bottom: 8px; margin-bottom: 2px; }
-    html[data-look="paper"] .tagline { font-family: "Newsreader", serif; font-style: italic; font-size: 13px; }
-    html[data-look="paper"] .pill { border-radius: 0; border: 0; border-bottom: 2px solid transparent; background: none; padding: 0 2px; margin-right: 12px; font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); min-height: 32px; }
-    html[data-look="paper"] .pill[aria-pressed="true"] { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; background: none; }
-    html[data-look="paper"] .hero h1 { font-size: 38px; line-height: 1.03; font-weight: 700; }
-    html[data-look="paper"] .section-label { border-top: 1px solid #15181c; padding-top: 6px; margin-top: 24px; }
-    html[data-look="paper"] .card { border: 0; border-top: 1px solid var(--border); border-radius: 0; background: transparent; padding: 13px 0; margin: 0; }
-    html[data-look="paper"] .card h3 { font-size: 21px; line-height: 1.15; font-weight: 600; }
-    html[data-look="paper"] .card.lead { background: #fff; border-top: 3px solid var(--primary); padding: 14px; box-shadow: 0 10px 24px -14px rgba(0,40,80,.45), 0 1px 2px rgba(0,0,0,.06); margin-bottom: 4px; }
-    html[data-look="paper"] .card.lead h3 { font-size: 27px; line-height: 1.1; font-weight: 700; }
-    html[data-look="paper"] .chip { background: none; padding: 0; border-radius: 0; font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--primary); font-weight: 700; }
-    html[data-look="paper"] .chip.alert { color: var(--alert); }
-    html[data-look="paper"] .chip.muted { color: var(--grey); }
-    html[data-look="paper"] .stat .n { font-family: "Newsreader", serif; font-size: 42px; }
-    html[data-look="paper"] .gauge, html[data-look="paper"] .gauge i { border-radius: 0; height: 6px; }
-    html[data-look="paper"] .box { border: 0; border-top: 1px solid #15181c; border-radius: 0; background: transparent; padding: 0; }
-    html[data-look="paper"] .line { border-bottom: 1px dotted #9a9aa0; }
-    html[data-look="paper"] button.box { border-style: solid !important; border-width: 3px 0 0 0 !important; border-top-style: double !important; border-color: #15181c !important; background: transparent; }
+    .section-label { display: flex; align-items: center; gap: 10px; margin: 24px 0 12px; font-size: 12.5px; }
+    .section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); order: 3; }
+    .cnt { min-width: 22px; height: 22px; padding: 0 7px; border-radius: 99px; background: var(--primary); color: #fff; font-size: 12px; letter-spacing: 0; display: inline-grid; place-items: center; }
+    .cnt.alert { background: var(--alert); }
+    .cnt.soft { background: #d9dee6; color: #3b4048; }
 
-    /* ---------------- RECEIPT: thermal paper, stamps, ticket notches ---------------- */
-    html[data-look="receipt"] { --bg: #dfe4ea; --font-head: "IBM Plex Mono", monospace; --font-body: "IBM Plex Mono", monospace; }
-    html[data-look="receipt"] body { font-size: 13px; }
-    html[data-look="receipt"] .wordmark { letter-spacing: .2em; }
-    html[data-look="receipt"] .hero h1 { font-size: 22px; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
-    html[data-look="receipt"] .meta, html[data-look="receipt"] .tagline { text-transform: uppercase; letter-spacing: .03em; font-size: 11px; }
-    html[data-look="receipt"] .pill { border-radius: 2px; border: 1.5px dashed #9aa0a8; background: transparent; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
-    html[data-look="receipt"] .pill[aria-pressed="true"] { border-style: solid; border-color: var(--primary); background: var(--primary); }
-    html[data-look="receipt"] .section-label { border-bottom: 1.5px dashed #9aa0a8; padding-bottom: 6px; }
-    html[data-look="receipt"] .card { background: #fff; border: 0; border-top: 1.5px dashed #9aa0a8; border-bottom: 1.5px dashed #9aa0a8; border-radius: 0; padding: 14px 18px; margin-bottom: 14px; position: relative; box-shadow: 0 12px 22px -12px rgba(0,30,60,.4), 0 2px 3px rgba(0,0,0,.08); }
-    html[data-look="receipt"] .card::before, html[data-look="receipt"] .card::after { content: ""; position: absolute; top: 50%; width: 13px; height: 13px; margin-top: -6px; border-radius: 50%; background: var(--bg); }
-    html[data-look="receipt"] .card::before { left: -7px; } html[data-look="receipt"] .card::after { right: -7px; }
-    html[data-look="receipt"] .card h3 { font-size: 14.5px; line-height: 1.4; font-weight: 600; }
-    html[data-look="receipt"] .chip { background: none; border: 1.5px solid var(--primary); color: var(--primary); border-radius: 2px; text-transform: uppercase; letter-spacing: .08em; font-size: 10px; padding: 3px 6px; transform: rotate(-2deg); }
-    html[data-look="receipt"] .chip.alert { border-color: var(--alert); color: var(--alert); }
-    html[data-look="receipt"] .chip.muted { border-color: #9aa0a8; color: var(--grey); }
-    html[data-look="receipt"] .stat .n { font-size: 34px; font-weight: 600; }
-    html[data-look="receipt"] .gauge { border-radius: 0; height: 8px; background: #eceff3; }
-    html[data-look="receipt"] .gauge i { border-radius: 0; }
-    html[data-look="receipt"] .box { border: 1.5px dashed #9aa0a8; border-radius: 0; background: #fff; }
-    html[data-look="receipt"] .link { text-transform: uppercase; letter-spacing: .05em; font-size: 12px; }
+    .line { gap: 12px; padding: 12px 0; font-size: 15px; }
+    .line-title { margin: 4px 0 0; font-size: 15px; line-height: 1.35; }
+    .line .meta { margin-top: 2px; }
+    .box { padding: 2px 14px; }
+    .routine-btn { padding: 0 14px; }
+    .topband { position: relative; }
 
-    /* ---------------- PANEL: instrument, raised modules, dot-matrix display ---------------- */
-    html[data-look="panel"] { --bg: #d9dce1; --font-head: "DM Sans", sans-serif; }
-    html[data-look="panel"] .tagline, html[data-look="panel"] .meta { font-family: "IBM Plex Mono", monospace; font-size: 11px; }
-    html[data-look="panel"] .wordmark { letter-spacing: .18em; color: #1d2026; }
-    html[data-look="panel"] .pill { border-radius: 8px; font-family: "IBM Plex Mono", monospace; font-size: 12px; border: 0; background: linear-gradient(#f3f4f6, #dfe2e7); box-shadow: 0 1px 0 #fff inset, 0 3px 6px -2px rgba(20,30,50,.35); }
-    html[data-look="panel"] .pill[aria-pressed="true"] { background: #12161c; color: #8fc4ee; box-shadow: inset 0 2px 5px rgba(0,0,0,.7); }
-    html[data-look="panel"] .hero { background: #12161c; border-radius: 12px; padding: 16px 16px 12px; color: #e8eef5; box-shadow: inset 0 2px 6px rgba(0,0,0,.7), 0 1px 0 #fff; }
-    html[data-look="panel"] .hero h1 { font-family: "DotGothic16", monospace; font-size: 40px; line-height: 1.05; color: #8fc4ee; font-weight: 400; }
-    html[data-look="panel"] .hero .meta { color: #8d97a3; letter-spacing: .08em; text-transform: uppercase; font-size: 10.5px; }
-    html[data-look="panel"] .dots { gap: 4px; justify-content: stretch; margin-top: 14px; }
-    html[data-look="panel"] .dot { flex: 1; width: auto; height: 8px; border-radius: 2px; border: 0; background: #2a313b; }
-    html[data-look="panel"] .dot.on { background: #8fc4ee; } html[data-look="panel"] .dot.alert { background: #ff7a6e; }
-    html[data-look="panel"] .section-label { font-family: "IBM Plex Mono", monospace; letter-spacing: .14em; font-size: 10.5px; }
-    html[data-look="panel"] .card, html[data-look="panel"] .box { background: linear-gradient(#e9ebee, #dcdfe4); border: 0; border-radius: 12px; box-shadow: 0 1px 0 #fff inset, 0 -2px 0 rgba(0,0,0,.08) inset, 0 8px 14px -6px rgba(20,30,50,.45), 0 2px 3px rgba(20,30,50,.2); }
-    html[data-look="panel"] .card-top { display: flex; justify-content: space-between; align-items: center; }
-    html[data-look="panel"] .who { display: block; } html[data-look="panel"] .who b { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .1em; font-weight: 500; color: #555b66; }
-    html[data-look="panel"] .who small { display: none; }
-    html[data-look="panel"] .card .meta { display: none; }
-    html[data-look="panel"] .chip { background: none; padding: 0; font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--primary); font-weight: 600; }
-    html[data-look="panel"] .chip.alert { color: var(--alert); } html[data-look="panel"] .chip.muted { color: #555b66; }
-    html[data-look="panel"] .stat .n { font-family: "DotGothic16", monospace; font-weight: 400; font-size: 40px; }
-    html[data-look="panel"] .gauge { background: #12161c; height: 8px; border-radius: 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,.6); }
-    html[data-look="panel"] .gauge i { border-radius: 2px; background: #ff7a6e; box-shadow: 0 0 8px rgba(255,122,110,.7); }
-    html[data-look="panel"] .gauge em { background: #8fc4ee; }
-    html[data-look="panel"] button.box { border: 0 !important; }
+    /* ======================= c1 · CLASSIC: clean lines ======================= */
+    html[data-look="c1"] { --bg: #eef2f7; --rule: #e3e8ef; }
+    html[data-look="c1"] .hero { background: #fff; border: 1px solid #dbe2ea; border-radius: 16px; padding: 16px; box-shadow: 0 1px 2px rgba(16,40,70,.05), 0 10px 22px -14px rgba(16,40,70,.25); }
+    html[data-look="c1"] .seg { background: #fff; border: 1px solid #dbe2ea; border-radius: 12px; padding: 4px; gap: 4px; }
+    html[data-look="c1"] .seg .pill { flex: 1; border: 0; border-radius: 9px; background: transparent; min-height: 38px; font-weight: 600; }
+    html[data-look="c1"] .seg .pill[aria-pressed="true"] { background: var(--primary); color: #fff; box-shadow: 0 2px 6px -1px rgba(0,93,163,.5); }
+    html[data-look="c1"] .card { background: #fff; border: 1px solid #dbe2ea; border-left: 5px solid var(--primary); border-radius: 14px; box-shadow: 0 1px 2px rgba(16,40,70,.05), 0 10px 20px -12px rgba(16,40,70,.28); }
+    html[data-look="c1"] .card.alert { border-left-color: var(--alert); }
+    html[data-look="c1"] .card-top { padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+    html[data-look="c1"] .box { border: 1px solid #dbe2ea; border-radius: 14px; box-shadow: 0 1px 2px rgba(16,40,70,.05), 0 8px 18px -12px rgba(16,40,70,.25); }
+    html[data-look="c1"] .section-label { color: #3b4048; }
 
-    /* ---------------- DEPTH: layered shadows, avatars, a gradient hero card ---------------- */
-    html[data-look="depth"] { --bg: transparent; }
-    html[data-look="depth"] body { background: linear-gradient(#f2f6fb, #e9eff6 60%) fixed; }
-    html[data-look="depth"] .pill { box-shadow: 0 1px 3px rgba(0,40,80,.12); border: 0; }
-    html[data-look="depth"] .pill[aria-pressed="true"] { box-shadow: 0 4px 10px -2px rgba(0,93,163,.5); }
-    html[data-look="depth"] .hero h1 { font-size: 30px; letter-spacing: -.02em; }
-    html[data-look="depth"] .card { border: 0; border-radius: 20px; padding: 14px; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 6px 12px -4px rgba(0,40,80,.1), 0 18px 32px -12px rgba(0,40,80,.18); }
-    html[data-look="depth"] .card-top { display: flex; align-items: center; gap: 10px; }
-    html[data-look="depth"] .mono, html[data-look="briefing"] .alertonly .mono { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--primary-tint); color: var(--primary-deep); font-weight: 700; font-size: 12px; flex: none; }
-    html[data-look="depth"] .who { display: block; }
-    html[data-look="depth"] .chips { margin-left: auto; justify-content: flex-end; }
-    html[data-look="depth"] .card .meta { display: none; }
-    html[data-look="depth"] .card h3 { margin-top: 10px; font-size: 16px; }
-    html[data-look="depth"] .chip { border-radius: 99px; padding: 5px 9px; }
-    html[data-look="depth"] .card.alert .mono { background: var(--alert-tint); color: var(--alert); }
-    html[data-look="depth"] .card.lead { background: linear-gradient(160deg, var(--primary-bright), var(--primary-deep)); color: #fff; box-shadow: 0 18px 30px -12px rgba(0,65,114,.6); }
-    html[data-look="depth"] .card.lead .who small { color: #cfe3f3; }
-    html[data-look="depth"] .card.lead .mono { background: rgba(255,255,255,.18); color: #fff; }
-    html[data-look="depth"] .card.lead .chip { background: rgba(255,255,255,.2); color: #fff; }
-    html[data-look="depth"] .card.lead .link { color: #fff; }
-    html[data-look="depth"] .card.lead .why.alert { color: #ffd5d1; }
-    html[data-look="depth"] .box { border: 0; border-radius: 20px; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 8px 16px -8px rgba(0,40,80,.2); }
-    html[data-look="depth"] button.box { border: 0 !important; }
+    /* ======================= c2 · CLASSIC: banner ======================= */
+    html[data-look="c2"] { --bg: #eef2f7; --rule: #e3e8ef; }
+    html[data-look="c2"] .topband { margin: 0 -16px; padding: 0 16px 18px; background: linear-gradient(180deg, var(--primary-deep), var(--primary)); border-radius: 0 0 22px 22px; box-shadow: 0 12px 24px -14px rgba(0,65,114,.55); }
+    html[data-look="c2"] .wordmark { color: #fff; } html[data-look="c2"] .tagline { color: rgba(255,255,255,.82); }
+    html[data-look="c2"] .lookbtn { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.4); color: #fff; }
+    html[data-look="c2"] .seg .pill { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.3); color: #fff; }
+    html[data-look="c2"] .seg .pill[aria-pressed="true"] { background: #fff; color: var(--primary-deep); border-color: #fff; font-weight: 700; }
+    html[data-look="c2"] .hero { background: #fff; border-radius: 16px; padding: 16px; margin-top: 14px; box-shadow: 0 12px 24px -12px rgba(0,30,60,.5); }
+    html[data-look="c2"] .card { background: #fff; border: 1px solid #d5dde7; border-radius: 14px; padding: 0; overflow: hidden; box-shadow: 0 1px 2px rgba(16,40,70,.05), 0 10px 20px -12px rgba(16,40,70,.3); }
+    html[data-look="c2"] .card-top { background: var(--primary-tint); padding: 12px 14px; border-bottom: 1px solid #cfdeea; }
+    html[data-look="c2"] .card.alert .card-top { background: var(--alert-tint); border-bottom-color: #f0cfcc; }
+    html[data-look="c2"] .card > :not(.card-top) { margin-left: 14px; margin-right: 14px; }
+    html[data-look="c2"] .card .card-foot { margin-bottom: 0; padding-bottom: 10px; }
+    html[data-look="c2"] .card > :last-child { margin-bottom: 4px; }
+    html[data-look="c2"] .tile, html[data-look="c2"] .card.alert .tile { background: #fff; }
+    html[data-look="c2"] .card-top .chip { background: #fff; box-shadow: 0 0 0 1px rgba(0,60,120,.12); }
+    html[data-look="c2"] .card-top .chip.alert { box-shadow: 0 0 0 1px rgba(179,38,30,.25); }
+    html[data-look="c2"] .box { border: 1px solid #d5dde7; border-radius: 14px; box-shadow: 0 1px 2px rgba(16,40,70,.05), 0 8px 18px -12px rgba(16,40,70,.25); }
+    html[data-look="c2"] .section-label { color: #1f2a37; }
 
-    /* ---------------- BRIEFING: editorial type + depth + gauge + mono details (our mix) ---------------- */
-    html[data-look="briefing"] { --bg: #f6f7f9; --text: #15181c; --font-head: "Newsreader", Georgia, serif; --font-body: "DM Sans", "Helvetica Neue", Arial, sans-serif; }
-    html[data-look="briefing"] header { border-bottom: 3px double #15181c; padding-bottom: 8px; }
-    html[data-look="briefing"] .tagline { font-family: "Newsreader", serif; font-style: italic; font-size: 13px; }
-    html[data-look="briefing"] .pill { border-radius: 0; border: 0; border-bottom: 2px solid transparent; background: none; padding: 0 2px; margin-right: 12px; font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); min-height: 32px; }
-    html[data-look="briefing"] .pill[aria-pressed="true"] { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; background: none; }
-    html[data-look="briefing"] .hero h1 { font-size: 38px; line-height: 1.03; font-weight: 700; }
-    html[data-look="briefing"] .meta { font-family: "IBM Plex Mono", monospace; font-size: 11px; }
-    html[data-look="briefing"] .section-label { border-top: 1px solid #15181c; padding-top: 6px; margin-top: 24px; }
-    html[data-look="briefing"] .card { border: 0; border-top: 3px solid var(--primary); border-radius: 8px; padding: 14px; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 8px 18px -8px rgba(0,40,80,.22), 0 20px 30px -18px rgba(0,40,80,.22); }
-    html[data-look="briefing"] .card.alert { border-top-color: var(--alert); }
-    html[data-look="briefing"] .card h3 { font-size: 20px; line-height: 1.15; font-weight: 600; }
-    html[data-look="briefing"] .card.lead h3 { font-size: 25px; line-height: 1.1; font-weight: 700; }
-    html[data-look="briefing"] .chip { background: none; padding: 0; border-radius: 0; font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--primary); font-weight: 700; }
-    html[data-look="briefing"] .chip.alert { color: var(--alert); } html[data-look="briefing"] .chip.muted { color: var(--grey); }
-    html[data-look="briefing"] .card-top { display: flex; align-items: center; gap: 10px; }
-    html[data-look="briefing"] .alertonly .mono { width: 34px; height: 34px; background: var(--alert-tint); color: var(--alert); border-radius: 8px; }
-    html[data-look="briefing"] .who b { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .06em; font-weight: 600; }
-    html[data-look="briefing"] .alertonly .chips { margin-left: auto; }
-    html[data-look="briefing"] .stat .n { font-family: "Newsreader", serif; font-size: 44px; font-weight: 700; }
-    html[data-look="briefing"] .gauge { height: 8px; }
-    html[data-look="briefing"] .box { border: 0; border-radius: 8px; background: #fff; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 8px 18px -10px rgba(0,40,80,.25); }
-    html[data-look="briefing"] .line { border-bottom: 1px dotted #9a9aa0; }
-    html[data-look="briefing"] button.box { border-style: solid !important; border-width: 3px 0 0 0 !important; border-top-style: double !important; border-color: #15181c !important; border-radius: 0; box-shadow: none; background: transparent; }
+    /* ======================= d1 · DEPTH: soft ======================= */
+    html[data-look="d1"] { --bg: transparent; --rule: rgba(0,60,120,.1); }
+    html[data-look="d1"] body { background: linear-gradient(#f3f7fc, #e7eef6 55%) fixed; }
+    html[data-look="d1"] .seg .pill { border: 0; box-shadow: 0 1px 3px rgba(0,40,80,.14); min-height: 38px; }
+    html[data-look="d1"] .seg .pill[aria-pressed="true"] { box-shadow: 0 6px 12px -3px rgba(0,93,163,.55); }
+    html[data-look="d1"] .hero h1 { font-size: 30px; letter-spacing: -.02em; }
+    html[data-look="d1"] .card { background: #fff; border: 1px solid rgba(0,60,120,.07); border-radius: 20px; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 8px 14px -6px rgba(0,40,80,.12), 0 22px 34px -16px rgba(0,40,80,.22); }
+    html[data-look="d1"] .card-top { padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+    html[data-look="d1"] .chip { border-radius: 99px; padding: 5px 10px; }
+    html[data-look="d1"] .card.lead { background: linear-gradient(160deg, var(--primary-bright), var(--primary-deep)); color: #fff; border-color: transparent; box-shadow: 0 20px 32px -14px rgba(0,65,114,.65); }
+    html[data-look="d1"] .card.lead .card-top, html[data-look="d1"] .card.lead .card-foot { border-color: rgba(255,255,255,.22); }
+    html[data-look="d1"] .card.lead .who small, html[data-look="d1"] .card.lead .card-foot { color: #d3e6f5; }
+    html[data-look="d1"] .card.lead .tile { background: rgba(255,255,255,.18); color: #fff; }
+    html[data-look="d1"] .card.lead .chip { background: rgba(255,255,255,.22); color: #fff; }
+    html[data-look="d1"] .card.lead .link { color: #fff; }
+    html[data-look="d1"] .card.lead .why.alert { color: #ffd5d1; }
+    html[data-look="d1"] .box { border: 1px solid rgba(0,60,120,.07); border-radius: 20px; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 12px 20px -12px rgba(0,40,80,.22); }
+
+    /* ======================= d2 · DEPTH: gradient header ======================= */
+    html[data-look="d2"] { --bg: #edf2f8; --rule: #e6ebf2; }
+    html[data-look="d2"] .topband { margin: 0 -16px; padding: 0 16px 22px; background: linear-gradient(160deg, var(--primary-bright) 0%, var(--primary-deep) 100%); border-radius: 0 0 30px 30px; box-shadow: 0 18px 30px -16px rgba(0,65,114,.7); color: #fff; }
+    html[data-look="d2"] .wordmark, html[data-look="d2"] .hero h1, html[data-look="d2"] .big-n { color: #fff; }
+    html[data-look="d2"] .tagline, html[data-look="d2"] .hero .meta { color: rgba(255,255,255,.82); }
+    html[data-look="d2"] .lookbtn { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.4); color: #fff; }
+    html[data-look="d2"] .seg { background: rgba(255,255,255,.16); border-radius: 99px; padding: 4px; gap: 2px; }
+    html[data-look="d2"] .seg .pill { flex: 1; border: 0; background: transparent; color: #fff; min-height: 38px; }
+    html[data-look="d2"] .seg .pill[aria-pressed="true"] { background: #fff; color: var(--primary-deep); font-weight: 700; box-shadow: 0 4px 10px -2px rgba(0,0,0,.3); }
+    html[data-look="d2"] .hero { margin-top: 22px; }
+    html[data-look="d2"] .big-n { display: block; font-family: var(--font-head); font-weight: 900; font-size: 68px; line-height: .9; letter-spacing: -.03em; }
+    html[data-look="d2"] .h-all { display: none; } html[data-look="d2"] .h-rest { display: block; font-size: 24px; }
+    html[data-look="d2"] .dot { border-color: rgba(255,255,255,.45); }
+    html[data-look="d2"] .dot.on { background: #fff; border-color: #fff; }
+    html[data-look="d2"] .dot.alert { background: #ffb4ab; border-color: #ffb4ab; }
+    html[data-look="d2"] .card { background: #fff; border: 1px solid rgba(0,60,120,.06); border-radius: 18px; box-shadow: 0 2px 4px rgba(0,40,80,.05), 0 14px 24px -10px rgba(0,40,80,.22); }
+    html[data-look="d2"] .tile { background: linear-gradient(145deg, var(--primary-bright), var(--primary-deep)); color: #fff; box-shadow: 0 6px 12px -4px rgba(0,65,114,.55); }
+    html[data-look="d2"] .card.alert .tile { background: linear-gradient(145deg, #e0584c, var(--alert)); color: #fff; box-shadow: 0 6px 12px -4px rgba(179,38,30,.5); }
+    html[data-look="d2"] .card h3 { font-size: 18px; }
+    html[data-look="d2"] .card.lead h3 { font-size: 21px; line-height: 1.25; }
+    html[data-look="d2"] .chip { border-radius: 99px; padding: 5px 10px; }
+    html[data-look="d2"] .box { border: 1px solid rgba(0,60,120,.06); border-radius: 18px; box-shadow: 0 2px 4px rgba(0,40,80,.05), 0 12px 22px -12px rgba(0,40,80,.22); }
+    html[data-look="d2"] .section-label { color: #3b4048; }
+
+    /* ======================= b1 · BRIEFING: readable ======================= */
+    html[data-look="b1"] { --bg: #f4f6f9; --font-head: "Newsreader", Georgia, serif; --font-body: "DM Sans", "Helvetica Neue", Arial, sans-serif; --rule: #e3e8ef; }
+    html[data-look="b1"] .hero h1 { font-size: 36px; line-height: 1.05; font-weight: 700; }
+    html[data-look="b1"] .seg { background: #fff; border: 1px solid #dbe2ea; border-radius: 12px; padding: 4px; gap: 4px; }
+    html[data-look="b1"] .seg .pill { flex: 1; border: 0; border-radius: 9px; background: transparent; min-height: 38px; font-weight: 600; }
+    html[data-look="b1"] .seg .pill[aria-pressed="true"] { background: var(--primary-deep); color: #fff; }
+    html[data-look="b1"] .card { background: #fff; border: 1px solid #d9e0e8; border-top: 4px solid var(--primary); border-radius: 10px; box-shadow: 0 1px 2px rgba(16,40,70,.05), 0 10px 20px -12px rgba(16,40,70,.28); }
+    html[data-look="b1"] .card.alert { border-top-color: var(--alert); }
+    html[data-look="b1"] .card-top { padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+    html[data-look="b1"] .card h3 { font-size: 21px; line-height: 1.2; font-weight: 600; }
+    html[data-look="b1"] .card.lead h3 { font-size: 25px; line-height: 1.15; font-weight: 700; }
+    html[data-look="b1"] .stat .n { font-family: "Newsreader", serif; font-size: 46px; }
+    html[data-look="b1"] .tile { border-radius: 10px; }
+    html[data-look="b1"] .box { border: 1px solid #d9e0e8; border-radius: 10px; box-shadow: 0 1px 2px rgba(16,40,70,.05), 0 8px 18px -12px rgba(16,40,70,.25); }
+    html[data-look="b1"] .section-label { color: #1f2a37; }
+
+    /* ======================= b2 · BRIEFING: magazine ======================= */
+    html[data-look="b2"] { --bg: #f1f3f6; --font-head: "Newsreader", Georgia, serif; --font-body: "DM Sans", "Helvetica Neue", Arial, sans-serif; --rule: #cdd6e1; }
+    html[data-look="b2"] .hero { padding-bottom: 14px; border-bottom: 2px solid #15181c; }
+    html[data-look="b2"] .big-n { display: block; font-family: "Newsreader", serif; font-weight: 700; font-size: 84px; line-height: .85; color: var(--primary); letter-spacing: -.03em; }
+    html[data-look="b2"] .h-all { display: none; } html[data-look="b2"] .h-rest { display: block; font-size: 28px; line-height: 1.05; font-weight: 700; }
+    html[data-look="b2"] .seg .pill { border-radius: 4px; border: 1.5px solid #15181c; background: transparent; font-weight: 600; min-height: 38px; }
+    html[data-look="b2"] .seg .pill[aria-pressed="true"] { background: #15181c; color: #fff; }
+    html[data-look="b2"] .card { background: #fff; border: 1.5px solid #cdd6e1; border-radius: 6px; padding: 0; overflow: hidden; box-shadow: 0 2px 3px rgba(16,40,70,.06), 0 12px 20px -14px rgba(16,40,70,.3); margin-bottom: 18px; }
+    html[data-look="b2"] .card-top { background: #f3f6fa; padding: 12px 14px; border-bottom: 1.5px solid #cdd6e1; }
+    html[data-look="b2"] .card.alert { border-color: #e7b9b5; }
+    html[data-look="b2"] .card.alert .card-top { background: var(--alert-tint); border-bottom-color: #e7b9b5; }
+    html[data-look="b2"] .card > :not(.card-top) { margin-left: 14px; margin-right: 14px; }
+    html[data-look="b2"] .card .card-foot { padding-bottom: 10px; }
+    html[data-look="b2"] .card > :last-child { margin-bottom: 4px; }
+    html[data-look="b2"] .card h3 { font-size: 21px; line-height: 1.2; font-weight: 600; margin-top: 14px; }
+    html[data-look="b2"] .card.lead { background: #eaf3fa; border-color: #9cc0de; }
+    html[data-look="b2"] .card.lead .card-top { background: #d9e9f5; border-bottom-color: #9cc0de; }
+    html[data-look="b2"] .card.lead h3 { font-size: 26px; line-height: 1.15; font-weight: 700; }
+    html[data-look="b2"] .card.lead .card-foot { border-top-color: #b8d3e8; }
+    html[data-look="b2"] .tile { border-radius: 50%; background: #fff; }
+    html[data-look="b2"] .stat .n { font-family: "Newsreader", serif; font-size: 48px; }
+    html[data-look="b2"] .section-label { border-top: 2px solid #15181c; padding-top: 8px; margin-top: 28px; color: #15181c; }
+    html[data-look="b2"] .section-label::after { display: none; }
+    html[data-look="b2"] .cnt { margin-left: auto; background: none; color: #15181c; font-size: 14px; }
+    html[data-look="b2"] .box { border: 1.5px solid #cdd6e1; border-radius: 6px; box-shadow: 0 2px 3px rgba(16,40,70,.06), 0 10px 18px -14px rgba(16,40,70,.3); }
 
     .topbar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--primary-bright); transform-origin: left; animation: load 1.2s ease-in-out infinite; z-index: 30; }
     @keyframes load { 0% { transform: scaleX(0); } 70% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
@@ -245,18 +283,40 @@
 
   <!-- ================= TODAY ================= -->
   <section x-show="tab === 'today'">
-    <header class="pt-5 pb-1 flex items-start justify-between">
-      <div>
-        <div class="wordmark">FINN</div>
-        <p class="tagline">A filter, not a feed.</p>
-      </div>
-      <!-- EXPERIMENT: look switcher, removed once a look is chosen -->
-      <button class="lookbtn" @click="nextLook()" :aria-label="'Change look, now ' + look.label"><span x-text="look.label"></span> ▸</button>
-    </header>
+    <div class="topband">
+      <header class="top-head">
+        <div>
+          <div class="wordmark">FINN</div>
+          <p class="tagline">A filter, not a feed.</p>
+        </div>
+        <!-- EXPERIMENT: look switcher, removed once a look is chosen -->
+        <button class="lookbtn" @click="nextLook()" :aria-label="'Change look, now ' + look.label"><span x-text="look.label"></span> ▸</button>
+      </header>
 
-    <div class="mt-3 flex gap-2" role="group" aria-label="Time window">
-      <template x-for="w in windows" :key="w.key">
-        <button class="pill" :aria-pressed="period === w.key" @click="setWindow(w.key)" x-text="w.key"></button>
+      <div class="seg" role="group" aria-label="Time window">
+        <template x-for="w in windows" :key="w.key">
+          <button class="pill" :aria-pressed="period === w.key" @click="setWindow(w.key)" x-text="w.key"></button>
+        </template>
+      </div>
+
+      <!-- hero: headline + signal strip (T2) -->
+      <template x-if="data">
+        <div class="hero">
+          <div class="hero-row">
+            <span class="big-n" aria-hidden="true" x-text="nMatter"></span>
+            <div class="hero-text">
+              <h1 class="h-all" x-text="headline"></h1>
+              <h1 class="h-rest" aria-hidden="true" x-text="headlineRest"></h1>
+              <p class="meta sub" x-text="subline"></p>
+            </div>
+          </div>
+          <div class="dots" role="img" :aria-label="stripLabel">
+            <template x-for="s in strip" :key="s.t">
+              <span class="dot" :class="s.state" :title="s.t"></span>
+            </template>
+          </div>
+          <p class="meta strip-cap" x-text="stripLabel"></p>
+        </div>
       </template>
     </div>
 
@@ -264,8 +324,8 @@
     <div x-show="loading && !data" class="mt-5" aria-busy="true">
       <div class="skel" style="height:28px;width:70%"></div>
       <div class="skel mt-2" style="height:14px;width:45%"></div>
-      <div class="skel mt-5" style="height:104px"></div>
-      <div class="skel mt-3" style="height:104px"></div>
+      <div class="skel mt-5" style="height:128px"></div>
+      <div class="skel mt-3" style="height:128px"></div>
       <div class="skel mt-3" style="height:64px"></div>
       <p class="meta mt-4" x-show="slow" x-cloak>Waking the server. The first load can take up to 30 seconds.</p>
     </div>
@@ -281,29 +341,17 @@
     <div x-show="data" x-cloak>
       <template x-if="data">
         <div>
-          <div class="banner mt-3" x-show="data.widened" x-text="widenedText"></div>
-          <div class="banner warn mt-3" x-show="data.fallback_used">Live data unavailable right now. Showing the last saved copy.</div>
-
-          <!-- hero: headline + signal strip (T2) -->
-          <div class="hero mt-5">
-            <h1 class="text-2xl leading-tight" x-text="headline"></h1>
-            <p class="meta mt-1" x-text="subline"></p>
-            <div class="dots" role="img" :aria-label="stripLabel">
-              <template x-for="s in strip" :key="s.t">
-                <span class="dot" :class="s.state" :title="s.t"></span>
-              </template>
-            </div>
-            <p class="meta strip-cap" x-text="stripLabel"></p>
-          </div>
+          <div class="banner mt-4" x-show="data.widened" x-text="widenedText"></div>
+          <div class="banner warn mt-4" x-show="data.fallback_used">Live data unavailable right now. Showing the last saved copy.</div>
 
           <!-- High cards -->
-          <div class="section-label" x-show="data.cards.length" x-text="'What matters'"></div>
+          <div class="section-label" x-show="data.cards.length"><span>What matters</span><span class="cnt" x-text="data.cards.length"></span></div>
           <template x-for="(c, i) in data.cards" :key="c.ticker + c.id + c.date">
             <article class="card" :class="[c.moved_same_day ? 'alert' : '', i === 0 ? 'lead' : '']">
               <div class="card-top">
-                <span class="mono" aria-hidden="true" x-text="c.ticker.slice(0, 2)"></span>
-                <div class="who"><b x-text="c.ticker"></b><small x-text="fmtDateTime(c.date)"></small></div>
-                <div class="chips flex flex-wrap items-center gap-2">
+                <span class="tile" aria-hidden="true" x-html="iconFor(c.kind)"></span>
+                <div class="who"><b x-text="c.ticker"></b><small x-text="shortCompany(c.company)"></small></div>
+                <div class="chips">
                   <span class="chip" x-text="kindLabel(c.kind)"></span>
                   <template x-for="a in c.alerts" :key="a.type">
                     <span class="chip alert" x-text="alertChip(a)"></span>
@@ -311,24 +359,26 @@
                 </div>
               </div>
               <h3 x-text="cleanTitle(c)"></h3>
-              <p class="meta"><span class="font-bold" x-text="c.ticker"></span> · <span x-text="shortCompany(c.company)"></span> · <span x-text="fmtDateTime(c.date)"></span></p>
               <p class="why alert" x-show="c.moved_same_day">The stock also moved on the day of this filing.</p>
-              <a class="link" x-show="c.pdf_url" :href="c.pdf_url" target="_blank" rel="noopener">Open filing ↗</a>
+              <div class="card-foot">
+                <span class="when" x-text="fmtDateTime(c.date)"></span>
+                <a class="link" x-show="c.pdf_url" :href="c.pdf_url" target="_blank" rel="noopener">Open filing ↗</a>
+              </div>
             </article>
           </template>
 
           <!-- alert-only (T4) -->
-          <div class="section-label" x-show="data.alert_only.length">Unusual moves</div>
+          <div class="section-label" x-show="data.alert_only.length"><span>Unusual moves</span><span class="cnt alert" x-text="data.alert_only.length"></span></div>
           <template x-for="a in data.alert_only" :key="a.ticker + a.type">
             <article class="card alert alertonly">
               <div class="card-top">
-                <span class="mono" aria-hidden="true" x-text="a.ticker.slice(0, 2)"></span>
-                <div class="who"><b x-text="a.ticker"></b><small x-text="shortCompany(a.company) + ' · ' + fmtDay(a.date)"></small></div>
-                <div class="chips flex flex-wrap items-center gap-2">
+                <span class="tile" aria-hidden="true" x-html="iconFor(alertIcon(a))"></span>
+                <div class="who"><b x-text="a.ticker"></b><small x-text="shortCompany(a.company)"></small></div>
+                <div class="chips">
                   <span class="chip alert" x-text="a.type === 'price' ? 'Price move' : 'Volume spike'"></span>
                 </div>
               </div>
-              <h3 class="alert-h" x-text="alertHeadline(a)"></h3>
+              <h3 class="sr-only" x-text="alertHeadline(a)"></h3>
               <div class="stat">
                 <span class="n" x-text="statText(a)"></span>
                 <span class="u" x-text="a.type === 'price' ? 'close vs previous close' : 'the 20-day average volume'"></span>
@@ -337,24 +387,28 @@
                 <div class="gauge"><i :style="'width:' + gaugePct(a) + '%'"></i><em></em></div>
                 <div class="gl"><span x-text="a.type === 'price' ? '0%' : '0×'"></span><span x-text="'your limit ' + limitText(a)"></span><span x-text="a.type === 'price' ? '±' + (data.thresholds.price * 2) + '%' : (data.thresholds.volume * 2) + '×'"></span></div>
               </div>
-              <p class="meta"><span class="font-bold" x-text="a.ticker"></span> · <span x-text="shortCompany(a.company)"></span> · <span x-text="fmtDay(a.date)"></span></p>
               <p class="why">No filing explains this move.</p>
+              <div class="card-foot">
+                <span class="when" x-text="fmtDay(a.date) + ' close'"></span>
+                <a class="link" href="#" @click.prevent="go('settings')">Adjust limit ›</a>
+              </div>
             </article>
           </template>
 
           <!-- Medium one-liners -->
-          <div class="section-label" x-show="data.summaries.length">Also filed</div>
+          <div class="section-label" x-show="data.summaries.length"><span>Also filed</span><span class="cnt soft" x-text="data.summaries.length"></span></div>
           <div class="box" x-show="data.summaries.length">
             <template x-for="m in data.summaries" :key="m.ticker + m.id + m.date">
               <div class="line">
+                <span class="tile sm" aria-hidden="true" x-html="iconFor(m.kind)"></span>
                 <div class="flex-1 min-w-0">
                   <div class="flex flex-wrap items-center gap-2">
                     <span class="font-bold" x-text="m.ticker"></span>
                     <span class="chip muted" x-text="kindLabel(m.kind)"></span>
                     <template x-for="a in m.alerts" :key="a.type"><span class="chip alert" x-text="alertChip(a)"></span></template>
                   </div>
-                  <p class="mt-1" style="margin-bottom:0" x-text="cleanTitle(m)"></p>
-                  <p class="meta mt-1" x-text="fmtDateTime(m.date)"></p>
+                  <p class="line-title" x-text="cleanTitle(m)"></p>
+                  <p class="meta" x-text="fmtDateTime(m.date)"></p>
                 </div>
                 <a class="link self-start" x-show="m.pdf_url" :href="m.pdf_url" target="_blank" rel="noopener" aria-label="Open filing">↗</a>
               </div>
@@ -368,18 +422,18 @@
           </div>
 
           <!-- Routine (collapsed) -->
-          <button class="box w-full mt-4 flex items-center justify-between" style="min-height:48px;text-align:left;border-style:dashed"
+          <button class="box routine-btn w-full mt-4 flex items-center justify-between" style="min-height:52px;text-align:left"
                   @click="routineOpen = !routineOpen" :aria-expanded="routineOpen" x-show="data.routine_count > 0">
             <span class="text-sm" style="color:var(--text-muted)" x-text="'Routine (' + data.routine_count + ')'"></span>
             <span aria-hidden="true" style="color:var(--text-muted)" x-text="routineOpen ? '▴' : '▾'"></span>
           </button>
           <div class="box mt-2" x-show="routineOpen && data.routine_count > 0" x-cloak>
             <template x-for="r in data.routine" :key="r.ticker + r.id + r.date">
-              <div class="line" style="font-size:13px">
+              <div class="line">
                 <div class="flex-1 min-w-0">
                   <span class="font-bold" x-text="r.ticker"></span>
                   <span class="chip muted ml-1" x-text="r.muted ? kindLabel(r.kind) + ' (off)' : kindLabel(r.kind)"></span>
-                  <p class="mt-1" style="margin-bottom:0;color:var(--text-muted)" x-text="cleanTitle(r)"></p>
+                  <p class="line-title" style="color:var(--text-muted)" x-text="cleanTitle(r)"></p>
                   <p class="meta" x-text="fmtDateTime(r.date)"></p>
                 </div>
                 <a class="link self-start" x-show="r.pdf_url" :href="r.pdf_url" target="_blank" rel="noopener" aria-label="Open filing">↗</a>
@@ -403,7 +457,7 @@
 
   <!-- ================= RESEARCH (stub until the research build) ================= -->
   <section x-show="tab === 'research'" x-cloak>
-    <header class="pt-5"><div class="wordmark">FINN</div></header>
+    <div class="topband"><header class="top-head"><div class="wordmark">FINN</div></header></div>
     <div class="mt-8 text-center">
       <h1 class="text-2xl">Research</h1>
       <p class="meta mt-2">Ask about any company. Answers come from annual reports and concall transcripts only, every claim with its source.</p>
@@ -413,7 +467,7 @@
 
   <!-- ================= SETTINGS ================= -->
   <section x-show="tab === 'settings'" x-cloak>
-    <header class="pt-5"><div class="wordmark">FINN</div></header>
+    <div class="topband"><header class="top-head"><div class="wordmark">FINN</div></header></div>
     <div class="mt-5">
       <h1 class="text-2xl">Alerts</h1>
       <p class="meta mt-1">You decide what unusual means. Saved on this device.</p>
@@ -506,7 +560,33 @@ const KIND_LABELS = {
   board_outcome: 'Board outcome', earnings_call: 'Earnings call', investor_meetings: 'Investor meetings',
   agm_egm: 'AGM / EGM', postal_ballot: 'Postal ballot', press_release: 'Press release', unclassified: 'Other filing',
 };
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+// Category icons (simple outline shapes, 24px grid). Shown in the tile on each card.
+const svg = (d) => '<svg viewBox="0 0 24 24" aria-hidden="true">' + d + '</svg>';
+const ICONS = {
+  results: svg('<path d="M4 20V11M10 20V4M16 20v-6M2 20h20"/>'),
+  management_change: svg('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>'),
+  m_and_a: svg('<path d="M3 6h6l6 6-6 6H3M15 12h6"/>'),
+  litigation: svg('<path d="M12 3v18M5 21h14M4 7h16M7 7l-3.5 7a3.5 3.5 0 007 0zM17 7l-3.5 7a3.5 3.5 0 007 0z"/>'),
+  credit_rating: svg('<path d="M12 3l2.8 6 6.2.8-4.6 4.4 1.2 6.8L12 17.8 6.4 21l1.2-6.8L3 9.8 9.2 9z"/>'),
+  pledging: svg('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>'),
+  fund_raise: svg('<path d="M12 3v12M7 10l5 5 5-5M4 21h16"/>'),
+  capex: svg('<path d="M3 21V9l6 4V9l6 4V5h6v16zM3 21h18"/>'),
+  dividend: svg('<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>'),
+  bonus_split: svg('<path d="M12 21V11M12 11L5 4M12 11l7-7M5 9V4h5M14 4h5v5"/>'),
+  insider_trading: svg('<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'),
+  order_win: svg('<circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/>'),
+  board_outcome: svg('<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12h6M9 16h6"/>'),
+  earnings_call: svg('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/>'),
+  investor_meetings: svg('<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-4 3-6 7-6s7 2 7 6M17 5a3.5 3.5 0 010 7M22 20c0-3-2-5-5-5.5"/>'),
+  agm_egm: svg('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>'),
+  postal_ballot: svg('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/>'),
+  press_release: svg('<path d="M4 5h13v14H4zM17 9h3v8a2 2 0 01-3 1.5M7 9h7M7 13h7M7 16h4"/>'),
+  unclassified: svg('<path d="M6 3h8l5 5v13H6zM14 3v5h5"/>'),
+  price_down: svg('<path d="M3 7l6 6 4-4 8 8M15 17h6v-6"/>'),
+  price_up: svg('<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>'),
+  volume: svg('<path d="M5 20V12M12 20V5M19 20v-5"/>'),
+};
+const MONTHS =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 function readStore() {
@@ -538,17 +618,17 @@ function finn() {
     _timer: null,
     // EXPERIMENT: switchable looks (same markup, different skin). Removed once one is chosen.
     looks: [
-      { id: 'classic', label: 'Classic' },
-      { id: 'paper', label: 'Paper' },
-      { id: 'receipt', label: 'Receipt' },
-      { id: 'panel', label: 'Panel' },
-      { id: 'depth', label: 'Depth' },
-      { id: 'briefing', label: 'Briefing' },
+      { id: 'c1', label: 'Classic 1' },
+      { id: 'c2', label: 'Classic 2' },
+      { id: 'd1', label: 'Depth 1' },
+      { id: 'd2', label: 'Depth 2' },
+      { id: 'b1', label: 'Briefing 1' },
+      { id: 'b2', label: 'Briefing 2' },
     ],
-    lookId: 'classic',
+    lookId: 'd1',
     get look() { return this.looks.find(l => l.id === this.lookId) || this.looks[0]; },
     setLook(id) {
-      this.lookId = this.looks.some(l => l.id === id) ? id : 'classic';
+      this.lookId = this.looks.some(l => l.id === id) ? id : 'd1';
       document.documentElement.dataset.look = this.lookId;
       this.persist();
     },
@@ -560,7 +640,7 @@ function finn() {
     init() {
       const s = readStore();
       const asked = new URLSearchParams(location.search).get('look');
-      this.setLook(asked || s.look || 'classic');
+      this.setLook(asked || s.look || 'd1');
       if (s.window && ['24h', '3d', '7d'].includes(s.window)) this.period = s.window;
       if (s.settings) this.settings = { ...DEFAULTS, ...s.settings, off: Array.isArray(s.settings.off) ? s.settings.off : [] };
       this.$watch('settings', () => { this.persist(); this.scheduleLoad(); }, { deep: true });
@@ -605,6 +685,9 @@ function finn() {
     // ---------- derived text ----------
     get nMatter() { return this.data ? this.data.cards.length + this.data.alert_only.length : 0; },
     get isQuiet() { return !!this.data && this.nMatter === 0 && this.data.summaries.length === 0; },
+    get headlineRest() { return this.nMatter === 1 ? 'thing matters' : 'things matter'; },
+    iconFor(key) { return ICONS[key] || ICONS.unclassified; },
+    alertIcon(a) { return a.type === 'price' ? (a.value < 0 ? 'price_down' : 'price_up') : 'volume'; },
     get headline() {
       const n = this.nMatter;
       if (!this.data) return '';
