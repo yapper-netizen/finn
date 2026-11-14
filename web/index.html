@@ -8,7 +8,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23005da3'/%3E%3Ctext x='16' y='23' font-family='Arial' font-weight='700' font-size='20' text-anchor='middle' fill='white'%3EF%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DotGothic16&family=IBM+Plex+Mono:wght@400;500;600&family=Lato:wght@700;900&family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
   <style>
@@ -93,6 +93,146 @@
     .skel { border-radius: 8px; background: linear-gradient(90deg, #e9ebef 25%, #f4f5f7 37%, #e9ebef 63%); background-size: 400% 100%; animation: shimmer 1.4s ease infinite; }
     @keyframes shimmer { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
     @media (prefers-reduced-motion: reduce) { .skel { animation: none; } .switch, .switch::after { transition: none; } }
+    /* ======================================================================
+       LOOKS (experiment). Same markup everywhere; html[data-look] swaps the skin.
+       classic = what we had. Elements added for the looks (avatar, who, stat, gauge)
+       are hidden in classic.
+       ====================================================================== */
+    .lookbtn { font-size: 12px; font-weight: 600; min-height: 32px; padding: 0 11px; border-radius: 99px; border: 1px dashed var(--border); background: var(--surface); color: var(--primary); margin-top: 4px; }
+    .mono, .who, .stat, .gauge-wrap { display: none; }
+    .stat { align-items: baseline; gap: 8px; margin: 8px 0 0; }
+    .stat .n { font-size: 38px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; color: var(--alert); }
+    .stat .u { font-size: 12.5px; color: var(--text-muted); }
+    .gauge { position: relative; height: 10px; background: #e8ebf0; border-radius: 99px; margin: 12px 0 5px; }
+    .gauge i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: linear-gradient(90deg, #e56b60, var(--alert)); }
+    .gauge em { position: absolute; left: 50%; top: -4px; bottom: -4px; width: 2px; background: #16181d; }
+    .gl { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); }
+    /* every look except classic shows the big number and the gauge on alert cards */
+    html:not([data-look="classic"]) .alertonly .alert-h, html:not([data-look="classic"]) .alertonly .meta { display: none; }
+    html:not([data-look="classic"]) .stat { display: flex; }
+    html:not([data-look="classic"]) .gauge-wrap { display: block; }
+    html:not([data-look="classic"]) .alertonly .who { display: block; }
+    .who b { display: block; font-size: 15px; line-height: 1.2; }
+    .who small { display: block; color: var(--text-muted); font-size: 11.5px; }
+
+    /* ---------------- PAPER: editorial front page ---------------- */
+    html[data-look="paper"] { --bg: #fafaf8; --text: #15181c; --font-head: "Newsreader", Georgia, serif; --font-body: "DM Sans", "Helvetica Neue", Arial, sans-serif; }
+    html[data-look="paper"] header { border-bottom: 3px double #15181c; padding-bottom: 8px; margin-bottom: 2px; }
+    html[data-look="paper"] .tagline { font-family: "Newsreader", serif; font-style: italic; font-size: 13px; }
+    html[data-look="paper"] .pill { border-radius: 0; border: 0; border-bottom: 2px solid transparent; background: none; padding: 0 2px; margin-right: 12px; font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); min-height: 32px; }
+    html[data-look="paper"] .pill[aria-pressed="true"] { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; background: none; }
+    html[data-look="paper"] .hero h1 { font-size: 38px; line-height: 1.03; font-weight: 700; }
+    html[data-look="paper"] .section-label { border-top: 1px solid #15181c; padding-top: 6px; margin-top: 24px; }
+    html[data-look="paper"] .card { border: 0; border-top: 1px solid var(--border); border-radius: 0; background: transparent; padding: 13px 0; margin: 0; }
+    html[data-look="paper"] .card h3 { font-size: 21px; line-height: 1.15; font-weight: 600; }
+    html[data-look="paper"] .card.lead { background: #fff; border-top: 3px solid var(--primary); padding: 14px; box-shadow: 0 10px 24px -14px rgba(0,40,80,.45), 0 1px 2px rgba(0,0,0,.06); margin-bottom: 4px; }
+    html[data-look="paper"] .card.lead h3 { font-size: 27px; line-height: 1.1; font-weight: 700; }
+    html[data-look="paper"] .chip { background: none; padding: 0; border-radius: 0; font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--primary); font-weight: 700; }
+    html[data-look="paper"] .chip.alert { color: var(--alert); }
+    html[data-look="paper"] .chip.muted { color: var(--grey); }
+    html[data-look="paper"] .stat .n { font-family: "Newsreader", serif; font-size: 42px; }
+    html[data-look="paper"] .gauge, html[data-look="paper"] .gauge i { border-radius: 0; height: 6px; }
+    html[data-look="paper"] .box { border: 0; border-top: 1px solid #15181c; border-radius: 0; background: transparent; padding: 0; }
+    html[data-look="paper"] .line { border-bottom: 1px dotted #9a9aa0; }
+    html[data-look="paper"] button.box { border-style: solid !important; border-width: 3px 0 0 0 !important; border-top-style: double !important; border-color: #15181c !important; background: transparent; }
+
+    /* ---------------- RECEIPT: thermal paper, stamps, ticket notches ---------------- */
+    html[data-look="receipt"] { --bg: #dfe4ea; --font-head: "IBM Plex Mono", monospace; --font-body: "IBM Plex Mono", monospace; }
+    html[data-look="receipt"] body { font-size: 13px; }
+    html[data-look="receipt"] .wordmark { letter-spacing: .2em; }
+    html[data-look="receipt"] .hero h1 { font-size: 22px; text-transform: uppercase; letter-spacing: .03em; font-weight: 600; }
+    html[data-look="receipt"] .meta, html[data-look="receipt"] .tagline { text-transform: uppercase; letter-spacing: .03em; font-size: 11px; }
+    html[data-look="receipt"] .pill { border-radius: 2px; border: 1.5px dashed #9aa0a8; background: transparent; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+    html[data-look="receipt"] .pill[aria-pressed="true"] { border-style: solid; border-color: var(--primary); background: var(--primary); }
+    html[data-look="receipt"] .section-label { border-bottom: 1.5px dashed #9aa0a8; padding-bottom: 6px; }
+    html[data-look="receipt"] .card { background: #fff; border: 0; border-top: 1.5px dashed #9aa0a8; border-bottom: 1.5px dashed #9aa0a8; border-radius: 0; padding: 14px 18px; margin-bottom: 14px; position: relative; box-shadow: 0 12px 22px -12px rgba(0,30,60,.4), 0 2px 3px rgba(0,0,0,.08); }
+    html[data-look="receipt"] .card::before, html[data-look="receipt"] .card::after { content: ""; position: absolute; top: 50%; width: 13px; height: 13px; margin-top: -6px; border-radius: 50%; background: var(--bg); }
+    html[data-look="receipt"] .card::before { left: -7px; } html[data-look="receipt"] .card::after { right: -7px; }
+    html[data-look="receipt"] .card h3 { font-size: 14.5px; line-height: 1.4; font-weight: 600; }
+    html[data-look="receipt"] .chip { background: none; border: 1.5px solid var(--primary); color: var(--primary); border-radius: 2px; text-transform: uppercase; letter-spacing: .08em; font-size: 10px; padding: 3px 6px; transform: rotate(-2deg); }
+    html[data-look="receipt"] .chip.alert { border-color: var(--alert); color: var(--alert); }
+    html[data-look="receipt"] .chip.muted { border-color: #9aa0a8; color: var(--grey); }
+    html[data-look="receipt"] .stat .n { font-size: 34px; font-weight: 600; }
+    html[data-look="receipt"] .gauge { border-radius: 0; height: 8px; background: #eceff3; }
+    html[data-look="receipt"] .gauge i { border-radius: 0; }
+    html[data-look="receipt"] .box { border: 1.5px dashed #9aa0a8; border-radius: 0; background: #fff; }
+    html[data-look="receipt"] .link { text-transform: uppercase; letter-spacing: .05em; font-size: 12px; }
+
+    /* ---------------- PANEL: instrument, raised modules, dot-matrix display ---------------- */
+    html[data-look="panel"] { --bg: #d9dce1; --font-head: "DM Sans", sans-serif; }
+    html[data-look="panel"] .tagline, html[data-look="panel"] .meta { font-family: "IBM Plex Mono", monospace; font-size: 11px; }
+    html[data-look="panel"] .wordmark { letter-spacing: .18em; color: #1d2026; }
+    html[data-look="panel"] .pill { border-radius: 8px; font-family: "IBM Plex Mono", monospace; font-size: 12px; border: 0; background: linear-gradient(#f3f4f6, #dfe2e7); box-shadow: 0 1px 0 #fff inset, 0 3px 6px -2px rgba(20,30,50,.35); }
+    html[data-look="panel"] .pill[aria-pressed="true"] { background: #12161c; color: #8fc4ee; box-shadow: inset 0 2px 5px rgba(0,0,0,.7); }
+    html[data-look="panel"] .hero { background: #12161c; border-radius: 12px; padding: 16px 16px 12px; color: #e8eef5; box-shadow: inset 0 2px 6px rgba(0,0,0,.7), 0 1px 0 #fff; }
+    html[data-look="panel"] .hero h1 { font-family: "DotGothic16", monospace; font-size: 40px; line-height: 1.05; color: #8fc4ee; font-weight: 400; }
+    html[data-look="panel"] .hero .meta { color: #8d97a3; letter-spacing: .08em; text-transform: uppercase; font-size: 10.5px; }
+    html[data-look="panel"] .dots { gap: 4px; justify-content: stretch; margin-top: 14px; }
+    html[data-look="panel"] .dot { flex: 1; width: auto; height: 8px; border-radius: 2px; border: 0; background: #2a313b; }
+    html[data-look="panel"] .dot.on { background: #8fc4ee; } html[data-look="panel"] .dot.alert { background: #ff7a6e; }
+    html[data-look="panel"] .section-label { font-family: "IBM Plex Mono", monospace; letter-spacing: .14em; font-size: 10.5px; }
+    html[data-look="panel"] .card, html[data-look="panel"] .box { background: linear-gradient(#e9ebee, #dcdfe4); border: 0; border-radius: 12px; box-shadow: 0 1px 0 #fff inset, 0 -2px 0 rgba(0,0,0,.08) inset, 0 8px 14px -6px rgba(20,30,50,.45), 0 2px 3px rgba(20,30,50,.2); }
+    html[data-look="panel"] .card-top { display: flex; justify-content: space-between; align-items: center; }
+    html[data-look="panel"] .who { display: block; } html[data-look="panel"] .who b { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .1em; font-weight: 500; color: #555b66; }
+    html[data-look="panel"] .who small { display: none; }
+    html[data-look="panel"] .card .meta { display: none; }
+    html[data-look="panel"] .chip { background: none; padding: 0; font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--primary); font-weight: 600; }
+    html[data-look="panel"] .chip.alert { color: var(--alert); } html[data-look="panel"] .chip.muted { color: #555b66; }
+    html[data-look="panel"] .stat .n { font-family: "DotGothic16", monospace; font-weight: 400; font-size: 40px; }
+    html[data-look="panel"] .gauge { background: #12161c; height: 8px; border-radius: 2px; box-shadow: inset 0 1px 3px rgba(0,0,0,.6); }
+    html[data-look="panel"] .gauge i { border-radius: 2px; background: #ff7a6e; box-shadow: 0 0 8px rgba(255,122,110,.7); }
+    html[data-look="panel"] .gauge em { background: #8fc4ee; }
+    html[data-look="panel"] button.box { border: 0 !important; }
+
+    /* ---------------- DEPTH: layered shadows, avatars, a gradient hero card ---------------- */
+    html[data-look="depth"] { --bg: transparent; }
+    html[data-look="depth"] body { background: linear-gradient(#f2f6fb, #e9eff6 60%) fixed; }
+    html[data-look="depth"] .pill { box-shadow: 0 1px 3px rgba(0,40,80,.12); border: 0; }
+    html[data-look="depth"] .pill[aria-pressed="true"] { box-shadow: 0 4px 10px -2px rgba(0,93,163,.5); }
+    html[data-look="depth"] .hero h1 { font-size: 30px; letter-spacing: -.02em; }
+    html[data-look="depth"] .card { border: 0; border-radius: 20px; padding: 14px; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 6px 12px -4px rgba(0,40,80,.1), 0 18px 32px -12px rgba(0,40,80,.18); }
+    html[data-look="depth"] .card-top { display: flex; align-items: center; gap: 10px; }
+    html[data-look="depth"] .mono, html[data-look="briefing"] .alertonly .mono { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--primary-tint); color: var(--primary-deep); font-weight: 700; font-size: 12px; flex: none; }
+    html[data-look="depth"] .who { display: block; }
+    html[data-look="depth"] .chips { margin-left: auto; justify-content: flex-end; }
+    html[data-look="depth"] .card .meta { display: none; }
+    html[data-look="depth"] .card h3 { margin-top: 10px; font-size: 16px; }
+    html[data-look="depth"] .chip { border-radius: 99px; padding: 5px 9px; }
+    html[data-look="depth"] .card.alert .mono { background: var(--alert-tint); color: var(--alert); }
+    html[data-look="depth"] .card.lead { background: linear-gradient(160deg, var(--primary-bright), var(--primary-deep)); color: #fff; box-shadow: 0 18px 30px -12px rgba(0,65,114,.6); }
+    html[data-look="depth"] .card.lead .who small { color: #cfe3f3; }
+    html[data-look="depth"] .card.lead .mono { background: rgba(255,255,255,.18); color: #fff; }
+    html[data-look="depth"] .card.lead .chip { background: rgba(255,255,255,.2); color: #fff; }
+    html[data-look="depth"] .card.lead .link { color: #fff; }
+    html[data-look="depth"] .card.lead .why.alert { color: #ffd5d1; }
+    html[data-look="depth"] .box { border: 0; border-radius: 20px; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 8px 16px -8px rgba(0,40,80,.2); }
+    html[data-look="depth"] button.box { border: 0 !important; }
+
+    /* ---------------- BRIEFING: editorial type + depth + gauge + mono details (our mix) ---------------- */
+    html[data-look="briefing"] { --bg: #f6f7f9; --text: #15181c; --font-head: "Newsreader", Georgia, serif; --font-body: "DM Sans", "Helvetica Neue", Arial, sans-serif; }
+    html[data-look="briefing"] header { border-bottom: 3px double #15181c; padding-bottom: 8px; }
+    html[data-look="briefing"] .tagline { font-family: "Newsreader", serif; font-style: italic; font-size: 13px; }
+    html[data-look="briefing"] .pill { border-radius: 0; border: 0; border-bottom: 2px solid transparent; background: none; padding: 0 2px; margin-right: 12px; font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); min-height: 32px; }
+    html[data-look="briefing"] .pill[aria-pressed="true"] { color: var(--primary); border-bottom-color: var(--primary); font-weight: 700; background: none; }
+    html[data-look="briefing"] .hero h1 { font-size: 38px; line-height: 1.03; font-weight: 700; }
+    html[data-look="briefing"] .meta { font-family: "IBM Plex Mono", monospace; font-size: 11px; }
+    html[data-look="briefing"] .section-label { border-top: 1px solid #15181c; padding-top: 6px; margin-top: 24px; }
+    html[data-look="briefing"] .card { border: 0; border-top: 3px solid var(--primary); border-radius: 8px; padding: 14px; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 8px 18px -8px rgba(0,40,80,.22), 0 20px 30px -18px rgba(0,40,80,.22); }
+    html[data-look="briefing"] .card.alert { border-top-color: var(--alert); }
+    html[data-look="briefing"] .card h3 { font-size: 20px; line-height: 1.15; font-weight: 600; }
+    html[data-look="briefing"] .card.lead h3 { font-size: 25px; line-height: 1.1; font-weight: 700; }
+    html[data-look="briefing"] .chip { background: none; padding: 0; border-radius: 0; font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--primary); font-weight: 700; }
+    html[data-look="briefing"] .chip.alert { color: var(--alert); } html[data-look="briefing"] .chip.muted { color: var(--grey); }
+    html[data-look="briefing"] .card-top { display: flex; align-items: center; gap: 10px; }
+    html[data-look="briefing"] .alertonly .mono { width: 34px; height: 34px; background: var(--alert-tint); color: var(--alert); border-radius: 8px; }
+    html[data-look="briefing"] .who b { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .06em; font-weight: 600; }
+    html[data-look="briefing"] .alertonly .chips { margin-left: auto; }
+    html[data-look="briefing"] .stat .n { font-family: "Newsreader", serif; font-size: 44px; font-weight: 700; }
+    html[data-look="briefing"] .gauge { height: 8px; }
+    html[data-look="briefing"] .box { border: 0; border-radius: 8px; background: #fff; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 8px 18px -10px rgba(0,40,80,.25); }
+    html[data-look="briefing"] .line { border-bottom: 1px dotted #9a9aa0; }
+    html[data-look="briefing"] button.box { border-style: solid !important; border-width: 3px 0 0 0 !important; border-top-style: double !important; border-color: #15181c !important; border-radius: 0; box-shadow: none; background: transparent; }
+
     .topbar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--primary-bright); transform-origin: left; animation: load 1.2s ease-in-out infinite; z-index: 30; }
     @keyframes load { 0% { transform: scaleX(0); } 70% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
   </style>
@@ -110,6 +250,8 @@
         <div class="wordmark">FINN</div>
         <p class="tagline">A filter, not a feed.</p>
       </div>
+      <!-- EXPERIMENT: look switcher, removed once a look is chosen -->
+      <button class="lookbtn" @click="nextLook()" :aria-label="'Change look, now ' + look.label"><span x-text="look.label"></span> ▸</button>
     </header>
 
     <div class="mt-3 flex gap-2" role="group" aria-label="Time window">
@@ -139,31 +281,34 @@
     <div x-show="data" x-cloak>
       <template x-if="data">
         <div>
-          <div class="mt-5">
-            <h1 class="text-2xl leading-tight" x-text="headline"></h1>
-            <p class="meta mt-1" x-text="subline"></p>
-          </div>
-
           <div class="banner mt-3" x-show="data.widened" x-text="widenedText"></div>
           <div class="banner warn mt-3" x-show="data.fallback_used">Live data unavailable right now. Showing the last saved copy.</div>
 
-          <!-- signal strip (T2) -->
-          <div class="dots" role="img" :aria-label="stripLabel">
-            <template x-for="s in strip" :key="s.t">
-              <span class="dot" :class="s.state" :title="s.t"></span>
-            </template>
+          <!-- hero: headline + signal strip (T2) -->
+          <div class="hero mt-5">
+            <h1 class="text-2xl leading-tight" x-text="headline"></h1>
+            <p class="meta mt-1" x-text="subline"></p>
+            <div class="dots" role="img" :aria-label="stripLabel">
+              <template x-for="s in strip" :key="s.t">
+                <span class="dot" :class="s.state" :title="s.t"></span>
+              </template>
+            </div>
+            <p class="meta strip-cap" x-text="stripLabel"></p>
           </div>
-          <p class="meta" x-text="stripLabel"></p>
 
           <!-- High cards -->
           <div class="section-label" x-show="data.cards.length" x-text="'What matters'"></div>
-          <template x-for="c in data.cards" :key="c.ticker + c.id + c.date">
-            <article class="card" :class="c.moved_same_day ? 'alert' : ''">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="chip" x-text="kindLabel(c.kind)"></span>
-                <template x-for="a in c.alerts" :key="a.type">
-                  <span class="chip alert" x-text="alertChip(a)"></span>
-                </template>
+          <template x-for="(c, i) in data.cards" :key="c.ticker + c.id + c.date">
+            <article class="card" :class="[c.moved_same_day ? 'alert' : '', i === 0 ? 'lead' : '']">
+              <div class="card-top">
+                <span class="mono" aria-hidden="true" x-text="c.ticker.slice(0, 2)"></span>
+                <div class="who"><b x-text="c.ticker"></b><small x-text="fmtDateTime(c.date)"></small></div>
+                <div class="chips flex flex-wrap items-center gap-2">
+                  <span class="chip" x-text="kindLabel(c.kind)"></span>
+                  <template x-for="a in c.alerts" :key="a.type">
+                    <span class="chip alert" x-text="alertChip(a)"></span>
+                  </template>
+                </div>
               </div>
               <h3 x-text="cleanTitle(c)"></h3>
               <p class="meta"><span class="font-bold" x-text="c.ticker"></span> · <span x-text="shortCompany(c.company)"></span> · <span x-text="fmtDateTime(c.date)"></span></p>
@@ -175,11 +320,23 @@
           <!-- alert-only (T4) -->
           <div class="section-label" x-show="data.alert_only.length">Unusual moves</div>
           <template x-for="a in data.alert_only" :key="a.ticker + a.type">
-            <article class="card alert">
-              <div class="flex flex-wrap items-center gap-2">
-                <span class="chip alert" x-text="a.type === 'price' ? 'Price move' : 'Volume spike'"></span>
+            <article class="card alert alertonly">
+              <div class="card-top">
+                <span class="mono" aria-hidden="true" x-text="a.ticker.slice(0, 2)"></span>
+                <div class="who"><b x-text="a.ticker"></b><small x-text="shortCompany(a.company) + ' · ' + fmtDay(a.date)"></small></div>
+                <div class="chips flex flex-wrap items-center gap-2">
+                  <span class="chip alert" x-text="a.type === 'price' ? 'Price move' : 'Volume spike'"></span>
+                </div>
               </div>
-              <h3 x-text="alertHeadline(a)"></h3>
+              <h3 class="alert-h" x-text="alertHeadline(a)"></h3>
+              <div class="stat">
+                <span class="n" x-text="statText(a)"></span>
+                <span class="u" x-text="a.type === 'price' ? 'close vs previous close' : 'the 20-day average volume'"></span>
+              </div>
+              <div class="gauge-wrap">
+                <div class="gauge"><i :style="'width:' + gaugePct(a) + '%'"></i><em></em></div>
+                <div class="gl"><span x-text="a.type === 'price' ? '0%' : '0×'"></span><span x-text="'your limit ' + limitText(a)"></span><span x-text="a.type === 'price' ? '±' + (data.thresholds.price * 2) + '%' : (data.thresholds.volume * 2) + '×'"></span></div>
+              </div>
               <p class="meta"><span class="font-bold" x-text="a.ticker"></span> · <span x-text="shortCompany(a.company)"></span> · <span x-text="fmtDay(a.date)"></span></p>
               <p class="why">No filing explains this move.</p>
             </article>
@@ -260,6 +417,13 @@
     <div class="mt-5">
       <h1 class="text-2xl">Alerts</h1>
       <p class="meta mt-1">You decide what unusual means. Saved on this device.</p>
+    </div>
+
+    <div class="section-label">Look (experiment)</div>
+    <div class="flex flex-wrap gap-2">
+      <template x-for="l in looks" :key="l.id">
+        <button class="pill" :aria-pressed="lookId === l.id" @click="setLook(l.id)" x-text="l.label"></button>
+      </template>
     </div>
 
     <div class="section-label">Presets</div>
@@ -372,9 +536,31 @@ function finn() {
     ],
     _ctl: null,
     _timer: null,
+    // EXPERIMENT: switchable looks (same markup, different skin). Removed once one is chosen.
+    looks: [
+      { id: 'classic', label: 'Classic' },
+      { id: 'paper', label: 'Paper' },
+      { id: 'receipt', label: 'Receipt' },
+      { id: 'panel', label: 'Panel' },
+      { id: 'depth', label: 'Depth' },
+      { id: 'briefing', label: 'Briefing' },
+    ],
+    lookId: 'classic',
+    get look() { return this.looks.find(l => l.id === this.lookId) || this.looks[0]; },
+    setLook(id) {
+      this.lookId = this.looks.some(l => l.id === id) ? id : 'classic';
+      document.documentElement.dataset.look = this.lookId;
+      this.persist();
+    },
+    nextLook() {
+      const i = this.looks.findIndex(l => l.id === this.lookId);
+      this.setLook(this.looks[(i + 1) % this.looks.length].id);
+    },
 
     init() {
       const s = readStore();
+      const asked = new URLSearchParams(location.search).get('look');
+      this.setLook(asked || s.look || 'classic');
       if (s.window && ['24h', '3d', '7d'].includes(s.window)) this.period = s.window;
       if (s.settings) this.settings = { ...DEFAULTS, ...s.settings, off: Array.isArray(s.settings.off) ? s.settings.off : [] };
       this.$watch('settings', () => { this.persist(); this.scheduleLoad(); }, { deep: true });
@@ -382,7 +568,7 @@ function finn() {
       this.load();
     },
 
-    persist() { writeStore({ window: this.period, settings: this.settings }); },
+    persist() { writeStore({ window: this.period, settings: this.settings, look: this.lookId }); },
     go(t) { this.tab = t; window.scrollTo({ top: 0 }); },
     setWindow(w) { this.period = w; this.persist(); this.load(); },
     scheduleLoad() { clearTimeout(this._timer); this._timer = setTimeout(() => this.load(), 350); },
@@ -465,6 +651,11 @@ function finn() {
       t = t.charAt(0).toUpperCase() + t.slice(1);
       return t.length > 150 ? t.slice(0, 147) + '…' : t;
     },
+    // Alert-card visuals: the big number, and how far the move went past the user's own limit.
+    statText(a) { return a.type === 'price' ? (a.value > 0 ? '+' : '−') + Math.abs(a.value).toFixed(1) + '%' : a.value.toFixed(1) + '×'; },
+    limitOf(a) { return a.type === 'price' ? this.data.thresholds.price : this.data.thresholds.volume; },
+    limitText(a) { return a.type === 'price' ? '±' + this.limitOf(a) + '%' : this.limitOf(a) + '×'; },
+    gaugePct(a) { return Math.min(100, Math.abs(a.value) / (this.limitOf(a) * 2) * 100).toFixed(1); },
     alertChip(a) { return a.type === 'price' ? 'Moved ' + (a.value > 0 ? '+' : '') + a.value.toFixed(1) + '%' : 'Volume ' + a.value.toFixed(1) + '×'; },
     alertHeadline(a) {
       return a.type === 'price'
