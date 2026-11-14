@@ -132,8 +132,8 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | ID | P | Task | Decisions | est | Done when |
 |---|---|---|---|---|---|
 | BE-1 | P0 | [x] {EOD price & volume} via yfinance, .NS → .BO → snapshot | D-003 | done | 18/18 load |
-| BE-2 | P0 | [ ] Ticker resolver: NSE symbol → BSE scrip code [BSE's numeric company ID] + company name; reject invalid tickers with a clear message | D-013 | 1 | Works for portfolio + 2 random tickers |
-| BE-3 | P0 | [ ] {Corporate announcements} fetcher: per ticker, date range, returns `{date, title, category, subcategory, pdf_url}`; browser-like headers, timeout, retry, snapshot | D-012 | 2 | 7 days of filings for all portfolio stocks |
+| BE-2 | P0 | [x] Ticker resolver: NSE symbol → BSE scrip code [BSE's numeric company ID] + company name; reject invalid tickers with a clear message | D-013, D-064 | 1 | Done 2026-11-15: `data/symbols.py`, shipped NSE symbol list (no BSE code needed) |
+| BE-3 | P0 | [x] {Corporate announcements} fetcher: per ticker, date range, returns `{date, title, category, subcategory, pdf_url}`; browser-like headers, timeout, retry, snapshot | D-012, D-064 | 2 | Done 2026-11-15: `data/filings.py` + `py run_filings.py`, NSE API with snapshot |
 | BE-4 | P0 | [ ] Filing PDF downloader + text extractor with page numbers (pdfplumber [PDF text library]) cached by URL hash [short fingerprint of the URL] | D-021 | 1 | Text + page map for a results PDF |
 | BE-5 | P0 | [ ] Fundamentals document finder: last 4 {concall transcripts} + latest {annual report} links, plus last 5 results-filing links (for EN-13 actuals) | D-020, D-049 | 2 | Links for the research set + 1 unknown ticker |
 | ~~BE-6~~ | — | ~~Structured quarterly numbers source~~ — removed: actuals come from the EN-5 extractor on results filings (primary) | D-049 | 0 | — |
@@ -298,8 +298,8 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-008 | Commit history | Open — real history | OPS-1 |
 | D-009 | Strong model | **Decided** (D-060, D-061) — Gemini 3.5 Flash on the free tier; no Pro or Claude | OPS-6, EN-13 |
 | D-011 | Interaction model | **Decided via D-052** — cards-first + "Brief me" | FE-1, FE-9 |
-| D-012 | Filings source | Open — BSE primary, NSE backup | BE-3 |
-| D-013 | Ticker → BSE code mapping | Open — shipped scrip list + lookup | BE-2 |
+| D-012 | Filings source | **Decided via D-064** — NSE announcements API + snapshot | BE-3 |
+| D-013 | Ticker → BSE code mapping | **Decided via D-064** — dropped; NSE symbol list shipped | BE-2 |
 | D-014 | Classification method | **Rules only for P0 (D-043)**; AI fallback = EN-19 | EN-2 |
 | D-015 | Category tiers | **Decided** — adapt: 17 categories → High / Medium / Low; review in FE-12 | EN-3 |
 | D-016 | Results numbers source | Open — PDF extraction with arithmetic checks; screener option dropped (D-049) | EN-5 |
@@ -326,7 +326,8 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-041 | Receipts standard | Open — verified quote + page + link | EN-15 |
 | D-043–D-056 | Audit v1 changes | Decided 2026-11-14 | see DECISIONS.md |
 | D-058 | Screen set | **Decided, on hold for review** — 6 screens, one per brief item; review in FE-12 | FE-1..6 |
-| D-063 | BSE filings API blocks scripts | **Open** — blocks BE-2, BE-3; options A NSE API / B snapshot from your browser / C snapshot-only | BE-2, BE-3 |
+| D-063 | BSE filings API blocks scripts | **Decided via D-064** | BE-2, BE-3 |
+| D-064 | Filings source = NSE API | **Decided** — NSE announcements, snapshot fallback | BE-2, BE-3 |
 | D-059 | Front-end design v1 | **Decided** — `design/DESIGN_1.md` is the current design | FE-1..13 |
 | D-060 | Free-tier-only AI keys | **Decided** — one free Gemini key, no billing, no Anthropic | OPS-6 |
 | D-061 | Free-tier model lineup | **Decided** — cheap 3.5-flash-lite, strong 3.5-flash, fallback 3.1-flash-lite | OPS-6, EN-9 |

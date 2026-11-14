@@ -29,6 +29,12 @@ RETRIES = 1
 # Frozen copy of fetched data, used if a data source is down.
 SNAPSHOT_DIR = "snapshot"
 
+# Corporate filings (D-064): NSE announcements API (BSE's API blocks scripts, D-063).
+NSE_ANNOUNCEMENTS_URL = "https://www.nseindia.com/api/corporate-announcements"
+NSE_REFERER = "https://www.nseindia.com/companies-listing/corporate-filings-announcements"
+FILINGS_DAYS = 7                       # default look-back window (days)
+EQUITY_LIST_CSV = "data/equity_list.csv"  # NSE's list of listed symbols, refreshed by hand
+
 # AI models (D-009, D-060: free tier only). Swap a model with a one-line change here.
 CHEAP_MODEL = "gemini-3.5-flash-lite"   # bulk: classification leftovers, PDF numbers, quotes
 STRONG_MODEL = "gemini-3.5-flash"       # reasoning (thinks before answering): promise verdicts, bull/bear

@@ -396,9 +396,16 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Why: fills the healthcare-services gap (portfolio had pharma but no services), regular concalls for the promise tracker, non-defence (ENAM values). Not yet checked: that its BSE filings load (blocked, see D-063); SAFARI is the fallback pick if its filings are thin.
 - Trade-off: not the smallest of the three; SAFARI is the truer small-cap by size.
 
-### D-063 · BSE filings API blocks scripts · 2026-11-15 · BE-2, BE-3 (reopens D-012, D-013) · Status: open
+### D-063 · BSE filings API blocks scripts · 2026-11-15 · BE-2, BE-3 (reopens D-012, D-013) · Status: decided via D-064
 - Finding: api.bseindia.com returns 403 "Access Denied" (bot shield) to Python/PowerShell requests even with browser headers and after visiting the home page: announcements, scrip list and search endpoints all blocked. NSE's public symbol list (nsearchives.nseindia.com/content/equities/EQUITY_L.csv) downloads fine (symbol, name, ISIN).
 - Not done: spoofing a browser's network fingerprint to get past the shield (bypassing bot protection; the permission check blocked it and we should not).
 - Options: A NSE corporate-announcements API with a normal cookie session (D-012 option B; may also block, untested) / B build the fetcher against BSE anyway and ship a frozen snapshot of filings captured by the user from a real browser session / C demo on snapshot filings only plus a clear "live filings blocked by exchange" banner
 - Chosen: —
 - Why it matters: {corporate announcements} drive the whole Push side; {a demo that doesn't run is the worst outcome}, so the snapshot path must exist whichever live option works.
+
+### D-064 · NSE announcements API is the filings source; no BSE scrip codes · 2026-11-15 · BE-2, BE-3 (settles D-012, D-013, D-063) · Status: decided
+- Options: A NSE corporate-announcements API / B BSE fetcher + snapshot captured from the user's browser / C snapshot-only with a banner
+- Chosen: A (user pick). Tested 2026-11-15: NSE's API answered plain requests (no cookie, no TLS tricks) for all 19 tickers plus WIPRO and MARUTI; BSE's stayed blocked. Snapshot fallback still built (D-012 intent). Ticker validation uses NSE's own EQUITY_L.csv shipped as `data/equity_list.csv` (2,635 symbols, works offline, any NSE ticker); BSE scrip codes dropped because NSE uses our symbols and ISINs.
+- Result: `py run_filings.py` prints 7 days for all 19 stocks (25 filings; 6 stocks had none that week, which the empty-window banner D-046 handles). Fields: date, title, category (NSE's own label, e.g. "Change in Director(s)"), pdf_url; no sub-category, so the classifier (EN-2) refines from category + title.
+- Why: {corporate announcements} drive Push, and a live source that works beats snapshot-only. NSE categories are finer than BSE's for ranking.
+- Trade-off: unofficial API, can block or change (or block Render's IPs at deploy: test early at the Sat 20:00 gate); BSE-only listings are not supported; the symbol list goes stale for new listings (refresh by re-downloading the CSV).
