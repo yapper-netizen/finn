@@ -422,3 +422,4 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
   - "alert" chip = High category that is toggled on (D-047 literal); price/volume boost reorders within a tier and sets `moved_same_day`, it never changes the tier.
 - Known gaps: unclassified is 38% of filings (mostly routine: ESOP, newspaper copies, trading windows); a stock's generic board outcome in results season stays Medium until EN-19. If the 24h window holds only routine filings (a quiet Sunday), the digest shows 0 cards and "Routine (N)" and does not widen: D-046 widens only when the window has no filings at all. Revisit if that looks empty on the phone.
 - Trade-off: no card cap means a heavy day is long; the tier is the filter, so the cost is length, not noise.
+- Sample review (2026-11-15): user reviewed the 50 labels in `tests/sample_labels.json` and approved them, so the 48/50 (96%) accuracy now rests on user-checked labels (D-065).
