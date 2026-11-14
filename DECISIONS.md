@@ -463,3 +463,12 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Rules applied to all six (checked by script at 375 px: no text under 12px, no horizontal scroll, on Today and Settings): meta text 13px, chips 12px, no mono type for details; every card has border + shadow + inner dividers (header row, footer row); a category icon tile on every card and one-liner (24 outline icons in `ICONS`, drawn by us); section labels carry a count badge and a rule; alert cards keep the big number and gauge, footer gets "Adjust limit ›" which opens Settings; company names wrap to two lines instead of truncating.
 - Markup change: header + window pills + hero now sit in one `.topband` block so banner looks can wrap them; the "Look" button and `?look=` switch stay until one look is chosen (`c1 c2 d1 d2 b1 b2`).
 - Next: user picks one look (or a blend); then delete the other five and the switcher and apply the pick to detail screens (FE-3) and Research (FE-4).
+
+### D-071 · Look round 3: Depth 1 chosen, three refinements · 2026-11-15 · FE-7 (refines D-070) · Status: open (user choosing among refinements)
+- Chosen so far: Depth 1 (user pick from round 2). Classic, Briefing and Depth 2 dropped (CSS removed).
+- Drafts built on Depth 1 (`html[data-look]`: d1 original kept for reference, d1a, d1b, d1c):
+  - 1A Polished: radial blue glow behind the page, inner highlight on cards, soft gradient icon tiles with ring, chips with ring, "Open filing" as a tinted pill button, glossy segmented time control, glowing signal dots, fading section rules, thicker gauge with a knob at the actual value, floating rounded tab bar.
+  - 1B Hero card: everything in 1A plus a gradient hero card holding the big count numeral and the signal strip; the first filing card is a pale blue-bordered card instead of a second gradient block.
+  - 1C Timeline: everything in 1A plus filings grouped by day under date chips, linked by a vertical rail with nodes (red nodes for filings whose stock also moved).
+- Checked at 375 px for d1, d1a, d1b, d1c on Today, Settings and Research: no text under 12px, no horizontal scroll. Also fixed: chips stay on one line.
+- Next: user picks one (or a blend); then delete the other drafts and the look switcher, and apply the pick to the detail screens (FE-3) and Research (FE-4).
