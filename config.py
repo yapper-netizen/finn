@@ -4,7 +4,7 @@
 PORTFOLIO: list[str] = [
     "RELIANCE", "HDFCBANK", "TCS", "INFY", "PIDILITIND", "LT",
     "BHARTIARTL", "SUNPHARMA", "ASIANPAINT", "TITAN", "DMART", "TRENT",
-    "POLYCAB", "DIXON", "PERSISTENT", "HAL", "DEEPAKNTR", "IRCTC",
+    "POLYCAB", "DIXON", "PERSISTENT", "VIJAYA", "DEEPAKNTR", "IRCTC",
 ]
 
 # Extra research-only stocks (ASTRAL is outside the portfolio).

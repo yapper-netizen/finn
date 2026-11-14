@@ -75,7 +75,7 @@ finn/
 ```
 
 ## Draft portfolio (verify each loads in yfinance; no ITC)
-RELIANCE, HDFCBANK, TCS, INFY, PIDILITIND, LT, BHARTIARTL, SUNPHARMA, ASIANPAINT, TITAN, DMART, TRENT, POLYCAB, DIXON, PERSISTENT, HAL → to be replaced by a non-defence small-cap (D-055, task BE-10), DEEPAKNTR, IRCTC
+RELIANCE, HDFCBANK, TCS, INFY, PIDILITIND, LT, BHARTIARTL, SUNPHARMA, ASIANPAINT, TITAN, DMART, TRENT, POLYCAB, DIXON, PERSISTENT, VIJAYA (Vijaya Diagnostic, small-cap, replaced HAL, D-062), DEEPAKNTR, IRCTC
 Research set (D-051): POLYCAB, PERSISTENT, ASTRAL (outside portfolio) — all precomputed
 
 ## Plan

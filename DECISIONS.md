@@ -389,3 +389,16 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Why: only models that answered the smoke test are safe for a demo that must run ({a demo that doesn't run is the worst outcome}); the fallback chain (retry once, then fallback) absorbs Google's overload spikes, shown live when the strong call fell back.
 - Trade-off: no true "Pro" tier, so the strong model is a Flash with thinking; verdict quality to be checked on real promise-tracker data (EN-13). Model names change often: re-run `py smoke_test_llm.py` before the deploy gate. Writeup should say this honestly.
 - Evidence (free key, probed 2026-11-14 with one tiny call each): OK = gemini-3.5-flash (102 output tokens, it thinks), gemini-3.5-flash-lite, gemini-3.1-flash-lite (1 output token each). 404 "no longer available to new users" = gemini-2.5-flash, gemini-2.5-pro. 503/504 overloaded = gemini-3.8-flash, 3.7-flash, 3.6-flash. Smoke test: cheap call answered by 3.5-flash-lite; strong call got 504 then 503 on 3.5-flash and was answered by the fallback 3.1-flash-lite. Re-run `py smoke_test_llm.py` to refresh this.
+
+### D-062 · HAL replaced by Vijaya Diagnostic (VIJAYA) · 2026-11-15 · BE-10 (completes D-055) · Status: decided
+- Options: VIJAYA (Vijaya Diagnostic, healthcare services) / SAFARI (Safari Industries, consumer goods) / SANSERA (Sansera Engineering, auto components)
+- Chosen: VIJAYA. All three loaded in yfinance (30 daily rows each). Approx. market cap from yfinance shares x last close: VIJAYA ₹14.5k cr, SAFARI ₹6.6k cr, SANSERA ₹29.4k cr (so SANSERA is not a small-cap).
+- Why: fills the healthcare-services gap (portfolio had pharma but no services), regular concalls for the promise tracker, non-defence (ENAM values). Not yet checked: that its BSE filings load (blocked, see D-063); SAFARI is the fallback pick if its filings are thin.
+- Trade-off: not the smallest of the three; SAFARI is the truer small-cap by size.
+
+### D-063 · BSE filings API blocks scripts · 2026-11-15 · BE-2, BE-3 (reopens D-012, D-013) · Status: open
+- Finding: api.bseindia.com returns 403 "Access Denied" (bot shield) to Python/PowerShell requests even with browser headers and after visiting the home page: announcements, scrip list and search endpoints all blocked. NSE's public symbol list (nsearchives.nseindia.com/content/equities/EQUITY_L.csv) downloads fine (symbol, name, ISIN).
+- Not done: spoofing a browser's network fingerprint to get past the shield (bypassing bot protection; the permission check blocked it and we should not).
+- Options: A NSE corporate-announcements API with a normal cookie session (D-012 option B; may also block, untested) / B build the fetcher against BSE anyway and ship a frozen snapshot of filings captured by the user from a real browser session / C demo on snapshot filings only plus a clear "live filings blocked by exchange" banner
+- Chosen: —
+- Why it matters: {corporate announcements} drive the whole Push side; {a demo that doesn't run is the worst outcome}, so the snapshot path must exist whichever live option works.
