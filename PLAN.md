@@ -222,7 +222,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | ID | P | Task | Decisions | est | Done when |
 |---|---|---|---|---|---|
 | OPS-1 | P0 | [x] GitHub repo (push existing history), `.env.example` [template listing key names without values] | D-008, D-038 | 0.3 | Repo visible, no secrets in history |
-| OPS-2 | P0 | [ ] Render web service: build `pip install -r requirements.txt`, start `uvicorn api:app` [uvicorn = the server program that runs FastAPI], env vars for keys, Python version pinned | D-032, D-034 | 1 | Public URL loads on phone |
+| OPS-2 | P0 | [x] Render web service (live: https://finn-viku.onrender.com, 2026-11-15): build `pip install -r requirements.txt`, start `uvicorn api:app` [uvicorn = the server program that runs FastAPI], env vars for keys, Python version pinned | D-032, D-034 | 1 | Public URL loads on phone |
 | OPS-3 | P0 | [x] Ship precomputed `cache.db` / snapshot in repo (Render free disk is wiped on every restart) | D-006, D-032 | 0.5 | Fresh deploy shows full demo instantly |
 | OPS-4 | P0 | [ ] Cold-start mitigation [Render free sleeps after ~15 min idle; first visit waits ~1 min] | D-032 | 0.3 | Plan written into the email |
 | OPS-5 | P2 | [ ] Nightly refresh (GitHub Actions [free scheduled jobs on GitHub] runs refresh script, commits snapshot) | D-031 | 1 | Optional |
@@ -240,7 +240,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | QA-4 | P0 | [ ] {Verify ≥2 results cards against actual filing PDFs}; record in DECISIONS/README | 1 | Numbers match to the crore |
 | QA-5 | P0 | [ ] LLM output validation tests (bad JSON, fake quote) with a fake model [stand-in that returns canned answers, no API cost] | 0.5 | pass |
 | QA-6 | P0 | [ ] Offline test: block network → app serves snapshot | 0.3 | Works |
-| QA-7 | P0 | [ ] Real-phone test (Android + iOS if possible) on deployed URL | 0.5 | No horizontal scroll, taps ≥44px |
+| QA-7 | P0 | [ ] Real-phone test (Android + iOS if possible) on deployed URL — iPhone Safari checked by the user 2026-11-15 (looks right, PDFs open); Android still to check | 0.5 | No horizontal scroll, taps ≥44px |
 | QA-8 | P0 | [ ] Unknown-ticker test (2 tickers never seen) | 0.5 | Works or fails gracefully |
 | QA-9 | P1 | [ ] {Cost report}: tokens per model, cost per research run, cache hit rate | 0.5 | Table in README |
 
