@@ -179,7 +179,9 @@ def ask_json(
     except json.JSONDecodeError as e:
         raise ValueError(f"Model returned invalid JSON: {res.text[:200]}") from e
     value = validate(parsed) if validate else parsed
-    if use_cache and not cached:
+    # A strong-tier answer that came from the backup model is not kept, so the next run tries the
+    # strong model again instead of freezing the weaker answer (10f).
+    if use_cache and not cached and not (strong and res.model == config.FALLBACK_MODEL):
         cache_put(key, res)
     if meta is not None:
         meta.update(model=res.model, tokens_in=res.tokens_in, tokens_out=res.tokens_out, cached=bool(cached))

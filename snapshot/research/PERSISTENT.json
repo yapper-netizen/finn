@@ -2,15 +2,15 @@
  "ticker": "PERSISTENT",
  "company": "Persistent Systems Limited",
  "status": "ready",
- "engine_version": 1,
- "generated_at": "2026-11-15T15:58:53",
+ "engine_version": 2,
+ "generated_at": "2026-11-15T19:50:01",
  "latest_quarter": "Q2 FY27",
  "counts": {
-  "Delivered": 1,
+  "Delivered": 2,
   "Partial": 0,
   "Missed": 0,
   "Too early": 3,
-  "Not checkable": 7
+  "Not checkable": 6
  },
  "promises": [
   {
@@ -38,7 +38,9 @@
    "fact_ids": [],
    "decided_by": "rules",
    "reason": "Due by Q4 FY27; latest reported quarter is Q2 FY27.",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P2",
@@ -61,7 +63,9 @@
    "fact_ids": [],
    "decided_by": "rules",
    "reason": "Due by Q4 FY27; latest reported quarter is Q2 FY27.",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P3",
@@ -84,11 +88,41 @@
     "Q2 FY26",
     "Q3 FY26"
    ],
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
-   "fact_ids": [],
-   "decided_by": "rules",
-   "facts": []
+   "verdict": "Delivered",
+   "fact_ids": [
+    "F62"
+   ],
+   "reason": "The effective tax rate for FY26 was 22.6%, which falls within the guided range of 22.5% to 23.5%.",
+   "target": {
+    "low": 22.5,
+    "high": 23.5
+   },
+   "actual_fact_id": "F62",
+   "decided_by": "ai",
+   "facts": [
+    {
+     "id": "F62",
+     "metric": "tax_rate",
+     "quarter": "FY26",
+     "text": "Effective tax rate FY26 (tax ÷ profit before tax, 4 quarters): 22.6%",
+     "value": 22.6,
+     "unit": "%",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    }
+   ],
+   "say_do": {
+    "low": 22.5,
+    "high": 23.5,
+    "actual": 22.6,
+    "unit": "%",
+    "fact": "Effective tax rate FY26 (tax ÷ profit before tax, 4 quarters): 22.6%"
+   },
+   "guidance": false
   },
   {
    "id": "P4",
@@ -111,10 +145,12 @@
     "Q3 FY26"
    ],
    "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "FINN holds no filed figure for this (e.g. volumes, market share, exports, deals, dividends).",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P5",
@@ -134,55 +170,18 @@
     "match": 1.0
    },
    "restated_in": [],
-   "verdict": "Delivered",
-   "fact_ids": [
-    "F4",
-    "F9",
-    "F14"
-   ],
-   "reason": "EBITDA margin improved by 250 bps in Q2, 180 bps in Q3, and 90 bps in Q4 of FY26, consistently meeting or exceeding the 100 bps improvement target.",
+   "verdict": "Not checkable",
+   "fact_ids": [],
+   "reason": "The promise refers to a 100 basis point improvement in FY26 without specifying which metric (e.g., EBITDA margin, PAT margin) is being targeted.",
+   "target": {
+    "low": null,
+    "high": null
+   },
+   "actual_fact_id": null,
    "decided_by": "ai",
-   "facts": [
-    {
-     "id": "F4",
-     "metric": "ebitda_margin",
-     "quarter": "Q2 FY26",
-     "text": "EBITDA margin Q2 FY26: 19.1%, +250 bps YoY",
-     "value": 19.1,
-     "source": {
-      "filing_id": "106407160",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_14102025154025_PSLBMOutcomeResults141025signed.pdf",
-      "page": 9,
-      "basis": "consolidated"
-     }
-    },
-    {
-     "id": "F9",
-     "metric": "ebitda_margin",
-     "quarter": "Q3 FY26",
-     "text": "EBITDA margin Q3 FY26: 19.4%, +180 bps YoY",
-     "value": 19.4,
-     "source": {
-      "filing_id": "106502144",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20012026154513_PSLQ3FY26FinancialResults.pdf",
-      "page": 10,
-      "basis": "consolidated"
-     }
-    },
-    {
-     "id": "F14",
-     "metric": "ebitda_margin",
-     "quarter": "Q4 FY26",
-     "text": "EBITDA margin Q4 FY26: 18.9%, +90 bps YoY",
-     "value": 18.9,
-     "source": {
-      "filing_id": "106595548",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_21042026153058_PSLBMOutcomeQ4FY26April212026sd.pdf",
-      "page": 10,
-      "basis": "consolidated"
-     }
-    }
-   ]
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P6",
@@ -205,7 +204,9 @@
    "fact_ids": [],
    "decided_by": "rules",
    "reason": "Due by Q4 FY27; latest reported quarter is Q2 FY27.",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P7",
@@ -225,10 +226,12 @@
     "match": 1.0
    },
    "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "FINN holds no filed figure for this (e.g. volumes, market share, exports, deals, dividends).",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P8",
@@ -247,11 +250,35 @@
     "doc": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
     "match": 1.0
    },
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
-   "fact_ids": [],
-   "decided_by": "rules",
-   "facts": []
+   "verdict": "Delivered",
+   "fact_ids": [
+    "F68"
+   ],
+   "reason": "The operational cash flow to PAT ratio for H2 FY26 was 84%, which is a normalized level compared to previous periods.",
+   "target": {
+    "low": null,
+    "high": null
+   },
+   "actual_fact_id": "F68",
+   "decided_by": "ai",
+   "facts": [
+    {
+     "id": "F68",
+     "metric": "cash_conversion",
+     "quarter": "H2 FY26",
+     "text": "Cash from operations ÷ PAT, H2 FY26: 84%",
+     "value": 83.5,
+     "unit": "%",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    }
+   ],
+   "say_do": null,
+   "guidance": false
   },
   {
    "id": "P9",
@@ -271,10 +298,12 @@
     "match": 1.0
    },
    "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "FINN holds no filed figure for this (e.g. volumes, market share, exports, deals, dividends).",
+   "facts": [],
+   "say_do": null,
+   "guidance": false
   },
   {
    "id": "P10",
@@ -294,10 +323,12 @@
     "match": 1.0
    },
    "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "FINN holds no filed figure for this (e.g. volumes, market share, exports, deals, dividends).",
+   "facts": [],
+   "say_do": null,
+   "guidance": false
   },
   {
    "id": "P11",
@@ -317,10 +348,12 @@
     "match": 1.0
    },
    "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "FINN holds no filed figure for this (e.g. volumes, market share, exports, deals, dividends).",
+   "facts": [],
+   "say_do": null,
+   "guidance": false
   }
  ],
  "bull": [
@@ -347,6 +380,7 @@
      "quarter": "Q2 FY26",
      "text": "Revenue Q2 FY26: ₹3,581 cr, up 23.6% YoY (consolidated)",
      "value": 23.6,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106407160",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_14102025154025_PSLBMOutcomeResults141025signed.pdf",
@@ -360,6 +394,7 @@
      "quarter": "Q3 FY26",
      "text": "Revenue Q3 FY26: ₹3,778 cr, up 23.4% YoY (consolidated)",
      "value": 23.4,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106502144",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20012026154513_PSLQ3FY26FinancialResults.pdf",
@@ -373,6 +408,7 @@
      "quarter": "Q4 FY26",
      "text": "Revenue Q4 FY26: ₹4,056 cr, up 25.1% YoY (consolidated)",
      "value": 25.1,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106595548",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_21042026153058_PSLBMOutcomeQ4FY26April212026sd.pdf",
@@ -386,6 +422,7 @@
      "quarter": "Q1 FY27",
      "text": "Revenue Q1 FY27: ₹4,303 cr, up 29.1% YoY (consolidated)",
      "value": 29.1,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106721243",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_02082026144059_PSLBMOutcomeJune302026093signed.pdf",
@@ -399,6 +436,7 @@
      "quarter": "Q2 FY27",
      "text": "Revenue Q2 FY27: ₹4,664 cr, up 30.3% YoY (consolidated)",
      "value": 30.3,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106818661",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
@@ -409,7 +447,30 @@
    ]
   },
   {
-   "point": "Persistent Systems is successfully scaling its business, evidenced by a 30.3% year-on-year revenue growth in Q2 FY27.",
+   "point": "Persistent Systems maintains a strong operational cash flow, with H1 FY27 cash from operations reaching 111% of PAT.",
+   "receipt": null,
+   "fact_ids": [
+    "F66"
+   ],
+   "facts": [
+    {
+     "id": "F66",
+     "metric": "cash_conversion",
+     "quarter": "H1 FY27",
+     "text": "Cash from operations ÷ PAT, H1 FY27: 111%",
+     "value": 111.2,
+     "unit": "%",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1739401_15102026080919_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    }
+   ]
+  },
+  {
+   "point": "The company is successfully scaling its business, evidenced by a 30.3% year-on-year revenue growth in Q2 FY27.",
    "receipt": {
     "quote": "In rupee terms, the growth for the quarter came in at 8.4% quarter-on-quarter and 30.3% year-on-year.",
     "page": 4,
@@ -427,6 +488,7 @@
      "quarter": "Q2 FY27",
      "text": "Revenue Q2 FY27: ₹4,664 cr, up 30.3% YoY (consolidated)",
      "value": 30.3,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106818661",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
@@ -435,30 +497,12 @@
      }
     }
    ]
-  },
-  {
-   "point": "The company is actively investing in high-growth areas like AI and data modernization to maintain its competitive edge.",
-   "receipt": {
-    "quote": "We are building and investing in capabilities on the AI front and otherwise.",
-    "page": 26,
-    "pdf_url": "https://www.persistent.com/wp-content/uploads/2026/04/Analyst-Call-Transcript-Q4FY26.pdf",
-    "doc": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
-    "match": 1.0
-   },
-   "fact_ids": [],
-   "facts": []
   }
  ],
  "bear": [
   {
    "point": "EBIT margins have faced significant pressure, declining to 13.6% in Q2 FY27, a 550 basis point drop year-on-year.",
-   "receipt": {
-    "quote": "EBIT margins for Q2 FY27 came in at 15%, 130 basis points declined year-on-year.",
-    "page": 8,
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
-    "doc": "Q2 FY27 earnings call",
-    "match": 1.0
-   },
+   "receipt": null,
    "fact_ids": [
     "F24"
    ],
@@ -469,6 +513,7 @@
      "quarter": "Q2 FY27",
      "text": "EBITDA margin Q2 FY27: 13.6%, −550 bps YoY",
      "value": 13.6,
+     "unit": "%",
      "source": {
       "filing_id": "106818661",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
@@ -479,17 +524,28 @@
    ]
   },
   {
-   "point": "Profitability has been impacted by rising costs, including wage hikes and amortization expenses from large deal acquisitions.",
+   "point": "Management acknowledged that macroeconomic factors and geopolitical dynamics have led to a slowdown in customer decision-making.",
    "receipt": {
-    "quote": "As you would remember, this is the quarter when we have the yearly wage hike coming into effect. This impacted our margins by 180 basis points.",
-    "page": 8,
+    "quote": "The slowdown of decision making in the last few weeks was pretty apparent.",
+    "page": 19,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   },
+   "fact_ids": [],
+   "facts": []
+  },
+  {
+   "point": "Profit after tax experienced a sharp decline of 25.4% year-on-year in Q2 FY27, impacted by exceptional one-time expenses.",
+   "receipt": {
+    "quote": "I would like to point out that the reported PAT includes exceptional one-time expenses as part of Nagarro acquisition, resulting in approximately 3.1% impact for the quarter.",
+    "page": 4,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
     "doc": "Q2 FY27 earnings call",
     "match": 1.0
    },
    "fact_ids": [
-    "F23",
-    "F25"
+    "F23"
    ],
    "facts": [
     {
@@ -498,19 +554,7 @@
      "quarter": "Q2 FY27",
      "text": "PAT Q2 FY27: ₹352 cr, down 25.4% YoY",
      "value": -25.4,
-     "source": {
-      "filing_id": "106818661",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
-      "page": 19,
-      "basis": "consolidated"
-     }
-    },
-    {
-     "id": "F25",
-     "metric": "pat_margin",
-     "quarter": "Q2 FY27",
-     "text": "PAT margin Q2 FY27: 7.5%, −570 bps YoY",
-     "value": 7.5,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106818661",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
@@ -519,18 +563,98 @@
      }
     }
    ]
+  }
+ ],
+ "tone": [
+  {
+   "transcript_id": "T5",
+   "quarter": "Q1 FY26",
+   "quarter_end": "2025-06-30",
+   "score": 1,
+   "label": "steady sequential growth",
+   "growth": 21.8,
+   "growth_next": 23.6,
+   "next_quarter": "Q2 FY26",
+   "gap": null,
+   "receipt": {
+    "quote": "This marks our 21st sequential quarter of growth.",
+    "page": 4,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_29072025232737_PSLTranscript_of_Investors_call_recordingsigned.pdf",
+    "doc": "Q1 FY26 earnings call",
+    "match": 1.0
+   }
   },
   {
-   "point": "Management acknowledged that macroeconomic uncertainty and geopolitical dynamics are causing slower decision-making and impacting deal flow.",
+   "transcript_id": "T4",
+   "quarter": "Q2 FY26",
+   "quarter_end": "2025-09-30",
+   "score": 1,
+   "label": "positive sequential momentum",
+   "growth": 23.6,
+   "growth_next": 23.4,
+   "next_quarter": "Q3 FY26",
+   "gap": null,
    "receipt": {
-    "quote": "The slowdown of decision making in the last few weeks was pretty apparent. And it was not the productivity side of it. It is just the nature of the deals.",
-    "page": 19,
+    "quote": "In Q2 FY26, we delivered revenue of $406.2 million, reflecting 4.2% quarter-on-quarter growth and 17.6% year-on-year growth.",
+    "page": 4,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20102025194609_PSLEarningscallTranscriptQ2FY26.pdf",
+    "doc": "Q2 FY26 earnings call",
+    "match": 0.97
+   }
+  },
+  {
+   "transcript_id": "T3",
+   "quarter": "Q3 FY26",
+   "quarter_end": "2025-12-31",
+   "score": 2,
+   "label": "confident in trajectory",
+   "growth": 23.4,
+   "growth_next": 25.1,
+   "next_quarter": "Q4 FY26",
+   "gap": null,
+   "receipt": {
+    "quote": "I am also happy to share that we remain firmly on track, advancing confidently towards our aspiration of $2 billion by March 2027 and laying the foundation of $5 billion by March 2031.",
+    "page": 6,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_27012026213814_PSLSubmissionoftheTranscriptforQ3FY26Sd.pdf",
+    "doc": "Q3 FY26 earnings call",
+    "match": 1.0
+   }
+  },
+  {
+   "transcript_id": "T2",
+   "quarter": "Q4 FY26",
+   "quarter_end": "2026-03-31",
+   "score": 1,
+   "label": "optimistic about adoption",
+   "growth": 25.1,
+   "growth_next": 29.1,
+   "next_quarter": "Q1 FY27",
+   "gap": null,
+   "receipt": {
+    "quote": "We do expect the pace of adoption in both the tech companies and enterprises to accelerate significantly in the coming quarters, with tech companies leading the way.",
+    "page": 6,
+    "pdf_url": "https://www.persistent.com/wp-content/uploads/2026/04/Analyst-Call-Transcript-Q4FY26.pdf",
+    "doc": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   }
+  },
+  {
+   "transcript_id": "T1",
+   "quarter": "Q2 FY27",
+   "quarter_end": "2026-09-30",
+   "score": 2,
+   "label": "upbeat on growth",
+   "growth": 30.3,
+   "growth_next": null,
+   "next_quarter": null,
+   "gap": null,
+   "receipt": {
+    "quote": "We are confident that this combination positions Persistent and Nagarro for the next chapter of sustained profitable growth together.",
+    "page": 6,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
     "doc": "Q2 FY27 earnings call",
     "match": 1.0
-   },
-   "fact_ids": [],
-   "facts": []
+   }
   }
  ],
  "facts": [
@@ -540,6 +664,7 @@
    "quarter": "Q2 FY26",
    "text": "Revenue Q2 FY26: ₹3,581 cr, up 23.6% YoY (consolidated)",
    "value": 23.6,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106407160",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_14102025154025_PSLBMOutcomeResults141025signed.pdf",
@@ -553,6 +678,7 @@
    "quarter": "Q2 FY26",
    "text": "EBITDA Q2 FY26: ₹683 cr, up 42.1% YoY (computed)",
    "value": 42.1,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106407160",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_14102025154025_PSLBMOutcomeResults141025signed.pdf",
@@ -566,6 +692,7 @@
    "quarter": "Q2 FY26",
    "text": "PAT Q2 FY26: ₹471 cr, up 45.1% YoY",
    "value": 45.1,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106407160",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_14102025154025_PSLBMOutcomeResults141025signed.pdf",
@@ -579,6 +706,7 @@
    "quarter": "Q2 FY26",
    "text": "EBITDA margin Q2 FY26: 19.1%, +250 bps YoY",
    "value": 19.1,
+   "unit": "%",
    "source": {
     "filing_id": "106407160",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_14102025154025_PSLBMOutcomeResults141025signed.pdf",
@@ -592,6 +720,7 @@
    "quarter": "Q2 FY26",
    "text": "PAT margin Q2 FY26: 13.2%, +200 bps YoY",
    "value": 13.2,
+   "unit": "%",
    "source": {
     "filing_id": "106407160",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_14102025154025_PSLBMOutcomeResults141025signed.pdf",
@@ -605,6 +734,7 @@
    "quarter": "Q3 FY26",
    "text": "Revenue Q3 FY26: ₹3,778 cr, up 23.4% YoY (consolidated)",
    "value": 23.4,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106502144",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20012026154513_PSLQ3FY26FinancialResults.pdf",
@@ -618,6 +748,7 @@
    "quarter": "Q3 FY26",
    "text": "EBITDA Q3 FY26: ₹733 cr, up 36.3% YoY (computed)",
    "value": 36.3,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106502144",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20012026154513_PSLQ3FY26FinancialResults.pdf",
@@ -631,6 +762,7 @@
    "quarter": "Q3 FY26",
    "text": "PAT Q3 FY26: ₹439 cr, up 17.8% YoY",
    "value": 17.8,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106502144",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20012026154513_PSLQ3FY26FinancialResults.pdf",
@@ -644,6 +776,7 @@
    "quarter": "Q3 FY26",
    "text": "EBITDA margin Q3 FY26: 19.4%, +180 bps YoY",
    "value": 19.4,
+   "unit": "%",
    "source": {
     "filing_id": "106502144",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20012026154513_PSLQ3FY26FinancialResults.pdf",
@@ -657,6 +790,7 @@
    "quarter": "Q3 FY26",
    "text": "PAT margin Q3 FY26: 11.6%, −60 bps YoY",
    "value": 11.6,
+   "unit": "%",
    "source": {
     "filing_id": "106502144",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20012026154513_PSLQ3FY26FinancialResults.pdf",
@@ -670,6 +804,7 @@
    "quarter": "Q4 FY26",
    "text": "Revenue Q4 FY26: ₹4,056 cr, up 25.1% YoY (consolidated)",
    "value": 25.1,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106595548",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_21042026153058_PSLBMOutcomeQ4FY26April212026sd.pdf",
@@ -683,6 +818,7 @@
    "quarter": "Q4 FY26",
    "text": "EBITDA Q4 FY26: ₹768 cr, up 31.4% YoY (computed)",
    "value": 31.4,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106595548",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_21042026153058_PSLBMOutcomeQ4FY26April212026sd.pdf",
@@ -696,6 +832,7 @@
    "quarter": "Q4 FY26",
    "text": "PAT Q4 FY26: ₹529 cr, up 33.7% YoY",
    "value": 33.7,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106595548",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_21042026153058_PSLBMOutcomeQ4FY26April212026sd.pdf",
@@ -709,6 +846,7 @@
    "quarter": "Q4 FY26",
    "text": "EBITDA margin Q4 FY26: 18.9%, +90 bps YoY",
    "value": 18.9,
+   "unit": "%",
    "source": {
     "filing_id": "106595548",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_21042026153058_PSLBMOutcomeQ4FY26April212026sd.pdf",
@@ -722,6 +860,7 @@
    "quarter": "Q4 FY26",
    "text": "PAT margin Q4 FY26: 13.0%, +80 bps YoY",
    "value": 13.0,
+   "unit": "%",
    "source": {
     "filing_id": "106595548",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_21042026153058_PSLBMOutcomeQ4FY26April212026sd.pdf",
@@ -735,6 +874,7 @@
    "quarter": "Q1 FY27",
    "text": "Revenue Q1 FY27: ₹4,303 cr, up 29.1% YoY (consolidated)",
    "value": 29.1,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106721243",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_02082026144059_PSLBMOutcomeJune302026093signed.pdf",
@@ -748,6 +888,7 @@
    "quarter": "Q1 FY27",
    "text": "EBITDA Q1 FY27: ₹697 cr, up 13.9% YoY (computed)",
    "value": 13.9,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106721243",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_02082026144059_PSLBMOutcomeJune302026093signed.pdf",
@@ -761,6 +902,7 @@
    "quarter": "Q1 FY27",
    "text": "PAT Q1 FY27: ₹483 cr, up 13.7% YoY",
    "value": 13.7,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106721243",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_02082026144059_PSLBMOutcomeJune302026093signed.pdf",
@@ -774,6 +916,7 @@
    "quarter": "Q1 FY27",
    "text": "EBITDA margin Q1 FY27: 16.2%, −210 bps YoY",
    "value": 16.2,
+   "unit": "%",
    "source": {
     "filing_id": "106721243",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_02082026144059_PSLBMOutcomeJune302026093signed.pdf",
@@ -787,6 +930,7 @@
    "quarter": "Q1 FY27",
    "text": "PAT margin Q1 FY27: 11.2%, −150 bps YoY",
    "value": 11.2,
+   "unit": "%",
    "source": {
     "filing_id": "106721243",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_02082026144059_PSLBMOutcomeJune302026093signed.pdf",
@@ -800,6 +944,7 @@
    "quarter": "Q2 FY27",
    "text": "Revenue Q2 FY27: ₹4,664 cr, up 30.3% YoY (consolidated)",
    "value": 30.3,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106818661",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
@@ -813,6 +958,7 @@
    "quarter": "Q2 FY27",
    "text": "EBITDA Q2 FY27: ₹633 cr, down 7.3% YoY (computed)",
    "value": -7.3,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106818661",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
@@ -826,6 +972,7 @@
    "quarter": "Q2 FY27",
    "text": "PAT Q2 FY27: ₹352 cr, down 25.4% YoY",
    "value": -25.4,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106818661",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
@@ -839,6 +986,7 @@
    "quarter": "Q2 FY27",
    "text": "EBITDA margin Q2 FY27: 13.6%, −550 bps YoY",
    "value": 13.6,
+   "unit": "%",
    "source": {
     "filing_id": "106818661",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
@@ -852,11 +1000,656 @@
    "quarter": "Q2 FY27",
    "text": "PAT margin Q2 FY27: 7.5%, −570 bps YoY",
    "value": 7.5,
+   "unit": "%",
    "source": {
     "filing_id": "106818661",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
     "page": 19,
     "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F26",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY26",
+   "text": "Segment revenue, Banking, Financial Services and Insurance (BFSI), Q1 FY26: ₹1,130 cr, up 34.0% YoY",
+   "value": 34.0,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1491776_23072025083000_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F27",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Banking, Financial Services and Insurance (BFSI), Q1 FY26: 34.4% vs 33.0% a year ago",
+   "value": 34.4,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1491776_23072025083000_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F28",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY26",
+   "text": "Segment revenue, Healthcare & Life Sciences, Q1 FY26: ₹843 cr, up 15.3% YoY",
+   "value": 15.3,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1491776_23072025083000_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F29",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Healthcare & Life Sciences, Q1 FY26: 36.1% vs 36.9% a year ago",
+   "value": 36.1,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1491776_23072025083000_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F30",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY26",
+   "text": "Segment revenue, Software, Hi-Tech and Emerging Industries, Q1 FY26: ₹1,361 cr, up 17.0% YoY",
+   "value": 17.0,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1491776_23072025083000_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F31",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Software, Hi-Tech and Emerging Industries, Q1 FY26: 36.0% vs 24.0% a year ago",
+   "value": 36.0,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1491776_23072025083000_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F32",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY26",
+   "text": "Segment revenue, Banking, Financial Services and Insurance (BFSI), Q2 FY26: ₹1,246 cr, up 36.6% YoY",
+   "value": 36.6,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1548199_14102025081605_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F33",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Banking, Financial Services and Insurance (BFSI), Q2 FY26: 34.9% vs 37.2% a year ago",
+   "value": 34.9,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1548199_14102025081605_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F34",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY26",
+   "text": "Segment revenue, Healthcare & Life Sciences, Q2 FY26: ₹903 cr, up 11.9% YoY",
+   "value": 11.9,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1548199_14102025081605_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F35",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Healthcare & Life Sciences, Q2 FY26: 38.3% vs 38.5% a year ago",
+   "value": 38.3,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1548199_14102025081605_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F36",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY26",
+   "text": "Segment revenue, Software, Hi-Tech and Emerging Industries, Q2 FY26: ₹1,432 cr, up 21.5% YoY",
+   "value": 21.5,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1548199_14102025081605_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F37",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Software, Hi-Tech and Emerging Industries, Q2 FY26: 36.6% vs 27.4% a year ago",
+   "value": 36.6,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1548199_14102025081605_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F38",
+   "metric": "segment_revenue",
+   "quarter": "Q3 FY26",
+   "text": "Segment revenue, Banking, Financial Services and Insurance (BFSI), Q3 FY26: ₹1,321 cr, up 36.3% YoY",
+   "value": 36.3,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1606226_20012026071106_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F39",
+   "metric": "segment_margin",
+   "quarter": "Q3 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Banking, Financial Services and Insurance (BFSI), Q3 FY26: 33.9% vs 37.4% a year ago",
+   "value": 33.9,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1606226_20012026071106_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F40",
+   "metric": "segment_revenue",
+   "quarter": "Q3 FY26",
+   "text": "Segment revenue, Healthcare & Life Sciences, Q3 FY26: ₹960 cr, up 13.2% YoY",
+   "value": 13.2,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1606226_20012026071106_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F41",
+   "metric": "segment_margin",
+   "quarter": "Q3 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Healthcare & Life Sciences, Q3 FY26: 36.8% vs 42.5% a year ago",
+   "value": 36.8,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1606226_20012026071106_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F42",
+   "metric": "segment_revenue",
+   "quarter": "Q3 FY26",
+   "text": "Segment revenue, Software, Hi-Tech and Emerging Industries, Q3 FY26: ₹1,496 cr, up 20.2% YoY",
+   "value": 20.2,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1606226_20012026071106_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F43",
+   "metric": "segment_margin",
+   "quarter": "Q3 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Software, Hi-Tech and Emerging Industries, Q3 FY26: 33.1% vs 31.5% a year ago",
+   "value": 33.1,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1606226_20012026071106_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F44",
+   "metric": "segment_revenue",
+   "quarter": "Q4 FY26",
+   "text": "Segment revenue, BFSI, Q4 FY26: ₹1,396 cr",
+   "value": null,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F45",
+   "metric": "segment_margin",
+   "quarter": "Q4 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), BFSI, Q4 FY26: 35.6%",
+   "value": 35.6,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F46",
+   "metric": "segment_revenue",
+   "quarter": "Q4 FY26",
+   "text": "Segment revenue, Healthcare & Life Sciences, Q4 FY26: ₹1,066 cr, up 22.7% YoY",
+   "value": 22.7,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F47",
+   "metric": "segment_margin",
+   "quarter": "Q4 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Healthcare & Life Sciences, Q4 FY26: 37.5% vs 38.6% a year ago",
+   "value": 37.5,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F48",
+   "metric": "segment_revenue",
+   "quarter": "Q4 FY26",
+   "text": "Segment revenue, Software, Hi-Tech and Emerging Industries, Q4 FY26: ₹1,593 cr, up 20.2% YoY",
+   "value": 20.2,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F49",
+   "metric": "segment_margin",
+   "quarter": "Q4 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Software, Hi-Tech and Emerging Industries, Q4 FY26: 34.5% vs 33.0% a year ago",
+   "value": 34.5,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F50",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY27",
+   "text": "Segment revenue, BFSI, Q1 FY27: ₹1,463 cr",
+   "value": null,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1706739_02082026064511_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F51",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), BFSI, Q1 FY27: 35.6%",
+   "value": 35.6,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1706739_02082026064511_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F52",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY27",
+   "text": "Segment revenue, Healthcare & Life Sciences, Q1 FY27: ₹1,091 cr, up 29.5% YoY",
+   "value": 29.5,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1706739_02082026064511_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F53",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Healthcare & Life Sciences, Q1 FY27: 36.8% vs 36.1% a year ago",
+   "value": 36.8,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1706739_02082026064511_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F54",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY27",
+   "text": "Segment revenue, Software, Hi-Tech and Emerging Industries, Q1 FY27: ₹1,749 cr, up 28.5% YoY",
+   "value": 28.5,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1706739_02082026064511_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F55",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Software, Hi-Tech and Emerging Industries, Q1 FY27: 34.6% vs 36.0% a year ago",
+   "value": 34.6,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1706739_02082026064511_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F56",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY27",
+   "text": "Segment revenue, BFSI, Q2 FY27: ₹1,571 cr",
+   "value": null,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1739401_15102026080919_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F57",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), BFSI, Q2 FY27: 34.9%",
+   "value": 34.9,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1739401_15102026080919_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F58",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY27",
+   "text": "Segment revenue, Healthcare & Life Sciences, Q2 FY27: ₹1,098 cr, up 21.6% YoY",
+   "value": 21.6,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1739401_15102026080919_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F59",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Healthcare & Life Sciences, Q2 FY27: 35.1% vs 38.3% a year ago",
+   "value": 35.1,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1739401_15102026080919_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F60",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY27",
+   "text": "Segment revenue, Software, Hi-Tech and Emerging Industries, Q2 FY27: ₹1,994 cr, up 39.2% YoY",
+   "value": 39.2,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1739401_15102026080919_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F61",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Software, Hi-Tech and Emerging Industries, Q2 FY27: 32.0% vs 36.6% a year ago",
+   "value": 32.0,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1739401_15102026080919_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F62",
+   "metric": "tax_rate",
+   "quarter": "FY26",
+   "text": "Effective tax rate FY26 (tax ÷ profit before tax, 4 quarters): 22.6%",
+   "value": 22.6,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F63",
+   "metric": "segment_revenue_fy",
+   "quarter": "FY26",
+   "text": "Segment revenue, Healthcare & Life Sciences, FY26 (4 quarters): ₹3,772 cr, up 15.9% YoY",
+   "value": 15.9,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F64",
+   "metric": "segment_revenue_fy",
+   "quarter": "FY26",
+   "text": "Segment revenue, Software, Hi-Tech and Emerging Industries, FY26 (4 quarters): ₹5,883 cr, up 19.8% YoY",
+   "value": 19.8,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F65",
+   "metric": "capex",
+   "quarter": "H1 FY27",
+   "text": "Capex H1 FY27 (purchase of fixed assets, cash flow statement): ₹247 cr",
+   "value": 246.76,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1739401_15102026080919_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F66",
+   "metric": "cash_conversion",
+   "quarter": "H1 FY27",
+   "text": "Cash from operations ÷ PAT, H1 FY27: 111%",
+   "value": 111.2,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1739401_15102026080919_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F67",
+   "metric": "capex",
+   "quarter": "H2 FY26",
+   "text": "Capex H2 FY26 (purchase of fixed assets, cash flow statement): ₹-117 cr",
+   "value": -116.76,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F68",
+   "metric": "cash_conversion",
+   "quarter": "H2 FY26",
+   "text": "Cash from operations ÷ PAT, H2 FY26: 84%",
+   "value": 83.5,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F69",
+   "metric": "capex",
+   "quarter": "FY26",
+   "text": "Capex FY26 (full year, H1 + H2): ₹-13 cr",
+   "value": -13.4,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1656685_21042026071318_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F70",
+   "metric": "capex",
+   "quarter": "H1 FY26",
+   "text": "Capex H1 FY26 (purchase of fixed assets, cash flow statement): ₹103 cr",
+   "value": 103.36,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1548199_14102025081605_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F71",
+   "metric": "cash_conversion",
+   "quarter": "H1 FY26",
+   "text": "Cash from operations ÷ PAT, H1 FY26: 107%",
+   "value": 106.9,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1548199_14102025081605_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
    }
   }
  ],
@@ -947,13 +1740,14 @@
   "Results filed 2025-07-23 could not be read: No readable quarterly results table found in this PDF (it may be a cover letter, a press note, or a poor-quality scan)."
  ],
  "ai": {
-  "calls": 7,
+  "calls": 8,
   "cached": 1,
-  "tokens_in": 45032,
-  "tokens_out": 5340,
+  "tokens_in": 54111,
+  "tokens_out": 5936,
   "models": [
    "gemini-3.1-flash-lite",
-   "gemini-3.5-flash"
+   "gemini-3.5-flash",
+   "gemini-3.5-flash-lite"
   ],
   "fallback_used": true
  }

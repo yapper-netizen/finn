@@ -25,7 +25,8 @@ from data.research_docs import find_documents
 from engine import cards
 from engine.results import fiscal_label
 
-ENGINE_VERSION = 1
+ENGINE_VERSION = 2       # 2: XBRL facts, say-do targets, tone vs numbers (block 10f)
+MIN_ENGINE_VERSION = 1   # older saved results still open (without the 10f parts)
 Ask = Callable[..., Any]   # engine.llm.ask_json-compatible
 Progress = Callable[[str], None]
 
@@ -149,7 +150,8 @@ def card_facts(card_list: list[dict]) -> list[dict]:
                       key=lambda c: c["period"]["current"])
 
     def add(metric: str, quarter: str, text: str, value: float | None, card: dict, page: int | None) -> None:
-        facts.append({"id": f"F{len(facts) + 1}", "metric": metric, "quarter": quarter, "text": text, "value": value,
+        unit = "%" if "margin" in metric else "% YoY"
+        facts.append({"id": f"F{len(facts) + 1}", "metric": metric, "quarter": quarter, "text": text, "value": value, "unit": unit,
                       "source": {"filing_id": card.get("filing_id"), "pdf_url": card.get("pdf_url"), "page": page,
                                  "basis": card.get("basis")}})
 
@@ -204,6 +206,103 @@ def card_facts(card_list: list[dict]) -> list[dict]:
     return facts
 
 
+# ---------------------------------------------------------------- more facts from XBRL (10f, N1)
+
+def xbrl_facts(fin: dict | None, start: int, since: str | None = None) -> list[dict]:
+    """Segment, capex, tax-rate and cash-conversion facts from the XBRL statements (D-103).
+
+    Python does all arithmetic. `since` (YYYY-MM-DD) drops quarters before the research window.
+    Segment results are before interest and tax (like EBIT), so they are labelled as such.
+    """
+    if not fin or not fin.get("quarters"):
+        return []
+    facts: list[dict] = []
+    qs = sorted(fin["quarters"], key=lambda q: q["period_end"])
+    src = lambda q: {"pdf_url": q.get("url"), "page": None, "basis": fin.get("basis"), "kind": "xbrl"}
+
+    def add(metric: str, quarter: str, text: str, value: float | None, unit: str, q: dict) -> None:
+        facts.append({"id": f"F{start + len(facts)}", "metric": metric, "quarter": quarter, "text": text,
+                      "value": value, "unit": unit, "source": src(q)})
+
+    def growth(cur: float | None, base: float | None) -> float | None:
+        return round((cur - base) / base * 100, 1) if cur is not None and base and base > 0 else None
+
+    by_end = {q["period_end"]: q for q in qs}
+    seg_by_q = {q["period_end"]: {s["key"]: s for s in q.get("segments") or []} for q in qs}
+    for q in qs:
+        if since and q["period_end"] < since:
+            continue
+        ya_end = str(int(q["period_end"][:4]) - 1) + q["period_end"][4:]
+        for key, sg in seg_by_q[q["period_end"]].items():
+            if len(seg_by_q[q["period_end"]]) < 2:
+                break
+            ya = seg_by_q.get(ya_end, {}).get(key)
+            g = growth(sg.get("revenue"), ya.get("revenue") if ya else None)
+            add("segment_revenue", q["label"], f"Segment revenue, {sg['name']}, {q['label']}: ₹{sg['revenue']:,.0f} cr"
+                + (f", {'up' if g >= 0 else 'down'} {abs(g):.1f}% YoY" if g is not None else ""), g, "% YoY", q)
+            if sg.get("margin") is not None:
+                prev_m = ya.get("margin") if ya else None
+                add("segment_margin", q["label"], f"Segment result margin (before interest and tax, not EBITDA), {sg['name']}, "
+                    f"{q['label']}: {sg['margin']:.1f}%" + (f" vs {prev_m:.1f}% a year ago" if prev_m is not None else ""),
+                    sg["margin"], "%", q)
+    # fiscal-year totals: segment revenue growth, effective tax rate (needs the 4 quarters of the year)
+    fys: dict[str, list[dict]] = {}
+    for q in qs:
+        fys.setdefault(q["label"].split()[1], []).append(q)
+    for fy, four in fys.items():
+        if len(four) != 4 or (since and four[-1]["period_end"] < since):
+            continue
+        tax, pbt = [q.get("tax") for q in four], [q.get("pbt") for q in four]
+        if None not in tax and None not in pbt and sum(pbt) > 0:
+            add("tax_rate", fy, f"Effective tax rate {fy} (tax ÷ profit before tax, 4 quarters): {100 * sum(tax) / sum(pbt):.1f}%",
+                round(100 * sum(tax) / sum(pbt), 1), "%", four[-1])
+        prev = fys.get(f"FY{int(fy[2:]) - 1:02d}")
+        if prev and len(prev) == 4:
+            names = {k: s["name"] for k, s in seg_by_q[four[-1]["period_end"]].items()}
+            for key, name in names.items():
+                cur = [seg_by_q[q["period_end"]].get(key, {}).get("revenue") for q in four]
+                old = [seg_by_q[q["period_end"]].get(key, {}).get("revenue") for q in prev]
+                if None in cur or None in old:
+                    continue
+                g = growth(sum(cur), sum(old))
+                add("segment_revenue_fy", fy, f"Segment revenue, {name}, {fy} (4 quarters): ₹{sum(cur):,.0f} cr"
+                    + (f", {'up' if g >= 0 else 'down'} {abs(g):.1f}% YoY" if g is not None else ""), g, "% YoY", four[-1])
+    # capex and cash conversion by half year; full-year capex when both halves are known
+    halves = {h["label"]: h for h in fin.get("cash_flows") or []}
+    for label, h in halves.items():
+        q = {"url": h.get("url"), "period_end": ""}
+        if h.get("capex") is not None:
+            add("capex", label, f"Capex {label} (purchase of fixed assets, cash flow statement): ₹{h['capex']:,.0f} cr",
+                h["capex"], "cr", q)
+        if h.get("cash_conversion") is not None:
+            add("cash_conversion", label, f"Cash from operations ÷ PAT, {label}: {h['cash_conversion']:.0f}%",
+                h["cash_conversion"], "%", q)
+        if label.startswith("H2") and f"H1 {label[3:]}" in halves and h.get("capex") is not None:
+            h1 = halves[f"H1 {label[3:]}"]
+            if h1.get("capex") is not None:
+                add("capex", label[3:], f"Capex {label[3:]} (full year, H1 + H2): ₹{h1['capex'] + h['capex']:,.0f} cr",
+                    round(h1["capex"] + h["capex"], 2), "cr", q)
+    return facts
+
+
+_OTHER_CHECKABLE = re.compile(r"capex|capital expenditure|tax rate|cash flow|ocf|cash conversion|segment|margin|growth|"
+                              r"revenue|grow|ebitda|business", re.I)
+
+
+def worth_judging(p: dict, segment_names: list[str]) -> bool:
+    """A non-headline promise goes to the verdict step only if FINN may hold a figure for it."""
+    text = p["statement"]
+    if re.search(r"operating margin|\bEBIT\b(?!DA)|EBIT margin", text, re.I) and not re.search(r"segment|business", text, re.I):
+        return False    # operating/EBIT margin is not EBITDA, and FINN does not compute company EBIT margins
+    if p["metric"] in CHECKABLE:
+        return True
+    if re.search(r"volume|market share|export|europe|deal|closure|acquisition|payout|dividend|plant|launch|"
+                 r"one-time|incremental amount|working capital|debt", text, re.I):
+        return False    # FINN has no filed figure for these (or measures them differently)
+    named_segment = any(n.lower().split()[0] in text.lower() for n in segment_names if n)
+    return named_segment or bool(_OTHER_CHECKABLE.search(text))
+
+
 # ---------------------------------------------------------------- verdicts (EN-13)
 
 class VerdictOut(BaseModel):
@@ -211,6 +310,9 @@ class VerdictOut(BaseModel):
     verdict: Literal["Delivered", "Partial", "Missed", "Not checkable"]
     fact_ids: list[str]
     reason: str
+    target_low: float | None = None      # the promised number(s), as stated in the promise
+    target_high: float | None = None
+    actual_fact_id: str | None = None    # the one fact whose value is the delivered number
 
 
 class VerdictsOut(BaseModel):
@@ -243,6 +345,15 @@ For each promise give:
 - reason: one short sentence (max 30 words) naming the figures, e.g. "Revenue grew 18% in FY26
   against 20%+ guided."
 - Use only facts for quarters AFTER the call in which the promise was made.
+- Segment facts: a promise about one business (e.g. "paints", "FMEG", "cables") is judged on that
+  segment's facts only if the segment exists by that name; if the segment combines several businesses
+  (e.g. "Paints and Adhesives") and the promise is about one of them, answer "Not checkable".
+- Segment result margins are before interest and tax (like EBIT), lower than EBITDA: never judge an
+  EBITDA-margin target against them ("Not checkable"), except a purely directional promise.
+- Capex promises are judged on the capex facts (₹ crore; 1 billion = 100 crore).
+- target_low / target_high: the promised number(s) exactly as stated (a single number: both equal;
+  "20%+": low 20, high null; directional: both null). actual_fact_id: the ONE fact whose value is
+  the delivered number to compare with the target (null if none fits).
 Write the reason first in your head, then pick the verdict that matches it.
 Return one entry per promise id.
 """
@@ -269,8 +380,186 @@ def judge(ask: Ask, company: str, promises: list[dict], facts: list[dict], meta:
             verdict, ids = "Not checkable", []   # verdict and reason disagree: show neither as a verdict
             v.reason = "The AI's verdict and its reason disagreed, so no verdict is shown. " + v.reason
         result[v.promise_id] = {"verdict": verdict, "fact_ids": ids if verdict != "Not checkable" else [],
-                                "reason": v.reason.strip()[:240]}
+                                "reason": v.reason.strip()[:240],
+                                "target": {"low": v.target_low, "high": v.target_high},
+                                "actual_fact_id": v.actual_fact_id if v.actual_fact_id in ids else None}
     return result
+
+
+def is_guidance(p: dict) -> bool:
+    """Explicit headline guidance (N7): a company-level number, or a stated figure for revenue,
+    growth, margin, profit or capex (segment guidance included)."""
+    if p["metric"] in CHECKABLE:
+        return True
+    stated = bool(_numbers(p["statement"])) or bool(re.search(r"double[- ]digit|single[- ]digit", p["statement"], re.I))
+    return stated and bool(
+        re.search(r"guid|revenue|growth|grow|margin|ebitda|capex|profit", p["statement"], re.I))
+
+
+def guard_verdict(p: dict, facts_by_id: dict[str, dict]) -> None:
+    """Python checks on an AI verdict that has a target and a delivered figure (10f).
+
+    - An annual capex target judged on half-year capex only -> "Too early".
+    - "Delivered" while the figure is outside the promise (below the low end; for capex, outside
+      the range) -> no verdict shown, with the reason.
+    """
+    if p.get("verdict") not in ("Delivered", "Partial", "Missed"):
+        return
+    fact = facts_by_id.get(p.get("actual_fact_id") or "")
+    tgt = p.get("target") or {}
+    if not fact or fact.get("value") is None:
+        return
+    if fact["metric"] == "capex" and fact["quarter"].startswith("H"):
+        p.update(verdict="Too early", fact_ids=[], decided_by="rules",
+                 reason=f"Only half-year capex is filed so far ({fact['text']}); an annual target is judged on the full year.")
+        return
+    sd = say_do(p, facts_by_id)
+    if not sd or p["verdict"] != "Delivered":
+        return
+    low, high, actual = sd["low"], sd["high"], sd["actual"]
+    outside = (low is not None and actual < low) or (sd["unit"] == "cr" and high is not None and actual > high)
+    if outside:
+        p.update(verdict="Not checkable", fact_ids=[], decided_by="rules",
+                 reason=f"The AI said Delivered, but the figure ({fact['text']}) is outside the promise, so no verdict is shown.")
+
+
+def target_from_statement(statement: str) -> tuple[float | None, float | None]:
+    """'11% to 13%' -> (11, 13); '20%+' / 'over 30%' -> (20, None); '22.5%' -> (22.5, 22.5); else (None, None)."""
+    nums = sorted(float(n) for n in _numbers(_with_digits(statement).replace(",", "")))
+    if len(nums) == 2:
+        return nums[0], nums[1]
+    if len(nums) == 1:
+        open_top = re.search(r"\d\s*%?\s*\+|over|above|more than|at least|greater than|exceed", statement, re.I)
+        return nums[0], (None if open_top else nums[0])
+    return None, None
+
+
+def _period_key(label: str) -> tuple[int, float]:
+    """'Q2 FY27' -> (27, 2); 'H1 FY27' -> (27, 2.1); 'FY26' -> (26, 5)."""
+    m = re.search(r"(Q|H)?(\d)?\s*FY(\d{2})", label or "")
+    if not m:
+        return (0, 0)
+    fy = int(m.group(3))
+    if not m.group(1):
+        return (fy, 5)
+    return (fy, int(m.group(2)) + (0.1 if m.group(1) == "H" else 0)) if m.group(1) == "Q" else (fy, 2.1 if m.group(2) == "1" else 4.1)
+
+
+def pick_actual(p: dict, facts_by_id: dict[str, dict]) -> str | None:
+    """The delivered number when the model named none: the latest cited fact in the promise's unit."""
+    text = p["statement"]
+    unit = "cr" if re.search(r"capex|billion|crore|₹|\bINR\b|\bRs\b", text, re.I) else \
+        "% YoY" if re.search(r"grow|growth", text, re.I) else "%"
+    cands = [facts_by_id[i] for i in p.get("fact_ids") or [] if i in facts_by_id
+             and facts_by_id[i].get("unit") == unit and facts_by_id[i].get("value") is not None]
+    return max(cands, key=lambda f: _period_key(f["quarter"]))["id"] if cands else None
+
+
+def say_do(p: dict, facts_by_id: dict[str, dict]) -> dict | None:
+    """Promised vs delivered numbers for the chart (N2), or None.
+
+    The target must be numbers that appear in the promise's own words (statement or quote); the
+    delivered number is a Python-made fact. Units must agree (% with %, crore with crore).
+    """
+    tgt, fid = p.get("target") or {}, p.get("actual_fact_id")
+    low, high = tgt.get("low"), tgt.get("high")
+    if low is None and high is None:                      # model gave none: read it from the promise
+        low, high = target_from_statement(p["statement"])
+    if fid not in facts_by_id:
+        fid = pick_actual(p, facts_by_id)
+    if fid not in facts_by_id or (low is None and high is None):
+        return None
+    words = _with_digits(p["statement"] + " " + (p.get("receipt") or {}).get("quote", ""))
+    said = {float(x) for x in re.findall(r"\d+(?:\.\d+)?", words.replace(",", ""))}
+    if any(v is not None and float(v) not in said and float(v) / 100 not in said and float(v) * 100 not in said
+           for v in (low, high)):
+        return None
+    fact = facts_by_id[fid]
+    if fact.get("value") is None:
+        return None
+    unit = fact.get("unit", "")
+    if unit == "cr" and re.search(r"billion|bn", words, re.I):        # "₹12 billion" -> 1,200 crore
+        low, high = (v * 100 if v is not None and v < 1000 else v for v in (low, high))
+    return {"low": low, "high": high, "actual": fact["value"], "unit": unit, "fact": fact["text"]}
+
+
+# ---------------------------------------------------------------- tone vs numbers (10f, N4)
+
+class ToneOut(BaseModel):
+    transcript_id: str
+    score: int                 # -2 very cautious .. +2 very confident
+    label: str
+    quote: str
+    page: int
+
+
+class TonesOut(BaseModel):
+    tones: list[ToneOut]
+
+
+TONE_PROMPT = """You read the opening remarks of {company}'s earnings calls (management speaking).
+For EACH call, rate how confident management sounds about the business outlook, from its own words:
+-2 very cautious (warnings, weak demand, pressure), -1 cautious, 0 neutral or mixed, +1 confident,
++2 very confident (strong demand, upbeat outlook, raised ambitions).
+Judge tone only, not the numbers. Use only the text below.
+For each call return: transcript_id, score, label (2-4 words, e.g. "upbeat on demand"),
+quote: ONE sentence copied exactly from that call that best shows the tone, page: its PAGE number.
+
+{text}
+"""
+
+
+def opening_pages(pages: list[str], n: int = 2, window: int = 6) -> list[int]:
+    """Management's opening remarks: among the first content pages, the ones where management
+    speaks most ("we", "our"), not the operator's agenda or the disclaimer. In page order."""
+    content = [i for i, t in enumerate(pages) if len(t.strip()) > 400][:window]
+    voice = lambda i: len(re.findall(r"\b(we|our|us)\b", pages[i], re.I)) / max(len(pages[i]), 1)
+    return sorted(sorted(content, key=voice, reverse=True)[:n])
+
+
+def tone_vs_numbers(ask: Ask, company: str, transcripts: list[dict], fin: dict | None, meta: dict) -> list[dict]:
+    """Cheap model scores each call's tone (with a verified quote); Python pairs it with growth.
+
+    For each call: revenue growth YoY of the quarter it discussed and of the next quarter (did the
+    tone hold up?). A gap is flagged when an upbeat call is followed by slower growth, or a
+    cautious call by faster growth (5 points or more).
+    """
+    if not transcripts:
+        return []
+    blocks = []
+    for t in transcripts:
+        idx = opening_pages(t["pages"])
+        blocks.append(f"##### CALL {t['id']} ({t['quarter']})\n" + pages_text(t["pages"], idx))
+    out = ask(TONE_PROMPT.format(company=company, text="\n\n".join(blocks)), strong=False,
+              validate=_validator(TonesOut), use_cache=True, meta=meta, schema=TonesOut)
+    by_id = {t["id"]: t for t in transcripts}
+    growth = {}
+    if fin:
+        qs = sorted(fin.get("quarters") or [], key=lambda q: q["period_end"])
+        for i, q in enumerate(qs):
+            growth[q["period_end"]] = (q.get("revenue_yoy"), qs[i + 1].get("revenue_yoy") if i + 1 < len(qs) else None,
+                                       qs[i + 1]["label"] if i + 1 < len(qs) else None)
+    rows = []
+    for o in out.tones:
+        t = by_id.get(o.transcript_id)
+        if not t:
+            continue
+        page, score = verify_quote(o.quote, t["pages"], o.page)
+        if page is None:
+            continue
+        g, g_next, next_label = growth.get(t["quarter_end"], (None, None, None))
+        gap = None
+        if g is not None and g_next is not None:
+            if o.score >= 1 and g_next <= g - 5:
+                gap = f"Upbeat call, then growth slowed to {g_next:+.1f}% in {next_label}"
+            elif o.score <= -1 and g_next >= g + 5:
+                gap = f"Cautious call, then growth picked up to {g_next:+.1f}% in {next_label}"
+        rows.append({"transcript_id": t["id"], "quarter": t["quarter"], "quarter_end": t["quarter_end"],
+                     "score": max(-2, min(2, o.score)), "label": o.label.strip()[:40],
+                     "growth": g, "growth_next": g_next, "next_quarter": next_label, "gap": gap,
+                     "receipt": {"quote": o.quote.strip(), "page": page, "pdf_url": t["pdf_url"], "doc": t["label"],
+                                 "match": round(score, 2)}})
+    return sorted(rows, key=lambda r: r["quarter_end"])
 
 
 # ---------------------------------------------------------------- bull vs bear (EN-14)
@@ -360,6 +649,11 @@ def quote_states_target(statement: str, quote: str) -> bool:
     return not nums or bool(nums & set(re.findall(r"\d+(?:\.\d+)?", _with_digits(quote))))
 
 
+def _default_fin(symbol: str) -> dict | None:
+    from engine import financials
+    return financials.get(symbol)
+
+
 def is_cover_letter(pages: list[str]) -> bool:
     """A 1-2 page letter that says the transcript is elsewhere, not the transcript itself."""
     text = " ".join(pages)
@@ -381,6 +675,7 @@ def build_research(
     pace: Callable[[dict], None] | None = None,
     link_finder: Callable[[str], str | None] = docs.linked_pdf,
     linked_loader: Callable[[str], list[str]] = docs.get_linked_pages,
+    fin_getter: Callable[[str], dict | None] | None = None,
 ) -> dict:
     """Run the whole research for one ticker and return the JSON the Research screen shows."""
     if ask is None:
@@ -464,13 +759,24 @@ def build_research(
 
     promises = dedupe_promises(promises)
 
+    # Segment, capex, tax and cash facts from the XBRL statements (10f, N1). No AI.
+    progress("Reading segment, capex and cash figures")
+    fin = None
+    try:
+        fin = (fin_getter or _default_fin)(symbol)
+    except Exception as exc:          # NSE down: headline facts from the cards still work
+        warnings.append(f"Segment and cash-flow figures could not be read ({str(exc)[:100]}); only headline numbers were used.")
+    since = min((t["quarter_end"] for t in transcripts), default=None)
+    facts += xbrl_facts(fin, len(facts) + 1, since)
+    segment_names = sorted({s["name"] for q in (fin or {}).get("quarters", [])[:4] for s in q.get("segments") or []})
+
     # Timing and checkability are decided by Python; only the rest goes to the strong model.
     progress("Checking promises against the reported numbers")
     to_judge = []
     for p in promises:
-        if p["metric"] not in CHECKABLE:
-            p.update(verdict="Not checkable", reason="Not a company-level number in the results filings.", fact_ids=[],
-                     decided_by="rules")
+        if not worth_judging(p, segment_names):
+            p.update(verdict="Not checkable", fact_ids=[], decided_by="rules",
+                     reason="FINN holds no filed figure for this (e.g. volumes, market share, exports, deals, dividends).")
         elif latest_actual and date.fromisoformat(p["quarter_end"]) >= latest_actual:
             p.update(verdict="Too early", fact_ids=[], decided_by="rules",
                      reason=f"Said in the latest call; no quarter has been reported since ({fiscal_label(latest_actual)} is the latest).")
@@ -498,7 +804,22 @@ def build_research(
         p.setdefault("decided_by", "rules")
     fact_by_id = {f["id"]: f for f in facts}
     for p in promises:
+        guard_verdict(p, fact_by_id)
         p["facts"] = [fact_by_id[i] for i in p.get("fact_ids", [])]
+        p["say_do"] = say_do(p, fact_by_id) if p.get("verdict") in ("Delivered", "Partial", "Missed") else None
+        p["guidance"] = is_guidance(p)
+
+    # Tone vs numbers (N4): one cheap call over every call's opening remarks.
+    progress("Comparing management's tone with the numbers")
+    tone: list[dict] = []
+    if transcripts:
+        meta = {}
+        try:
+            tone = tone_vs_numbers(ask, company, transcripts, fin, meta)
+            calls.append(meta)
+            pace(meta)
+        except (ValueError, RuntimeError) as exc:
+            warnings.append(f"Tone vs numbers could not be built ({str(exc)[:120]}).")
 
     # Bull vs bear from the two latest transcripts and the facts (D-084, decision 7B).
     progress("Weighing bull and bear points")
@@ -526,6 +847,7 @@ def build_research(
         "counts": counts,
         "promises": promises,
         "bull": bb.get("bull", []), "bear": bb.get("bear", []),
+        "tone": tone,
         "facts": facts,
         # What NSE listed when this was built (the refresh compares against it, D-090).
         "documents_seen": {"transcripts": sorted(t["date"][:10] for t in found["transcripts"]),

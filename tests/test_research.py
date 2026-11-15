@@ -109,7 +109,7 @@ class FakeAI:
     """Answers by schema: promises, verdicts, bull/bear. Records calls."""
 
     def __init__(self, promises, verdicts, bull_bear):
-        self.answers = {"PromisesOut": promises, "VerdictsOut": verdicts, "BullBearOut": bull_bear}
+        self.answers = {"PromisesOut": promises, "VerdictsOut": verdicts, "BullBearOut": bull_bear, "TonesOut": {"tones": []}}
         self.calls = []
 
     def __call__(self, prompt, strong=False, validate=None, use_cache=False, meta=None, schema=None):
@@ -127,7 +127,8 @@ def run(ai, cards_=FY26):
     by_id = {c["filing_id"]: c for c in cards_}
     steps = []
     out = R.build_research("XYZ", progress=steps.append, ask=ai, finder=lambda t: found,
-                           pages_loader=lambda url: TRANSCRIPT, card_getter=lambda f: by_id[f["id"]], pace=lambda m: None)
+                           pages_loader=lambda url: TRANSCRIPT, card_getter=lambda f: by_id[f["id"]], pace=lambda m: None,
+                           fin_getter=lambda s: None)
     return out, steps
 
 
@@ -158,8 +159,8 @@ def test_pipeline_end_to_end_with_fake_model():
     assert rev["verdict"] == "Delivered" and rev["fact_ids"] == [fy_id]        # unknown F99 discarded
     assert rev["facts"][0]["metric"] == "revenue_fy" and rev["receipt"]["page"] == 2
     assert by_stmt["EBITDA margin 12-13% in FY28"]["verdict"] == "Too early"   # Python timing, no AI
-    assert by_stmt["Capex of Rs 500 crore"]["verdict"] == "Not checkable"      # decision 3A
-    assert out["counts"] == {"Delivered": 1, "Partial": 0, "Missed": 0, "Too early": 1, "Not checkable": 1}
+    assert by_stmt["Capex of Rs 500 crore"]["verdict"] in ("Too early", "Not checkable")   # capex is checkable since 10f (XBRL)
+    assert out["counts"] == {"Delivered": 1, "Partial": 0, "Missed": 0, "Too early": 2, "Not checkable": 0}   # capex now timed, 10f
     assert [p["point"] for p in out["bull"]] == ["Revenue grew 21% in FY26."]   # unsourced point dropped
     assert out["bear"][0]["receipt"]["page"] == 2
     import config
@@ -268,3 +269,120 @@ def test_quote_must_state_the_target():
     assert R.quote_states_target("EBITDA margin 11% to 13%", "we should expect 11% to 13% EBITDA margin")
     assert R.quote_states_target("Double revenue by FY30", "we aim to double our revenue by 2030")
     assert R.quote_states_target("Growth momentum to continue", "we are confident of the momentum")   # no number
+
+
+# ---------------------------------------------------------------- block 10f: XBRL facts, say-do, tone
+
+FIN = {"basis": "consolidated", "quarters": [
+    {"period_end": e, "label": l, "url": "https://nsearchives.nseindia.in/x.xml", "tax": 25.0, "pbt": 100.0, "revenue_yoy": g,
+     "segments": [{"name": "Plumbing", "key": "plumbing", "revenue": rp, "margin": 15.0},
+                  {"name": "Paints", "key": "paints", "revenue": rq, "margin": 5.0}]}
+    for e, l, rp, rq, g in [("2025-06-30", "Q1 FY26", 100, 20, 10.0), ("2025-09-30", "Q2 FY26", 100, 20, 12.0),
+                            ("2025-12-31", "Q3 FY26", 100, 20, 11.0), ("2026-03-31", "Q4 FY26", 100, 20, 30.0),
+                            ("2026-06-30", "Q1 FY27", 120, 30, 9.0)]],
+       "cash_flows": [{"label": "H2 FY26", "capex": 180.0, "cash_conversion": 120.0, "url": "u2"},
+                      {"label": "H1 FY26", "capex": 150.0, "cash_conversion": 80.0, "url": "u1"}]}
+
+
+def test_xbrl_facts_segments_capex_tax():
+    facts = R.xbrl_facts(FIN, 10)
+    texts = [f["text"] for f in facts]
+    assert facts[0]["id"] == "F10"
+    seg = next(f for f in facts if f["metric"] == "segment_revenue" and "Paints" in f["text"] and "Q1 FY27" in f["text"])
+    assert seg["value"] == 50.0 and seg["unit"] == "% YoY"                     # 30 vs 20 a year ago
+    assert any("not EBITDA" in t for t in texts)                              # segment result labelled honestly
+    capex_fy = next(f for f in facts if f["metric"] == "capex" and f["quarter"] == "FY26")
+    assert capex_fy["value"] == 330.0 and capex_fy["unit"] == "cr"
+    assert next(f for f in facts if f["metric"] == "tax_rate")["value"] == 25.0
+    assert R.xbrl_facts(None, 1) == []
+
+
+def test_worth_judging_skips_promises_without_filed_figures():
+    segs = ["Plumbing", "Paints"]
+    assert R.worth_judging({"metric": "other", "statement": "Capex of 300 to 350 crore for FY27"}, segs)
+    assert R.worth_judging({"metric": "other", "statement": "Paints to grow 20% this year"}, segs)
+    assert not R.worth_judging({"metric": "other", "statement": "Exports above 10% of revenue by FY30"}, segs)
+    assert not R.worth_judging({"metric": "other", "statement": "Nagarro deal closure by Q1 CY27"}, segs)
+    assert R.worth_judging({"metric": "revenue_growth", "statement": "Grow 1.5x the market"}, segs)
+
+
+def test_say_do_needs_target_in_the_promise_and_matching_fact():
+    facts = {"F1": {"value": 1480.0, "unit": "cr", "text": "Capex FY26: ₹1,480 cr"},
+             "F2": {"value": 21.1, "unit": "% YoY", "text": "Revenue FY26 up 21.1%"}}
+    p = {"statement": "Capex of ₹12 billion to ₹16 billion a year", "receipt": {"quote": "12 to 16 billion"},
+         "target": {"low": 12, "high": 16}, "actual_fact_id": "F1"}
+    assert R.say_do(p, facts) == {"low": 1200, "high": 1600, "actual": 1480.0, "unit": "cr", "fact": "Capex FY26: ₹1,480 cr"}
+    invented = {**p, "statement": "Revenue growth of 20%", "receipt": {"quote": "20% growth"}, "target": {"low": 25, "high": None},
+                "actual_fact_id": "F2"}
+    assert R.say_do(invented, facts) is None                                 # 25 is not in the promise's words
+    assert R.say_do({**p, "actual_fact_id": None}, facts) is None
+
+
+def test_tone_vs_numbers_verifies_quote_and_flags_gap():
+    pages = ["cover " * 100, "Management: Demand was very strong and we are confident of the year ahead. " * 8, "more " * 100]
+    ts = [{"id": "T1", "quarter": "Q4 FY26", "quarter_end": "2026-03-31", "pages": pages, "pdf_url": "u", "label": "Q4 FY26 earnings call"}]
+
+    def ask(prompt, strong, validate, use_cache, meta, schema):
+        assert not strong and "CALL T1" in prompt
+        return validate({"tones": [{"transcript_id": "T1", "score": 2, "label": "upbeat on demand",
+                                    "quote": "Demand was very strong and we are confident of the year ahead.", "page": 2},
+                                   {"transcript_id": "T9", "score": 0, "label": "x", "quote": "y", "page": 1}]})
+    rows = R.tone_vs_numbers(ask, "XYZ", ts, FIN, {})
+    assert len(rows) == 1 and rows[0]["growth"] == 30.0 and rows[0]["growth_next"] == 9.0
+    assert rows[0]["gap"].startswith("Upbeat call, then growth slowed") and rows[0]["receipt"]["page"] == 2
+
+    def bad(prompt, strong, validate, use_cache, meta, schema):
+        return validate({"tones": [{"transcript_id": "T1", "score": 1, "label": "x", "quote": "We never said this sentence at all.", "page": 2}]})
+    assert R.tone_vs_numbers(bad, "XYZ", ts, FIN, {}) == []
+
+
+def test_guard_verdict_half_year_capex_and_outside_figures():
+    facts = {"F1": {"metric": "capex", "quarter": "H1 FY27", "value": 598.0, "unit": "cr", "text": "Capex H1 FY27: ₹598 cr"},
+             "F2": {"metric": "ebitda_margin", "quarter": "Q2 FY27", "value": 10.0, "unit": "%", "text": "EBITDA margin 10%"}}
+    capex = {"verdict": "Delivered", "statement": "Annual capex of ₹12 to 16 billion", "receipt": {"quote": "12 to 16 billion"},
+             "target": {"low": 12, "high": 16}, "actual_fact_id": "F1"}
+    R.guard_verdict(capex, facts)
+    assert capex["verdict"] == "Too early" and capex["decided_by"] == "rules"
+    margin = {"verdict": "Delivered", "statement": "EBITDA margin of 12% to 14%", "receipt": {"quote": "12% to 14%"},
+              "target": {"low": 12, "high": 14}, "actual_fact_id": "F2"}
+    R.guard_verdict(margin, facts)
+    assert margin["verdict"] == "Not checkable" and "outside the promise" in margin["reason"]
+    beat = {**margin, "verdict": "Delivered", "target": {"low": 8, "high": 9}, "statement": "EBITDA margin of 8% to 9%",
+            "receipt": {"quote": "8% to 9%"}}
+    R.guard_verdict(beat, facts)
+    assert beat["verdict"] == "Delivered"                                      # above a margin range = beat
+
+
+def test_operating_margin_promise_is_not_judged_against_ebitda():
+    assert not R.worth_judging({"metric": "other", "statement": "Maintain operating margin in the 16% to 17% range"}, [])
+    assert not R.worth_judging({"metric": "ebitda_margin", "statement": "EBIT margin of 14%"}, [])
+    assert R.worth_judging({"metric": "ebitda_margin", "statement": "EBITDA margin of 14%"}, [])
+
+
+def test_opening_pages_prefer_management_voice():
+    pages = ["Cover page and disclaimer text. " * 30,
+             "Moderator: Ladies and gentlemen, welcome to the call. Agenda follows. " * 10,
+             "We delivered strong growth and our margins expanded; we expect us to keep going. " * 10,
+             "We saw our demand rise and we are confident. " * 10,
+             "Question from an analyst about pricing in the market today. " * 10]
+    assert R.opening_pages(pages) == [2, 3]
+
+
+def test_target_and_actual_worked_out_in_python_when_model_gives_none():
+    assert R.target_from_statement("EBITDA margin of 11% to 13%") == (11.0, 13.0)
+    assert R.target_from_statement("Revenue growth of 20%+ in FY27") == (20.0, None)
+    assert R.target_from_statement("Tax rate of 22.5% for the year") == (22.5, 22.5)
+    assert R.target_from_statement("Margins will improve") == (None, None)
+    facts = {"F1": {"id": "F1", "metric": "ebitda_margin", "quarter": "Q1 FY27", "value": 13.8, "unit": "%", "text": "a"},
+             "F2": {"id": "F2", "metric": "ebitda_margin", "quarter": "Q2 FY27", "value": 14.4, "unit": "%", "text": "b"},
+             "F3": {"id": "F3", "metric": "revenue", "quarter": "Q2 FY27", "value": 30.0, "unit": "% YoY", "text": "c"}}
+    p = {"statement": "EBITDA margin of 11% to 13%", "receipt": {"quote": "11% to 13%"}, "fact_ids": ["F1", "F2", "F3"],
+         "target": {"low": None, "high": None}, "actual_fact_id": None}
+    assert R.say_do(p, facts) == {"low": 11.0, "high": 13.0, "actual": 14.4, "unit": "%", "fact": "b"}
+
+
+def test_guidance_filter_keeps_stated_headline_numbers():
+    assert R.is_guidance({"metric": "ebitda_margin", "statement": "Margins will improve"})
+    assert R.is_guidance({"metric": "other", "statement": "Capex of 300 to 350 crore in FY27"})
+    assert not R.is_guidance({"metric": "other", "statement": "CPVC plant to be complete by September 2026"})
+    assert not R.is_guidance({"metric": "other", "statement": "Healthy growth in the second half"})

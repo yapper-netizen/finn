@@ -46,8 +46,8 @@ Build:
 - {Triggered alerts}: volume, price, category toggles (toggle off → Routine; toggle on + High → "alert" chip, D-047)
 - {Results card: Revenue, EBITDA, PBT, PAT with QoQ and YoY}. If EBITDA isn't printed, compute PBT + finance cost + D&A − other income and label it "computed" (D-054). Growth % computed in Python, not by the AI. Banks: Total income / PBT / PAT, EBITDA "n/a for banks" (D-048).
 - {Management change card with incoming person's bio} — use the "brief profile" in the exchange filing, no LinkedIn scraping.
-- Pull: "Promise tracker" ({narrative vs numbers}, last 4 quarters: Delivered / Partial / Missed with quote; actual numbers from results filings, D-049) + business snapshot (if time) + bull vs bear (if time).
-Skip (state in writeup): real push notifications, intraday data, logins, full bank metrics (NII, asset quality), the other 5 research views.
+- Pull: "Promise tracker" ({narrative vs numbers}, last 4 quarters: Delivered / Partial / Missed with quote; actual numbers from results filings + XBRL segment/capex/tax/cash facts, D-049, D-105; promised-vs-delivered chart, credibility meter, tone vs numbers, guidance filter) + business and financial snapshot, trajectory, balance sheet & cash (D-104) + bull vs bear.
+Skip (state in writeup): real push notifications, intraday data, logins, full bank metrics (asset quality), annual-report reading, a separate Guidance view (it is a filter).
 
 ## Tech stack
 - Python + FastAPI [library for building the API] — backend and serves the frontend (one deployment)
@@ -68,7 +68,7 @@ finn/
 ├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, brief (Brief me), llm, quotes (quote guard), results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs, financials (statements + ratios from XBRL, no AI), profile (what the company does, backed sentences)
 ├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/symbols?q=, /api/research, /api/research/{ticker}, /api/financials/{ticker}, /api/profile/{ticker}
 ├─ web/index.html      one file: Today (+ results sheet), Research (company hero, snapshot, trajectory, balance sheet & cash charts, promises, bull/bear, receipts), Settings; look in design/DESIGN_2.md
-├─ tests/              202 pytest tests (no network)
+├─ tests/              211 pytest tests (no network)
 ├─ snapshot/           frozen prices, filings, results cards, research (3 stocks), financials (3 stocks, XBRL), profiles (3 stocks), committed
 ├─ design/             DESIGN_1.md (screens), DESIGN_2.md (look), previews and brainstorm history
 ├─ briefs/             one hand-off brief per block (see Working loop)

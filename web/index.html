@@ -368,6 +368,18 @@
     .flag.flat { background: #eceef2; color: var(--grey); }
     .convs { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
     .finload { height: 120px; margin-bottom: 14px; border-radius: 20px; }
+    .cred { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 16px; }
+    .cred i, .vlegend i.c-delivered, .vlegend i[class^="c-"] { display: inline-block; width: 16px; height: 16px; border-radius: 5px; }
+    .c-delivered { background: #4cc483; } .c-partial { background: #f2b84b; } .c-missed { background: #ff8a7f; }
+    .c-early { background: transparent; box-shadow: inset 0 0 0 2px rgba(255,255,255,.75); }
+    .c-nocheck { background: rgba(255,255,255,.22); }
+    .sdrow { display: block; width: 100%; text-align: left; background: none; border: 0; border-top: 1px solid var(--border-soft); padding: 10px 0 4px; }
+    .sdrow:first-of-type { border-top: 0; }
+    .sdt { display: block; font-size: 14.5px; line-height: 1.35; }
+    .sdrow svg { display: block; width: 100%; height: auto; margin-top: 4px; }
+    .tchip { flex: none; min-width: 34px; height: 26px; border-radius: 99px; display: grid; place-items: center; font-weight: 800; font-size: 13px; background: #eceef2; color: var(--grey); }
+    .tchip.up { background: var(--primary-tint); color: var(--primary-deep); } .tchip.down { background: var(--warn-tint); color: var(--warn); }
+    .gapnote { color: var(--alert); font-size: 13.5px; font-weight: 600; margin-top: 2px; }
     .big-fig { font-family: var(--font-head); font-weight: 900; font-size: 30px; margin: 6px 0 0; color: var(--primary-deep); }
     .rdot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px var(--ok-tint); }
     .rchip[aria-pressed="true"] .rdot { background: #fff; box-shadow: none; }
@@ -839,22 +851,55 @@
             <div><h2 class="h-rest" x-text="judgedCount === 1 ? 'promise checked' : 'promises checked'"></h2>
                  <p class="meta sub">against the reported numbers</p></div>
           </div>
-          <div class="vbar" role="img" :aria-label="verdictSummary" x-show="judgedCount">
-            <template x-for="v in ['Delivered','Partial','Missed']" :key="v">
-              <i :class="'v-' + v.toLowerCase()" :style="'flex:' + (rs.data.counts[v] || 0)"></i>
-            </template>
+          <!-- credibility meter (N3): one square per promise -->
+          <div class="cred" role="img" :aria-label="verdictSummary">
+            <template x-for="(p, i) in credSquares" :key="i"><i :class="'c-' + vClass(p.verdict)" :title="p.verdict + ': ' + p.statement"></i></template>
           </div>
           <div class="vlegend">
-            <template x-for="v in ['Delivered','Partial','Missed']" :key="v">
-              <span><i :class="'v-' + v.toLowerCase()"></i><b x-text="rs.data.counts[v] || 0"></b> <span x-text="v"></span></span>
+            <template x-for="v in ['Delivered','Partial','Missed','Too early','Not checkable']" :key="v">
+              <span x-show="(rs.data.counts[v] || 0) > 0"><i :class="'c-' + vClass(v)"></i><b x-text="rs.data.counts[v] || 0"></b> <span x-text="v.toLowerCase()"></span></span>
             </template>
           </div>
           <p class="meta strip-cap" x-text="coverageText"></p>
         </div>
 
+        <!-- promised vs delivered (N2) -->
+        <div class="cbox mt-4" x-show="sayDo.length">
+          <div class="ctop"><h3>Promised vs delivered</h3><span class="meta" x-text="sayDo.length + (sayDo.length === 1 ? ' target' : ' targets')"></span></div>
+          <template x-for="r in sayDo" :key="r.id">
+            <button class="sdrow" @click="openReceipt('promise', r.p)">
+              <span class="sdt" x-text="r.title"></span>
+              <span x-html="r.svg"></span>
+            </button>
+          </template>
+          <p class="cnote">Band = what management promised, in its own words; dot = what the filings show (latest figure FINN used). Each row has its own scale.</p>
+        </div>
+
+        <!-- tone vs numbers (N4) -->
+        <div class="cbox" x-show="toneChart">
+          <div class="ctop"><h3>Tone vs numbers</h3><span class="meta" x-text="(rs.data.tone || []).length + ' calls'"></span></div>
+          <div x-html="toneChart"></div>
+          <template x-for="t in (rs.data.tone || [])" :key="t.transcript_id">
+            <button class="psent" @click="openReceipt('profile', { text: t.quarter + ' call: ' + t.label, receipt: t.receipt })">
+              <span class="tchip" :class="t.score > 0 ? 'up' : t.score < 0 ? 'down' : ''" x-text="(t.score > 0 ? '+' : '') + t.score"></span>
+              <span class="flex-1"><b x-text="t.quarter"></b> <span x-text="t.label"></span>
+                <span class="block meta" x-text="(t.growth === null ? '' : 'Revenue ' + pctTxt(t.growth) + ' YoY that quarter') + (t.growth_next === null || t.growth_next === undefined ? '' : ' → ' + pctTxt(t.growth_next) + ' in ' + t.next_quarter)"></span>
+                <span class="block gapnote" x-show="t.gap" x-text="'⚑ ' + t.gap"></span></span>
+              <span class="chev" aria-hidden="true">›</span>
+            </button>
+          </template>
+          <p class="cnote">Tone: how confident management sounded in its opening remarks, scored −2 to +2 by AI from its own words (tap for the sentence). Bars: revenue growth on a year ago for the quarter each call discussed, from the filings. ⚑ marks an upbeat call followed by slower growth, or a cautious one followed by faster growth.</p>
+        </div>
+
         <div class="section-label"><span>Promise tracker</span><span class="cnt" x-text="judgedCount"></span></div>
-        <p class="meta" x-show="!judgedCount">No company-level promise from these calls could be checked against the results yet. The other promises are listed below.</p>
-        <div class="box" x-show="judgedCount">
+        <!-- guidance filter (N7) -->
+        <div class="seg" role="group" aria-label="Which promises">
+          <button class="pill" :aria-pressed="!rs.guideOnly" @click="rs.guideOnly = false">All promises</button>
+          <button class="pill" :aria-pressed="!!rs.guideOnly" @click="rs.guideOnly = true">Headline guidance</button>
+        </div>
+        <p class="meta mt-2" x-show="rs.guideOnly">Only what management explicitly guided on revenue, growth, margins, profit or capex.</p>
+        <p class="meta mt-3" x-show="!promisesBy(['Delivered','Partial','Missed']).length">No promise in this list could be checked against the filed numbers yet. The others are listed below.</p>
+        <div class="box mt-3" x-show="promisesBy(['Delivered','Partial','Missed']).length">
           <template x-for="p in promisesBy(['Delivered','Partial','Missed'])" :key="p.id">
             <button class="line pline" @click="openReceipt('promise', p)">
               <span class="vchip" :class="'v-' + vClass(p.verdict)" x-text="p.verdict"></span>
@@ -868,10 +913,10 @@
         </div>
 
         <template x-for="grp in [{k:'Too early', t:'Too early to judge'}, {k:'Not checkable', t:'Not checkable from filings'}]" :key="grp.k">
-          <div x-show="(rs.data.counts[grp.k] || 0) > 0">
+          <div x-show="promisesBy([grp.k]).length > 0">
             <button class="box routine-btn w-full mt-3 flex items-center justify-between" style="min-height:52px;text-align:left"
                     @click="rs.open[grp.k] = !rs.open[grp.k]" :aria-expanded="!!rs.open[grp.k]">
-              <span class="text-sm" style="color:var(--text-muted)" x-text="grp.t + ' (' + rs.data.counts[grp.k] + ')'"></span>
+              <span class="text-sm" style="color:var(--text-muted)" x-text="grp.t + ' (' + promisesBy([grp.k]).length + ')'"></span>
               <span aria-hidden="true" style="color:var(--text-muted)" x-text="rs.open[grp.k] ? '▴' : '▾'"></span>
             </button>
             <div class="box mt-2" x-show="rs.open[grp.k]">
@@ -1215,7 +1260,7 @@
           <p style="font-size:15px;line-height:1.45" x-text="rc.item.reason"></p>
         </div>
       </template>
-      <p class="note" x-text="rc.kind === 'figure' ? 'Arithmetic by FINN in Python from the tagged numbers the company filed with NSE. No AI.' : rc.kind === 'profile' ? 'Sentence by AI in its own words; shown only because the passage above was found on that page of the transcript.' : rc.kind !== 'promise' ? 'Point by AI from the transcripts and results filings only; each one is shown only with a verified quote or figure.' : rc.item.decided_by === 'ai' ? 'Verdict by AI using only the figures above, which FINN computed from the results filings.' : 'Set by FINN's rules, not by AI: only company-level revenue, margin and profit promises whose due date has passed are judged.'"></p>
+      <p class="note" x-text="rc.kind === 'figure' ? 'Arithmetic by FINN in Python from the tagged numbers the company filed with NSE. No AI.' : rc.kind === 'profile' ? 'Sentence by AI in its own words; shown only because the passage above was found on that page of the transcript.' : rc.kind !== 'promise' ? 'Point by AI from the transcripts and results filings only; each one is shown only with a verified quote or figure.' : rc.item.decided_by === 'ai' ? 'Verdict by AI using only the figures above, which FINN computed from the results filings.' : 'Set by FINN\'s rules, not by AI: only company-level revenue, margin and profit promises whose due date has passed are judged.'"></p>
     </div>
   </template>
 </section>
@@ -1376,6 +1421,52 @@ const CH = {
       `<text x="${W - R}" y="${H - 4}" text-anchor="end" font-size="14" font-weight="700" fill="#004172">Revenue growth (YoY) →</text>` +
       `<text x="${L - 34}" y="13" font-size="14" font-weight="700" fill="#004172">↑ ${CH.esc(yLabel)}</text></svg>`;
   },
+  fmtU(v, unit) {
+    if (v === null || v === undefined) return '';
+    return unit === 'cr' ? '₹' + CH.num(v, 0) + ' cr' : unit === '% YoY' ? (v > 0 ? '+' : '') + CH.num(v) + '%' : CH.num(v) + '%';
+  },
+  sayDo(sd, verdict) {                 // one dumbbell row: promised band vs delivered dot
+    const W = 320, H = 52, L = 8, R = 8, y = 30;
+    const lowV = sd.low ?? sd.high, hiV = sd.high ?? (sd.low * 1.35);
+    const lo = Math.min(lowV, sd.actual), hi = Math.max(hiV, sd.actual), pad = (hi - lo || Math.abs(hi) || 1) * 0.18;
+    const x0 = lo - pad, x1 = hi + pad, sx = v => L + (v - x0) / (x1 - x0) * (W - L - R);
+    const col = { Delivered: '#1b6e3a', Partial: '#c08a2b', Missed: '#b3261e' }[verdict] || '#6a6970';
+    const bx = sx(lowV), bw = Math.max(sx(sd.high ?? x1) - bx, 6);
+    let g = `<rect x="${bx.toFixed(1)}" y="${y - 7}" width="${bw.toFixed(1)}" height="14" rx="7" fill="#dbe9f6" stroke="#7fb0d8"${sd.high === null ? ' stroke-dasharray="4 3"' : ''}/>`;
+    g += `<line x1="${Math.min(bx, sx(sd.actual)).toFixed(1)}" x2="${Math.max(bx + bw, sx(sd.actual)).toFixed(1)}" y1="${y}" y2="${y}" stroke="rgba(0,60,120,.15)"/>`;
+    const tl = sd.low === null ? '' : CH.fmtU(sd.low, sd.unit) + (sd.high === null ? '+' : sd.high !== sd.low ? '–' + CH.fmtU(sd.high, sd.unit) : '');
+    const tx = Math.min(Math.max(bx + bw / 2, 60), W - 60);
+    g += `<text x="${tx.toFixed(1)}" y="${y + 21}" text-anchor="middle" font-size="14" fill="#2e7ab4">promised ${CH.esc(tl)}</text>`;
+    const ax = sx(sd.actual), anchor = ax > W - 50 ? 'end' : ax < 50 ? 'start' : 'middle';
+    g += `<circle cx="${ax.toFixed(1)}" cy="${y}" r="8" fill="${col}" stroke="#fff" stroke-width="2.5"/>`;
+    g += `<text x="${ax.toFixed(1)}" y="${y - 13}" text-anchor="${anchor}" font-size="14.5" font-weight="800" fill="${col}">${CH.esc(CH.fmtU(sd.actual, sd.unit))}</text>`;
+    return `<svg viewBox="0 0 ${W} ${H + 6}" role="img" aria-label="Promised ${CH.esc(tl)}, delivered ${CH.esc(CH.fmtU(sd.actual, sd.unit))}">${g}</svg>`;
+  },
+  tone(rows) {                         // tone line (top) over revenue-growth bars (bottom), one column per call
+    if (rows.length < 2) return '';
+    const W = 320, H = 236, L = 34, R = 8, n = rows.length, slot = (W - L - R) / n, cx = i => L + slot * (i + 0.5);
+    const tT = 34, tB = 98, ty = s => tT + (2 - s) / 4 * (tB - tT);
+    const gs = rows.map(r => r.growth).filter(v => v !== null && v !== undefined);
+    const gHi = Math.max(...gs, 1), gLo = Math.min(...gs, 0), bT = 140, bB = 196, by = v => bT + (gHi - v) / (gHi - gLo || 1) * (bB - bT);
+    let g = '';
+    for (const sc of [2, 0, -2]) g += `<line x1="${L}" x2="${W - R}" y1="${ty(sc)}" y2="${ty(sc)}" stroke="rgba(0,60,120,${sc === 0 ? .25 : .08})"${sc === 0 ? ' stroke-dasharray="3 4"' : ''}/><text x="${L - 6}" y="${ty(sc) + 4.5}" text-anchor="end" font-size="14" fill="#6a6970">${sc > 0 ? '+' : ''}${sc}</text>`;
+    g += `<text x="${L}" y="${tT - 16}" font-size="14" font-weight="700" fill="#004172">Tone</text><text x="${L}" y="${bT - 14}" font-size="14" font-weight="700" fill="#004172">Revenue growth (YoY)</text>`;
+    const pts = rows.map((r, i) => [cx(i), ty(r.score)]);
+    g += `<path d="M${pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L')}" fill="none" stroke="#2e7ab4" stroke-width="2.5" stroke-linejoin="round"/>`;
+    rows.forEach((r, i) => {
+      const [x, y] = pts[i];
+      if (r.gap) g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="11" fill="none" stroke="#b3261e" stroke-width="2"/>`;
+      g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="${r.score > 0 ? '#004172' : r.score < 0 ? '#c08a2b' : '#8a8f99'}" stroke="#fff" stroke-width="2"/>`;
+      if (r.growth !== null && r.growth !== undefined) {
+        const top = Math.min(by(r.growth), by(0)), h = Math.max(Math.abs(by(r.growth) - by(0)), 2), bw = Math.min(28, slot - 14);
+        g += `<rect x="${(x - bw / 2).toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="4" fill="${r.growth < 0 ? '#d06a62' : i === n - 1 ? '#004172' : '#7fb0d8'}"/>`;
+        g += `<text x="${x.toFixed(1)}" y="${(top - 5).toFixed(1)}" text-anchor="middle" font-size="14" font-weight="700" fill="#1b1b1f">${Math.round(r.growth)}%</text>`;
+      }
+      const [q, fy] = r.quarter.split(' ');
+      g += `<text x="${x.toFixed(1)}" y="${H - 22}" text-anchor="middle" font-size="14" fill="#6a6970">${CH.esc(q)}</text><text x="${x.toFixed(1)}" y="${H - 6}" text-anchor="middle" font-size="14" fill="#6a6970">${CH.esc(fy || '')}</text>`;
+    });
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${CH.esc(rows.map(r => r.quarter + ': tone ' + r.score + ', growth ' + r.growth + '%').join('; '))}">${g}</svg>`;
+  },
   arc(cx, cy, r, a0, a1) {             // degrees clockwise from 12 o'clock
     const p = a => [cx + r * Math.sin(a * Math.PI / 180), cy - r * Math.cos(a * Math.PI / 180)];
     const [x0, y0] = p(a0), [x1, y1] = p(a1), large = Math.abs(a1 - a0) > 180 ? 1 : 0, sweep = a1 > a0 ? 1 : 0;
@@ -1444,7 +1535,7 @@ function finn() {
     _timer: null,
     sheet: { open: false, loading: false, slow: false, error: null, card: null, filing: null, formula: null },
     rs: { query: '', ticker: null, status: 'idle', data: null, steps: [], error: null, retryable: true, side: 'bull', open: {}, fromPhone: null,
-          fin: null, prof: null, finState: 'idle', profState: 'idle', finError: null, profError: null, sec: 'snapshot' },
+          fin: null, prof: null, finState: 'idle', profState: 'idle', finError: null, profError: null, sec: 'snapshot', guideOnly: false },
     _spy: null,
     sg: { list: [], active: -1, open: false, seq: 0, timer: null },
     rstore: { recent: [], saved: {} },   // this phone's recents + finished research copies (D-100)
@@ -1646,7 +1737,7 @@ function finn() {
       clearTimeout(this._rsTimer);
       const seq = ++this._rsSeq;            // a newer search replaces an older one
       this.rs = { ...this.rs, query: t, ticker: t, status: 'loading', data: null, steps: [], error: null, open: {}, side: 'bull', fromPhone: null,
-                  fin: null, prof: null, finState: 'idle', profState: 'idle', finError: null, profError: null, sec: 'snapshot' };
+                  fin: null, prof: null, finState: 'idle', profState: 'idle', finError: null, profError: null, sec: 'snapshot', guideOnly: false };
       // The server's copy wins; if it lost it (restart), open this phone's copy at once.
       const kept = this.rstore.saved[t];
       if (kept && !this.stored.some(r => r.ticker === t) && (!this.engineVersion || kept.data.engine_version === this.engineVersion)) {
@@ -1881,7 +1972,22 @@ function finn() {
       if (f.checks.length) out.push({ t: f.checks.length + ' data note' + (f.checks.length > 1 ? 's' : '') + ' below', cls: 'warn' });
       return out;
     },
-    promisesBy(verdicts) { return this.rs.data ? this.rs.data.promises.filter(p => verdicts.includes(p.verdict)) : []; },
+    promisesBy(verdicts) {
+      if (!this.rs.data) return [];
+      return this.rs.data.promises.filter(p => verdicts.includes(p.verdict) && (!this.rs.guideOnly || (p.guidance ?? p.metric !== 'other')));
+    },
+    get credSquares() {
+      if (!this.rs.data) return [];
+      const order = ['Delivered', 'Partial', 'Missed', 'Too early', 'Not checkable'];
+      return [...this.rs.data.promises].sort((a, b) => order.indexOf(a.verdict) - order.indexOf(b.verdict));
+    },
+    get sayDo() {
+      if (!this.rs.data) return [];
+      return this.rs.data.promises.filter(p => p.say_do).map(p => ({ id: p.id, p,
+        title: p.verdict + ': ' + p.statement.replace(/^(The company|Management|Company) (maintains|expects|plans|aims|aspires)( to)? /i, '').replace(/^./, c => c.toUpperCase()),
+        svg: CH.sayDo(p.say_do, p.verdict) }));
+    },
+    get toneChart() { const t = this.rs.data && this.rs.data.tone; return t && t.length >= 2 ? CH.tone(t) : ''; },
     get judgedCount() { const c = (this.rs.data && this.rs.data.counts) || {}; return (c.Delivered || 0) + (c.Partial || 0) + (c.Missed || 0); },
     get verdictSummary() { const c = (this.rs.data && this.rs.data.counts) || {}; return (c.Delivered || 0) + ' delivered, ' + (c.Partial || 0) + ' partial, ' + (c.Missed || 0) + ' missed'; },
     get coverageText() {

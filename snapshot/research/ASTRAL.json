@@ -2,15 +2,15 @@
  "ticker": "ASTRAL",
  "company": "Astral Limited",
  "status": "ready",
- "engine_version": 1,
- "generated_at": "2026-11-15T15:59:49",
+ "engine_version": 2,
+ "generated_at": "2026-11-15T19:51:09",
  "latest_quarter": "Q2 FY27",
  "counts": {
   "Delivered": 0,
   "Partial": 0,
-  "Missed": 0,
-  "Too early": 2,
-  "Not checkable": 11
+  "Missed": 1,
+  "Too early": 6,
+  "Not checkable": 6
  },
  "promises": [
   {
@@ -37,9 +37,16 @@
    ],
    "verdict": "Not checkable",
    "fact_ids": [],
-   "reason": "The provided facts do not contain specific revenue growth data for the paint business segment.",
+   "reason": "The segment is reported as 'Paints and Adhesives' combined, making it impossible to isolate the growth of the paint business specifically.",
+   "target": {
+    "low": null,
+    "high": null
+   },
+   "actual_fact_id": null,
    "decided_by": "ai",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P2",
@@ -63,9 +70,16 @@
    ],
    "verdict": "Not checkable",
    "fact_ids": [],
-   "reason": "The provided facts do not contain specific EBITDA margin data for the adhesive business segment.",
+   "reason": "The segment is reported as 'Paints and Adhesives' combined, and the provided facts only show segment result margins, not EBITDA margins for the adhesive business.",
+   "target": {
+    "low": null,
+    "high": null
+   },
+   "actual_fact_id": null,
    "decided_by": "ai",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P3",
@@ -88,10 +102,17 @@
     "Q1 FY27"
    ],
    "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
-   "decided_by": "rules",
-   "facts": []
+   "reason": "The provided facts do not contain data for a 'bathware' business segment.",
+   "target": {
+    "low": null,
+    "high": null
+   },
+   "actual_fact_id": null,
+   "decided_by": "ai",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P4",
@@ -114,10 +135,12 @@
     "Q3 FY26"
    ],
    "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "FINN holds no filed figure for this (e.g. volumes, market share, exports, deals, dividends).",
+   "facts": [],
+   "say_do": null,
+   "guidance": false
   },
   {
    "id": "P5",
@@ -139,11 +162,41 @@
    "restated_in": [
     "Q3 FY26"
    ],
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
-   "fact_ids": [],
-   "decided_by": "rules",
-   "facts": []
+   "verdict": "Missed",
+   "fact_ids": [
+    "F51"
+   ],
+   "reason": "Full-year CAPEX for FY26 was ₹459 crores, which is above the guided range of ₹300-350 crores.",
+   "target": {
+    "low": 300.0,
+    "high": 350.0
+   },
+   "actual_fact_id": "F51",
+   "decided_by": "ai",
+   "facts": [
+    {
+     "id": "F51",
+     "metric": "capex",
+     "quarter": "FY26",
+     "text": "Capex FY26 (full year, H1 + H2): ₹459 cr",
+     "value": 459.1,
+     "unit": "cr",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    }
+   ],
+   "say_do": {
+    "low": 300.0,
+    "high": 350.0,
+    "actual": 459.1,
+    "unit": "cr",
+    "fact": "Capex FY26 (full year, H1 + H2): ₹459 cr"
+   },
+   "guidance": true
   },
   {
    "id": "P6",
@@ -167,9 +220,16 @@
    ],
    "verdict": "Not checkable",
    "fact_ids": [],
-   "reason": "The provided facts contain revenue growth figures but do not report specific volume growth data for FY26.",
+   "reason": "The provided facts report revenue growth, but do not provide specific volume growth figures for the company.",
+   "target": {
+    "low": null,
+    "high": null
+   },
+   "actual_fact_id": null,
    "decided_by": "ai",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P7",
@@ -194,9 +254,16 @@
    ],
    "verdict": "Not checkable",
    "fact_ids": [],
-   "reason": "The provided facts do not contain specific EBITDA margin data for the polymer business segment.",
+   "reason": "The provided facts do not contain data for a 'polymer' business segment.",
+   "target": {
+    "low": null,
+    "high": null
+   },
+   "actual_fact_id": null,
    "decided_by": "ai",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P8",
@@ -216,11 +283,13 @@
     "match": 1.0
    },
    "restated_in": [],
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
+   "verdict": "Too early",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "Due by Q4 FY27; latest reported quarter is Q2 FY27.",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P9",
@@ -243,7 +312,9 @@
    "fact_ids": [],
    "decided_by": "rules",
    "reason": "Due by Q4 FY27; latest reported quarter is Q2 FY27.",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P10",
@@ -265,11 +336,13 @@
    "restated_in": [
     "Q2 FY27"
    ],
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
+   "verdict": "Too early",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "Due by Q4 FY27; latest reported quarter is Q2 FY27.",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P11",
@@ -292,7 +365,9 @@
    "fact_ids": [],
    "decided_by": "rules",
    "reason": "Said in the latest call; no quarter has been reported since (Q2 FY27 is the latest).",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P12",
@@ -312,11 +387,13 @@
     "match": 1.0
    },
    "restated_in": [],
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
+   "verdict": "Too early",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "Said in the latest call; no quarter has been reported since (Q2 FY27 is the latest).",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P13",
@@ -335,16 +412,18 @@
     "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
     "match": 1.0
    },
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
+   "verdict": "Too early",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "Said in the latest call; no quarter has been reported since (Q2 FY27 is the latest).",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   }
  ],
  "bull": [
   {
-   "point": "Consolidated revenue demonstrated strong top-line momentum, rising 26.0% YoY to ₹1,988 crore in Q2 FY27.",
+   "point": "Consolidated revenue grew by 26.0% YoY in Q2 FY27, driven by robust performance across plumbing and adhesives.",
    "receipt": {
     "quote": "On a consolidated basis, this quarter INR1,988 crores versus last year INR1,577 crores, so an overall growth of 26%.",
     "page": 5,
@@ -353,7 +432,8 @@
     "match": 1.0
    },
    "fact_ids": [
-    "F19"
+    "F19",
+    "F40"
    ],
    "facts": [
     {
@@ -362,58 +442,66 @@
      "quarter": "Q2 FY27",
      "text": "Revenue Q2 FY27: ₹1,988 cr, up 26.0% YoY (consolidated)",
      "value": 26.0,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106847370",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
       "page": 12,
       "basis": "consolidated"
      }
-    }
-   ]
-  },
-  {
-   "point": "Net profit grew significantly by 48.0% YoY to ₹120 crore in Q1 FY27 with PAT margin improving to 7.6%.",
-   "receipt": null,
-   "fact_ids": [
-    "F17",
-    "F18"
-   ],
-   "facts": [
-    {
-     "id": "F17",
-     "metric": "pat_growth",
-     "quarter": "Q1 FY27",
-     "text": "PAT Q1 FY27: ₹120 cr, up 48.0% YoY",
-     "value": 48.0,
-     "source": {
-      "filing_id": "106739054",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf",
-      "page": 7,
-      "basis": "consolidated"
-     }
     },
     {
-     "id": "F18",
-     "metric": "pat_margin",
-     "quarter": "Q1 FY27",
-     "text": "PAT margin Q1 FY27: 7.6%, +160 bps YoY",
-     "value": 7.6,
+     "id": "F40",
+     "metric": "segment_revenue",
+     "quarter": "Q2 FY27",
+     "text": "Segment revenue, Plumbing, Q2 FY27: ₹1,398 cr, up 25.0% YoY",
+     "value": 25.0,
+     "unit": "% YoY",
      "source": {
-      "filing_id": "106739054",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf",
-      "page": 7,
-      "basis": "consolidated"
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1754338_05112026102124_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
      }
     }
    ]
   },
   {
-   "point": "The paint business achieved historic quarterly performance by delivering 48.7% growth in Q1 FY27 following the acquisition of Gem.",
+   "point": "The Paints and Adhesives segment registered strong top-line performance, growing 29.5% YoY in Q1 FY27.",
    "receipt": {
-    "quote": "The key points to note here is that in the history we have first time delivered a highest 48.7% growth in paint after acquisition of Gem.",
+    "quote": "In the adhesive and paint also, we have registered a very robust consolidated growth of 29.5% in which adhesive was 25.2% and the paint was 48.7%.",
     "page": 6,
     "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
     "doc": "Q1 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "fact_ids": [
+    "F38"
+   ],
+   "facts": [
+    {
+     "id": "F38",
+     "metric": "segment_revenue",
+     "quarter": "Q1 FY27",
+     "text": "Segment revenue, Paints and Adhesives, Q1 FY27: ₹528 cr, up 29.5% YoY",
+     "value": 29.5,
+     "unit": "% YoY",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1712963_12082026070826_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    }
+   ]
+  },
+  {
+   "point": "Construction of the CPVC plant is nearly complete, positioning the company for commercial production by the end of Q4.",
+   "receipt": {
+    "quote": "The major thing, the construction of CPVC plant is almost complete.",
+    "page": 3,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
     "match": 1.0
    },
    "fact_ids": [],
@@ -422,7 +510,7 @@
  ],
  "bear": [
   {
-   "point": "Operating profitability faced headwinds in Q2 FY27, with EBITDA margin contracting by 320 bps YoY to 13.1%.",
+   "point": "High-cost inventory and lagged price pass-through compressed Q2 FY27 EBITDA margin by 320 bps, leading to a 5.6% PAT decline.",
    "receipt": {
     "quote": "During the quarter, margins were under pressure due to high-cost inventories, and pass-through is taking place with a lag effect.",
     "page": 3,
@@ -431,16 +519,17 @@
     "match": 1.0
    },
    "fact_ids": [
-    "F20",
+    "F21",
     "F22"
    ],
    "facts": [
     {
-     "id": "F20",
-     "metric": "ebitda_growth",
+     "id": "F21",
+     "metric": "pat_growth",
      "quarter": "Q2 FY27",
-     "text": "EBITDA Q2 FY27: ₹260 cr, up 1.4% YoY (computed)",
-     "value": 1.4,
+     "text": "PAT Q2 FY27: ₹127 cr, down 5.6% YoY",
+     "value": -5.6,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106847370",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
@@ -454,6 +543,7 @@
      "quarter": "Q2 FY27",
      "text": "EBITDA margin Q2 FY27: 13.1%, −320 bps YoY",
      "value": 13.1,
+     "unit": "%",
      "source": {
       "filing_id": "106847370",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
@@ -464,7 +554,7 @@
    ]
   },
   {
-   "point": "The paint division incurred operating losses in Q2 FY27, generating a negative EBITDA margin of approximately 5%.",
+   "point": "Profitability in Paints and Adhesives dropped significantly as Q2 FY27 segment result margin plummeted to 2.6% from 6.8% YoY.",
    "receipt": {
     "quote": "Paint business, negative INR4 crores, so roughly about negative 5%.",
     "page": 5,
@@ -472,20 +562,155 @@
     "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
     "match": 1.0
    },
-   "fact_ids": [],
-   "facts": []
+   "fact_ids": [
+    "F43"
+   ],
+   "facts": [
+    {
+     "id": "F43",
+     "metric": "segment_margin",
+     "quarter": "Q2 FY27",
+     "text": "Segment result margin (before interest and tax, not EBITDA), Paints and Adhesives, Q2 FY27: 2.6% vs 6.8% a year ago",
+     "value": 2.6,
+     "unit": "%",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1754338_05112026102124_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    }
+   ]
   },
   {
-   "point": "India adhesive business margins underperformed guidance, reaching only 11.5% in H1 compared to the target range of 14% to 15%.",
+   "point": "Operating cash flows deteriorated severely in H1 FY27, with cash from operations to PAT turning negative at -28%.",
+   "receipt": null,
+   "fact_ids": [
+    "F47",
+    "F48"
+   ],
+   "facts": [
+    {
+     "id": "F47",
+     "metric": "capex",
+     "quarter": "H1 FY27",
+     "text": "Capex H1 FY27 (purchase of fixed assets, cash flow statement): ₹318 cr",
+     "value": 318.4,
+     "unit": "cr",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1754338_05112026102124_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    },
+    {
+     "id": "F48",
+     "metric": "cash_conversion",
+     "quarter": "H1 FY27",
+     "text": "Cash from operations ÷ PAT, H1 FY27: -28%",
+     "value": -27.5,
+     "unit": "%",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1754338_05112026102124_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    }
+   ]
+  }
+ ],
+ "tone": [
+  {
+   "transcript_id": "T5",
+   "quarter": "Q2 FY26",
+   "quarter_end": "2025-09-30",
+   "score": 1,
+   "label": "confident in steady growth",
+   "growth": 15.1,
+   "growth_next": 10.3,
+   "next_quarter": "Q3 FY26",
+   "gap": null,
    "receipt": {
-    "quote": "I think India we guided 14%-15% normal EBITDA we are delivering, but in H1 it is 11.5% kind of we have delivered.",
-    "page": 12,
+    "quote": "Adhesive business as usual, the business is steadily growing at 15% run rate and we are confident that it will keep growing at the same run rate in coming fiscals.",
+    "page": 3,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+    "doc": "Q2 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   }
+  },
+  {
+   "transcript_id": "T4",
+   "quarter": "Q3 FY26",
+   "quarter_end": "2025-12-31",
+   "score": 1,
+   "label": "good response and growth",
+   "growth": 10.3,
+   "growth_next": 24.2,
+   "next_quarter": "Q4 FY26",
+   "gap": null,
+   "receipt": {
+    "quote": "So we are also increasing its capacity on a fast basis.",
+    "page": 3,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+    "doc": "Q3 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   }
+  },
+  {
+   "transcript_id": "T3",
+   "quarter": "Q4 FY26",
+   "quarter_end": "2026-03-31",
+   "score": 1,
+   "label": "innovating and growing fast",
+   "growth": 24.2,
+   "growth_next": 15.9,
+   "next_quarter": "Q1 FY27",
+   "gap": "Upbeat call, then growth slowed to +15.9% in Q1 FY27",
+   "receipt": {
+    "quote": "These are the two products that we are very bullish on.",
+    "page": 6,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/05/Analysts-Meet-2026-Transcript.pdf",
+    "doc": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   }
+  },
+  {
+   "transcript_id": "T2",
+   "quarter": "Q1 FY27",
+   "quarter_end": "2026-06-30",
+   "score": 2,
+   "label": "confident in delivering growth",
+   "growth": 15.9,
+   "growth_next": 26.0,
+   "next_quarter": "Q2 FY27",
+   "gap": null,
+   "receipt": {
+    "quote": "Overall, industry environment is positive in all vertical, and we are confident that we will be delivering a healthy growth in the coming quarters also.",
+    "page": 7,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+    "doc": "Q1 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   }
+  },
+  {
+   "transcript_id": "T1",
+   "quarter": "Q2 FY27",
+   "quarter_end": "2026-09-30",
+   "score": 1,
+   "label": "robust demand and growth",
+   "growth": 26.0,
+   "growth_next": null,
+   "next_quarter": null,
+   "gap": null,
+   "receipt": {
+    "quote": "And we expect our growth at that robust pace to continue and deliver a healthy margin in this quarter.",
+    "page": 3,
     "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
     "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
     "match": 1.0
-   },
-   "fact_ids": [],
-   "facts": []
+   }
   }
  ],
  "facts": [
@@ -495,6 +720,7 @@
    "quarter": "Q2 FY26",
    "text": "Revenue Q2 FY26: ₹1,577 cr, up 15.1% YoY (consolidated)",
    "value": 15.1,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106428144",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
@@ -508,6 +734,7 @@
    "quarter": "Q2 FY26",
    "text": "EBITDA Q2 FY26: ₹257 cr, up 22.2% YoY (computed)",
    "value": 22.2,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106428144",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
@@ -521,6 +748,7 @@
    "quarter": "Q2 FY26",
    "text": "PAT Q2 FY26: ₹135 cr, up 22.5% YoY",
    "value": 22.5,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106428144",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
@@ -534,6 +762,7 @@
    "quarter": "Q2 FY26",
    "text": "EBITDA margin Q2 FY26: 16.3%, +100 bps YoY",
    "value": 16.3,
+   "unit": "%",
    "source": {
     "filing_id": "106428144",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
@@ -547,6 +776,7 @@
    "quarter": "Q2 FY26",
    "text": "PAT margin Q2 FY26: 8.5%, +50 bps YoY",
    "value": 8.5,
+   "unit": "%",
    "source": {
     "filing_id": "106428144",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
@@ -560,6 +790,7 @@
    "quarter": "Q3 FY26",
    "text": "Revenue Q3 FY26: ₹1,542 cr, up 10.3% YoY (consolidated)",
    "value": 10.3,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106521666",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
@@ -573,6 +804,7 @@
    "quarter": "Q3 FY26",
    "text": "EBITDA Q3 FY26: ₹237 cr, up 8.2% YoY (computed)",
    "value": 8.2,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106521666",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
@@ -586,6 +818,7 @@
    "quarter": "Q3 FY26",
    "text": "PAT Q3 FY26: ₹108 cr, down 5.6% YoY",
    "value": -5.6,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106521666",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
@@ -599,6 +832,7 @@
    "quarter": "Q3 FY26",
    "text": "EBITDA margin Q3 FY26: 15.4%, −30 bps YoY",
    "value": 15.4,
+   "unit": "%",
    "source": {
     "filing_id": "106521666",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
@@ -612,6 +846,7 @@
    "quarter": "Q3 FY26",
    "text": "PAT margin Q3 FY26: 7.0%, −120 bps YoY",
    "value": 7.0,
+   "unit": "%",
    "source": {
     "filing_id": "106521666",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
@@ -625,6 +860,7 @@
    "quarter": "Q4 FY26",
    "text": "Revenue Q4 FY26: ₹2,088 cr, up 24.2% YoY (consolidated)",
    "value": 24.2,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106627640",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
@@ -638,6 +874,7 @@
    "quarter": "Q4 FY26",
    "text": "EBITDA Q4 FY26: ₹383 cr, up 26.8% YoY (computed)",
    "value": 26.8,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106627640",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
@@ -651,6 +888,7 @@
    "quarter": "Q4 FY26",
    "text": "PAT Q4 FY26: ₹213 cr, up 18.8% YoY",
    "value": 18.8,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106627640",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
@@ -664,6 +902,7 @@
    "quarter": "Q4 FY26",
    "text": "EBITDA margin Q4 FY26: 18.3%, +30 bps YoY",
    "value": 18.3,
+   "unit": "%",
    "source": {
     "filing_id": "106627640",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
@@ -677,6 +916,7 @@
    "quarter": "Q4 FY26",
    "text": "PAT margin Q4 FY26: 10.2%, −50 bps YoY",
    "value": 10.2,
+   "unit": "%",
    "source": {
     "filing_id": "106627640",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
@@ -690,6 +930,7 @@
    "quarter": "Q1 FY27",
    "text": "Revenue Q1 FY27: ₹1,578 cr, up 15.9% YoY (consolidated)",
    "value": 15.9,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106739054",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf",
@@ -703,6 +944,7 @@
    "quarter": "Q1 FY27",
    "text": "PAT Q1 FY27: ₹120 cr, up 48.0% YoY",
    "value": 48.0,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106739054",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf",
@@ -716,6 +958,7 @@
    "quarter": "Q1 FY27",
    "text": "PAT margin Q1 FY27: 7.6%, +160 bps YoY",
    "value": 7.6,
+   "unit": "%",
    "source": {
     "filing_id": "106739054",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf",
@@ -729,6 +972,7 @@
    "quarter": "Q2 FY27",
    "text": "Revenue Q2 FY27: ₹1,988 cr, up 26.0% YoY (consolidated)",
    "value": 26.0,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106847370",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
@@ -742,6 +986,7 @@
    "quarter": "Q2 FY27",
    "text": "EBITDA Q2 FY27: ₹260 cr, up 1.4% YoY (computed)",
    "value": 1.4,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106847370",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
@@ -755,6 +1000,7 @@
    "quarter": "Q2 FY27",
    "text": "PAT Q2 FY27: ₹127 cr, down 5.6% YoY",
    "value": -5.6,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106847370",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
@@ -768,6 +1014,7 @@
    "quarter": "Q2 FY27",
    "text": "EBITDA margin Q2 FY27: 13.1%, −320 bps YoY",
    "value": 13.1,
+   "unit": "%",
    "source": {
     "filing_id": "106847370",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
@@ -781,11 +1028,432 @@
    "quarter": "Q2 FY27",
    "text": "PAT margin Q2 FY27: 6.4%, −210 bps YoY",
    "value": 6.4,
+   "unit": "%",
    "source": {
     "filing_id": "106847370",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
     "page": 12,
     "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F24",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY26",
+   "text": "Segment revenue, Plumbing, Q2 FY26: ₹1,119 cr, up 15.7% YoY",
+   "value": 15.7,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1566191_05112025082105_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F25",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Plumbing, Q2 FY26: 14.0% vs 13.7% a year ago",
+   "value": 14.0,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1566191_05112025082105_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F26",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY26",
+   "text": "Segment revenue, Paints and Adhesives, Q2 FY26: ₹459 cr, up 13.6% YoY",
+   "value": 13.6,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1566191_05112025082105_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F27",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Paints and Adhesives, Q2 FY26: 6.8% vs 6.0% a year ago",
+   "value": 6.8,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1566191_05112025082105_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F28",
+   "metric": "segment_revenue",
+   "quarter": "Q3 FY26",
+   "text": "Segment revenue, Plumbing, Q3 FY26: ₹1,072 cr, up 8.3% YoY",
+   "value": 8.3,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1619564_05022026075421_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F29",
+   "metric": "segment_margin",
+   "quarter": "Q3 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Plumbing, Q3 FY26: 12.9% vs 14.2% a year ago",
+   "value": 12.9,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1619564_05022026075421_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F30",
+   "metric": "segment_revenue",
+   "quarter": "Q3 FY26",
+   "text": "Segment revenue, Paints and Adhesives, Q3 FY26: ₹470 cr, up 15.4% YoY",
+   "value": 15.4,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1619564_05022026075421_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F31",
+   "metric": "segment_margin",
+   "quarter": "Q3 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Paints and Adhesives, Q3 FY26: 6.3% vs 5.8% a year ago",
+   "value": 6.3,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1619564_05022026075421_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F32",
+   "metric": "segment_revenue",
+   "quarter": "Q4 FY26",
+   "text": "Segment revenue, Plumbing, Q4 FY26: ₹1,534 cr, up 25.1% YoY",
+   "value": 25.1,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F33",
+   "metric": "segment_margin",
+   "quarter": "Q4 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Plumbing, Q4 FY26: 19.1% vs 16.3% a year ago",
+   "value": 19.1,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F34",
+   "metric": "segment_revenue",
+   "quarter": "Q4 FY26",
+   "text": "Segment revenue, Paints and Adhesives, Q4 FY26: ₹554 cr, up 21.9% YoY",
+   "value": 21.9,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F35",
+   "metric": "segment_margin",
+   "quarter": "Q4 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Paints and Adhesives, Q4 FY26: 4.1% vs 9.1% a year ago",
+   "value": 4.1,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F36",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY27",
+   "text": "Segment revenue, Plumbing, Q1 FY27: ₹1,050 cr, up 10.1% YoY",
+   "value": 10.1,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1712963_12082026070826_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F37",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Plumbing, Q1 FY27: 13.5% vs 10.4% a year ago",
+   "value": 13.5,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1712963_12082026070826_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F38",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY27",
+   "text": "Segment revenue, Paints and Adhesives, Q1 FY27: ₹528 cr, up 29.5% YoY",
+   "value": 29.5,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1712963_12082026070826_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F39",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Paints and Adhesives, Q1 FY27: 3.7% vs 4.8% a year ago",
+   "value": 3.7,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1712963_12082026070826_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F40",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY27",
+   "text": "Segment revenue, Plumbing, Q2 FY27: ₹1,398 cr, up 25.0% YoY",
+   "value": 25.0,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1754338_05112026102124_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F41",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Plumbing, Q2 FY27: 12.4% vs 14.0% a year ago",
+   "value": 12.4,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1754338_05112026102124_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F42",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY27",
+   "text": "Segment revenue, Paints and Adhesives, Q2 FY27: ₹590 cr, up 28.6% YoY",
+   "value": 28.6,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1754338_05112026102124_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F43",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Paints and Adhesives, Q2 FY27: 2.6% vs 6.8% a year ago",
+   "value": 2.6,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1754338_05112026102124_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F44",
+   "metric": "tax_rate",
+   "quarter": "FY26",
+   "text": "Effective tax rate FY26 (tax ÷ profit before tax, 4 quarters): 26.8%",
+   "value": 26.8,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F45",
+   "metric": "segment_revenue_fy",
+   "quarter": "FY26",
+   "text": "Segment revenue, Plumbing, FY26 (4 quarters): ₹4,679 cr, up 11.5% YoY",
+   "value": 11.5,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F46",
+   "metric": "segment_revenue_fy",
+   "quarter": "FY26",
+   "text": "Segment revenue, Paints and Adhesives, FY26 (4 quarters): ₹1,890 cr, up 15.5% YoY",
+   "value": 15.5,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F47",
+   "metric": "capex",
+   "quarter": "H1 FY27",
+   "text": "Capex H1 FY27 (purchase of fixed assets, cash flow statement): ₹318 cr",
+   "value": 318.4,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1754338_05112026102124_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F48",
+   "metric": "cash_conversion",
+   "quarter": "H1 FY27",
+   "text": "Cash from operations ÷ PAT, H1 FY27: -28%",
+   "value": -27.5,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1754338_05112026102124_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F49",
+   "metric": "capex",
+   "quarter": "H2 FY26",
+   "text": "Capex H2 FY26 (purchase of fixed assets, cash flow statement): ₹234 cr",
+   "value": 234.2,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F50",
+   "metric": "cash_conversion",
+   "quarter": "H2 FY26",
+   "text": "Cash from operations ÷ PAT, H2 FY26: 227%",
+   "value": 227.1,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F51",
+   "metric": "capex",
+   "quarter": "FY26",
+   "text": "Capex FY26 (full year, H1 + H2): ₹459 cr",
+   "value": 459.1,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1668969_18052026084804_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F52",
+   "metric": "capex",
+   "quarter": "H1 FY26",
+   "text": "Capex H1 FY26 (purchase of fixed assets, cash flow statement): ₹225 cr",
+   "value": 224.9,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1566191_05112025082105_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F53",
+   "metric": "cash_conversion",
+   "quarter": "H1 FY26",
+   "text": "Cash from operations ÷ PAT, H1 FY26: 182%",
+   "value": 181.7,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1566191_05112025082105_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
    }
   }
  ],
@@ -876,13 +1544,14 @@
   "Results filed 2025-08-11 could not be read: The results pages are scanned images without a text layer; FINN does not read text from images (OCR). Open the filing for the numbers."
  ],
  "ai": {
-  "calls": 7,
+  "calls": 8,
   "cached": 1,
-  "tokens_in": 43853,
-  "tokens_out": 8947,
+  "tokens_in": 53576,
+  "tokens_out": 8342,
   "models": [
    "gemini-3.1-flash-lite",
-   "gemini-3.5-flash"
+   "gemini-3.5-flash",
+   "gemini-3.5-flash-lite"
   ],
   "fallback_used": true
  }

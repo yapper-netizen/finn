@@ -362,3 +362,4 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-102 | NUS lessons | **Decided** — relevance filter, labelled proxies, pledge-style extraction | 10d |
 | D-103 | Statements from XBRL | **Decided** — no AI; reconciled with printed cards; /api/financials | 10d |
 | D-104 | Research views + company profile | **Decided** — scroll + chips; SVG charts; backed sentences | 10e |
+| D-105 | Narrative vs numbers, deeper | **Decided** — XBRL facts, Python guards, say-do, tone, guidance filter | 10f |

@@ -2,15 +2,15 @@
  "ticker": "POLYCAB",
  "company": "Polycab India Limited",
  "status": "ready",
- "engine_version": 1,
- "generated_at": "2026-11-15T15:58:06",
+ "engine_version": 2,
+ "generated_at": "2026-11-15T19:48:56",
  "latest_quarter": "Q2 FY27",
  "counts": {
-  "Delivered": 2,
+  "Delivered": 3,
   "Partial": 0,
   "Missed": 0,
-  "Too early": 2,
-  "Not checkable": 8
+  "Too early": 6,
+  "Not checkable": 3
  },
  "promises": [
   {
@@ -40,12 +40,15 @@
    "fact_ids": [
     "F11",
     "F14",
-    "F16",
     "F19",
-    "F21",
     "F24"
    ],
-   "reason": "EBITDA margins in the quarters following the Q2 FY26 call were 13.1%, 13.8%, and 14.4%, consistently meeting or exceeding the 11-13% long-term guidance range.",
+   "reason": "EBITDA margins in subsequent quarters (13.1%, 13.8%, 14.4%) have been at or above the 11-13% long-term guidance range.",
+   "target": {
+    "low": 11.0,
+    "high": 13.0
+   },
+   "actual_fact_id": null,
    "decided_by": "ai",
    "facts": [
     {
@@ -54,6 +57,7 @@
      "quarter": "Q4 FY26",
      "text": "Revenue Q4 FY26: ₹8,864 cr, up 26.9% YoY (consolidated)",
      "value": 26.9,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106611050",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_06052026143122_BMoutcme06052026.pdf",
@@ -67,23 +71,11 @@
      "quarter": "Q4 FY26",
      "text": "EBITDA margin Q4 FY26: 13.1%, −160 bps YoY",
      "value": 13.1,
+     "unit": "%",
      "source": {
       "filing_id": "106611050",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_06052026143122_BMoutcme06052026.pdf",
       "page": 8,
-      "basis": "consolidated"
-     }
-    },
-    {
-     "id": "F16",
-     "metric": "revenue",
-     "quarter": "Q1 FY27",
-     "text": "Revenue Q1 FY27: ₹8,210 cr, up 39.0% YoY (consolidated)",
-     "value": 39.0,
-     "source": {
-      "filing_id": "106700031",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
-      "page": 4,
       "basis": "consolidated"
      }
     },
@@ -93,22 +85,10 @@
      "quarter": "Q1 FY27",
      "text": "EBITDA margin Q1 FY27: 13.8%, −70 bps YoY",
      "value": 13.8,
+     "unit": "%",
      "source": {
       "filing_id": "106700031",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
-      "page": 4,
-      "basis": "consolidated"
-     }
-    },
-    {
-     "id": "F21",
-     "metric": "revenue",
-     "quarter": "Q2 FY27",
-     "text": "Revenue Q2 FY27: ₹9,899 cr, up 52.8% YoY (consolidated)",
-     "value": 52.8,
-     "source": {
-      "filing_id": "106818441",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
       "page": 4,
       "basis": "consolidated"
      }
@@ -119,6 +99,7 @@
      "quarter": "Q2 FY27",
      "text": "EBITDA margin Q2 FY27: 14.4%, −140 bps YoY",
      "value": 14.4,
+     "unit": "%",
      "source": {
       "filing_id": "106818441",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
@@ -126,7 +107,15 @@
       "basis": "consolidated"
      }
     }
-   ]
+   ],
+   "say_do": {
+    "low": 11.0,
+    "high": 13.0,
+    "actual": 14.4,
+    "unit": "%",
+    "fact": "EBITDA margin Q2 FY27: 14.4%, −140 bps YoY"
+   },
+   "guidance": true
   },
   {
    "id": "P2",
@@ -149,11 +138,13 @@
     "Q3 FY26",
     "Q2 FY27"
    ],
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
+   "verdict": "Too early",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "Due by Q4 FY30; latest reported quarter is Q2 FY27.",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P3",
@@ -174,18 +165,49 @@
    },
    "restated_in": [],
    "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "FINN holds no filed figure for this (e.g. volumes, market share, exports, deals, dividends).",
+   "facts": [],
+   "say_do": null,
+   "guidance": false
   },
   {
    "id": "P4",
    "metric": "other",
-   "statement": "We expect working capital cycle to normalize to 50 to 55 days.",
+   "statement": "The FMEG segment targets 1.5x to 2x industry growth and 8% to 10% EBITDA margins by FY30.",
+   "period_text": "by FY30",
+   "due": "2030-03-31",
+   "due_label": "Q4 FY30",
+   "made_in": "Q3 FY26",
+   "made_on": "2026-01-22",
+   "quarter_end": "2025-12-31",
+   "receipt": {
+    "quote": "Looking ahead, we are confident in the long-term potential of the FMEG segment and remain on track to achieve our Project Spring targets of 1.5x - 2x industry growth and EBITDA margins in the range of 8% to 10% by FY30, positioning the business for sustained growth and value creation.",
+    "page": 7,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_22012026193636_Intimation_of_Earnings_Call_Transcript.pdf",
+    "doc": "Q3 FY26 earnings call",
+    "match": 1.0
+   },
+   "restated_in": [
+    "Q4 FY26",
+    "Q1 FY27"
+   ],
+   "verdict": "Too early",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "reason": "Due by Q4 FY30; latest reported quarter is Q2 FY27.",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
+  },
+  {
+   "id": "P5",
+   "metric": "other",
+   "statement": "The working capital cycle is expected to normalize to 50 to 55 days in the coming quarters.",
    "period_text": "coming quarters",
-   "due": "2026-06-30",
-   "due_label": "Q1 FY27",
+   "due": null,
+   "due_label": null,
    "made_in": "Q3 FY26",
    "made_on": "2026-01-22",
    "quarter_end": "2025-12-31",
@@ -197,33 +219,12 @@
     "match": 1.0
    },
    "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
-  },
-  {
-   "id": "P5",
-   "metric": "other",
-   "statement": "EPC annual sustainable operating margin is expected to remain in the high single digits.",
-   "period_text": "mid- to long term",
-   "due": null,
-   "due_label": null,
-   "made_in": "Q3 FY26",
-   "made_on": "2026-01-22",
-   "quarter_end": "2025-12-31",
-   "receipt": {
-    "quote": "Looking ahead, the annual sustainable operating margin is expected to remain in the high single digits over mid- to long term.",
-    "page": 7,
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_22012026193636_Intimation_of_Earnings_Call_Transcript.pdf",
-    "doc": "Q3 FY26 earnings call",
-    "match": 0.98
-   },
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
-   "fact_ids": [],
-   "decided_by": "rules",
-   "facts": []
+   "reason": "FINN holds no filed figure for this (e.g. volumes, market share, exports, deals, dividends).",
+   "facts": [],
+   "say_do": null,
+   "guidance": false
   },
   {
    "id": "P6",
@@ -244,49 +245,27 @@
    },
    "verdict": "Delivered",
    "fact_ids": [
-    "F16",
     "F19",
-    "F21",
     "F24"
    ],
-   "reason": "EBITDA margins in the quarters following the Q4 FY26 call were 13.8% and 14.4%, which are within or above the 12-14% near to mid-term guidance range.",
+   "reason": "EBITDA margins in Q1 FY27 (13.8%) and Q2 FY27 (14.4%) are within or above the 12-14% guidance range.",
+   "target": {
+    "low": 12.0,
+    "high": 14.0
+   },
+   "actual_fact_id": null,
    "decided_by": "ai",
    "facts": [
-    {
-     "id": "F16",
-     "metric": "revenue",
-     "quarter": "Q1 FY27",
-     "text": "Revenue Q1 FY27: ₹8,210 cr, up 39.0% YoY (consolidated)",
-     "value": 39.0,
-     "source": {
-      "filing_id": "106700031",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
-      "page": 4,
-      "basis": "consolidated"
-     }
-    },
     {
      "id": "F19",
      "metric": "ebitda_margin",
      "quarter": "Q1 FY27",
      "text": "EBITDA margin Q1 FY27: 13.8%, −70 bps YoY",
      "value": 13.8,
+     "unit": "%",
      "source": {
       "filing_id": "106700031",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
-      "page": 4,
-      "basis": "consolidated"
-     }
-    },
-    {
-     "id": "F21",
-     "metric": "revenue",
-     "quarter": "Q2 FY27",
-     "text": "Revenue Q2 FY27: ₹9,899 cr, up 52.8% YoY (consolidated)",
-     "value": 52.8,
-     "source": {
-      "filing_id": "106818441",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
       "page": 4,
       "basis": "consolidated"
      }
@@ -297,6 +276,7 @@
      "quarter": "Q2 FY27",
      "text": "EBITDA margin Q2 FY27: 14.4%, −140 bps YoY",
      "value": 14.4,
+     "unit": "%",
      "source": {
       "filing_id": "106818441",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
@@ -304,7 +284,15 @@
       "basis": "consolidated"
      }
     }
-   ]
+   ],
+   "say_do": {
+    "low": 12.0,
+    "high": 14.0,
+    "actual": 14.4,
+    "unit": "%",
+    "fact": "EBITDA margin Q2 FY27: 14.4%, −140 bps YoY"
+   },
+   "guidance": true
   },
   {
    "id": "P7",
@@ -323,16 +311,46 @@
     "doc": "Q4 FY26 earnings call",
     "match": 1.0
    },
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
-   "fact_ids": [],
-   "decided_by": "rules",
-   "facts": []
+   "verdict": "Delivered",
+   "fact_ids": [
+    "F63"
+   ],
+   "reason": "Annual capex for FY26 was ₹1,481 crore, which falls within the guided range of ₹1,200 crore to ₹1,600 crore.",
+   "target": {
+    "low": 1200.0,
+    "high": 1600.0
+   },
+   "actual_fact_id": "F63",
+   "decided_by": "ai",
+   "facts": [
+    {
+     "id": "F63",
+     "metric": "capex",
+     "quarter": "FY26",
+     "text": "Capex FY26 (full year, H1 + H2): ₹1,481 cr",
+     "value": 1480.51,
+     "unit": "cr",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    }
+   ],
+   "say_do": {
+    "low": 1200.0,
+    "high": 1600.0,
+    "actual": 1480.51,
+    "unit": "cr",
+    "fact": "Capex FY26 (full year, H1 + H2): ₹1,481 cr"
+   },
+   "guidance": true
   },
   {
    "id": "P8",
    "metric": "other",
-   "statement": "Management targets exports to contribute greater than 10% of revenue by FY30.",
+   "statement": "Management targets FMEG segment EBITDA margin of 8% to 10% by FY30.",
    "period_text": "financial year 2030",
    "due": "2030-03-31",
    "due_label": "Q4 FY30",
@@ -340,7 +358,7 @@
    "made_on": "2026-05-08",
    "quarter_end": "2026-03-31",
    "receipt": {
-    "quote": "We remain firm on track to achieve our target of greater than 10% contribution from exports by financial year 2030.",
+    "quote": "in line with our Project Spring trajectory of achieving 8% to 10% EBITDA margins by financial year 2030.",
     "page": 8,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_08052026185934_Intimation_of_Earnings_Call_Transcript.pdf",
     "doc": "Q4 FY26 earnings call",
@@ -349,11 +367,13 @@
    "restated_in": [
     "Q1 FY27"
    ],
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
+   "verdict": "Too early",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "Due by Q4 FY30; latest reported quarter is Q2 FY27.",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P9",
@@ -376,7 +396,9 @@
    "fact_ids": [],
    "decided_by": "rules",
    "reason": "Due by Q4 FY30; latest reported quarter is Q2 FY27.",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P10",
@@ -399,7 +421,9 @@
    "fact_ids": [],
    "decided_by": "rules",
    "reason": "Said in the latest call; no quarter has been reported since (Q2 FY27 is the latest).",
-   "facts": []
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P11",
@@ -419,10 +443,12 @@
     "match": 1.0
    },
    "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "FINN holds no filed figure for this (e.g. volumes, market share, exports, deals, dividends).",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   },
   {
    "id": "P12",
@@ -441,26 +467,21 @@
     "doc": "Q2 FY27 earnings call",
     "match": 1.0
    },
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
+   "verdict": "Too early",
    "fact_ids": [],
    "decided_by": "rules",
-   "facts": []
+   "reason": "Said in the latest call; no quarter has been reported since (Q2 FY27 is the latest).",
+   "facts": [],
+   "say_do": null,
+   "guidance": true
   }
  ],
  "bull": [
   {
-   "point": "Consolidated revenue for Q2 FY27 reached ₹9,899 crore, growing 52.8% YoY, while EBITDA grew 39.4% YoY to ₹1,422 crore.",
-   "receipt": {
-    "quote": "Revenue grew by 46% year-on-year, crossing a significant milestone of INR180 billion.",
-    "page": 6,
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_19102026163912_Intimation_of_Earnings_Call_Transcript.pdf",
-    "doc": "Q2 FY27 earnings call",
-    "match": 1.0
-   },
+   "point": "Polycab achieved strong top-line expansion with consolidated revenue growing 52.8% year-on-year in Q2 FY27.",
+   "receipt": null,
    "fact_ids": [
-    "F21",
-    "F22"
+    "F21"
    ],
    "facts": [
     {
@@ -469,19 +490,7 @@
      "quarter": "Q2 FY27",
      "text": "Revenue Q2 FY27: ₹9,899 cr, up 52.8% YoY (consolidated)",
      "value": 52.8,
-     "source": {
-      "filing_id": "106818441",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
-      "page": 4,
-      "basis": "consolidated"
-     }
-    },
-    {
-     "id": "F22",
-     "metric": "ebitda_growth",
-     "quarter": "Q2 FY27",
-     "text": "EBITDA Q2 FY27: ₹1,422 cr, up 39.4% YoY (computed)",
-     "value": 39.4,
+     "unit": "% YoY",
      "source": {
       "filing_id": "106818441",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
@@ -492,55 +501,83 @@
    ]
   },
   {
-   "point": "Polycab's FMEG business delivered strong top-line momentum, registering high multi-fold growth led by solar products.",
+   "point": "The FMEG segment demonstrated high growth and margin expansion, with EBIT margins reaching a milestone of 10.1% in Q2 FY27.",
    "receipt": {
-    "quote": "The FMEG segment delivered a breakthrough quarter, registering a remarkable 124% year-on-year growth with strong performance across all major product categories.",
+    "quote": "The segment also achieved a major profitability milestone, with EBIT margins crossing the double-digit mark for the first time and recording a 10.1% margin during the quarter.",
     "page": 7,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_19102026163912_Intimation_of_Earnings_Call_Transcript.pdf",
     "doc": "Q2 FY27 earnings call",
     "match": 1.0
    },
-   "fact_ids": [],
-   "facts": []
-  },
-  {
-   "point": "In Q1 FY27, consolidated revenue surged 39.0% year-on-year to ₹8,210 crore, with net profit rising 32.5% to ₹784 crore.",
-   "receipt": {
-    "quote": "The Wires & Cables segment registered a healthy 39% year-on-year growth during the quarter.",
-    "page": 5,
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_20072026120857_Intimation_of_Earnings_Call_Transcript.pdf",
-    "doc": "Q1 FY27 earnings call",
-    "match": 1.0
-   },
    "fact_ids": [
-    "F16",
-    "F18"
+    "F52",
+    "F53"
    ],
    "facts": [
     {
-     "id": "F16",
-     "metric": "revenue",
-     "quarter": "Q1 FY27",
-     "text": "Revenue Q1 FY27: ₹8,210 cr, up 39.0% YoY (consolidated)",
-     "value": 39.0,
+     "id": "F52",
+     "metric": "segment_revenue",
+     "quarter": "Q2 FY27",
+     "text": "Segment revenue, FMEG, Q2 FY27: ₹993 cr, up 119.6% YoY",
+     "value": 119.6,
+     "unit": "% YoY",
      "source": {
-      "filing_id": "106700031",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
-      "page": 4,
-      "basis": "consolidated"
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
      }
     },
     {
-     "id": "F18",
-     "metric": "pat_growth",
-     "quarter": "Q1 FY27",
-     "text": "PAT Q1 FY27: ₹784 cr, up 32.5% YoY",
-     "value": 32.5,
+     "id": "F53",
+     "metric": "segment_margin",
+     "quarter": "Q2 FY27",
+     "text": "Segment result margin (before interest and tax, not EBITDA), FMEG, Q2 FY27: 10.1% vs 0.5% a year ago",
+     "value": 10.1,
+     "unit": "%",
      "source": {
-      "filing_id": "106700031",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
-      "page": 4,
-      "basis": "consolidated"
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    }
+   ]
+  },
+  {
+   "point": "Polycab maintained healthy cash conversion, with cash from operations exceeding net profit significantly throughout FY26.",
+   "receipt": null,
+   "fact_ids": [
+    "F62",
+    "F65"
+   ],
+   "facts": [
+    {
+     "id": "F62",
+     "metric": "cash_conversion",
+     "quarter": "H2 FY26",
+     "text": "Cash from operations ÷ PAT, H2 FY26: 143%",
+     "value": 142.7,
+     "unit": "%",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
+     }
+    },
+    {
+     "id": "F65",
+     "metric": "cash_conversion",
+     "quarter": "H1 FY26",
+     "text": "Cash from operations ÷ PAT, H1 FY26: 138%",
+     "value": 138.5,
+     "unit": "%",
+     "source": {
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1552465_17102025061553_WEB.xml",
+      "page": null,
+      "basis": "consolidated",
+      "kind": "xbrl"
      }
     }
    ]
@@ -548,7 +585,7 @@
  ],
  "bear": [
   {
-   "point": "Polycab experienced profitability margin compression, with EBITDA margins contracting year-on-year across Q4 FY26, Q1 FY27, and Q2 FY27.",
+   "point": "EBITDA margins experienced year-on-year contraction in Q4 FY26, Q1 FY27, and Q2 FY27, indicating persistent operating margin pressure.",
    "receipt": null,
    "fact_ids": [
     "F14",
@@ -562,6 +599,7 @@
      "quarter": "Q4 FY26",
      "text": "EBITDA margin Q4 FY26: 13.1%, −160 bps YoY",
      "value": 13.1,
+     "unit": "%",
      "source": {
       "filing_id": "106611050",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_06052026143122_BMoutcme06052026.pdf",
@@ -575,6 +613,7 @@
      "quarter": "Q1 FY27",
      "text": "EBITDA margin Q1 FY27: 13.8%, −70 bps YoY",
      "value": 13.8,
+     "unit": "%",
      "source": {
       "filing_id": "106700031",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
@@ -588,6 +627,7 @@
      "quarter": "Q2 FY27",
      "text": "EBITDA margin Q2 FY27: 14.4%, −140 bps YoY",
      "value": 14.4,
+     "unit": "%",
      "source": {
       "filing_id": "106818441",
       "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
@@ -598,7 +638,7 @@
    ]
   },
   {
-   "point": "The international business declined on a year-on-year basis in Q1 FY27 due to near-term geopolitical developments.",
+   "point": "The international segment witnessed a revenue decline in Q1 FY27 due to near-term geopolitical developments and external uncertainties.",
    "receipt": {
     "quote": "Our international business witnessed a decline on Y-o-Y basis, reflecting the impact of near-term geopolitical developments.",
     "page": 5,
@@ -610,9 +650,9 @@
    "facts": []
   },
   {
-   "point": "Analysts raised concerns over potential delays in transmission and data center capex that could impact volume growth momentum.",
+   "point": "Analysts highlighted risks regarding lower volume growth over recent quarters and potential delays in transmission and infrastructure project execution.",
    "receipt": {
-    "quote": "And just -- I mean, building on the previous discussion, all the data centre or transmission or T&D capex, I mean it can delay by 1 or 2 years and that can impact our volume growth.",
+    "quote": "Is it just because of this? Or you see there is a deceleration in the momentum?",
     "page": 17,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_20072026120857_Intimation_of_Earnings_Call_Transcript.pdf",
     "doc": "Q1 FY27 earnings call",
@@ -622,6 +662,98 @@
    "facts": []
   }
  ],
+ "tone": [
+  {
+   "transcript_id": "T5",
+   "quarter": "Q2 FY26",
+   "quarter_end": "2025-09-30",
+   "score": 2,
+   "label": "strong milestone performance",
+   "growth": 17.8,
+   "growth_next": 46.1,
+   "next_quarter": "Q3 FY26",
+   "gap": null,
+   "receipt": {
+    "quote": "This quarter, we saw our highest ever second quarter and half yearly revenue, reflecting the strength in demand and that of our execution capability.",
+    "page": 3,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_28102025211243_SEintimationearningscall17102025.pdf",
+    "doc": "Q2 FY26 earnings call",
+    "match": 1.0
+   }
+  },
+  {
+   "transcript_id": "T4",
+   "quarter": "Q3 FY26",
+   "quarter_end": "2025-12-31",
+   "score": 2,
+   "label": "optimistic consumption recovery",
+   "growth": 46.1,
+   "growth_next": 26.9,
+   "next_quarter": "Q4 FY26",
+   "gap": "Upbeat call, then growth slowed to +26.9% in Q4 FY26",
+   "receipt": {
+    "quote": "Overall, we are witnessing signs of recovery in consumption and this improving demand environment is expected to translate into a revival in private capex, complemented by sustained public investment, providing strong confidence in India's growth outlook.",
+    "page": 5,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_22012026193636_Intimation_of_Earnings_Call_Transcript.pdf",
+    "doc": "Q3 FY26 earnings call",
+    "match": 1.0
+   }
+  },
+  {
+   "transcript_id": "T3",
+   "quarter": "Q4 FY26",
+   "quarter_end": "2026-03-31",
+   "score": 2,
+   "label": "confident growth momentum",
+   "growth": 26.9,
+   "growth_next": 39.0,
+   "next_quarter": "Q1 FY27",
+   "gap": null,
+   "receipt": {
+    "quote": "This consistent gain in market share reflects the strength of our execution under Project Spring and validates our long-term strategy of investing in brand, distribution and manufacturing scale.",
+    "page": 6,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_08052026185934_Intimation_of_Earnings_Call_Transcript.pdf",
+    "doc": "Q4 FY26 earnings call",
+    "match": 1.0
+   }
+  },
+  {
+   "transcript_id": "T2",
+   "quarter": "Q1 FY27",
+   "quarter_end": "2026-06-30",
+   "score": 2,
+   "label": "strong demand outlook",
+   "growth": 39.0,
+   "growth_next": 52.8,
+   "next_quarter": "Q2 FY27",
+   "gap": null,
+   "receipt": {
+    "quote": "The Wires & Cables segment registered a healthy 39% year-on-year growth during the quarter.",
+    "page": 5,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_20072026120857_Intimation_of_Earnings_Call_Transcript.pdf",
+    "doc": "Q1 FY27 earnings call",
+    "match": 1.0
+   }
+  },
+  {
+   "transcript_id": "T1",
+   "quarter": "Q2 FY27",
+   "quarter_end": "2026-09-30",
+   "score": 2,
+   "label": "upbeat on execution",
+   "growth": 52.8,
+   "growth_next": null,
+   "next_quarter": null,
+   "gap": null,
+   "receipt": {
+    "quote": "As we conclude the first half of FY27, I am pleased to share that Polycab has delivered its highest ever quarterly and half-yearly revenue and profitability.",
+    "page": 3,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_19102026163912_Intimation_of_Earnings_Call_Transcript.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   }
+  }
+ ],
  "facts": [
   {
    "id": "F1",
@@ -629,6 +761,7 @@
    "quarter": "Q1 FY26",
    "text": "Revenue Q1 FY26: ₹5,906 cr, up 25.7% YoY (consolidated)",
    "value": 25.7,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106302865",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_17072025144757_BMOUTCOMERESULTS17072025F.pdf",
@@ -642,6 +775,7 @@
    "quarter": "Q1 FY26",
    "text": "EBITDA Q1 FY26: ₹858 cr, up 47.0% YoY (computed)",
    "value": 47.0,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106302865",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_17072025144757_BMOUTCOMERESULTS17072025F.pdf",
@@ -655,6 +789,7 @@
    "quarter": "Q1 FY26",
    "text": "PAT Q1 FY26: ₹592 cr, up 49.5% YoY",
    "value": 49.5,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106302865",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_17072025144757_BMOUTCOMERESULTS17072025F.pdf",
@@ -668,6 +803,7 @@
    "quarter": "Q1 FY26",
    "text": "EBITDA margin Q1 FY26: 14.5%, +210 bps YoY",
    "value": 14.5,
+   "unit": "%",
    "source": {
     "filing_id": "106302865",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_17072025144757_BMOUTCOMERESULTS17072025F.pdf",
@@ -681,6 +817,7 @@
    "quarter": "Q1 FY26",
    "text": "PAT margin Q1 FY26: 10.0%, +160 bps YoY",
    "value": 10.0,
+   "unit": "%",
    "source": {
     "filing_id": "106302865",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_17072025144757_BMOUTCOMERESULTS17072025F.pdf",
@@ -694,6 +831,7 @@
    "quarter": "Q2 FY26",
    "text": "Revenue Q2 FY26: ₹6,477 cr, up 17.8% YoY (consolidated)",
    "value": 17.8,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106410997",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_17102025133329_FR17102025.pdf",
@@ -707,6 +845,7 @@
    "quarter": "Q2 FY26",
    "text": "EBITDA Q2 FY26: ₹1,021 cr, up 61.6% YoY (computed)",
    "value": 61.6,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106410997",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_17102025133329_FR17102025.pdf",
@@ -720,6 +859,7 @@
    "quarter": "Q2 FY26",
    "text": "PAT Q2 FY26: ₹685 cr, up 55.9% YoY",
    "value": 55.9,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106410997",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_17102025133329_FR17102025.pdf",
@@ -733,6 +873,7 @@
    "quarter": "Q2 FY26",
    "text": "EBITDA margin Q2 FY26: 15.8%, +430 bps YoY",
    "value": 15.8,
+   "unit": "%",
    "source": {
     "filing_id": "106410997",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_17102025133329_FR17102025.pdf",
@@ -746,6 +887,7 @@
    "quarter": "Q2 FY26",
    "text": "PAT margin Q2 FY26: 10.6%, +260 bps YoY",
    "value": 10.6,
+   "unit": "%",
    "source": {
     "filing_id": "106410997",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_17102025133329_FR17102025.pdf",
@@ -759,6 +901,7 @@
    "quarter": "Q4 FY26",
    "text": "Revenue Q4 FY26: ₹8,864 cr, up 26.9% YoY (consolidated)",
    "value": 26.9,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106611050",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_06052026143122_BMoutcme06052026.pdf",
@@ -772,6 +915,7 @@
    "quarter": "Q4 FY26",
    "text": "EBITDA Q4 FY26: ₹1,161 cr, up 13.3% YoY (computed)",
    "value": 13.3,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106611050",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_06052026143122_BMoutcme06052026.pdf",
@@ -785,6 +929,7 @@
    "quarter": "Q4 FY26",
    "text": "PAT Q4 FY26: ₹773 cr, up 6.3% YoY",
    "value": 6.3,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106611050",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_06052026143122_BMoutcme06052026.pdf",
@@ -798,6 +943,7 @@
    "quarter": "Q4 FY26",
    "text": "EBITDA margin Q4 FY26: 13.1%, −160 bps YoY",
    "value": 13.1,
+   "unit": "%",
    "source": {
     "filing_id": "106611050",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_06052026143122_BMoutcme06052026.pdf",
@@ -811,6 +957,7 @@
    "quarter": "Q4 FY26",
    "text": "PAT margin Q4 FY26: 8.7%, −170 bps YoY",
    "value": 8.7,
+   "unit": "%",
    "source": {
     "filing_id": "106611050",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_06052026143122_BMoutcme06052026.pdf",
@@ -824,6 +971,7 @@
    "quarter": "Q1 FY27",
    "text": "Revenue Q1 FY27: ₹8,210 cr, up 39.0% YoY (consolidated)",
    "value": 39.0,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106700031",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
@@ -837,6 +985,7 @@
    "quarter": "Q1 FY27",
    "text": "EBITDA Q1 FY27: ₹1,136 cr, up 32.5% YoY (computed)",
    "value": 32.5,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106700031",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
@@ -850,6 +999,7 @@
    "quarter": "Q1 FY27",
    "text": "PAT Q1 FY27: ₹784 cr, up 32.5% YoY",
    "value": 32.5,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106700031",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
@@ -863,6 +1013,7 @@
    "quarter": "Q1 FY27",
    "text": "EBITDA margin Q1 FY27: 13.8%, −70 bps YoY",
    "value": 13.8,
+   "unit": "%",
    "source": {
     "filing_id": "106700031",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
@@ -876,6 +1027,7 @@
    "quarter": "Q1 FY27",
    "text": "PAT margin Q1 FY27: 9.6%, −40 bps YoY",
    "value": 9.6,
+   "unit": "%",
    "source": {
     "filing_id": "106700031",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_16072026135420_BMoutcomeJuly26.pdf",
@@ -889,6 +1041,7 @@
    "quarter": "Q2 FY27",
    "text": "Revenue Q2 FY27: ₹9,899 cr, up 52.8% YoY (consolidated)",
    "value": 52.8,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106818441",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
@@ -902,6 +1055,7 @@
    "quarter": "Q2 FY27",
    "text": "EBITDA Q2 FY27: ₹1,422 cr, up 39.4% YoY (computed)",
    "value": 39.4,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106818441",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
@@ -915,6 +1069,7 @@
    "quarter": "Q2 FY27",
    "text": "PAT Q2 FY27: ₹977 cr, up 42.6% YoY",
    "value": 42.6,
+   "unit": "% YoY",
    "source": {
     "filing_id": "106818441",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
@@ -928,6 +1083,7 @@
    "quarter": "Q2 FY27",
    "text": "EBITDA margin Q2 FY27: 14.4%, −140 bps YoY",
    "value": 14.4,
+   "unit": "%",
    "source": {
     "filing_id": "106818441",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
@@ -941,11 +1097,572 @@
    "quarter": "Q2 FY27",
    "text": "PAT margin Q2 FY27: 9.9%, −70 bps YoY",
    "value": 9.9,
+   "unit": "%",
    "source": {
     "filing_id": "106818441",
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
     "page": 4,
     "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F26",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY26",
+   "text": "Segment revenue, Wires & Cables, Q2 FY26: ₹5,691 cr, up 20.6% YoY",
+   "value": 20.6,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1552465_17102025061553_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F27",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Wires & Cables, Q2 FY26: 15.1% vs 12.3% a year ago",
+   "value": 15.1,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1552465_17102025061553_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F28",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY26",
+   "text": "Segment revenue, FMEG, Q2 FY26: ₹452 cr, up 13.8% YoY",
+   "value": 13.8,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1552465_17102025061553_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F29",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), FMEG, Q2 FY26: 0.5% vs -6.4% a year ago",
+   "value": 0.5,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1552465_17102025061553_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F30",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY26",
+   "text": "Segment revenue, EPC, Q2 FY26: ₹402 cr",
+   "value": null,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1552465_17102025061553_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F31",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), EPC, Q2 FY26: 18.1%",
+   "value": 18.1,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1552465_17102025061553_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F32",
+   "metric": "segment_revenue",
+   "quarter": "Q3 FY26",
+   "text": "Segment revenue, Wires and cables, Q3 FY26: ₹6,853 cr, up 56.3% YoY",
+   "value": 56.3,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1602515_16012026051416_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F33",
+   "metric": "segment_margin",
+   "quarter": "Q3 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Wires and cables, Q3 FY26: 12.2% vs 13.5% a year ago",
+   "value": 12.2,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1602515_16012026051416_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F34",
+   "metric": "segment_revenue",
+   "quarter": "Q3 FY26",
+   "text": "Segment revenue, FMEG, Q3 FY26: ₹500 cr, up 18.1% YoY",
+   "value": 18.1,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1602515_16012026051416_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F35",
+   "metric": "segment_margin",
+   "quarter": "Q3 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), FMEG, Q3 FY26: 2.8% vs -3.0% a year ago",
+   "value": 2.8,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1602515_16012026051416_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F36",
+   "metric": "segment_revenue",
+   "quarter": "Q3 FY26",
+   "text": "Segment revenue, EPC, Q3 FY26: ₹407 cr",
+   "value": null,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1602515_16012026051416_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F37",
+   "metric": "segment_margin",
+   "quarter": "Q3 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), EPC, Q3 FY26: 6.7%",
+   "value": 6.7,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1602515_16012026051416_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F38",
+   "metric": "segment_revenue",
+   "quarter": "Q4 FY26",
+   "text": "Segment revenue, Wires and Cables, Q4 FY26: ₹7,762 cr, up 29.0% YoY",
+   "value": 29.0,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F39",
+   "metric": "segment_margin",
+   "quarter": "Q4 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Wires and Cables, Q4 FY26: 13.1% vs 15.1% a year ago",
+   "value": 13.1,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F40",
+   "metric": "segment_revenue",
+   "quarter": "Q4 FY26",
+   "text": "Segment revenue, FMEG, Q4 FY26: ₹663 cr, up 39.3% YoY",
+   "value": 39.3,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F41",
+   "metric": "segment_margin",
+   "quarter": "Q4 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), FMEG, Q4 FY26: 4.4% vs 0.4% a year ago",
+   "value": 4.4,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F42",
+   "metric": "segment_revenue",
+   "quarter": "Q4 FY26",
+   "text": "Segment revenue, EPC, Q4 FY26: ₹510 cr, down 15.4% YoY",
+   "value": -15.4,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F43",
+   "metric": "segment_margin",
+   "quarter": "Q4 FY26",
+   "text": "Segment result margin (before interest and tax, not EBITDA), EPC, Q4 FY26: 7.6% vs 9.4% a year ago",
+   "value": 7.6,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F44",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY27",
+   "text": "Segment revenue, Wires and Cables, Q1 FY27: ₹7,202 cr, up 37.7% YoY",
+   "value": 37.7,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1694176_16072026035916_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F45",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Wires and Cables, Q1 FY27: 13.3% vs 14.7% a year ago",
+   "value": 13.3,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1694176_16072026035916_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F46",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY27",
+   "text": "Segment revenue, FMEG, Q1 FY27: ₹761 cr, up 67.6% YoY",
+   "value": 67.6,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1694176_16072026035916_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F47",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), FMEG, Q1 FY27: 8.0% vs 2.1% a year ago",
+   "value": 8.0,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1694176_16072026035916_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F48",
+   "metric": "segment_revenue",
+   "quarter": "Q1 FY27",
+   "text": "Segment revenue, EPC, Q1 FY27: ₹308 cr, down 11.4% YoY",
+   "value": -11.4,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1694176_16072026035916_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F49",
+   "metric": "segment_margin",
+   "quarter": "Q1 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), EPC, Q1 FY27: 11.0% vs 7.7% a year ago",
+   "value": 11.0,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1694176_16072026035916_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F50",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY27",
+   "text": "Segment revenue, Wires and Cables, Q2 FY27: ₹8,377 cr, up 47.2% YoY",
+   "value": 47.2,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F51",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), Wires and Cables, Q2 FY27: 14.2% vs 15.1% a year ago",
+   "value": 14.2,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F52",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY27",
+   "text": "Segment revenue, FMEG, Q2 FY27: ₹993 cr, up 119.6% YoY",
+   "value": 119.6,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F53",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), FMEG, Q2 FY27: 10.1% vs 0.5% a year ago",
+   "value": 10.1,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F54",
+   "metric": "segment_revenue",
+   "quarter": "Q2 FY27",
+   "text": "Segment revenue, EPC, Q2 FY27: ₹617 cr, up 53.4% YoY",
+   "value": 53.4,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F55",
+   "metric": "segment_margin",
+   "quarter": "Q2 FY27",
+   "text": "Segment result margin (before interest and tax, not EBITDA), EPC, Q2 FY27: 7.2% vs 18.1% a year ago",
+   "value": 7.2,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F56",
+   "metric": "tax_rate",
+   "quarter": "FY26",
+   "text": "Effective tax rate FY26 (tax ÷ profit before tax, 4 quarters): 25.0%",
+   "value": 25.0,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F57",
+   "metric": "segment_revenue_fy",
+   "quarter": "FY26",
+   "text": "Segment revenue, Wires and Cables, FY26 (4 quarters): ₹25,534 cr, up 33.9% YoY",
+   "value": 33.9,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F58",
+   "metric": "segment_revenue_fy",
+   "quarter": "FY26",
+   "text": "Segment revenue, FMEG, FY26 (4 quarters): ₹2,069 cr, up 23.0% YoY",
+   "value": 23.0,
+   "unit": "% YoY",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F59",
+   "metric": "capex",
+   "quarter": "H1 FY27",
+   "text": "Capex H1 FY27 (purchase of fixed assets, cash flow statement): ₹598 cr",
+   "value": 597.56,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F60",
+   "metric": "cash_conversion",
+   "quarter": "H1 FY27",
+   "text": "Cash from operations ÷ PAT, H1 FY27: 94%",
+   "value": 93.5,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1738868_15102026035523_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F61",
+   "metric": "capex",
+   "quarter": "H2 FY26",
+   "text": "Capex H2 FY26 (purchase of fixed assets, cash flow statement): ₹728 cr",
+   "value": 728.25,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F62",
+   "metric": "cash_conversion",
+   "quarter": "H2 FY26",
+   "text": "Cash from operations ÷ PAT, H2 FY26: 143%",
+   "value": 142.7,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F63",
+   "metric": "capex",
+   "quarter": "FY26",
+   "text": "Capex FY26 (full year, H1 + H2): ₹1,481 cr",
+   "value": 1480.51,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1664066_06052026044749_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F64",
+   "metric": "capex",
+   "quarter": "H1 FY26",
+   "text": "Capex H1 FY26 (purchase of fixed assets, cash flow statement): ₹752 cr",
+   "value": 752.26,
+   "unit": "cr",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1552465_17102025061553_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
+   }
+  },
+  {
+   "id": "F65",
+   "metric": "cash_conversion",
+   "quarter": "H1 FY26",
+   "text": "Cash from operations ÷ PAT, H1 FY26: 138%",
+   "value": 138.5,
+   "unit": "%",
+   "source": {
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/xbrl/INTEGRATED_FILING_INDAS_1552465_17102025061553_WEB.xml",
+    "page": null,
+    "basis": "consolidated",
+    "kind": "xbrl"
    }
   }
  ],
@@ -1036,13 +1753,14 @@
   "Results filed 2026-01-16 could not be read: No readable quarterly results table found in this PDF (it may be a cover letter, a press note, or a poor-quality scan)."
  ],
  "ai": {
-  "calls": 7,
+  "calls": 8,
   "cached": 4,
-  "tokens_in": 42076,
-  "tokens_out": 16996,
+  "tokens_in": 51940,
+  "tokens_out": 18877,
   "models": [
    "gemini-3.1-flash-lite",
-   "gemini-3.5-flash"
+   "gemini-3.5-flash",
+   "gemini-3.5-flash-lite"
   ],
   "fallback_used": true
  }

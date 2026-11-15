@@ -33,7 +33,7 @@ def stored(symbol: str) -> dict | None:
                 data = json.loads(path.read_text(encoding="utf-8"))
             except ValueError:
                 continue
-            if data.get("engine_version") == research_mod.ENGINE_VERSION:
+            if research_mod.MIN_ENGINE_VERSION <= (data.get("engine_version") or 0) <= research_mod.ENGINE_VERSION:
                 return data
     return None
 
@@ -54,7 +54,8 @@ def list_stored() -> list[dict]:
                 d = json.loads(path.read_text(encoding="utf-8"))
             except ValueError:
                 continue
-            if d.get("engine_version") != research_mod.ENGINE_VERSION or d.get("status") != "ready":
+            if not research_mod.MIN_ENGINE_VERSION <= (d.get("engine_version") or 0) <= research_mod.ENGINE_VERSION \
+                    or d.get("status") != "ready":
                 continue
             rows[path.stem] = {"ticker": d.get("ticker", path.stem), "company": d.get("company", ""),
                                "latest_quarter": d.get("latest_quarter"), "generated_at": d.get("generated_at"),
