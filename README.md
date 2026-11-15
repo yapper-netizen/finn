@@ -3,7 +3,7 @@
 A mobile-first research agent for a long-term stock investor, built for the ENAM Holdings AI Engineer challenge.
 
 - **Try it (open on a phone):** https://finn-viku.onrender.com. Free hosting: the first open can take ~30 s to wake.
-- **Writeup:** [`WRITEUP.md`](WRITEUP.md) · **How it was built:** [`build-history/`](build-history/) · **Every decision:** [`DECISIONS.md`](DECISIONS.md)
+- **How it was built:** [`build-history/`](build-history/) · **Every decision:** [`DECISIONS.md`](DECISIONS.md)
 
 > **Point of view: "Glance, triage, ask."** Pulse is a ten-second glance at 18 stocks. Today is a two-minute triage of what changed. An Ask box answers questions, and only from documents FINN has read, with the source one tap away. Every number and quote can be traced to a filing page.
 
@@ -114,4 +114,4 @@ Full reasoning, with the options rejected, is in [`DECISIONS.md`](DECISIONS.md) 
 
 ## What is not here
 
-Real push notifications and intraday data (end-of-day only); logins (settings live in the browser); annual-report reading; OCR for scanned filings; bank asset-quality metrics; adding or removing portfolio stocks. See `WRITEUP.md` for the next steps.
+Real push notifications and intraday data (end-of-day only); logins (settings live in the browser); annual-report reading; OCR for scanned filings; bank asset-quality metrics; adding or removing portfolio stocks. Next steps: add or remove portfolio stocks, a task-based model router, segment tables and annual reports, real notifications.
