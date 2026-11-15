@@ -501,3 +501,13 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Built (final): the other four drafts, the Look switcher button, `?look=`, the Settings "Look" section, day grouping (`cardGroups`) and the split-footer helpers were removed; A's styles are now the base (`html:root` selectors, same specificity as before). Spec in `design/DESIGN_2.md`.
 - Checked at 375 and 360 px on Today, Settings and Research: no text under 12.5px, no horizontal scroll, no ribbon/date overlap; 81 tests pass.
 - Trade-off: no day grouping, so a quiet week reads as one list; the date in each ribbon gives the time context. Light mode only.
+
+### D-075 · Deploy: Render free, Python 3.12, uptime pinger · 2026-11-15 · OPS-2, OPS-3, OPS-4 (settles D-032, D-034) · Status: decided
+- Options: hosting A Render free / B Hugging Face Spaces / C Railway or Fly (card needed); Python A 3.12 / B 3.14; cold starts A accept and warm before sending / B free uptime pinger on /health.
+- Chosen (user): A, A, B.
+- Prepared in the repo: `render.yaml` (web service `finn`, free plan, Singapore region, build `pip install -r requirements.txt`, start `uvicorn api:app --host 0.0.0.0 --port $PORT`, health check `/health`, `PYTHON_VERSION=3.12.8`, auto-deploy on push, no secrets); `requirements.txt` is now runtime-only and `requirements-dev.txt` adds pytest and httpx; `tests/test_deploy.py` (5 tests: blueprint complete and secret-free, snapshot folder ships for every portfolio stock, runtime requirements lean, `.env` ignored, app exposes /health) plus the offline test QA-6 (all live sources blocked: the digest still renders 4 cards from the saved snapshot, `fallback_used` true). 86 tests pass.
+- Checked locally with the exact start command and `PORT`: `/health` ok, `/api/digest` 200 (4 cards, 19 routine), page 200. No Python 3.13+ features in the code.
+- Not verifiable here: Python 3.12 (only 3.14 is installed locally) and a clean-venv install (Windows Application Control blocked a pandas file in a temp venv; not bypassed). Render's first build is the real test; if a library fails on 3.12, the fix is a pin in `requirements.txt` or `PYTHON_VERSION`.
+- GEMINI_API_KEY is not needed on Render yet (Today runs on rules); add it as a dashboard-only env var (`sync: false`) when the research build needs it.
+- Cold starts (OPS-4): free Render sleeps after ~15 minutes idle; an uptime pinger (e.g. UptimeRobot, free, every 5 minutes on `/health`) keeps it awake. First load after a restart waits up to 25 s for live data, then falls back to the snapshot (D-067). Mention both in the writeup.
+- Risk still open: NSE or yfinance may block Render's IPs; the app then shows the saved copy with a banner. Check on the deployed link.

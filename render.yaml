@@ -1,0 +1,17 @@
+# Render blueprint [a file that tells Render how to build and run the app] (D-075).
+# Free plan: the service sleeps after ~15 min idle; an uptime pinger on /health keeps it awake (OPS-4).
+services:
+  - type: web
+    name: finn
+    runtime: python
+    plan: free
+    region: singapore            # closest free region to India
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    autoDeploy: true             # redeploy on every push to the default branch
+    envVars:
+      - key: PYTHON_VERSION      # D-034: pinned, library support is widest on 3.12
+        value: 3.12.8
+      # No secrets yet: Today runs on rules, not AI. GEMINI_API_KEY is added here
+      # (sync: false, value entered in the Render dashboard) when the research build needs it.
