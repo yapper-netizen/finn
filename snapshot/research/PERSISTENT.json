@@ -3,7 +3,7 @@
  "company": "Persistent Systems Limited",
  "status": "ready",
  "engine_version": 1,
- "generated_at": "2026-11-15T14:42:25",
+ "generated_at": "2026-11-15T15:58:53",
  "latest_quarter": "Q2 FY27",
  "counts": {
   "Delivered": 1,
@@ -860,6 +860,23 @@
    }
   }
  ],
+ "documents_seen": {
+  "transcripts": [
+   "2025-07-29",
+   "2025-10-20",
+   "2026-01-27",
+   "2026-04-28",
+   "2026-10-23"
+  ],
+  "results": [
+   "106309148",
+   "106407160",
+   "106502144",
+   "106595548",
+   "106721243",
+   "106818661"
+  ]
+ },
  "sources": {
   "transcripts": [
    {
@@ -931,12 +948,13 @@
  ],
  "ai": {
   "calls": 7,
-  "cached": 0,
+  "cached": 1,
   "tokens_in": 45032,
   "tokens_out": 5340,
   "models": [
    "gemini-3.1-flash-lite",
    "gemini-3.5-flash"
-  ]
+  ],
+  "fallback_used": true
  }
 }

@@ -17,7 +17,7 @@ from typing import Any, Callable, Literal
 from pydantic import BaseModel, ValidationError
 
 import config
-from engine.research import norm, verify_quote
+from engine.quotes import norm, verify_quote
 
 Event = Literal["appointment", "reappointment", "resignation", "retirement", "cessation", "role_change",
                 "auditor_change", "other"]

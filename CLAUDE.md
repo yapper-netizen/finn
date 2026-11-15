@@ -65,19 +65,19 @@ finn/
 ├─ requirements.txt (runtime, what Render installs), requirements-dev.txt (+ pytest, httpx), pytest.ini, render.yaml
 ├─ config.py           tickers, thresholds, category tiers, model names, cache and API limits
 ├─ data/               prices.py, filings.py, symbols.py, clock.py, docs.py (PDF text), research_docs.py (transcripts + results finder), equity_list.csv
-├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, llm, results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs
+├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, brief (Brief me), llm, quotes (quote guard), results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs
 ├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/research/{ticker}
 ├─ web/index.html      one file: Today (+ results sheet), Research (scorecard, receipts, bull/bear), Settings; look in design/DESIGN_2.md
-├─ tests/              166 pytest tests (no network)
+├─ tests/              178 pytest tests (no network)
 ├─ snapshot/           frozen prices, filings, results cards, research (3 stocks), committed
 ├─ design/             DESIGN_1.md (screens), DESIGN_2.md (look), previews and brainstorm history
 ├─ briefs/             one hand-off brief per block (see Working loop)
-├─ run_filings.py, run_digest.py, run_alerts.py, run_cards.py, run_research.py, smoke_test_llm.py   (run-and-see scripts)
+├─ refresh_snapshot.py, run_filings.py, run_digest.py, run_alerts.py, run_cards.py, run_research.py, smoke_test_llm.py   (scripts)
 ├─ plan_revamp_v1/     plan audit record
 └─ brief/              ENAM brief PDFs (private repo for now, D-066)
 ```
 Run: `py -m uvicorn api:app --port 8000` (or the `finn-api` entry in `.claude/launch.json` via preview_start) · tests: `py -m pytest -q` · `py run_digest.py 7d` · cards: `py run_cards.py` (`--save` rebuilds `snapshot/cards/` from the cached AI answers).
-Before the code freeze (D-078): `py run_filings.py 7`, then `py run_cards.py --save`, check new cards, commit. New results filings are also prebuilt in the background on the server when GEMINI_API_KEY is set.
+Before the code freeze (D-078, D-090): `py refresh_snapshot.py` (prices, filings, new cards, research only if new documents), check `git status snapshot/`, run the tests, commit. Frozen at tag `v1.0`: fixes only after it. New results filings are also prebuilt in the background on the server when GEMINI_API_KEY is set.
 Research: `py run_research.py POLYCAB --save` rebuilds `snapshot/research/POLYCAB.json` (AI answers cached in cache.db; a new ticker costs ~7 AI calls, 1-3 min).
 
 ## Draft portfolio (verify each loads in yfinance; no ITC)

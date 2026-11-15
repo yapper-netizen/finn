@@ -99,8 +99,10 @@ def attach_summaries(payload: dict) -> dict:
             if not card:
                 continue
             if card.get("kind") == "management":
+                first = (card.get("changes") or [{}])[0]
                 item["mgmt"] = {"status": card.get("status"), "headline": card.get("headline"),
-                                "key_role": card.get("key_role", False)}
+                                "key_role": card.get("key_role", False),
+                                "first": {k: first.get(k) for k in ("event", "person", "role", "effective_date")}}
             else:
                 item["results"] = summary(card)
     return payload

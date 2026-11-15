@@ -61,3 +61,13 @@ def test_app_imports_and_exposes_health():
 
     paths = {r.path for r in api.app.routes}
     assert {"/health", "/", "/api/digest"} <= paths
+
+
+@pytest.mark.parametrize("module", ["api", "engine.research", "engine.mgmt", "engine.cards", "engine.research_jobs",
+                                    "run_research", "run_cards", "refresh_snapshot"])
+def test_every_entry_point_imports_on_its_own(module):
+    """A fresh interpreter per module: catches circular imports that a shared test session hides."""
+    import subprocess
+    import sys
+    r = subprocess.run([sys.executable, "-c", f"import {module}"], cwd=ROOT, capture_output=True, text=True, timeout=120)
+    assert r.returncode == 0, r.stderr[-500:]

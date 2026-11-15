@@ -137,7 +137,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | BE-4 | P0 | [x] Filing PDF downloader + text extractor with page numbers (pdfplumber [PDF text library]) cached by URL hash [short fingerprint of the URL] | D-021 | 1 | Done 2026-11-15 (block 7): `data/docs.py` |
 | BE-5 | P0 | [x] Fundamentals document finder: last 4 {concall transcripts} + latest {annual report} links, plus last 5 results-filing links (for EN-13 actuals) | D-020, D-049 | 2 | Done 2026-11-15 (block 8): `data/research_docs.py`, NSE transcripts + results (D-079) |
 | ~~BE-6~~ | — | ~~Structured quarterly numbers source~~ — removed: actuals come from the EN-5 extractor on results filings (primary) | D-049 | 0 | — |
-| BE-7 | P0 | [ ] Snapshot refresh script: one command re-freezes prices, filings, docs; **run Sun 13:00 and commit** | D-031, D-053 | 0.5 | `python refresh_snapshot.py` runs clean |
+| BE-7 | P0 | [x] Snapshot refresh script: one command re-freezes prices, filings, docs; **run Sun 13:00 and commit** | D-031, D-053 | 0.5 | Done 2026-11-15 (D-090): `py refresh_snapshot.py`; freeze run committed, tag v1.0 |
 | BE-8 | P2 | [ ] Market-holiday calendar (exact last trading day) — not needed for D-046 fallback, which uses "last day with filings" | D-046 | 0.5 | Optional |
 | BE-9 | P0 | [x] Finalise research set of 3 {3–5, may be outside portfolio}: POLYCAB, PERSISTENT, ASTRAL (outside); verify ASTRAL loads; precompute all 3 after EN-16 | D-051 | 0.2 | Done: POLYCAB, PERSISTENT, ASTRAL precomputed in `snapshot/research/` |
 | BE-10 | P0 | [x] Replace HAL in `config.py` with a non-defence small-cap that loads in yfinance (adds {"sizes"} mix; ENAM values) → VIJAYA; all 19 tickers load | D-055, D-062 | 0.2 | Done 2026-11-15 |
@@ -209,7 +209,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | FE-6 | P0 | [x] **Settings**: price %, volume ×, category toggles (EN-18), portfolio list; saved in localStorage | D-029, D-047 | 1 | Change persists after reload |
 | FE-7 | P1 | [x] Visual polish: final look decided and built in light mode (`design/DESIGN_2.md`); dark mode not built | D-028, D-044, D-074 | 1 | Looks deliberate, not template |
 | FE-8 | P1 | [ ] PWA [Progressive Web App: "Add to Home Screen", app icon, full-screen] manifest + icon | D-030 | 0.5 | Installs on Android/iOS |
-| FE-9 | P1 | [ ] Interaction experiment: **"Brief me"** — 3-sentence summary of Today, shown and read aloud via Web Speech API [browser's built-in, free text-to-speech]; built from digest data, no extra AI call | D-011, D-052 | 1.5 | Demo-able in 15 seconds |
+| FE-9 | P1 | [x] Interaction experiment: **"Brief me"** — 3-sentence summary of Today, shown and read aloud via Web Speech API [browser's built-in, free text-to-speech]; built from digest data, no extra AI call | D-011, D-052 | 1.5 | Done (D-091): templates over the digest + Web Speech API; no AI |
 | FE-10 | P2 | [ ] "Seen" state: cards you've opened dim; "since you last looked" | D-046 | 1 | Stored in localStorage |
 | FE-11 | P0 | [x] ENAM theme tokens: take colours and fonts from ENAM's website into CSS variables [named colour/font settings reused everywhere]; own FINN wordmark, no ENAM logo | D-028, D-044 | 0.5 | All screens use the tokens |
 | FE-12 | P1 | [ ] **On hold — review after the front-end brainstorm**: (a) the 6-screen set (Today, Results, Management change, Settings, Research, Promise tracker; one per brief item), (b) 17 categories → High / Medium / Low tiers. Decisions stand for the build; redesign only if the brainstorm shows a better structure | D-015, D-058 | 0.5 | Reviewed; kept or changed with a DECISIONS.md entry |
@@ -347,3 +347,5 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-087 | Management-change card | **Decided** — annexure only, Python-verified, Key role badge | EN-6 |
 | D-088 | AI retries and fallback label | **Decided** — back off on 503, skip on 429, label | EN-9 |
 | D-089 | Board-outcome results promotion; offline test | **Decided** | EN-2, EN-5, QA-6 |
+| D-090 | Freeze refresh, tag v1.0 | **Decided** | BE-7 |
+| D-091 | "Brief me" | **Decided** — templates + browser speech, no AI | FE-9 |

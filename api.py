@@ -15,6 +15,7 @@ from fastapi.responses import FileResponse, JSONResponse, Response
 import config
 from data import filings as filings_mod
 from engine import cards
+from engine.brief import brief_me
 from engine.research_jobs import ResearchJobs
 from engine.feed import FeedCache, company_name
 from engine.today import build_today
@@ -104,7 +105,9 @@ def api_digest(
         return error_response(f"Unknown categories: {', '.join(unknown)}.")
     data = feed_cache.get()
     data = replace(data, filings=cards.apply_promotions(data.filings))   # board outcomes holding results (D-087)
-    return cards.attach_summaries(build_today(data, window=window, price=price, volume=volume, off=off_set))
+    payload = cards.attach_summaries(build_today(data, window=window, price=price, volume=volume, off=off_set))
+    payload["brief"] = brief_me(payload)   # "Brief me": 3 sentences, templates only (D-091)
+    return payload
 
 
 def _find_filing(filing_id: str) -> dict | None:

@@ -3,7 +3,7 @@
  "company": "Astral Limited",
  "status": "ready",
  "engine_version": 1,
- "generated_at": "2026-11-15T14:44:56",
+ "generated_at": "2026-11-15T15:59:49",
  "latest_quarter": "Q2 FY27",
  "counts": {
   "Delivered": 0,
@@ -789,6 +789,23 @@
    }
   }
  ],
+ "documents_seen": {
+  "transcripts": [
+   "2025-11-10",
+   "2026-02-10",
+   "2026-05-25",
+   "2026-08-18",
+   "2026-11-11"
+  ],
+  "results": [
+   "106334731",
+   "106428144",
+   "106521666",
+   "106627640",
+   "106739054",
+   "106847370"
+  ]
+ },
  "sources": {
   "transcripts": [
    {
@@ -860,12 +877,13 @@
  ],
  "ai": {
   "calls": 7,
-  "cached": 6,
+  "cached": 1,
   "tokens_in": 43853,
   "tokens_out": 8947,
   "models": [
    "gemini-3.1-flash-lite",
    "gemini-3.5-flash"
-  ]
+  ],
+  "fallback_used": true
  }
 }

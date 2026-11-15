@@ -3,7 +3,7 @@
  "company": "Polycab India Limited",
  "status": "ready",
  "engine_version": 1,
- "generated_at": "2026-11-15T14:40:51",
+ "generated_at": "2026-11-15T15:58:06",
  "latest_quarter": "Q2 FY27",
  "counts": {
   "Delivered": 2,
@@ -949,6 +949,23 @@
    }
   }
  ],
+ "documents_seen": {
+  "transcripts": [
+   "2025-10-28",
+   "2026-01-22",
+   "2026-05-08",
+   "2026-07-20",
+   "2026-10-19"
+  ],
+  "results": [
+   "106302865",
+   "106410997",
+   "106499016",
+   "106611050",
+   "106700031",
+   "106818441"
+  ]
+ },
  "sources": {
   "transcripts": [
    {
@@ -1020,12 +1037,13 @@
  ],
  "ai": {
   "calls": 7,
-  "cached": 1,
+  "cached": 4,
   "tokens_in": 42076,
   "tokens_out": 16996,
   "models": [
    "gemini-3.1-flash-lite",
    "gemini-3.5-flash"
-  ]
+  ],
+  "fallback_used": true
  }
 }

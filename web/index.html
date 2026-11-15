@@ -270,6 +270,15 @@
     .sheet .section-label { margin-top: 20px; }
     .fail-box { background: #fdf3e1; color: #5c3900; border-radius: 14px; padding: 12px 14px; font-size: 15px; line-height: 1.45; margin-top: 12px; }
 
+    /* ---------- "Brief me" (FE-9) ---------- */
+    .briefbtn { position: relative; z-index: 1; margin-top: 14px; min-height: 44px; padding: 0 18px 0 14px; border-radius: 99px; border: 1px solid rgba(255,255,255,.45); background: rgba(255,255,255,.16); color: #fff; font-weight: 700; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; backdrop-filter: blur(6px); }
+    .briefbtn[aria-pressed="true"] { background: #fff; color: var(--primary-deep); }
+    .briefbtn .ico svg { width: 18px; height: 18px; }
+    .briefbox { margin-top: 12px; background: #fff; border-radius: 20px; padding: 12px 16px; border: 1px solid rgba(0,93,163,.18); box-shadow: 0 10px 22px -14px rgba(0,40,80,.35); }
+    .briefbox p { margin: 0; padding: 6px 0; font-size: 16px; line-height: 1.45; border-left: 3px solid transparent; padding-left: 10px; transition: border-color .2s, background .2s; }
+    .briefbox p.on { border-left-color: var(--primary-bright); background: var(--primary-tint); border-radius: 0 8px 8px 0; }
+    .briefbox p.meta { font-size: 14px; }
+
     /* ---------- management change sheet (EN-6) ---------- */
     .mchange { padding: 14px 0; border-bottom: 1px solid var(--rule); }
     .mchange:last-of-type { border-bottom: 0; }
@@ -364,6 +373,19 @@
             </template>
           </div>
           <p class="meta strip-cap" x-text="stripLabel"></p>
+          <button class="briefbtn" @click="toggleBrief()" :aria-pressed="bm.open" :aria-label="bm.speaking ? 'Stop reading the brief' : 'Brief me: hear Today in three sentences'">
+            <span class="ico" aria-hidden="true" x-html="iconFor(bm.speaking ? 'stop' : 'speaker')"></span>
+            <span x-text="bm.speaking ? 'Stop' : 'Brief me'"></span>
+          </button>
+        </div>
+      </template>
+      <!-- "Brief me" (D-052): three sentences from the digest, read aloud; no AI -->
+      <template x-if="bm.open && data && data.brief">
+        <div class="briefbox" role="region" aria-label="Brief" aria-live="polite">
+          <template x-for="(t, k) in data.brief.sentences" :key="k">
+            <p :class="bm.speaking && bm.at === k ? 'on' : ''" x-text="t"></p>
+          </template>
+          <p class="meta" x-show="!bm.canSpeak">This browser cannot read aloud; the brief is shown as text.</p>
         </div>
       </template>
     </div>
@@ -983,6 +1005,8 @@ const ICONS = {
   doc: svg('<path d="M6 3h8l5 5v13H6zM14 3v5h5M9 13h6M9 17h6"/>'),
   sliders: svg('<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>'),
   arrow: svg('<path d="M7 17L17 7M9 7h8v8"/>'),
+  speaker: svg('<path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/>'),
+  stop: svg('<rect x="6" y="6" width="12" height="12" rx="2"/>'),
 };
 const MONTHS =['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -1017,6 +1041,7 @@ function finn() {
     sheet: { open: false, loading: false, slow: false, error: null, card: null, filing: null, formula: null },
     rs: { query: '', ticker: null, status: 'idle', data: null, steps: [], error: null, retryable: true, side: 'bull', open: {} },
     rc: { open: false, kind: null, item: null },
+    bm: { open: false, speaking: false, at: -1, canSpeak: typeof window !== 'undefined' && 'speechSynthesis' in window },
     _rsTimer: null,
     _rsSeq: 0,
     _cardCtl: null,
@@ -1030,8 +1055,8 @@ function finn() {
     },
 
     persist() { writeStore({ window: this.period, settings: this.settings }); },
-    go(t) { this.tab = t; window.scrollTo({ top: 0 }); },
-    setWindow(w) { this.period = w; this.persist(); this.load(); },
+    go(t) { if (t !== this.tab) this.stopBrief(); this.tab = t; window.scrollTo({ top: 0 }); },
+    setWindow(w) { this.period = w; this.stopBrief(); this.bm.open = false; this.persist(); this.load(); },
     scheduleLoad() { clearTimeout(this._timer); this._timer = setTimeout(() => this.load(), 350); },
     toggleCategory(key) {
       const off = new Set(this.settings.off);
@@ -1121,6 +1146,28 @@ function finn() {
       const line = m.source.note ? m.source.note : '"' + (m.source.line || m.label) + '"';
       return 'Page ' + m.source.page + ': ' + (line.length > 60 ? line.slice(0, 57) + '…' : line);
     },
+
+    // ---------- "Brief me" (FE-9) ----------
+    toggleBrief() {
+      if (this.bm.speaking) { this.stopBrief(); return; }
+      this.bm.open = true;
+      if (!this.bm.canSpeak || !this.data || !this.data.brief) return;
+      const synth = window.speechSynthesis;
+      synth.cancel();
+      const voice = synth.getVoices().find(v => /en-IN/i.test(v.lang)) || synth.getVoices().find(v => /^en/i.test(v.lang));
+      this.data.brief.sentences.forEach((t, k) => {
+        const u = new SpeechSynthesisUtterance(t);
+        if (voice) u.voice = voice;
+        u.lang = voice ? voice.lang : 'en-IN';
+        u.rate = 1.02;
+        u.onstart = () => { this.bm.at = k; this.bm.speaking = true; };
+        u.onend = () => { if (k === this.data.brief.sentences.length - 1) { this.bm.speaking = false; this.bm.at = -1; } };
+        u.onerror = () => { this.bm.speaking = false; this.bm.at = -1; };
+        synth.speak(u);
+      });
+      this.bm.speaking = true;
+    },
+    stopBrief() { if (this.bm.canSpeak) window.speechSynthesis.cancel(); this.bm.speaking = false; this.bm.at = -1; },
 
     hasCard(c) { return c.kind === 'results' || c.kind === 'management_change'; },
     eventClass(e) { return ['appointment', 'reappointment'].includes(e) ? 'v-delivered' : ['resignation', 'retirement', 'cessation'].includes(e) ? 'v-missed' : 'v-early'; },
