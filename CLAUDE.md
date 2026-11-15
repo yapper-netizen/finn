@@ -53,26 +53,30 @@ Skip (state in writeup): real push notifications, intraday data, logins, full ba
 - Python + FastAPI [library for building the API] — backend and serves the frontend (one deployment)
 - SQLite [single-file database] as cache: each document processed by AI once
 - Frontend: single HTML page, Tailwind CSS + Alpine.js, mobile-first
-- AI routing: Gemini Flash (cheap: classification leftovers, PDF number extraction, guidance quotes) → Claude Sonnet or Gemini Pro (strong: promised-vs-delivered verdict, bull/bear). Rules, not AI, for alerts and most classification.
-- Data: yfinance (.NS / .BO) {EOD price & volume}; BSE announcements API (NSE backup) {corporate announcements}; screener.in links {annual reports, transcripts}
-- Deploy: Render free tier. Keys in .env locally, environment variables on Render.
-- Save a JSON snapshot of fetched data so the demo works if a site blocks us.
+- AI routing (D-060, D-061; free tier only, no billing): cheap = `gemini-3.5-flash-lite` (PDF number extraction, quotes, leftovers), strong = `gemini-3.5-flash` (it thinks: promised-vs-delivered verdicts, bull/bear), fallback = `gemini-3.1-flash-lite`. All calls go through `engine/llm.py` (retry once, fallback, token log). Model names live in `config.py`; Google retires models often, so re-run `py smoke_test_llm.py` when a call 404s. Rules, not AI, for alerts and classification.
+- Data: yfinance (.NS) {EOD price & volume}; **NSE corporate-announcements API** {corporate announcements} (BSE's API blocks scripts, D-063/D-064); screener.in links {annual reports, transcripts}
+- Deploy: Render free tier, live at https://finn-viku.onrender.com (`render.yaml`, Python 3.12.8 pinned, auto-deploys on every push to main, UptimeRobot pings /health every 5 min). Keys in .env locally; Render needs none yet.
+- Save a JSON snapshot of fetched data so the demo works if a site blocks us (committed under `snapshot/`; Render's disk is wiped on restart).
 
 ## Folder architecture
 ```
 finn/
-├─ CLAUDE.md, README.md, PLAN.md, DECISIONS.md, .env, .gitignore, requirements.txt, pytest.ini
-├─ config.py           tickers, thresholds, category weights, model names
-├─ data/               prices.py, filings.py, docs.py, symbols.py   (plumbing)
-├─ engine/             alerts.py, classifier.py, ranker.py, cards.py, research.py, llm.py   (brains)
-├─ api.py              FastAPI endpoints
-├─ web/index.html      Today, Detail, Research, Settings screens
-├─ tests/              pytest unit tests
-├─ snapshot/           frozen data copy
+├─ CLAUDE.md, PLAN.md, DECISIONS.md, README.md (to write), .env (ignored), .env.example, .gitignore
+├─ requirements.txt (runtime, what Render installs), requirements-dev.txt (+ pytest, httpx), pytest.ini, render.yaml
+├─ config.py           tickers, thresholds, category tiers, model names, cache and API limits
+├─ data/               prices.py, filings.py, symbols.py, clock.py, equity_list.csv   (plumbing; docs.py to write)
+├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, llm   (brains; cards.py, research.py to write)
+├─ api.py              FastAPI: /, /health, /api/digest, /api/config (more endpoints to write)
+├─ web/index.html      one file: Today, Research (stub), Settings; look in design/DESIGN_2.md
+├─ tests/              86 pytest tests (no network)
+├─ snapshot/           frozen prices + filings, committed
+├─ design/             DESIGN_1.md (screens), DESIGN_2.md (look), previews and brainstorm history
+├─ briefs/             one hand-off brief per block (see Working loop)
+├─ run_filings.py, run_digest.py, run_alerts.py, smoke_test_llm.py   (run-and-see scripts)
 ├─ plan_revamp_v1/     plan audit record
-├─ brief/              ENAM brief PDFs
-└─ cache.db            AI answer cache
+└─ brief/              ENAM brief PDFs (private repo for now, D-066)
 ```
+Run: `py -m uvicorn api:app --port 8000` (or the `finn-api` entry in `.claude/launch.json` via preview_start) · tests: `py -m pytest -q` · `py run_digest.py 7d`.
 
 ## Draft portfolio (verify each loads in yfinance; no ITC)
 RELIANCE, HDFCBANK, TCS, INFY, PIDILITIND, LT, BHARTIARTL, SUNPHARMA, ASIANPAINT, TITAN, DMART, TRENT, POLYCAB, DIXON, PERSISTENT, VIJAYA (Vijaya Diagnostic, small-cap, replaced HAL, D-062), DEEPAKNTR, IRCTC
@@ -89,7 +93,7 @@ Detailed task plan: PLAN.md. All choices (open and decided): DECISIONS.md — ap
 
 ## Open decisions
 All open and decided choices live in DECISIONS.md (index in PLAN.md §13). Don't duplicate them here.
-Timeline (D-043): deploy gate Sat 14 Nov 20:00 · code freeze Sun 15 Nov 13:00 · send ≤17:30 IST.
+Timeline (D-043): code freeze Sun 15 Nov 13:00 · send ≤17:30 IST. **Do not raise deadline or hours worries** (D-057, and the user said so on 2026-11-15: that is theirs to manage; quality first, no compromise). Flag a real risk to a deliverable in one line, nothing more.
 
 ## Engineering standards
 - Small, single-purpose functions with type hints [labels saying what data type goes in/out] and short docstrings.
@@ -100,8 +104,20 @@ Timeline (D-043): deploy gate Sat 14 Nov 20:00 · code freeze Sun 15 Nov 13:00 �
 - Unit tests [small automatic checks] for alerts, ranking and QoQ/YoY maths (pytest).
 - A step is done only when it runs end to end and its tests pass.
 
-## Working rules for Claude Code
-- One step at a time; after each step show me how to run and check it.
-- Verify at least 2 results cards against the actual filing PDF numbers.
-- Never commit .env or API keys.
+## Working loop (every block; the user's approved routine, 2026-11-15)
+1. **Brief.** When the user says "brief block N" (or "what's next"), use the `task-briefing` skill and write ONE exhaustive hand-off brief: the 6 sections (task, why, done-looks-like, decisions as tables with a recommendation, needs-from-you, next) plus a context pack (repo state, live URL, decisions already made, constraints, gotchas, candidate data, known risks). It must be paste-able into a fresh chat. Save it as `briefs/block-NN-name.md` and show it in full. Put every decision in the brief's tables; do NOT ask the user the options one by one in chat first.
+2. **Decide.** The user answers the decision tables and approves. If an answer looks wrong, challenge it once with a recommendation, then follow their final call.
+3. **Build.** Keep the task list (`update_plan`); one step at a time; tests pass; run it end to end. UI work: check at 375x812 and 360x740 (no horizontal scroll, text >= 12.5px, nothing overlapping). Data work: check on live data and with the network blocked.
+4. **Record.** Append each decision to DECISIONS.md (new D-number, never rewrite old entries), update PLAN.md rows and the decision index, update this file if a fact here changed.
+5. **Commit** with a clear message and the Co-Authored-By line. **Do not push unless asked**: pushing redeploys Render.
+6. **Report** what was done: built, how it was verified, what is NOT verified, deviations from the brief, new decisions, how to run and check it.
+7. **Prompt the next brief** with one question ("Brief block N+1?"). Then wait.
+
+## Hard-won rules for Claude Code
+- Windows + PowerShell: use `py`, not `python`. Local Python is 3.14, Render runs 3.12.8: keep code 3.12-compatible.
+- Never work around a site's protection (BSE 403, Bloomberg bot check) or the machine's policies (the permission check blocked browser-fingerprint spoofing; Windows Application Control blocks DLLs in temp venvs). Report it and offer options.
+- Downloading any file needs the user's explicit OK first: state filename, source and size.
+- Never commit .env or API keys; never print key values; the user pastes keys into .env themselves.
+- Verify at least 2 results cards against the actual filing PDF numbers (to the crore), plus 1 bank card.
+- Terms in [square brackets], brief-required items in {curly brackets}; concise; 2-3 options with a recommendation; challenge the user if they are wrong.
 - Commit after each working step with a clear message.
