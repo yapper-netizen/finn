@@ -24,7 +24,10 @@
    "reason": null,
    "profile": null,
    "key_role": true,
-   "page": 1
+   "page": 1,
+   "exit_style": null,
+   "exit_note": null,
+   "background": null
   }
  ],
  "key_role": true,
@@ -35,5 +38,7 @@
   "tokens_in": 942,
   "tokens_out": 123,
   "cached": true
- }
+ },
+ "background": null,
+ "enriched": true
 }

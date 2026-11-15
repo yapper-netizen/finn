@@ -29,7 +29,16 @@
     "summary": "He holds a management degree from the Indian Institute of Management, Bangalore, and an engineering degree from the Indian Institute of Technology, Kanpur."
    },
    "key_role": true,
-   "page": 3
+   "page": 3,
+   "came_from": [],
+   "experience_years": null,
+   "qualifications": [
+    "Management degree from Indian Institute of Management, Bangalore",
+    "Engineering degree from Indian Institute of Technology, Kanpur"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Management degree from Indian Institute of Management, Bangalore"
   },
   {
    "event": "cessation",
@@ -42,7 +51,10 @@
    "reason": "Will complete his tenure as the MD & CEO of the Bank.",
    "profile": null,
    "key_role": true,
-   "page": 4
+   "page": 4,
+   "exit_style": "planned",
+   "exit_note": "Planned: retirement or end of term",
+   "background": null
   },
   {
    "event": "appointment",
@@ -60,7 +72,16 @@
     "summary": "Anup Bagchi is an experienced financial services leader with over thirty years of expertise across banking, capital markets, wealth management, and insurance."
    },
    "key_role": false,
-   "page": 3
+   "page": 3,
+   "came_from": [],
+   "experience_years": null,
+   "qualifications": [
+    "Management degree from Indian Institute of Management, Bangalore",
+    "Engineering degree from Indian Institute of Technology, Kanpur"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Management degree from Indian Institute of Management, Bangalore"
   }
  ],
  "key_role": true,
@@ -73,5 +94,7 @@
   "tokens_in": 2150,
   "tokens_out": 475,
   "cached": false
- }
+ },
+ "background": "Anup Bagchi: Management degree from Indian Institute of Management, Bangalore",
+ "enriched": true
 }

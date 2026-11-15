@@ -29,7 +29,15 @@
     "summary": "Raj Kumar Verma is an Indian Railway Service of Mechanical Engineers officer from the 2008 batch, bringing approximately 18 years of experience with Indian Railways."
    },
    "key_role": false,
-   "page": 1
+   "page": 1,
+   "came_from": [
+    "Indian Railways"
+   ],
+   "experience_years": 18,
+   "qualifications": [],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Joins from Indian Railways · 18 years' experience"
   }
  ],
  "key_role": false,
@@ -40,5 +48,7 @@
   "tokens_in": 652,
   "tokens_out": 174,
   "cached": false
- }
+ },
+ "background": "Raj Kumar Verma: Joins from Indian Railways · 18 years' experience",
+ "enriched": true
 }

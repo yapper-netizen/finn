@@ -24,7 +24,10 @@
    "reason": null,
    "profile": null,
    "key_role": true,
-   "page": 1
+   "page": 1,
+   "exit_style": null,
+   "exit_note": null,
+   "background": null
   },
   {
    "event": "cessation",
@@ -37,7 +40,10 @@
    "reason": "Completion of term",
    "profile": null,
    "key_role": true,
-   "page": 1
+   "page": 1,
+   "exit_style": "planned",
+   "exit_note": "Planned: retirement or end of term, from 22 Jan 2027",
+   "background": null
   },
   {
    "event": "appointment",
@@ -50,7 +56,10 @@
    "reason": null,
    "profile": null,
    "key_role": false,
-   "page": 1
+   "page": 1,
+   "exit_style": null,
+   "exit_note": null,
+   "background": null
   }
  ],
  "key_role": true,
@@ -61,5 +70,7 @@
   "tokens_in": 1113,
   "tokens_out": 298,
   "cached": true
- }
+ },
+ "background": null,
+ "enriched": true
 }

@@ -61,3 +61,30 @@ def build_pulse(data: FeedData, events: dict, today: date) -> dict:
                     "avg_move": round(sum(r["move"] for r in moved) / len(moved), 2) if moved else None},
         "fallback_used": data.fallback_used,
     }
+
+
+def alert_history(data: FeedData, sessions: int = 7) -> dict:
+    """Each portfolio stock's day move and volume multiple for the last `sessions` trading days (10h, P4).
+
+    The Settings screen counts these against the user's sliders as they drag, so "what would
+    ±3% have meant?" is answered from real data. Same maths as engine.alerts: the move is close
+    vs the previous close; the volume multiple is volume ÷ the average of the 20 sessions before.
+    """
+    rows: list[dict] = []
+    dates: set[str] = set()
+    w = config.VOLUME_AVG_WINDOW
+    for t in config.PORTFOLIO:
+        df = data.prices.get(t)
+        if df is None or len(df) < 2:
+            continue
+        df = df.sort_values("Date").reset_index(drop=True)
+        for i in range(max(1, len(df) - sessions), len(df)):
+            prev, cur = float(df.iloc[i - 1]["Close"]), float(df.iloc[i]["Close"])
+            move = round((cur / prev - 1) * 100, 2) if prev > 0 else None
+            hist = df["Volume"].iloc[max(0, i - w):i]
+            vol_x = round(float(df.iloc[i]["Volume"]) / float(hist.mean()), 2) if len(hist) == w and hist.mean() > 0 else None
+            day = df.iloc[i]["Date"].strftime("%Y-%m-%d")
+            dates.add(day)
+            rows.append({"ticker": t, "date": day, "move": move, "vol_x": vol_x})
+    return {"sessions": sorted(dates)[-sessions:], "rows": [r for r in rows if r["date"] in dates],
+            "fallback_used": data.fallback_used}

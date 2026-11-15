@@ -188,7 +188,7 @@ def headline(ch: dict) -> str:
 
 
 def build_mgmt_card(filing: dict, pages: list[str],
-                    extractor: Callable[[str, dict], MgmtOut] = ai_extract) -> dict:
+                    extractor: Callable[[str, dict], MgmtOut] = ai_extract, enrich: bool = True) -> dict:
     """Management-change card for one filing whose PDF text is loaded."""
     base = {
         "filing_id": filing.get("id"), "ticker": filing.get("ticker"), "company": filing.get("company"),
@@ -210,7 +210,7 @@ def build_mgmt_card(filing: dict, pages: list[str],
     changes = [c for c in (check_change(c, pages, warnings) for c in out.changes[:8]) if c]
     changes.sort(key=lambda c: (not c["key_role"], c["event"] not in ("appointment", "resignation", "retirement")))
     status = "ok" if changes else "could not extract"
-    return {
+    card = {
         **base, "status": status,
         "reason": None if changes else "No change in this filing could be confirmed against its text.",
         "changes": changes, "key_role": any(c["key_role"] for c in changes),
@@ -218,3 +218,113 @@ def build_mgmt_card(filing: dict, pages: list[str],
         "warnings": warnings,
         "ai": {k: meta.get(k) for k in ("model", "tokens_in", "tokens_out", "cached")},
     }
+    return enrich_card(card, pages) if changes and enrich else card
+
+
+# ---------------------------------------------------------------- who they are, and how they left (10h, P6)
+# The headline "Joins from X, was Y" and the exit style. Incoming person: one cheap call reads only the
+# filing's own profile text; Python keeps an item only if it appears in that text. Outgoing person: rules.
+
+class BackgroundOut(BaseModel):
+    person: str
+    came_from: list[str] = []            # organisations named as earlier employers
+    experience_years: int | None = None  # only if the profile states a number of years
+    qualifications: list[str] = []       # degrees, professional qualifications, institutes
+
+
+class BackgroundsOut(BaseModel):
+    people: list[BackgroundOut]
+
+
+BACKGROUND_PROMPT = """Below is the "brief profile" text a company filed about each incoming person.
+For each person give:
+- came_from: the organisations (companies, banks, institutions) named as places they worked before,
+  exactly as printed, at most 4, most recent or most senior first. [] if none are named.
+- experience_years: the total years of experience if the text states a number, else null.
+- qualifications: degrees, professional qualifications and institutes exactly as printed (e.g.
+  "Chartered Accountant", "IIM Bangalore"), at most 3.
+Use only this text. Do not add anything you know from elsewhere.
+
+{text}
+"""
+
+_PLANNED = re.compile(r"retire|superannuat|complet(e|es|ion of|ing) (his|her|their)? ?(term|tenure)|attain(ed|ing)? the age|end of (his|her|their) (term|tenure)", re.I)
+_IMMEDIATE = re.compile(r"with immediate effect|effective immediately", re.I)
+
+
+def _in_text(item: str, quote: str) -> bool:
+    return bool(norm(item)) and f" {norm(item)} " in f" {norm(quote)} "
+
+
+def verify_background(b: BackgroundOut, quote: str) -> dict:
+    """Keep only what is printed in the person's profile text."""
+    came: list[str] = []
+    for c in (c.strip() for c in b.came_from if c.strip() and _in_text(c, quote)):
+        n = norm(c)
+        if not any(n.startswith(norm(k)) or norm(k).startswith(n) for k in came):    # "Dabur" and "Dabur India Ltd" are one
+            came.append(c)
+    came = came[:4]
+    quals = [q.strip() for q in b.qualifications if q.strip() and _in_text(q, quote)][:3]
+    years = b.experience_years if b.experience_years and re.search(rf"\b{b.experience_years}\b", quote) else None
+    return {"came_from": came, "experience_years": years, "qualifications": quals}
+
+
+def exit_style(ch: dict, filing_date: str, text: str) -> tuple[str | None, str | None]:
+    """('planned' | 'immediate' | 'notice' | None, a short note) for a resignation, retirement or cessation."""
+    if ch["event"] not in ("resignation", "retirement", "cessation"):
+        return None, None
+    eff = ch.get("effective_date")
+    blob = f"{ch.get('reason') or ''} {ch['event']}"
+    if ch["event"] == "retirement" or _PLANNED.search(blob):
+        return "planned", "Planned: retirement or end of term" + (f", from {date.fromisoformat(eff):%d %b %Y}".replace(" 0", " ") if eff else "")
+    if _IMMEDIATE.search(text) or (eff and eff <= filing_date[:10]):
+        return "immediate", "Immediate: effective on the day of the filing" + (f" ({ch['reason']})" if ch.get("reason") else "")
+    if eff:
+        return "notice", f"Notice given: effective {date.fromisoformat(eff):%d %b %Y}".replace(" 0", " ")
+    return None, None
+
+
+def background_line(ch: dict) -> str | None:
+    """'Joins from Pfizer, Hindustan Unilever · 22 years · Chartered Accountant' for an incoming person."""
+    if ch["event"] not in ("appointment", "reappointment", "role_change"):
+        return None
+    parts: list[str] = []
+    if ch.get("came_from"):
+        parts.append(("Joins from " if ch["event"] == "appointment" else "Previously ") + ", ".join(ch["came_from"][:3]))
+    if ch.get("experience_years"):
+        parts.append(f"{ch['experience_years']} years' experience")
+    if ch.get("qualifications"):
+        parts.append(ch["qualifications"][0])
+    return " · ".join(parts) or None
+
+
+def enrich_card(card: dict, pages: list[str], ask: Callable[..., Any] | None = None) -> dict:
+    """Add came_from / experience / qualifications (AI, verified) and exit style (rules) to a management card.
+
+    One cheap call for all incoming people who have a profile; none if nobody does. Safe to re-run.
+    """
+    text = "\n".join(pages)
+    people = [c for c in card.get("changes", []) if c.get("profile")]
+    found: dict[str, dict] = {}
+    if people:
+        ask = ask or __import__("engine.llm", fromlist=["ask_json"]).ask_json
+        prompt = BACKGROUND_PROMPT.format(text="\n\n".join(f"PERSON: {c['person']}\nPROFILE: {c['profile']['quote']}" for c in people))
+        meta: dict = {}
+        try:
+            out = ask(prompt, strong=False, validate=lambda o: BackgroundsOut.model_validate(o), use_cache=True, meta=meta,
+                      schema=BackgroundsOut)
+            for b in out.people:
+                match = next((c for c in people if norm(c["person"]) == norm(b.person) or name_in_text(b.person, c["person"])), None)
+                if match:
+                    found[match["person"]] = verify_background(b, match["profile"]["quote"])
+        except (ValueError, RuntimeError, ValidationError):
+            pass                                                   # the card stays as it was
+    for ch in card.get("changes", []):
+        ch.update(found.get(ch["person"], {}))
+        style, note = exit_style(ch, card.get("filing_date") or "", text)
+        ch["exit_style"], ch["exit_note"] = style, note
+        ch["background"] = background_line(ch)
+    first = next((c for c in card.get("changes", []) if c.get("background")), None)
+    card["background"] = f"{first['person']}: {first['background']}" if first else None       # name the person: a card can hold several
+    card["enriched"] = True
+    return card

@@ -24,7 +24,10 @@
    "reason": "Personal reasons and commitments",
    "profile": null,
    "key_role": false,
-   "page": 1
+   "page": 1,
+   "exit_style": "immediate",
+   "exit_note": "Immediate: effective on the day of the filing (Personal reasons and commitments)",
+   "background": null
   }
  ],
  "key_role": false,
@@ -35,5 +38,7 @@
   "tokens_in": 1475,
   "tokens_out": 114,
   "cached": false
- }
+ },
+ "background": null,
+ "enriched": true
 }

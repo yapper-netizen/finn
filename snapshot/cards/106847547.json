@@ -29,7 +29,15 @@
     "summary": "Ritesh Patel holds a BE in Chemical Engineering and has 24 years of extensive experience in the plastic piping systems industry with in-depth knowledge of polymer-based materials."
    },
    "key_role": false,
-   "page": 2
+   "page": 2,
+   "came_from": [],
+   "experience_years": 24,
+   "qualifications": [
+    "BE in Chemical Engineering"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "24 years' experience · BE in Chemical Engineering"
   },
   {
    "event": "appointment",
@@ -47,7 +55,15 @@
     "summary": "Pritesh Shah is a qualified Chartered Accountant since 1998 with over 26 years of progressive experience in Finance and Accounts within the manufacturing industry."
    },
    "key_role": false,
-   "page": 2
+   "page": 2,
+   "came_from": [],
+   "experience_years": 26,
+   "qualifications": [
+    "Qualified Chartered Accountant (CA)"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "26 years' experience · Qualified Chartered Accountant (CA)"
   }
  ],
  "key_role": false,
@@ -58,5 +74,7 @@
   "tokens_in": 1616,
   "tokens_out": 370,
   "cached": true
- }
+ },
+ "background": "Ritesh Patel: 24 years' experience · BE in Chemical Engineering",
+ "enriched": true
 }

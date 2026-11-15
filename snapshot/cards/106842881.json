@@ -29,7 +29,16 @@
     "summary": "Rahul Jain is a qualified Company Secretary with over six years of professional experience in corporate secretarial functions, governance, and regulatory compliances for listed companies."
    },
    "key_role": false,
-   "page": 2
+   "page": 2,
+   "came_from": [],
+   "experience_years": null,
+   "qualifications": [
+    "Company Secretary",
+    "Associate Member of the Institute of Company Secretaries of India (ICSI)"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Company Secretary"
   }
  ],
  "key_role": false,
@@ -40,5 +49,7 @@
   "tokens_in": 1170,
   "tokens_out": 201,
   "cached": true
- }
+ },
+ "background": "Rahul Jain: Company Secretary",
+ "enriched": true
 }

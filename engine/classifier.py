@@ -115,3 +115,42 @@ def classify(filing: dict) -> str:
 def tier_of(category: str) -> str:
     """High / Medium / Low for a category (unknown categories are Low)."""
     return config.CATEGORY_TIER.get(category, "Low")
+
+
+# ---------------------------------------------------------------- why a filing was buried (10h, P2)
+
+_WHY_KIND = {
+    "earnings_call": "A call notice or transcript. The numbers are in the results filing; what management said is in Research.",
+    "investor_meetings": "A schedule of investor meetings. It says who the company meets, not that anything changed.",
+    "agm_egm": "Shareholder-meeting paperwork. Votes are rarely a surprise; it matters only if the agenda changes control or capital.",
+    "postal_ballot": "A shareholder-vote notice. Routine unless it changes capital or control.",
+    "press_release": "General company news with no category that a fund manager acts on.",
+    "unclassified": "Compliance paperwork with no price-relevant content.",
+}
+_WHY_SPECIFIC: list[tuple[re.Pattern, str]] = [
+    (re.compile(p, re.I), why) for p, why in [
+        (r"^trading window", "Trading-window closure: a calendar notice that insiders cannot trade, not news."),
+        (r"^(esop|options to purchase)|allotment of (equity )?shares .*(esop|employee)", "Employee share-option allotment: small, scheduled dilution."),
+        (r"copy of newspaper", "Newspaper copy of a notice the company already filed."),
+        (r"^certificate under sebi|verification|statement of deviation|monitoring agency", "A regulatory compliance certificate."),
+        (r"limited review|report of auditors|auditor'?s? report", "An auditor's report on results already filed."),
+        (r"store opening", "A store opening: too small to change a view of the whole company."),
+        (r"^action\(s\) (taken|initiated)", "A routine order or notice with no serious matter named in its title (mostly tax or GST)."),
+        (r"^(allotment|issue) of securities|^record date", "An allotment or record-date notice with no fund-raising in its title."),
+    ]
+]
+
+
+def buried_reason(filing: dict, kind: str, muted: bool) -> str:
+    """One plain sentence on why a Low-tier filing sits in Routine. Rules only, no AI.
+
+    If the user switched the category off in Settings, say so; else the specific pattern (trading
+    window, ESOP, newspaper copy...), else the category's reason.
+    """
+    if muted:
+        return "You switched this type off in Settings, so it goes to Routine."
+    desc, title = (filing.get("category") or "").strip(), (filing.get("title") or "").strip()
+    for pat, why in _WHY_SPECIFIC:
+        if pat.search(desc) or pat.search(title):
+            return why
+    return _WHY_KIND.get(kind, _WHY_KIND["unclassified"])

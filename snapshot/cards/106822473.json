@@ -24,7 +24,10 @@
    "reason": "Repatriated prematurely on his own request.",
    "profile": null,
    "key_role": false,
-   "page": 1
+   "page": 1,
+   "exit_style": "immediate",
+   "exit_note": "Immediate: effective on the day of the filing (Repatriated prematurely on his own request.)",
+   "background": null
   }
  ],
  "key_role": false,
@@ -35,5 +38,7 @@
   "tokens_in": 650,
   "tokens_out": 116,
   "cached": true
- }
+ },
+ "background": null,
+ "enriched": true
 }

@@ -112,3 +112,28 @@ def test_unknown_window_rejected():
 def test_digest_respects_toggles():
     d = build_digest(sample(), window="7d", toggles={"management_change": False}, now=NOW)
     assert d["counts"]["cards"] == 1 and d["counts"]["routine"] == 2
+
+
+def test_buried_reasons_are_specific_and_honest():
+    from engine.classifier import buried_reason
+    f = lambda cat, title="x": {"category": cat, "title": title}
+    assert "switched this type off" in buried_reason(f("Dividend"), "dividend", True)
+    assert "Trading-window" in buried_reason(f("Trading Window"), "unclassified", False)
+    assert "Employee share-option" in buried_reason(f("ESOP/ESOS/ESPS"), "unclassified", False)
+    assert "call notice or transcript" in buried_reason(f("Analysts/Institutional Investor Meet/Con. Call Updates"), "earnings_call", False)
+    assert "Compliance paperwork" in buried_reason(f("General Updates"), "unclassified", False)
+
+
+def test_routine_items_carry_why_and_digest_groups_them():
+    from datetime import datetime
+    from engine.digest import build_digest
+    now = datetime(2026, 11, 14, 12, 0)
+    filings = [
+        {"ticker": "AAA", "date": "2026-11-14T09:00:00", "title": "Trading window closure", "category": "Trading Window", "id": "1"},
+        {"ticker": "BBB", "date": "2026-11-14T09:30:00", "title": "Change in Director(s)", "category": "Change in Directors/ Key Managerial Personnel/ Auditor/ Compliance Officer/ Share Transfer Agent", "id": "2"},
+        {"ticker": "CCC", "date": "2026-11-14T10:00:00", "title": "Dividend declared", "category": "Dividend", "id": "3"},
+    ]
+    d = build_digest(filings, {}, "24h", {"dividend": False}, now)
+    assert d["cards"][0]["why"] is None
+    assert all(r["why"] for r in d["routine"])
+    assert {(g["kind"], g["muted"], g["count"]) for g in d["routine_groups"]} == {("unclassified", False, 1), ("dividend", True, 1)}

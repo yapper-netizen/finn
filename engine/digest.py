@@ -24,6 +24,16 @@ def _group(ranked: list[dict]) -> dict:
     }
 
 
+def routine_groups(routine: list[dict]) -> list[dict]:
+    """Routine items counted by reason: one row per category, plus one for what the user switched off."""
+    counts: dict[tuple[str, bool], int] = {}
+    for i in routine:
+        key = (i["kind"], bool(i.get("muted")))
+        counts[key] = counts.get(key, 0) + 1
+    rows = [{"kind": k, "muted": m, "count": n} for (k, m), n in counts.items()]
+    return sorted(rows, key=lambda r: (r["muted"], -r["count"], r["kind"]))
+
+
 def build_digest(
     filings: list[dict],
     alerts_by_ticker: dict[str, list[dict]] | None = None,
@@ -52,6 +62,7 @@ def build_digest(
         "as_of": as_of,
         "generated_at": now.isoformat(timespec="seconds"),
         **groups,
+        "routine_groups": routine_groups(groups["routine"]),
         "counts": {
             "cards": len(groups["cards"]),
             "summaries": len(groups["summaries"]),

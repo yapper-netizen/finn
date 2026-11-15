@@ -29,7 +29,15 @@
     "summary": "Prithvi Vachani is a Bentley University graduate and current Vice President at Dixon Technologies who has demonstrated strategic leadership through successful collaborations with companies like boAt."
    },
    "key_role": true,
-   "page": 3
+   "page": 3,
+   "came_from": [],
+   "experience_years": null,
+   "qualifications": [
+    "Bentley University"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Bentley University"
   }
  ],
  "key_role": true,
@@ -40,5 +48,7 @@
   "tokens_in": 7677,
   "tokens_out": 236,
   "cached": true
- }
+ },
+ "background": "Prithvi Vachani: Bentley University",
+ "enriched": true
 }

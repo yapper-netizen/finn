@@ -366,3 +366,4 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-106 | Backup-model verdicts shipped; push after 10g | **Decided** | 10f |
 | D-107 | 10g decisions: Copilot, Pulse, Ask FINN, voice | **Decided** — 1A 2A 3A 4 all 5A 6A | 10g |
 | D-108 | 10g built | **Decided** — /api/ask, /api/pulse, events snapshot | 10g |
+| D-109 | 10h built: P1, P2, P4, P6, P8 | **Decided (trial)** — user keeps or drops each | 10h |

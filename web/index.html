@@ -380,6 +380,44 @@
     .tchip { flex: none; min-width: 34px; height: 26px; border-radius: 99px; display: grid; place-items: center; font-weight: 800; font-size: 13px; background: #eceef2; color: var(--grey); }
     .tchip.up { background: var(--primary-tint); color: var(--primary-deep); } .tchip.down { background: var(--warn-tint); color: var(--warn); }
     .gapnote { color: var(--alert); font-size: 13.5px; font-weight: 600; margin-top: 2px; }
+    .newchip { background: linear-gradient(90deg, #1b6e3a, #2a8f52) !important; color: #fff !important; box-shadow: none !important; }
+    .chip.newchip.sm { padding: 3px 8px; font-size: 12.5px; }
+    html:root .card .chips .chip.newchip { clip-path: none; margin-right: 6px; border-radius: 99px; padding: 0 12px; }
+    .sincebar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; padding: 8px 10px; border-radius: 12px; background: rgba(255,255,255,.14); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+    .sincetxt { font-size: 14px; color: #fff; line-height: 1.3; }
+    .sincebtn { flex: none; min-height: 32px; padding: 0 12px; border-radius: 99px; border: 1px solid rgba(255,255,255,.5); background: transparent; color: #fff; font-weight: 700; font-size: 13px; }
+    .sincebtn[aria-pressed="true"] { background: #fff; color: var(--primary-deep); }
+    .rhint { font-size: 13px; opacity: .8; }
+    .rgroups { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 0 8px; border-bottom: 1px solid var(--border-soft); }
+    .rgroups .rrule { flex: 1 1 100%; margin: 0 0 4px; font-size: 14px; line-height: 1.4; color: var(--text); }
+    .chip.muted.off { background: var(--warn-tint); color: var(--warn); }
+    .whyburied { margin: 4px 0 0; font-size: 14px; line-height: 1.4; color: var(--text-muted); }
+    .inlink { color: var(--primary); font-weight: 700; text-decoration: none; white-space: nowrap; }
+    .pvline { margin: 6px 0 0; font-size: 14px; line-height: 1.4; color: var(--primary-deep); font-weight: 600; }
+    .pvbig { margin: 8px 0 0; font-size: 15px; line-height: 1.3; }
+    .pvbig .meta { display: block; margin-top: 2px; }
+    .pvbig b { font-family: var(--font-head); font-weight: 900; font-size: 28px; color: var(--primary-deep); }
+    .pvbars { display: flex; gap: 6px; align-items: flex-end; height: 100px; margin-top: 14px; }
+    .pvd { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 3px; min-width: 0; }
+    .pvd i { width: 100%; max-width: 34px; border-radius: 6px 6px 3px 3px; background: #dbe6f1; }
+    .pvd i.hot { background: linear-gradient(180deg, #d9534a, var(--alert)); }
+    .pvn { font-size: 13px; font-weight: 800; color: var(--alert); min-height: 16px; }
+    .pvl { font-size: 12.5px; color: var(--text-muted); white-space: nowrap; }
+    .pmbox { margin: 12px 0 4px; padding: 12px 12px 6px; border-radius: 16px; background: linear-gradient(180deg, #f1f8fe, #fff); border: 1px solid rgba(0,93,163,.2); }
+    .pmh { margin: 0 0 4px; }
+    .pmtag { font-size: 12.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--primary-deep); }
+    .pmrow { display: flex; gap: 10px; width: 100%; text-align: left; background: none; border: 0; border-top: 1px solid rgba(0,60,120,.08); padding: 10px 0; align-items: flex-start; }
+    .pmrow:first-of-type { border-top: 0; }
+    .pmrow svg { display: block; width: 100%; height: auto; margin-top: 2px; }
+    .pmask { display: flex; width: 100%; gap: 10px; align-items: center; text-align: left; background: none; border: 0; padding: 4px 0 8px; }
+    .pmask b { font-size: 15px; }
+    .mwho { margin: 6px 0 0; font-size: 15px; line-height: 1.4; font-weight: 700; color: var(--primary-deep); }
+    .rsum .mwho { font-size: 14.5px; margin-top: 4px; }
+    .exitnote { margin: 6px 0 0; font-size: 14px; line-height: 1.4; padding: 6px 10px; border-radius: 10px; background: #eceef2; color: var(--grey); }
+    .exitnote.x-planned { background: var(--ok-tint); color: var(--ok); }
+    .exitnote.x-immediate { background: var(--warn-tint); color: var(--warn); }
+    .lilink { display: flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 10px; padding: 0 12px; border-radius: 12px; border: 1px solid rgba(0,93,163,.25); background: #fff; color: var(--primary-deep); font-weight: 700; font-size: 14.5px; text-decoration: none; }
+    .lilink > span:first-child { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 5px; background: #0a66c2; color: #fff; font-size: 12.5px; font-weight: 900; }
     .dotsbtn { width: 100%; background: none; border: 0; padding: 4px 0; cursor: pointer; }
     .heat { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; }
     .ht { position: relative; min-height: 70px; border: 0; border-radius: 14px; padding: 8px 9px; text-align: left; display: flex; flex-direction: column; justify-content: space-between;
@@ -503,6 +541,10 @@
             </template>
           </button>
           <p class="meta strip-cap" x-text="stripLabel"></p>
+          <div class="sincebar" x-show="visit.prev && data" x-cloak>
+            <span class="sincetxt" x-text="sinceText"></span>
+            <button class="sincebtn" x-show="newCount > 0" :aria-pressed="visit.only" @click="visit.only = !visit.only" x-text="visit.only ? 'Show all' : 'Only new'"></button>
+          </div>
           <button class="briefbtn" @click="toggleBrief()" :aria-pressed="bm.open" :aria-label="bm.speaking ? 'Stop reading the brief' : 'Brief me: hear Today in three sentences'">
             <span class="ico" aria-hidden="true" x-html="iconFor(bm.speaking ? 'stop' : 'speaker')"></span>
             <span x-text="bm.speaking ? 'Stop' : 'Brief me'"></span>
@@ -546,7 +588,7 @@
 
           <!-- High cards, in priority order: tier, then "stock also moved that day", then newest -->
           <div class="section-label" x-show="data.cards.length"><span>What matters</span><span class="cnt" x-text="data.cards.length"></span></div>
-          <template x-for="(c, i) in data.cards" :key="c.ticker + c.id + c.date">
+          <template x-for="(c, i) in shown('cards')" :key="c.ticker + c.id + c.date">
             <article class="card" :class="[c.moved_same_day ? 'alert' : '', i === 0 ? 'lead' : '', hasCard(c) ? 'tappable' : '']"
                      :role="hasCard(c) ? 'button' : null" :tabindex="hasCard(c) ? 0 : null"
                      :aria-label="hasCard(c) ? (c.kind === 'results' ? 'Open results numbers for ' : 'Open management change details for ') + c.ticker : null"
@@ -554,6 +596,7 @@
               <div class="card-strip">
                 <span class="when dt"><span class="ico" aria-hidden="true" x-html="iconFor('calendar')"></span><span class="wtxt"><span class="wd" x-text="fmtDay(c.date)"></span><span class="wsep">, </span><span class="wt" x-text="fmtTime(c.date)"></span></span></span>
                 <div class="chips">
+                  <span class="chip newchip" x-show="isNew(c)">New</span>
                   <span class="chip" x-text="kindLabel(c.kind)"></span>
                   <template x-for="a in c.alerts" :key="a.type">
                     <span class="chip alert" x-text="alertChip(a)"></span>
@@ -571,6 +614,7 @@
               </div>
               <div class="rsum" x-show="c.kind === 'management_change'">
                 <span class="badge" style="margin-right:6px" x-show="c.mgmt && c.mgmt.key_role">Key role</span><span x-text="c.mgmt && c.mgmt.headline ? c.mgmt.headline : 'Who changed, in what role, from when, and their background.'"></span>
+                <span class="mwho block" x-show="c.mgmt && c.mgmt.background" x-text="c.mgmt ? c.mgmt.background : ''"></span>
                 <span class="cue" style="display:flex">See who and why <span aria-hidden="true">›</span></span>
               </div>
               <p class="why alert" x-show="c.moved_same_day">The stock also moved on the day of this filing.</p>
@@ -613,12 +657,13 @@
           <!-- Medium one-liners -->
           <div class="section-label" x-show="data.summaries.length"><span>Also filed</span><span class="cnt soft" x-text="data.summaries.length"></span></div>
           <div class="box" x-show="data.summaries.length">
-            <template x-for="m in data.summaries" :key="m.ticker + m.id + m.date">
+            <template x-for="m in shown('summaries')" :key="m.ticker + m.id + m.date">
               <div class="line">
                 <span class="tile sm" aria-hidden="true" x-html="iconFor(m.kind)"></span>
                 <div class="flex-1 min-w-0">
                   <div class="flex flex-wrap items-center gap-2">
                     <span class="font-bold" x-text="m.ticker"></span>
+                    <span class="chip newchip sm" x-show="isNew(m)">New</span>
                     <span class="chip muted" x-text="kindLabel(m.kind)"></span>
                     <template x-for="a in m.alerts" :key="a.type"><span class="chip alert" x-text="alertChip(a)"></span></template>
                   </div>
@@ -639,16 +684,23 @@
           <!-- Routine (collapsed) -->
           <button class="box routine-btn w-full mt-4 flex items-center justify-between" style="min-height:52px;text-align:left"
                   @click="routineOpen = !routineOpen" :aria-expanded="routineOpen" x-show="data.routine_count > 0">
-            <span class="text-sm" style="color:var(--text-muted)" x-text="'Routine (' + data.routine_count + ')'"></span>
+            <span class="text-sm" style="color:var(--text-muted)"><span x-text="'Routine (' + data.routine_count + ')'"></span><span class="rhint" x-show="!routineOpen"> · tap to see why</span></span>
             <span aria-hidden="true" style="color:var(--text-muted)" x-text="routineOpen ? '▴' : '▾'"></span>
           </button>
           <div class="box mt-2" x-show="routineOpen && data.routine_count > 0" x-cloak>
+            <div class="rgroups">
+              <p class="rrule">Test: would a long-term fund manager change a hold, buy or sell view because of this? For these, no.</p>
+              <template x-for="g in (data.routine_groups || [])" :key="g.kind + g.muted">
+                <span class="chip muted" :class="g.muted ? 'off' : ''" x-text="g.count + ' × ' + kindLabel(g.kind) + (g.muted ? ' (switched off)' : '')"></span>
+              </template>
+            </div>
             <template x-for="r in data.routine" :key="r.ticker + r.id + r.date">
               <div class="line">
                 <div class="flex-1 min-w-0">
                   <span class="font-bold" x-text="r.ticker"></span>
                   <span class="chip muted ml-1" x-text="r.muted ? kindLabel(r.kind) + ' (off)' : kindLabel(r.kind)"></span>
                   <p class="line-title" style="color:var(--text-muted)" x-text="cleanTitle(r)"></p>
+                  <p class="whyburied" x-show="r.why"><span aria-hidden="true">↳</span> <span x-text="r.why"></span> <a href="#" class="inlink" x-show="r.muted" @click.prevent="go('settings')">Change in Settings</a></p>
                   <p class="meta dt"><span class="ico" aria-hidden="true" x-html="iconFor('calendar')"></span><span x-text="fmtDateTime(r.date)"></span></p>
                 </div>
                 <a class="link self-start" x-show="r.pdf_url" :href="r.pdf_url" target="_blank" rel="noopener" aria-label="Open filing">↗</a>
@@ -1132,6 +1184,7 @@
       </label>
       <input id="price" type="range" min="1" max="10" step="0.5" x-model.number="settings.price">
       <p class="meta">Close versus the previous close.</p>
+      <p class="pvline" x-show="pv.data" x-text="pvPriceLine"></p>
     </div>
 
     <div class="section-label">Volume</div>
@@ -1142,6 +1195,18 @@
       </label>
       <input id="volume" type="range" min="1" max="5" step="0.5" x-model.number="settings.volume">
       <p class="meta">Versus the average of the previous 20 trading days.</p>
+      <p class="pvline" x-show="pv.data" x-text="pvVolumeLine"></p>
+    </div>
+
+    <div class="cbox pvbox mt-3" x-show="pv.data">
+      <div class="ctop"><h3>With these limits</h3><span class="meta" x-text="pvSpan"></span></div>
+      <p class="pvbig"><b x-text="pvTotal.n"></b> <span x-text="pvTotal.n === 1 ? 'alert' : 'alerts'"></span><span class="meta" x-text="' · ' + pvTotal.price + ' price + ' + pvTotal.vol + ' volume, across ' + pvTotal.stocks + (pvTotal.stocks === 1 ? ' stock' : ' stocks')"></span></p>
+      <div class="pvbars" role="img" :aria-label="pvAria">
+        <template x-for="d in pvDays" :key="d.date">
+          <div class="pvd"><span class="pvn" x-text="d.n || ''"></span><i :style="'height:' + (d.n ? 10 + Math.round(d.n / pvMax * 44) : 5) + 'px'" :class="d.n ? 'hot' : ''"></i><span class="pvl" x-text="d.label"></span></div>
+        </template>
+      </div>
+      <p class="cnote" x-text="pvNote"></p>
     </div>
 
     <div class="section-label">Filing types you care about</div>
@@ -1231,6 +1296,8 @@
               </div>
               <p class="mname" x-text="ch.person"></p>
               <p class="mrole" x-show="ch.role" x-text="ch.role"></p>
+              <p class="mwho" x-show="ch.background" x-text="ch.background"></p>
+              <p class="exitnote" x-show="ch.exit_note" :class="'x-' + (ch.exit_style || '')"><span aria-hidden="true" x-text="ch.exit_style === 'planned' ? '✓' : ch.exit_style === 'immediate' ? '⚑' : '•'"></span> <span x-text="ch.exit_note"></span></p>
               <p class="mmeta" x-show="ch.previous_role" x-text="'Previously: ' + ch.previous_role"></p>
               <p class="mmeta" x-show="ch.effective_date" x-text="'From ' + fmtDay(ch.effective_date) + ' ' + (ch.effective_date || '').slice(0, 4)"></p>
               <p class="mmeta" x-show="ch.reason" x-text="'Reason: ' + ch.reason"></p>
@@ -1245,12 +1312,15 @@
                 </div>
               </template>
               <p class="na-note" x-show="!ch.profile && ['appointment','reappointment','role_change'].includes(ch.event)">No profile in this filing.</p>
+              <a class="lilink" x-show="['appointment','reappointment','role_change'].includes(ch.event)" :href="linkedinUrl(ch, sheet.card)"
+                 target="_blank" rel="noopener noreferrer">
+                <span aria-hidden="true">in</span><span class="flex-1" x-text="'Search LinkedIn for ' + ch.person"></span><span aria-hidden="true">↗</span></a>
             </div>
           </template>
           <template x-if="sheet.card.warnings.length">
             <ul class="checks mt-2"><template x-for="w in sheet.card.warnings" :key="w"><li><span class="bad" aria-hidden="true">!</span><span x-text="w"></span></li></template></ul>
           </template>
-          <p class="note">Copied from the exchange filing by AI, then checked by FINN: each name, date and profile quote must appear in the filing, or it is not shown. No outside sources.</p>
+          <p class="note">Copied from the exchange filing by AI, then checked by FINN: each name, date, profile quote, earlier employer and qualification must appear in the filing, or it is not shown. The LinkedIn button only opens a search in your browser; FINN reads nothing from LinkedIn. Exit style is read by FINN's rules from the filing's wording and dates.</p>
           <a class="btn inline-flex items-center mt-4" :href="sheet.card.pdf_url" target="_blank" rel="noopener">Open the full filing</a>
         </div>
       </template>
@@ -1260,6 +1330,39 @@
           <p class="ctx" x-text="cardContext(sheet.card)"></p>
           <p class="verdict" x-show="sheet.card.verdict" x-text="sheet.card.verdict"></p>
           <div class="banner warn mt-2" x-show="sheet.card.status === 'partial'" x-text="sheet.card.reason"></div>
+
+          <!-- push meets pull (10h, P8): what management promised that this quarter tests -->
+          <template x-if="sheet.card.promises">
+            <div class="pmbox">
+              <template x-if="sheet.card.promises.available">
+                <div>
+                  <p class="pmh"><span class="pmtag">Versus what they promised</span></p>
+                  <template x-for="p in sheet.card.promises.items" :key="p.id">
+                    <button class="pmrow" @click="openReceipt('promise', p)">
+                      <span class="vchip" :class="'v-' + vClass(p.verdict)" x-text="p.verdict"></span>
+                      <span class="flex-1 min-w-0 text-left">
+                        <span class="line-title block" x-text="p.statement"></span>
+                        <span class="meta block" x-text="p.reason"></span>
+                        <span x-html="p.say_do ? sayDoSvg(p) : ''"></span>
+                      </span>
+                      <span class="chev" aria-hidden="true">›</span>
+                    </button>
+                  </template>
+                  <p class="meta" x-show="!sheet.card.promises.items.length" x-text="'None of management\'s tracked promises is tested by ' + (sheet.card.promises.quarter || 'this quarter') + '.'"></p>
+                  <p class="meta" x-show="sheet.card.promises.more" x-text="'+' + sheet.card.promises.more + ' more in Research.'"></p>
+                  <p class="meta" x-show="sheet.card.promises.next_test" x-text="sheet.card.promises.next_test ? 'Next test: ' + sheet.card.promises.next_test.statement + ' (due ' + sheet.card.promises.next_test.due_label + ').' : ''"></p>
+                  <button class="link" @click="closeCard(); go('research'); pick(sheet.card.ticker)">Open the full promise tracker ›</button>
+                </div>
+              </template>
+              <template x-if="!sheet.card.promises.available">
+                <button class="pmask" @click="closeCard(); go('research'); pick(sheet.card.ticker)">
+                  <span class="spark" aria-hidden="true">✦</span>
+                  <span class="flex-1 text-left"><b>What did they promise?</b><span class="meta block" x-text="'Research ' + sheet.card.ticker + ' to compare this quarter with management\'s own guidance (2 to 5 minutes the first time).'"></span></span>
+                  <span class="chev" aria-hidden="true">›</span>
+                </button>
+              </template>
+            </div>
+          </template>
 
           <template x-for="m in sheet.card.metrics" :key="m.key">
             <div class="mrow">
@@ -1730,6 +1833,16 @@ const CH = {
   },
 };
 
+// "Since you last looked" (10h, P1): the server time (India) of the data the user last saw. Filings
+// newer than that are "new" in the next session. Its own key; nothing leaves the phone.
+const VISIT = 'finn.visit.v1';
+function readVisit() {
+  try { return (JSON.parse(localStorage.getItem(VISIT)) || {}).lastSeen || null; } catch (e) { return null; }
+}
+function writeVisit(iso) {
+  try { localStorage.setItem(VISIT, JSON.stringify({ lastSeen: iso })); } catch (e) { /* private mode: no "new" next time */ }
+}
+
 function finn() {
   return {
     tab: 'today',
@@ -1762,6 +1875,8 @@ function finn() {
     ak: { open: false, ctx: {}, stockCtx: null, thread: [], sugg: [], q: '', busy: false, listening: false },
     vc: { canListen: typeof window !== 'undefined' && !!(window.SpeechRecognition || window.webkitSpeechRecognition), error: null, rec: null, spoken: false },
     pl: { data: null, error: null, sel: null, allExp: false, at: 0 },
+    pv: { data: null, at: 0 },            // last sessions' moves and volume, for the live preview in Settings (10h, P4)
+    visit: { prev: null, only: false },   // "since you last looked" (10h, P1): previous visit's data time, this session's filter
     bm: { open: false, speaking: false, at: -1, canSpeak: typeof window !== 'undefined' && 'speechSynthesis' in window },
     _rsTimer: null,
     _rsSeq: 0,
@@ -1773,12 +1888,63 @@ function finn() {
       this.$watch('settings', () => { this.persist(); this.scheduleLoad(); }, { deep: true });
       fetch('/api/config').then(r => r.json()).then(c => { this.cfg = c; }).catch(() => {});
       this.rstore = readResearchStore();
+      this.visit.prev = readVisit();
+      const leave = () => this.saveVisit();
+      document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') leave(); });
+      window.addEventListener('pagehide', leave);
       this.loadStored();
       this.load();
     },
 
     persist() { writeStore({ window: this.period, settings: this.settings }); },
-    go(t) { if (t !== this.tab) this.stopBrief(); this.tab = t; window.scrollTo({ top: 0 }); if (t === 'pulse') this.loadPulse(); },
+    saveVisit() { if (this.data && this.data.generated_at && !this.data.fallback_used) writeVisit(this.data.generated_at); },
+    isNew(item) { return !!this.visit.prev && item.date > this.visit.prev; },
+    shown(group) { const xs = this.data ? this.data[group] : []; return this.visit.only ? xs.filter(i => this.isNew(i)) : xs; },
+    get newCount() { return this.data && this.visit.prev ? this.data.cards.filter(i => this.isNew(i)).length + this.data.summaries.filter(i => this.isNew(i)).length : 0; },
+    get sinceText() {
+      const p = this.visit.prev; if (!p || !this.data) return '';
+      const d = new Date(p), now = new Date(this.data.generated_at), t = p.slice(11, 16);
+      const sameDay = p.slice(0, 10) === this.data.generated_at.slice(0, 10), yest = (now - d) / 864e5 < 2 && !sameDay;
+      const when = sameDay ? t : yest ? 'yesterday ' + t : this.fmtDay(p);
+      const n = this.newCount;
+      return n ? n + ' new since ' + when + (this.visit.only ? ' (showing only these)' : '') : 'Nothing new since ' + when + '. You are caught up.';
+    },
+    go(t) { if (t !== this.tab) this.stopBrief(); this.tab = t; window.scrollTo({ top: 0 }); if (t === 'pulse') this.loadPulse(); if (t === 'settings') this.loadPreview(); },
+    async loadPreview() {
+      if (this.pv.data && Date.now() - this.pv.at < 5 * 60e3) return;
+      try { const r = await fetch('/api/preview?sessions=7'); if (r.ok) { this.pv.data = await r.json(); this.pv.at = Date.now(); } } catch (e) { /* the sliders still work without it */ }
+    },
+    pvCount(price, volume) {
+      const rows = this.pv.data ? this.pv.data.rows : [];
+      const hit = rows.filter(r => (r.move !== null && Math.abs(r.move) > price) || (r.vol_x !== null && r.vol_x > volume));
+      const pr = r => r.move !== null && Math.abs(r.move) > price, vo = r => r.vol_x !== null && r.vol_x > volume;
+      const nOf = r => (pr(r) ? 1 : 0) + (vo(r) ? 1 : 0);        // a price and a volume alert on one day are two alerts, as on Today
+      return { n: hit.reduce((a, r) => a + nOf(r), 0), price: hit.filter(pr).length, vol: hit.filter(vo).length, stocks: new Set(hit.map(r => r.ticker)).size, hit, nOf };
+    },
+    get pvTotal() { return this.pvCount(this.settings.price, this.settings.volume); },
+    get pvDays() {
+      if (!this.pv.data) return [];
+      const t = this.pvTotal, hit = t.hit;
+      return this.pv.data.sessions.map(d => ({ date: d, n: hit.filter(r => r.date === d).reduce((a, r) => a + t.nOf(r), 0), label: d.slice(8) + ' ' + MONTHS[+d.slice(5, 7) - 1].slice(0, 3) }));
+    },
+    get pvMax() { return Math.max(1, ...this.pvDays.map(d => d.n)); },
+    get pvSpan() { const s = this.pv.data && this.pv.data.sessions; return s && s.length ? s.length + ' trading days to ' + this.fmtDay(s[s.length - 1]) : ''; },
+    get pvAria() { return this.pvDays.map(d => d.label + ': ' + d.n + ' alerts').join(', '); },
+    get pvPriceLine() {
+      const p = this.settings.price, here = this.pvCount(p, 99).n;
+      const alt = [Math.max(1, p - 1), p + 1].filter((x, i, a) => x !== p && a.indexOf(x) === i && x <= 10).map(x => '±' + x + '%: ' + this.pvCount(x, 99).price);
+      return 'At ±' + p + '%, ' + here + (here === 1 ? ' day move' : ' day moves') + ' in the last ' + this.pv.data.sessions.length + ' sessions' + (alt.length ? ' (' + alt.join(', ') + ')' : '') + '.';
+    },
+    get pvVolumeLine() {
+      const v = this.settings.volume, here = this.pvCount(999, v).n;
+      const alt = [Math.max(1, v - 0.5), v + 0.5].filter(x => x !== v && x <= 5).map(x => x + '×: ' + this.pvCount(999, x).vol);
+      return 'At ' + v + '×, ' + here + (here === 1 ? ' volume spike' : ' volume spikes') + (alt.length ? ' (' + alt.join(', ') + ')' : '') + '.';
+    },
+    get pvNote() {
+      const n = this.pvTotal.n, days = this.pv.data.sessions.length;
+      return n === 0 ? 'Nothing would have fired. Lower a limit if you want FINN to speak up more.' :
+        'About ' + (n / days).toFixed(1) + ' a day. If that is too many to read, raise a limit; if you would rather not miss a move, lower it. Past days only: this is not a forecast.';
+    },
     async loadPulse() {
       if (this.pl.data && Date.now() - this.pl.at < 5 * 60e3) return;
       try {
@@ -1925,6 +2091,10 @@ function finn() {
     },
     stopBrief() { if (this.bm.canSpeak) window.speechSynthesis.cancel(); this.bm.speaking = false; this.bm.at = -1; },
 
+    sayDoSvg(p) { return p.say_do ? CH.sayDo(p.say_do, p.verdict) : ''; },
+    linkedinUrl(ch, card) {     // a search the user opens themselves; nothing is fetched from LinkedIn (brief: "e.g. from LinkedIn")
+      return 'https://www.linkedin.com/search/results/people/?keywords=' + encodeURIComponent(ch.person + ' ' + this.shortCompany(card.company || card.ticker || ''));
+    },
     hasCard(c) { return c.kind === 'results' || c.kind === 'management_change'; },
     eventClass(e) { return ['appointment', 'reappointment'].includes(e) ? 'v-delivered' : ['resignation', 'retirement', 'cessation'].includes(e) ? 'v-missed' : 'v-early'; },
 

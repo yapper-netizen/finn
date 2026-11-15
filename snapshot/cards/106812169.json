@@ -29,7 +29,21 @@
     "summary": "Amit Agarwal brings over 22 years of financial experience across major companies and holds professional qualifications as a Chartered Accountant, Cost Accountant, and Company Secretary."
    },
    "key_role": true,
-   "page": 1
+   "page": 1,
+   "came_from": [
+    "Pfizer Limited",
+    "Hindustan Unilever Limited",
+    "Vedanta Resources Limited"
+   ],
+   "experience_years": 22,
+   "qualifications": [
+    "Chartered Accountant",
+    "Cost Accountant",
+    "Company Secretary"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Joins from Pfizer Limited, Hindustan Unilever Limited, Vedanta Resources Limited · 22 years' experience · Chartered Accountant"
   }
  ],
  "key_role": true,
@@ -40,5 +54,7 @@
   "tokens_in": 844,
   "tokens_out": 196,
   "cached": false
- }
+ },
+ "background": "Amit Agarwal: Joins from Pfizer Limited, Hindustan Unilever Limited, Vedanta Resources Limited · 22 years' experience · Chartered Accountant",
+ "enriched": true
 }

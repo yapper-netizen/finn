@@ -29,7 +29,20 @@
     "summary": "Sanjeev Shankaran is a commerce graduate with a PGDM from AIMA Delhi and brings over two decades of experience with major FMCG companies like Dabur and Kellogg's."
    },
    "key_role": false,
-   "page": 2
+   "page": 2,
+   "came_from": [
+    "Dabur",
+    "Kellogs"
+   ],
+   "experience_years": null,
+   "qualifications": [
+    "commerce graduate",
+    "PGDM",
+    "AIMA Delhi"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Joins from Dabur, Kellogs · commerce graduate"
   },
   {
    "event": "role_change",
@@ -42,7 +55,10 @@
    "reason": "Assume the role of Vice President - FMCG",
    "profile": null,
    "key_role": false,
-   "page": 2
+   "page": 2,
+   "exit_style": null,
+   "exit_note": null,
+   "background": null
   },
   {
    "event": "cessation",
@@ -55,7 +71,10 @@
    "reason": "Take up position at subsidiary Avenue E-Commerce Limited",
    "profile": null,
    "key_role": false,
-   "page": 3
+   "page": 3,
+   "exit_style": "notice",
+   "exit_note": "Notice given: effective 16 Nov 2026",
+   "background": null
   }
  ],
  "key_role": false,
@@ -66,5 +85,7 @@
   "tokens_in": 1458,
   "tokens_out": 474,
   "cached": true
- }
+ },
+ "background": "Sanjeev Shankaran: Joins from Dabur, Kellogs · commerce graduate",
+ "enriched": true
 }

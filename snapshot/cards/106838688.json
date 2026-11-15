@@ -24,7 +24,10 @@
    "reason": "Superannuation from the services of the Bank.",
    "profile": null,
    "key_role": false,
-   "page": 1
+   "page": 1,
+   "exit_style": "planned",
+   "exit_note": "Planned: retirement or end of term, from 31 Oct 2026",
+   "background": null
   }
  ],
  "key_role": false,
@@ -35,5 +38,7 @@
   "tokens_in": 877,
   "tokens_out": 128,
   "cached": true
- }
+ },
+ "background": null,
+ "enriched": true
 }

@@ -77,3 +77,19 @@ def test_api_pulse_offline(monkeypatch):
     monkeypatch.setattr(api.events_cache, "get", lambda syms: {"events": [], "as_of": None, "live": False})
     j = TestClient(api.app).get("/api/pulse").json()
     assert len(j["stocks"]) == 18 and "breadth" in j and j["events"] == []
+
+
+def test_alert_history_matches_alert_maths():
+    data = FeedData(filings=[], prices={"TCS": prices(5.0, 3.0), "INFY": prices(-2.0, 0.5)}, fallback_used=False)
+    out = P.alert_history(data, sessions=3)
+    last = [r for r in out["rows"] if r["ticker"] == "TCS" and r["date"] == "2026-11-13"][0]
+    assert last["move"] == 5.0 and last["vol_x"] == 3.0                    # same as check_alerts: close vs prev, volume vs 20-day mean
+    assert len(out["sessions"]) == 3 and out["sessions"][-1] == "2026-11-13"
+    flat = [r for r in out["rows"] if r["date"] == out["sessions"][0] and r["ticker"] == "TCS"][0]
+    assert flat["move"] == 0.0 and flat["vol_x"] == 1.0
+
+
+def test_api_preview_offline():
+    import api
+    j = TestClient(api.app).get("/api/preview?sessions=5").json()
+    assert len(j["sessions"]) == 5 and j["rows"] and {"ticker", "date", "move", "vol_x"} <= set(j["rows"][0])

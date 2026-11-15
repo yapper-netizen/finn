@@ -24,7 +24,10 @@
    "reason": "Retirement in accordance with the Tata Group Governance Guidelines",
    "profile": null,
    "key_role": true,
-   "page": 2
+   "page": 2,
+   "exit_style": "planned",
+   "exit_note": "Planned: retirement or end of term, from 12 Nov 2026",
+   "background": null
   }
  ],
  "key_role": true,
@@ -35,5 +38,7 @@
   "tokens_in": 1187,
   "tokens_out": 125,
   "cached": true
- }
+ },
+ "background": null,
+ "enriched": true
 }

@@ -20,8 +20,8 @@ from engine.brief import brief_me
 from data.symbols import resolve as resolve_symbol, search as search_symbols
 from data.clock import ist_now
 from data.events import EventsCache
-from engine import askfinn, copilot, financials
-from engine.pulse import build_pulse
+from engine import askfinn, copilot, financials, links
+from engine.pulse import alert_history, build_pulse
 from engine import profile as profile_mod
 from engine.research import ENGINE_VERSION
 from engine.research_jobs import ResearchJobs, list_stored, stored as stored_research
@@ -139,7 +139,7 @@ def api_card(filing_id: str):
         return error_response("Unknown filing id.", 404)
     card = cards.stored_card(filing_id)
     if card:
-        return card
+        return _with_promises(card)
     filing = _find_filing(filing_id)
     if filing is None:
         return error_response("Unknown filing id.", 404)
@@ -149,7 +149,17 @@ def api_card(filing_id: str):
         return error_response(str(exc), 400)
     if card.get("retryable"):
         return JSONResponse({**card, "error": card["reason"], "fallback_used": False}, status_code=503)
-    return card
+    return _with_promises(card)
+
+
+def _with_promises(card: dict) -> dict:
+    """A results card plus what management promised that this quarter tests (10h, P8); not stored on the card."""
+    if card.get("kind") != "results" or card.get("status") not in ("ok", "partial") or not card.get("ticker"):
+        return card
+    try:
+        return {**card, "promises": links.promises_for_card(card, stored_research(card["ticker"]))}
+    except Exception:          # the card must still open if the research file is odd
+        return card
 
 
 @app.get("/api/symbols")
@@ -277,6 +287,13 @@ def api_pulse() -> dict:
     """
     data = feed_cache.get()
     return build_pulse(data, events_cache.get(list(config.PORTFOLIO)), ist_now().date())
+
+
+@app.get("/api/preview")
+def api_preview(sessions: int = Query(7, ge=3, le=15)) -> dict:
+    """Day moves and volume multiples for the last N sessions, so Settings can show what a limit
+    would have fired as the sliders move (10h, P4). Python over the same price cache as Today."""
+    return alert_history(feed_cache.get(), sessions)
 
 
 @app.get("/api/research/{ticker}")

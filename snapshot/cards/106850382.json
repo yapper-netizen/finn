@@ -29,7 +29,15 @@
     "summary": "V. N. Srivatsan has around 34 years of professional experience, with about 25 years in the BFSI sector and nearly 10 years in compliance. Before joining the bank, he worked as Head – Compliance: Overseas Banking and Subsidiaries & Data Privacy Officer at ICICI Bank Limited."
    },
    "key_role": false,
-   "page": 3
+   "page": 3,
+   "came_from": [
+    "ICICI Bank Limited"
+   ],
+   "experience_years": 34,
+   "qualifications": [],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Joins from ICICI Bank Limited · 34 years' experience"
   }
  ],
  "key_role": false,
@@ -40,5 +48,7 @@
   "tokens_in": 1416,
   "tokens_out": 267,
   "cached": true
- }
+ },
+ "background": "V.N. Srivatsan: Joins from ICICI Bank Limited · 34 years' experience",
+ "enriched": true
 }

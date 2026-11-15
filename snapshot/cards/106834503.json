@@ -24,7 +24,10 @@
    "reason": "Retirement of Mr. Noel N. Tata as a Director and Chairman of the Company.",
    "profile": null,
    "key_role": true,
-   "page": 3
+   "page": 3,
+   "exit_style": "planned",
+   "exit_note": "Planned: retirement or end of term, from 11 Nov 2026",
+   "background": null
   },
   {
    "event": "appointment",
@@ -37,7 +40,10 @@
    "reason": null,
    "profile": null,
    "key_role": true,
-   "page": 1
+   "page": 1,
+   "exit_style": null,
+   "exit_note": null,
+   "background": null
   },
   {
    "event": "appointment",
@@ -50,7 +56,10 @@
    "reason": "Change in designation / Appointment of Mr. Bahram Vakil as the Chairman of the Company.",
    "profile": null,
    "key_role": true,
-   "page": 3
+   "page": 3,
+   "exit_style": null,
+   "exit_note": null,
+   "background": null
   },
   {
    "event": "appointment",
@@ -68,7 +77,18 @@
     "summary": "Rajiv Dube is an industry veteran with over 40 years of experience across the Tata and Aditya Birla conglomerates. He is an engineer and business management post-graduate who has held high-level executive and board positions."
    },
    "key_role": false,
-   "page": 4
+   "page": 4,
+   "came_from": [
+    "Tata and Aditya Birla",
+    "Tata Motors"
+   ],
+   "experience_years": 40,
+   "qualifications": [
+    "Business Management"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Joins from Tata and Aditya Birla, Tata Motors · 40 years' experience · Business Management"
   },
   {
    "event": "appointment",
@@ -86,7 +106,13 @@
     "summary": "Kalpana Merchant has over 45 years of legal experience, specializing in commercial property, infrastructure, project finance, dispute resolution, and mergers and acquisitions."
    },
    "key_role": false,
-   "page": 4
+   "page": 4,
+   "came_from": [],
+   "experience_years": 45,
+   "qualifications": [],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "45 years' experience"
   }
  ],
  "key_role": true,
@@ -97,5 +123,7 @@
   "tokens_in": 2131,
   "tokens_out": 787,
   "cached": true
- }
+ },
+ "background": "Rajiv Dube: Joins from Tata and Aditya Birla, Tata Motors · 40 years' experience · Business Management",
+ "enriched": true
 }

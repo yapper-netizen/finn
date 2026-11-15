@@ -24,7 +24,10 @@
    "reason": "Existing and growing professional and personal commitments.",
    "profile": null,
    "key_role": false,
-   "page": 1
+   "page": 1,
+   "exit_style": "immediate",
+   "exit_note": "Immediate: effective on the day of the filing (Existing and growing professional and personal commitments.)",
+   "background": null
   }
  ],
  "key_role": false,
@@ -35,5 +38,7 @@
   "tokens_in": 1011,
   "tokens_out": 116,
   "cached": true
- }
+ },
+ "background": null,
+ "enriched": true
 }

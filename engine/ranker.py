@@ -9,7 +9,7 @@ from __future__ import annotations
 from datetime import datetime
 
 import config
-from engine.classifier import classify, tier_of
+from engine.classifier import buried_reason, classify, tier_of
 
 
 def _same_day_alert(filing_date: str, alerts: list[dict]) -> bool:
@@ -27,7 +27,7 @@ def rank_filings(
 
     Each input filing needs `ticker`, `date` (ISO), `title`, `category` (NSE label).
     Added keys: `kind` (our category), `tier` (effective), `base_tier`, `muted`,
-    `alert_chip`, `moved_same_day`.
+    `alert_chip`, `moved_same_day`, `why` (the reason, for Routine items only).
     """
     alerts_by_ticker = alerts_by_ticker or {}
     on = {**config.DEFAULT_TOGGLES, **(toggles or {})}
@@ -43,6 +43,7 @@ def rank_filings(
             "base_tier": base,
             "tier": tier,
             "muted": muted,
+            "why": buried_reason(f, kind, muted) if tier == "Low" else None,
             "alert_chip": (not muted) and base == "High",
             "moved_same_day": _same_day_alert(f["date"], alerts_by_ticker.get(f["ticker"], [])),
         })

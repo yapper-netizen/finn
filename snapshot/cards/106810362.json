@@ -29,7 +29,15 @@
     "summary": "C Jayakumar is an experienced HR leader with over 38 years of expertise in strategic HRM and organizational transformation, currently serving as CHRO at L&T."
    },
    "key_role": false,
-   "page": 2
+   "page": 2,
+   "came_from": [],
+   "experience_years": 38,
+   "qualifications": [
+    "doctorate in leadership"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "38 years' experience · doctorate in leadership"
   },
   {
    "event": "role_change",
@@ -47,7 +55,15 @@
     "summary": "Suresh Kumar Narang has over 40 years of experience in the power sector, including project design, EPC execution, and operations, and has led significant initiatives at L&T since 2010."
    },
    "key_role": false,
-   "page": 2
+   "page": 2,
+   "came_from": [
+    "L&T"
+   ],
+   "experience_years": null,
+   "qualifications": [],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Previously L&T"
   },
   {
    "event": "role_change",
@@ -65,7 +81,18 @@
     "summary": "S Ramkumar is an electrical engineer with over 30 years of experience at L&T, currently leading the Transportation Infrastructure Division."
    },
    "key_role": false,
-   "page": 3
+   "page": 3,
+   "came_from": [
+    "Larsen & Toubro"
+   ],
+   "experience_years": null,
+   "qualifications": [
+    "Electrical Engineer",
+    "NIT Durgapur"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Previously Larsen & Toubro · Electrical Engineer"
   },
   {
    "event": "role_change",
@@ -83,7 +110,15 @@
     "summary": "Sriraman T has over 34 years of experience at L&T Construction, specializing in project execution, contracts, procurement, and business strategy."
    },
    "key_role": false,
-   "page": 3
+   "page": 3,
+   "came_from": [],
+   "experience_years": 34,
+   "qualifications": [
+    "Graduate Engineer Trainee"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "34 years' experience · Graduate Engineer Trainee"
   }
  ],
  "key_role": false,
@@ -94,5 +129,7 @@
   "tokens_in": 2522,
   "tokens_out": 885,
   "cached": false
- }
+ },
+ "background": "C Jayakumar: 38 years' experience · doctorate in leadership",
+ "enriched": true
 }

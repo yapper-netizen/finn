@@ -29,7 +29,16 @@
     "summary": "V. Srinivasa Rangan is an Executive Director at the bank heading various functions, holding a Commerce degree from Delhi University and an ICAI qualification."
    },
    "key_role": true,
-   "page": 4
+   "page": 4,
+   "came_from": [],
+   "experience_years": null,
+   "qualifications": [
+    "Bachelor’s degree in Commerce",
+    "Associate of the Institute of Chartered Accountants of India (ICAI)"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": "Bachelor’s degree in Commerce"
   }
  ],
  "key_role": true,
@@ -40,5 +49,7 @@
   "tokens_in": 1811,
   "tokens_out": 255,
   "cached": true
- }
+ },
+ "background": "V. Srinivasa Rangan: Bachelor’s degree in Commerce",
+ "enriched": true
 }

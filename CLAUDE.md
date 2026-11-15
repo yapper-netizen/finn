@@ -45,7 +45,7 @@ Build:
 - {Windowed digest} ({24h default} / 3d / 7d picker), prioritised, routine collapsed. If 24h is empty, widen to the last day with filings and show a banner (D-046).
 - {Triggered alerts}: volume, price, category toggles (toggle off → Routine; toggle on + High → "alert" chip, D-047)
 - {Results card: Revenue, EBITDA, PBT, PAT with QoQ and YoY}. If EBITDA isn't printed, compute PBT + finance cost + D&A − other income and label it "computed" (D-054). Growth % computed in Python, not by the AI. Banks: Total income / PBT / PAT, EBITDA "n/a for banks" (D-048).
-- {Management change card with incoming person's bio} — use the "brief profile" in the exchange filing, no LinkedIn scraping.
+- {Management change card with incoming person's bio} — use the "brief profile" in the exchange filing, verified earlier employers/qualifications, exit style by rules, a LinkedIn search link the user opens themselves (D-109); no LinkedIn scraping.
 - Pull: "Promise tracker" ({narrative vs numbers}, last 4 quarters: Delivered / Partial / Missed with quote; actual numbers from results filings + XBRL segment/capex/tax/cash facts, D-049, D-105; promised-vs-delivered chart, credibility meter, tone vs numbers, guidance filter) + business and financial snapshot, trajectory, balance sheet & cash (D-104) + bull vs bear.
 Skip (state in writeup): real push notifications, intraday data, logins, full bank metrics (asset quality), annual-report reading, a separate Guidance view (it is a filter).
 
@@ -65,14 +65,14 @@ finn/
 ├─ requirements.txt (runtime, what Render installs), requirements-dev.txt (+ pytest, httpx), pytest.ini, render.yaml
 ├─ config.py           tickers, thresholds, category tiers, model names, cache and API limits
 ├─ data/               prices.py, filings.py, symbols.py, clock.py, docs.py (PDF text), research_docs.py (transcripts + results finder), xbrl.py (NSE XBRL results data, D-103), events.py (NSE event calendar + corporate actions, D-108), equity_list.csv
-├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, brief (Brief me), llm, quotes (quote guard), results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs, financials (statements + ratios from XBRL, no AI), profile (what the company does, backed sentences), copilot (Ask about a stock or filing), askfinn (Ask across the portfolio), pulse
-├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/symbols?q=, /api/research, /api/research/{ticker}, /api/financials/{ticker}, /api/profile/{ticker}, POST /api/ask, /api/pulse
+├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, brief (Brief me), llm, quotes (quote guard), results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs, financials (statements + ratios from XBRL, no AI), profile (what the company does, backed sentences), copilot (Ask about a stock or filing), askfinn (Ask across the portfolio), pulse, links (a results card's matching promises)
+├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/symbols?q=, /api/research, /api/research/{ticker}, /api/financials/{ticker}, /api/profile/{ticker}, POST /api/ask, /api/pulse, /api/preview
 ├─ web/index.html      one file: Today (+ results sheet), Pulse (heatmap, move vs volume, calendar), Research (company hero, snapshot, trajectory, balance sheet & cash charts, promises, bull/bear, receipts), Settings, Ask sheet (Copilot / Ask FINN, voice); look in design/DESIGN_2.md
-├─ tests/              231 pytest tests (no network)
+├─ tests/              243 pytest tests (no network)
 ├─ snapshot/           frozen prices, filings, results cards, research (3 stocks), financials (3 stocks, XBRL), profiles (3 stocks), events.json, committed
 ├─ design/             DESIGN_1.md (screens), DESIGN_2.md (look), previews and brainstorm history
 ├─ briefs/             one hand-off brief per block (see Working loop)
-├─ refresh_snapshot.py, run_filings.py, run_digest.py, run_alerts.py, run_cards.py, run_research.py, smoke_test_llm.py   (scripts)
+├─ refresh_snapshot.py, run_mgmt_enrich.py, run_filings.py, run_digest.py, run_alerts.py, run_cards.py, run_research.py, smoke_test_llm.py   (scripts)
 ├─ plan_revamp_v1/     plan audit record
 └─ brief/              ENAM brief PDFs (private repo for now, D-066)
 ```

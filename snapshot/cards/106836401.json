@@ -24,7 +24,10 @@
    "reason": "Completion of its second consecutive term of five years under mandatory auditor rotation.",
    "profile": null,
    "key_role": false,
-   "page": 1
+   "page": 1,
+   "exit_style": null,
+   "exit_note": null,
+   "background": null
   },
   {
    "event": "auditor_change",
@@ -42,7 +45,15 @@
     "summary": "Deloitte Haskins & Sells Chartered Accountants LLP is an ICAI-registered chartered accountancy firm and part of the Deloitte network, possessing extensive audit and assurance experience with large listed and multinational companies across sectors such as pharmaceuticals, life sciences, and healthcare."
    },
    "key_role": false,
-   "page": 2
+   "page": 2,
+   "came_from": [],
+   "experience_years": null,
+   "qualifications": [
+    "Chartered Accountants"
+   ],
+   "exit_style": null,
+   "exit_note": null,
+   "background": null
   }
  ],
  "key_role": false,
@@ -53,5 +64,7 @@
   "tokens_in": 1534,
   "tokens_out": 359,
   "cached": true
- }
+ },
+ "background": null,
+ "enriched": true
 }
