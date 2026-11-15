@@ -38,6 +38,31 @@ def stored(symbol: str) -> dict | None:
     return None
 
 
+def list_stored() -> list[dict]:
+    """Every research this server can answer at once (D-100): precomputed first, newest run first.
+
+    Small rows only (ticker, company, quarter, date, precomputed), for the Research screen's list.
+    """
+    rows: dict[str, dict] = {}
+    for precomputed, folder in ((True, Path(config.RESEARCH_DIR)), (False, Path(config.CACHE_DIR) / "research")):
+        if not folder.is_dir():
+            continue
+        for path in folder.glob("*.json"):
+            if path.stem in rows:
+                continue
+            try:
+                d = json.loads(path.read_text(encoding="utf-8"))
+            except ValueError:
+                continue
+            if d.get("engine_version") != research_mod.ENGINE_VERSION or d.get("status") != "ready":
+                continue
+            rows[path.stem] = {"ticker": d.get("ticker", path.stem), "company": d.get("company", ""),
+                               "latest_quarter": d.get("latest_quarter"), "generated_at": d.get("generated_at"),
+                               "precomputed": precomputed}
+    newest_first = sorted(rows.values(), key=lambda r: r["generated_at"] or "", reverse=True)
+    return sorted(newest_first, key=lambda r: not r["precomputed"])   # stable: precomputed block first
+
+
 def save(result: dict, snapshot: bool = False) -> None:
     path = _paths(result["ticker"])[0 if snapshot else 1]
     path.parent.mkdir(parents=True, exist_ok=True)

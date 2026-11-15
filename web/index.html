@@ -291,10 +291,23 @@
     /* ---------- research (FE-4) ---------- */
     :root { --ok: #1b6e3a; --ok-tint: #e3f2e8; --warn: #7a4a00; --warn-tint: #fdf1dc; }
     .rsearch { display: flex; gap: 8px; margin-top: 14px; }
-    .rsearch input { flex: 1; min-width: 0; min-height: 46px; border-radius: 12px; border: 1px solid rgba(0,60,120,.18); background: #fff; padding: 0 14px; font-size: 16px; text-transform: uppercase; letter-spacing: .03em; box-shadow: inset 0 1px 2px rgba(0,40,80,.08); }
-    .rsearch input::placeholder { text-transform: none; letter-spacing: 0; color: #8a8a92; }
+    .rsearch input { flex: 1; min-width: 0; min-height: 46px; border-radius: 12px; border: 1px solid rgba(0,60,120,.18); background: #fff; padding: 0 14px; font-size: 16px; box-shadow: inset 0 1px 2px rgba(0,40,80,.08); }
+    .rsearch input::placeholder { color: #8a8a92; }
     .rsearch .btn { min-height: 46px; }
     .rsearch .btn:disabled { opacity: .5; }
+    .rwrap { position: relative; flex: 1; min-width: 0; display: flex; }
+    .rsugg { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 40; background: #fff; border-radius: 16px; border: 1px solid rgba(0,60,120,.08); padding: 6px; box-shadow: 0 2px 4px rgba(0,40,80,.06), 0 18px 34px -14px rgba(0,40,80,.35); max-height: 60vh; overflow-y: auto; }
+    .srow { width: 100%; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 6px 10px; border: 0; background: none; border-radius: 11px; text-align: left; cursor: pointer; }
+    .srow[aria-selected="true"], .srow:hover { background: var(--primary-tint); }
+    .ssym { flex: none; font-family: var(--font-head); font-weight: 800; font-size: 15px; color: var(--primary); letter-spacing: .02em; }
+    .sname { flex: 1; min-width: 0; font-size: 14px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sbadge { flex: none; font-size: 12.5px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: #eceef2; color: var(--grey); }
+    .sbadge.ok { background: var(--ok-tint); color: var(--ok); }
+    .rlists { margin-top: 14px; }
+    .rlabel { font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 8px; }
+    .rclock { width: 15px; height: 15px; color: var(--text-muted); }
+    .rchip[aria-pressed="true"] .rclock { color: #fff; }
+    .rsaved { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-muted); margin: 12px 2px 0; }
     .rchip { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
     .rdot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px var(--ok-tint); }
     .rchip[aria-pressed="true"] .rdot { background: #fff; box-shadow: none; }
@@ -545,18 +558,48 @@
     <div class="topband"><header class="top-head"><div class="wordmark">FINN</div></header></div>
     <div class="mt-5">
       <h1 class="text-2xl">Research</h1>
-      <p class="meta mt-1">Did management do what it said? Promises from earnings calls, checked against the reported numbers. Company filings only.</p>
+      <p class="meta mt-1">Did management do what it said? Promises from earnings calls, checked against the reported numbers. Company filings only. Search any NSE company by name or ticker.</p>
     </div>
 
-    <form class="rsearch" @submit.prevent="research(rs.query)">
-      <label class="sr-only" for="rq">NSE ticker</label>
-      <input id="rq" x-model="rs.query" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="Any NSE ticker, e.g. HAVELLS">
+    <form class="rsearch" @submit.prevent="submitSearch()">
+      <div class="rwrap">
+        <label class="sr-only" for="rq">Company name or NSE ticker</label>
+        <input id="rq" x-model="rs.query" @input="suggest()" @focus="sg.open = true; suggest()" @blur="sg.open = false"
+               @keydown.arrow-down.prevent="moveSugg(1)" @keydown.arrow-up.prevent="moveSugg(-1)" @keydown.escape="sg.open = false"
+               role="combobox" aria-autocomplete="list" aria-controls="rsugg" :aria-expanded="showSugg ? 'true' : 'false'"
+               :aria-activedescendant="sg.active >= 0 ? 'sg-' + sg.active : null"
+               autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search" placeholder="Company or ticker, e.g. IRCTC">
+        <div id="rsugg" class="rsugg" role="listbox" x-show="showSugg" x-cloak>
+          <template x-for="(s, i) in sg.list" :key="s.ticker">
+            <button type="button" class="srow" role="option" :id="'sg-' + i" :aria-selected="i === sg.active ? 'true' : 'false'"
+                    @mousedown.prevent @click="pick(s.ticker)">
+              <span class="ssym" x-text="s.ticker"></span>
+              <span class="sname" x-text="shortCompany(s.company)"></span>
+              <span class="sbadge ok" x-show="isReady(s.ticker)">Ready</span>
+              <span class="sbadge" x-show="!isReady(s.ticker) && s.portfolio">Portfolio</span>
+            </button>
+          </template>
+        </div>
+      </div>
       <button class="btn primary" type="submit" :disabled="!rs.query.trim()">Check</button>
     </form>
-    <div class="flex flex-wrap gap-2 mt-3" x-show="cfg && cfg.research_set">
-      <template x-for="t in (cfg ? cfg.research_set : [])" :key="t">
-        <button class="pill rchip" :aria-pressed="rs.ticker === t" @click="rs.query = t; research(t)"><span class="rdot" aria-hidden="true"></span><span x-text="t"></span></button>
-      </template>
+    <div class="rlists" x-show="readyList.length || recentOnly.length">
+      <div x-show="readyList.length">
+        <p class="rlabel">Ready to open</p>
+        <div class="flex flex-wrap gap-2">
+          <template x-for="r in readyList" :key="r.ticker">
+            <button class="pill rchip" :aria-pressed="rs.ticker === r.ticker" @click="pick(r.ticker)"><span class="rdot" aria-hidden="true"></span><span x-text="r.ticker"></span></button>
+          </template>
+        </div>
+      </div>
+      <div x-show="recentOnly.length" class="mt-3">
+        <p class="rlabel">Recent</p>
+        <div class="flex flex-wrap gap-2">
+          <template x-for="t in recentOnly" :key="t">
+            <button class="pill rchip" :aria-pressed="rs.ticker === t" @click="pick(t)"><svg class="rclock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span x-text="t"></span></button>
+          </template>
+        </div>
+      </div>
     </div>
 
     <!-- running -->
@@ -578,6 +621,7 @@
 
     <template x-if="rs.status === 'ready' && rs.data">
       <div>
+        <p class="rsaved" x-show="rs.fromPhone" x-text="'Kept on this phone · researched ' + fmtDay(rs.fromPhone)"></p>
         <!-- scorecard hero -->
         <div class="hero rhero">
           <p class="meta" x-text="rs.data.ticker + ' · ' + shortCompany(rs.data.company)"></p>
@@ -1018,6 +1062,27 @@ function writeStore(obj) {
   try { localStorage.setItem(STORE, JSON.stringify(obj)); } catch (e) { /* private mode: settings just won't persist */ }
 }
 
+// Research kept on this phone (D-100): recents + copies of finished live runs, so they survive
+// a server restart (Render's disk is wiped). Separate key from settings; ~30 KB per stock.
+const RSTORE = 'finn.research.v1', RSTORE_MAX = 12, RECENT_MAX = 6;
+function readResearchStore() {
+  try {
+    const s = JSON.parse(localStorage.getItem(RSTORE)) || {};
+    return { recent: Array.isArray(s.recent) ? s.recent : [], saved: s.saved && typeof s.saved === 'object' ? s.saved : {} };
+  } catch (e) { return { recent: [], saved: {} }; }
+}
+function writeResearchStore(s) {
+  const keys = Object.keys(s.saved).sort((a, b) => (s.saved[b].at || '').localeCompare(s.saved[a].at || ''));
+  for (const k of keys.slice(RSTORE_MAX)) delete s.saved[k];   // keep the newest copies
+  for (let tries = 0; tries < 4; tries++) {
+    try { localStorage.setItem(RSTORE, JSON.stringify(s)); return; }
+    catch (e) {                                                  // full: drop the oldest copy and retry
+      const ks = Object.keys(s.saved).sort((a, b) => (s.saved[a].at || '').localeCompare(s.saved[b].at || ''));
+      if (!ks.length) return; delete s.saved[ks[0]];
+    }
+  }
+}
+
 function finn() {
   return {
     tab: 'today',
@@ -1039,7 +1104,11 @@ function finn() {
     _ctl: null,
     _timer: null,
     sheet: { open: false, loading: false, slow: false, error: null, card: null, filing: null, formula: null },
-    rs: { query: '', ticker: null, status: 'idle', data: null, steps: [], error: null, retryable: true, side: 'bull', open: {} },
+    rs: { query: '', ticker: null, status: 'idle', data: null, steps: [], error: null, retryable: true, side: 'bull', open: {}, fromPhone: null },
+    sg: { list: [], active: -1, open: false, seq: 0, timer: null },
+    rstore: { recent: [], saved: {} },   // this phone's recents + finished research copies (D-100)
+    stored: [],                          // research the server can open at once
+    engineVersion: null,
     rc: { open: false, kind: null, item: null },
     bm: { open: false, speaking: false, at: -1, canSpeak: typeof window !== 'undefined' && 'speechSynthesis' in window },
     _rsTimer: null,
@@ -1051,6 +1120,8 @@ function finn() {
       if (s.settings) this.settings = { ...DEFAULTS, ...s.settings, off: Array.isArray(s.settings.off) ? s.settings.off : [] };
       this.$watch('settings', () => { this.persist(); this.scheduleLoad(); }, { deep: true });
       fetch('/api/config').then(r => r.json()).then(c => { this.cfg = c; }).catch(() => {});
+      this.rstore = readResearchStore();
+      this.loadStored();
       this.load();
     },
 
@@ -1173,12 +1244,75 @@ function finn() {
     eventClass(e) { return ['appointment', 'reappointment'].includes(e) ? 'v-delivered' : ['resignation', 'retirement', 'cessation'].includes(e) ? 'v-missed' : 'v-early'; },
 
     // ---------- research (FE-4) ----------
+    // ---------- research search: typeahead, recents, kept results (D-100) ----------
+    async loadStored() {
+      try {
+        const j = await (await fetch('/api/research')).json();
+        this.stored = j.stored || []; this.engineVersion = j.engine_version;
+      } catch (e) { /* offline: the phone's own copies still work */ }
+    },
+    isReady(t) { return this.stored.some(r => r.ticker === t) || !!this.rstore.saved[t]; },
+    get readyList() {
+      const out = [...this.stored], seen = new Set(out.map(r => r.ticker));
+      for (const [t, v] of Object.entries(this.rstore.saved)) if (!seen.has(t)) out.push({ ticker: t, at: v.at });
+      const rank = t => { const i = this.rstore.recent.indexOf(t); return i < 0 ? 99 : i; };
+      return out.map((r, i) => [rank(r.ticker), i, r]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map(x => x[2]);   // recently opened first
+    },
+    get recentOnly() { return this.rstore.recent.filter(t => !this.isReady(t)); },
+    get showSugg() { return this.sg.open && this.sg.list.length > 0 && !!this.rs.query.trim(); },
+    suggest() {
+      clearTimeout(this.sg.timer);
+      const q = this.rs.query.trim();
+      if (!q) { this.sg.list = []; this.sg.active = -1; return; }
+      const seq = ++this.sg.seq;
+      this.sg.timer = setTimeout(async () => {
+        try {
+          const j = await (await fetch('/api/symbols?q=' + encodeURIComponent(q))).json();
+          if (seq !== this.sg.seq) return;           // a newer keystroke won
+          this.sg.list = j.results || []; this.sg.active = this.sg.list.length ? 0 : -1;
+        } catch (e) { if (seq === this.sg.seq) this.sg.list = []; }
+      }, 120);
+    },
+    moveSugg(d) {
+      if (!this.sg.list.length) return;
+      this.sg.open = true;
+      this.sg.active = (this.sg.active + d + this.sg.list.length) % this.sg.list.length;
+    },
+    submitSearch() {
+      const pickFrom = this.sg.list.length && this.sg.open ? this.sg.list[Math.max(this.sg.active, 0)] : null;
+      this.pick(pickFrom ? pickFrom.ticker : this.rs.query);
+    },
+    pick(t) {
+      this.sg.open = false; this.sg.list = []; this.sg.active = -1;
+      const el = document.getElementById('rq'); if (el) el.blur();
+      this.research(t);
+    },
+    remember(t) {
+      const s = this.rstore;
+      s.recent = [t, ...s.recent.filter(x => x !== t)].slice(0, RECENT_MAX);
+      writeResearchStore(s); this.rstore = { ...s };
+    },
+    keepOnPhone(j) {
+      if (this.cfg && this.cfg.research_set.includes(j.ticker)) return;   // precomputed: always on the server
+      const s = this.rstore;
+      s.saved[j.ticker] = { at: j.generated_at || new Date().toISOString(), data: j };
+      writeResearchStore(s); this.rstore = { ...s, saved: { ...s.saved } };
+    },
+
     async research(raw) {
       const t = (raw || '').trim().toUpperCase();
       if (!t) return;
       clearTimeout(this._rsTimer);
       const seq = ++this._rsSeq;            // a newer search replaces an older one
-      this.rs = { ...this.rs, query: t, ticker: t, status: 'loading', data: null, steps: [], error: null, open: {}, side: 'bull' };
+      this.rs = { ...this.rs, query: t, ticker: t, status: 'loading', data: null, steps: [], error: null, open: {}, side: 'bull', fromPhone: null };
+      // The server's copy wins; if it lost it (restart), open this phone's copy at once.
+      const kept = this.rstore.saved[t];
+      if (kept && !this.stored.some(r => r.ticker === t) && (!this.engineVersion || kept.data.engine_version === this.engineVersion)) {
+        this.remember(t);
+        this.rs.data = kept.data; this.rs.status = 'ready'; this.rs.fromPhone = kept.at;
+        return;
+      }
+      let ranLive = false;
       const poll = async () => {
         try {
           const r = await fetch('/api/research/' + encodeURIComponent(t));
@@ -1186,11 +1320,19 @@ function finn() {
           if (seq !== this._rsSeq) return;
           if (!r.ok) { this.rs.status = 'error'; this.rs.error = j.error || 'Could not research ' + t + '.'; this.rs.retryable = false; return; }
           this.rs.ticker = j.ticker || t;
-          if (j.status === 'ready') { this.rs.data = j; this.rs.status = 'ready'; return; }
+          this.remember(this.rs.ticker);
+          if (j.status === 'ready') {
+            this.rs.data = j; this.rs.status = 'ready';
+            this.keepOnPhone(j);
+            if (ranLive) this.loadStored();
+            return;
+          }
+          ranLive = true;
           this.rs.status = j.status; this.rs.steps = j.steps || []; this.rs.error = j.error; this.rs.retryable = j.retryable !== false;
           if (j.status === 'pending' || j.status === 'queued') this._rsTimer = setTimeout(poll, 2500);
         } catch (e) {
           if (seq !== this._rsSeq) return;
+          if (kept) { this.rs.data = kept.data; this.rs.status = 'ready'; this.rs.fromPhone = kept.at; return; }
           this.rs.status = 'error'; this.rs.retryable = true;
           this.rs.error = 'No connection to the server. Check your internet and try again.';
         }

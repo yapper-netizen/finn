@@ -16,7 +16,9 @@ import config
 from data import filings as filings_mod
 from engine import cards
 from engine.brief import brief_me
-from engine.research_jobs import ResearchJobs
+from data.symbols import search as search_symbols
+from engine.research import ENGINE_VERSION
+from engine.research_jobs import ResearchJobs, list_stored
 from engine.feed import FeedCache, company_name
 from engine.today import build_today
 
@@ -141,6 +143,25 @@ def api_card(filing_id: str):
     if card.get("retryable"):
         return JSONResponse({**card, "error": card["reason"], "fallback_used": False}, status_code=503)
     return card
+
+
+@app.get("/api/symbols")
+def api_symbols(q: str = Query("", max_length=40)) -> dict:
+    """Typeahead for the Research search (D-100): NSE symbols and company names matching `q`.
+
+    Each row says whether the stock is in the portfolio and whether research is ready to open.
+    """
+    ready = {r["ticker"] for r in list_stored()}
+    prefer = frozenset(config.PORTFOLIO) | frozenset(config.RESEARCH_SET) | frozenset(ready)
+    return {"query": q, "results": [
+        {"ticker": c.symbol, "company": c.name, "portfolio": c.symbol in config.PORTFOLIO, "ready": c.symbol in ready}
+        for c in search_symbols(q, prefer=prefer)]}
+
+
+@app.get("/api/research")
+def api_research_list() -> dict:
+    """Research this server can open at once: precomputed + earlier live runs (D-100)."""
+    return {"engine_version": ENGINE_VERSION, "stored": list_stored()}
 
 
 @app.get("/api/research/{ticker}")
