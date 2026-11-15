@@ -18,7 +18,10 @@ from data import filings as filings_mod
 from engine import cards
 from engine.brief import brief_me
 from data.symbols import resolve as resolve_symbol, search as search_symbols
+from data.clock import ist_now
+from data.events import EventsCache
 from engine import copilot, financials
+from engine.pulse import build_pulse
 from engine import profile as profile_mod
 from engine.research import ENGINE_VERSION
 from engine.research_jobs import ResearchJobs, list_stored, stored as stored_research
@@ -28,6 +31,7 @@ from engine.today import build_today
 WEB_INDEX = Path(__file__).parent / "web" / "index.html"
 card_prebuilder = cards.CardPrebuilder()
 research_jobs = ResearchJobs()
+events_cache = EventsCache()
 feed_cache = FeedCache(on_loaded=card_prebuilder.enqueue_from)
 
 
@@ -248,6 +252,17 @@ def api_ask(body: AskIn):
         return copilot.ask_stock(body.question, symbol, stored_research(symbol), fin)
     except Exception as exc:  # AI quota or network: say so plainly
         return error_response(f"FINN could not answer right now: {str(exc)[:160]}", 503)
+
+
+@app.get("/api/pulse")
+def api_pulse() -> dict:
+    """Pulse (D-107): portfolio heatmap rows, move vs volume, and the next 14 days of events.
+
+    Prices and filings come from the same cache as Today; events from NSE in the background,
+    the saved list answering meanwhile (or when NSE blocks us).
+    """
+    data = feed_cache.get()
+    return build_pulse(data, events_cache.get(list(config.PORTFOLIO)), ist_now().date())
 
 
 @app.get("/api/research/{ticker}")

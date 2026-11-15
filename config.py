@@ -35,6 +35,11 @@ NSE_REFERER = "https://www.nseindia.com/companies-listing/corporate-filings-anno
 # XBRL results listings (D-093): integrated filings (2025 on) and older quarterly results.
 NSE_INTEGRATED_URL = "https://www.nseindia.com/api/integrated-filing-results"
 NSE_FIN_RESULTS_URL = "https://www.nseindia.com/api/corporates-financial-results"
+# Pulse calendar (D-107): board meetings and corporate actions, JSON.
+NSE_EVENTS_URL = "https://www.nseindia.com/api/event-calendar"
+NSE_ACTIONS_URL = "https://www.nseindia.com/api/corporates-corporateActions"
+EVENTS_DAYS = 14                       # calendar look-ahead
+EVENTS_TTL_S = 6 * 3600                # live event list kept this long
 FILINGS_DAYS = 7                       # default look-back window (days)
 EQUITY_LIST_CSV = "data/equity_list.csv"  # NSE's list of listed symbols, refreshed by hand
 

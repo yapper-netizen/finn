@@ -380,6 +380,21 @@
     .tchip { flex: none; min-width: 34px; height: 26px; border-radius: 99px; display: grid; place-items: center; font-weight: 800; font-size: 13px; background: #eceef2; color: var(--grey); }
     .tchip.up { background: var(--primary-tint); color: var(--primary-deep); } .tchip.down { background: var(--warn-tint); color: var(--warn); }
     .gapnote { color: var(--alert); font-size: 13.5px; font-weight: 600; margin-top: 2px; }
+    .dotsbtn { width: 100%; background: none; border: 0; padding: 4px 0; cursor: pointer; }
+    .heat { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; }
+    .ht { position: relative; min-height: 70px; border: 0; border-radius: 14px; padding: 8px 9px; text-align: left; display: flex; flex-direction: column; justify-content: space-between;
+          box-shadow: inset 0 0 0 1px rgba(0,40,80,.06), 0 6px 12px -8px rgba(0,40,80,.35); }
+    .ht b { font-size: 13px; letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ht .hm { font-family: var(--font-head); font-weight: 900; font-size: 18px; line-height: 1.1; }
+    .ht .h5 { font-size: 12.5px; opacity: .85; }
+    .ht.sel { outline: 3px solid var(--primary-deep); outline-offset: 2px; }
+    .hdot { position: absolute; top: 8px; right: 8px; width: 10px; height: 10px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px var(--primary-deep); }
+    .evrow { display: flex; gap: 12px; align-items: center; padding: 9px 0; border-top: 1px solid var(--border-soft); font-size: 14.5px; line-height: 1.35; }
+    .evrow:first-of-type { border-top: 0; }
+    .evd { flex: none; width: 48px; text-align: center; border-radius: 10px; padding: 4px 0; background: var(--primary-tint); color: var(--primary-deep); font-size: 12.5px; line-height: 1.15; font-weight: 700; }
+    .evd b { display: block; font-family: var(--font-head); font-size: 18px; font-weight: 900; }
+    .evd.exp { background: #fff; box-shadow: inset 0 0 0 1.5px rgba(0,93,163,.35); border: 0; }
+    .evd.past { background: #eceef2; color: var(--grey); }
     .askback { z-index: 43; } .asksheet { z-index: 44; display: flex; flex-direction: column; height: 82dvh; }
     .rcback { z-index: 45; } .rcsheet { z-index: 46; }
     .askthread { flex: 1; overflow-y: auto; padding-bottom: 8px; }
@@ -473,11 +488,11 @@
               <p class="meta sub" x-text="subline"></p>
             </div>
           </div>
-          <div class="dots" role="img" :aria-label="stripLabel">
+          <button class="dots dotsbtn" @click="go('pulse')" :aria-label="stripLabel + '. Open Pulse'">
             <template x-for="s in strip" :key="s.t">
               <span class="dot" :class="s.state" :title="s.t"></span>
             </template>
-          </div>
+          </button>
           <p class="meta strip-cap" x-text="stripLabel"></p>
           <button class="briefbtn" @click="toggleBrief()" :aria-pressed="bm.open" :aria-label="bm.speaking ? 'Stop reading the brief' : 'Brief me: hear Today in three sentences'">
             <span class="ico" aria-hidden="true" x-html="iconFor(bm.speaking ? 'stop' : 'speaker')"></span>
@@ -1006,6 +1021,84 @@
     </template>
   </section>
 
+  <!-- ================= PULSE (D-107): glance at the whole portfolio ================= -->
+  <section x-show="tab === 'pulse'" x-cloak>
+    <div class="topband"><header class="top-head"><div class="wordmark">FINN</div></header></div>
+    <div class="mt-5">
+      <h1 class="text-2xl">Pulse</h1>
+      <p class="meta mt-1">Your 18 stocks in ten seconds: how they moved, what crossed your limits, what is coming.</p>
+    </div>
+    <div class="skel finload mt-4" x-show="!pl.data && !pl.error"></div>
+    <div class="fail-box mt-4" x-show="pl.error" x-text="pl.error"></div>
+    <template x-if="pl.data">
+      <div>
+        <div class="hero">
+          <p class="meta" x-text="'Close of ' + fmtDay(pl.data.session_date)"></p>
+          <div class="hero-row mt-1">
+            <span class="big-n" x-text="pl.data.breadth.down > pl.data.breadth.up ? pl.data.breadth.down : pl.data.breadth.up"></span>
+            <div><h2 class="h-rest" x-text="'of ' + pl.data.stocks.length + (pl.data.breadth.down > pl.data.breadth.up ? ' fell' : ' rose')"></h2>
+                 <p class="meta sub" x-text="'average ' + pctTxt(pl.data.breadth.avg_move) + ' on the day'"></p></div>
+          </div>
+          <p class="meta strip-cap" x-text="pulseLine"></p>
+        </div>
+
+        <div class="section-label"><span>Heatmap</span></div>
+        <div class="heat" role="list">
+          <template x-for="r in pl.data.stocks" :key="r.ticker">
+            <button class="ht" role="listitem" :style="heatStyle(r.move)" :class="{ filed: r.filings.length, sel: pl.sel === r.ticker }"
+                    @click="pl.sel = pl.sel === r.ticker ? null : r.ticker" :aria-label="r.ticker + ' ' + pctTxt(r.move) + (r.filings.length ? ', filed today' : '')">
+              <b x-text="r.ticker"></b><span class="hm" x-text="pctTxt(r.move)"></span>
+              <span class="h5" x-text="'5d ' + pctTxt(r.move_5d)"></span>
+              <i class="hdot" x-show="r.filings.length" aria-hidden="true"></i>
+            </button>
+          </template>
+        </div>
+        <template x-if="pulseSel">
+          <div class="cbox mt-3">
+            <div class="ctop"><h3 x-text="pulseSel.ticker + ' · ' + shortCompany(pulseSel.company)"></h3><span class="meta" x-text="'₹' + inr(pulseSel.close)"></span></div>
+            <p class="cnote" x-text="'Day ' + pctTxt(pulseSel.move) + ' · 5 days ' + pctTxt(pulseSel.move_5d) + ' · volume ' + (pulseSel.vol_x ?? '–') + '× its 20-day average'"></p>
+            <template x-for="f in pulseSel.filings" :key="f.title"><p class="cnote" x-text="'Filed: ' + f.title"></p></template>
+            <div class="flex gap-2 mt-3">
+              <button class="btn primary" @click="go('research'); pick(pulseSel.ticker)">Research</button>
+              <button class="btn" @click="go('today')">Today's filings</button>
+            </div>
+          </div>
+        </template>
+        <p class="meta mt-2">Colour = the day's move (green up, red down, deeper = bigger). Dot = a filing that matters landed that day. Tap a stock for details.</p>
+
+        <div class="section-label"><span>Move vs volume</span></div>
+        <div class="cbox">
+          <div class="ctop"><h3>What crossed your limits</h3><span class="meta" x-text="'±' + settings.price + '% · ' + settings.volume + '×'"></span></div>
+          <div x-html="scatter"></div>
+          <p class="cnote" x-text="scatterNote"></p>
+        </div>
+
+        <div class="section-label"><span>Coming up</span></div>
+        <div class="cbox">
+          <div class="ctop"><h3>Next 14 days</h3><span class="meta" x-text="pl.data.events_live ? 'live from NSE' : 'saved list'"></span></div>
+          <template x-for="e in pl.data.events" :key="e.ticker + e.date + e.title">
+            <div class="evrow"><span class="evd" x-html="evDate(e.date)"></span><span class="flex-1"><b x-text="e.ticker"></b> <span x-text="e.title"></span></span></div>
+          </template>
+          <p class="cnote" x-show="!pl.data.events.length">Nothing scheduled with NSE for your stocks in the next 14 days.</p>
+        </div>
+        <div class="cbox" x-show="pl.data.expected.length">
+          <div class="ctop"><h3>Results expected</h3><span class="meta">estimates</span></div>
+          <template x-for="e in pl.data.expected.slice(0, pl.allExp ? 99 : 6)" :key="e.ticker">
+            <div class="evrow"><span class="evd exp" x-html="evDate(e.date)"></span><span class="flex-1"><b x-text="e.ticker"></b> <span class="meta" x-text="e.detail"></span></span></div>
+          </template>
+          <button class="link" x-show="pl.data.expected.length > 6" @click="pl.allExp = !pl.allExp" x-text="pl.allExp ? 'Show fewer' : 'Show all ' + pl.data.expected.length"></button>
+          <p class="cnote">Not announced yet: FINN takes the same quarter's results meeting last year and moves it forward a year.</p>
+        </div>
+        <div class="cbox" x-show="pl.data.recent_events.length">
+          <div class="ctop"><h3>Last 7 days</h3></div>
+          <template x-for="e in pl.data.recent_events" :key="e.ticker + e.date + e.title">
+            <div class="evrow"><span class="evd past" x-html="evDate(e.date)"></span><span class="flex-1"><b x-text="e.ticker"></b> <span x-text="e.title"></span></span></div>
+          </template>
+        </div>
+      </div>
+    </template>
+  </section>
+
   <!-- ================= SETTINGS ================= -->
   <section x-show="tab === 'settings'" x-cloak>
     <div class="topband"><header class="top-head"><div class="wordmark">FINN</div></header></div>
@@ -1340,6 +1433,9 @@
     <button class="tab" :aria-current="tab === 'today' ? 'page' : null" @click="go('today')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Today
     </button>
+    <button class="tab" :aria-current="tab === 'pulse' ? 'page' : null" @click="go('pulse')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>Pulse
+    </button>
     <button class="tab" :aria-current="tab === 'research' ? 'page' : null" @click="go('research')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Research
     </button>
@@ -1490,6 +1586,28 @@ const CH = {
       `<text x="${W - R}" y="${H - 4}" text-anchor="end" font-size="14" font-weight="700" fill="#004172">Revenue growth (YoY) →</text>` +
       `<text x="${L - 34}" y="13" font-size="14" font-weight="700" fill="#004172">↑ ${CH.esc(yLabel)}</text></svg>`;
   },
+  scatter(rows, pT, vT) {             // DB6: day's move (across) vs volume multiple (up), with the user's limits
+    const pts = rows.filter(r => r.move !== null && r.vol_x !== null);
+    if (!pts.length) return '';
+    const W = 320, H = 240, L = 40, R = 12, T = 26, B = 40;
+    const xm = Math.max(...pts.map(r => Math.abs(r.move)), pT) * 1.25, ym = Math.max(...pts.map(r => r.vol_x), vT) * 1.18;
+    const sx = v => L + (v + xm) / (2 * xm) * (W - L - R), sy = v => T + (ym - v) / ym * (H - T - B);
+    let g = `<rect x="${L}" y="${T}" width="${W - L - R}" height="${H - T - B}" fill="#f6f9fc" rx="8"/>`;
+    g += `<rect x="${sx(-pT).toFixed(1)}" y="${sy(vT).toFixed(1)}" width="${(sx(pT) - sx(-pT)).toFixed(1)}" height="${(sy(0) - sy(vT)).toFixed(1)}" fill="#fff"/>`;
+    for (const x of [-pT, pT]) g += `<line x1="${sx(x).toFixed(1)}" x2="${sx(x).toFixed(1)}" y1="${T}" y2="${H - B}" stroke="#b3261e" stroke-dasharray="4 4" stroke-opacity=".7"/>`;
+    g += `<line x1="${L}" x2="${W - R}" y1="${sy(vT).toFixed(1)}" y2="${sy(vT).toFixed(1)}" stroke="#b3261e" stroke-dasharray="4 4" stroke-opacity=".7"/>`;
+    g += `<line x1="${sx(0).toFixed(1)}" x2="${sx(0).toFixed(1)}" y1="${T}" y2="${H - B}" stroke="rgba(0,60,120,.18)"/>`;
+    for (const t of CH.ticks(0, ym, 3)) g += `<text x="${L - 6}" y="${(sy(t) + 4.5).toFixed(1)}" text-anchor="end" font-size="14" fill="#6a6970">${t}×</text>`;
+    for (const t of [-pT, 0, pT]) g += `<text x="${sx(t).toFixed(1)}" y="${H - B + 18}" text-anchor="middle" font-size="14" fill="${t ? '#b3261e' : '#6a6970'}">${t > 0 ? '+' : ''}${t}%</text>`;
+    const hot = r => Math.abs(r.move) > pT || r.vol_x > vT;
+    for (const r of [...pts].sort((a, b) => hot(a) - hot(b))) {
+      const x = sx(r.move), y = sy(r.vol_x), h = hot(r);
+      g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${h ? 6.5 : 4.5}" fill="${h ? '#b3261e' : 'rgba(46,122,180,.75)'}" stroke="#fff" stroke-width="1.5"><title>${CH.esc(r.ticker)}: ${r.move}%, ${r.vol_x}×</title></circle>`;
+      if (h) g += `<text x="${(x + (x > W - 70 ? -9 : 9)).toFixed(1)}" y="${(y + 4.5).toFixed(1)}" text-anchor="${x > W - 70 ? 'end' : 'start'}" font-size="14" font-weight="800" fill="#b3261e" paint-order="stroke" stroke="#fff" stroke-width="4">${CH.esc(r.ticker)}</text>`;
+    }
+    g += `<text x="${W - R}" y="${H - 4}" text-anchor="end" font-size="14" font-weight="700" fill="#004172">Day's move →</text><text x="${L - 34}" y="14" font-size="14" font-weight="700" fill="#004172">↑ Volume ÷ 20-day average</text>`;
+    return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${CH.esc(pts.map(r => r.ticker + ' ' + r.move + '% ' + r.vol_x + 'x').join(', '))}">${g}</svg>`;
+  },
   fmtU(v, unit) {
     if (v === null || v === undefined) return '';
     return unit === 'cr' ? '₹' + CH.num(v, 0) + ' cr' : unit === '% YoY' ? (v > 0 ? '+' : '') + CH.num(v) + '%' : CH.num(v) + '%';
@@ -1612,6 +1730,7 @@ function finn() {
     engineVersion: null,
     rc: { open: false, kind: null, item: null },
     ak: { open: false, ctx: {}, thread: [], sugg: [], q: '', busy: false },
+    pl: { data: null, error: null, sel: null, allExp: false, at: 0 },
     bm: { open: false, speaking: false, at: -1, canSpeak: typeof window !== 'undefined' && 'speechSynthesis' in window },
     _rsTimer: null,
     _rsSeq: 0,
@@ -1628,7 +1747,40 @@ function finn() {
     },
 
     persist() { writeStore({ window: this.period, settings: this.settings }); },
-    go(t) { if (t !== this.tab) this.stopBrief(); this.tab = t; window.scrollTo({ top: 0 }); },
+    go(t) { if (t !== this.tab) this.stopBrief(); this.tab = t; window.scrollTo({ top: 0 }); if (t === 'pulse') this.loadPulse(); },
+    async loadPulse() {
+      if (this.pl.data && Date.now() - this.pl.at < 5 * 60e3) return;
+      try {
+        const r = await fetch('/api/pulse'); const j = await r.json();
+        if (!r.ok) throw new Error(j.error || 'failed');
+        this.pl.data = j; this.pl.error = null; this.pl.at = Date.now();
+      } catch (e) { if (!this.pl.data) this.pl.error = 'Pulse could not load: ' + e.message + '. Open Pulse again to retry.'; }
+    },
+    heatStyle(m) {
+      if (m === null || m === undefined) return 'background:#eceef2;color:#6a6970';
+      const t = Math.min(Math.abs(m) / 4, 1), a = (0.12 + 0.78 * t).toFixed(2);
+      const rgb = m >= 0 ? '27,110,58' : '179,38,30';
+      return `background:rgba(${rgb},${a});color:${t > 0.45 ? '#fff' : (m >= 0 ? '#124d28' : '#7d1a15')}`;
+    },
+    get pulseSel() { return this.pl.data && this.pl.sel ? this.pl.data.stocks.find(r => r.ticker === this.pl.sel) : null; },
+    get pulseLine() {
+      const d = this.pl.data; if (!d) return '';
+      const s = [...d.stocks].filter(r => r.move !== null).sort((a, b) => a.move - b.move);
+      const filed = d.stocks.filter(r => r.filings.length).length;
+      return 'Best ' + s[s.length - 1].ticker + ' ' + this.pctTxt(s[s.length - 1].move) + ', worst ' + s[0].ticker + ' ' + this.pctTxt(s[0].move) +
+        (filed ? '. ' + filed + (filed === 1 ? ' stock' : ' stocks') + ' filed something that matters.' : '.');
+    },
+    get scatter() { return this.pl.data ? CH.scatter(this.pl.data.stocks, this.settings.price, this.settings.volume) : ''; },
+    get scatterNote() {
+      const d = this.pl.data; if (!d) return '';
+      const hot = d.stocks.filter(r => r.move !== null && (Math.abs(r.move) > this.settings.price || (r.vol_x || 0) > this.settings.volume));
+      return (hot.length ? hot.length + ' of ' + d.stocks.length + ' crossed your limits (red): ' + hot.map(r => r.ticker).join(', ') + '.' : 'None crossed your limits on the last session.') +
+        ' Dashed lines move with your Settings; outside the white box is "unusual".';
+    },
+    evDate(iso) {
+      const [y, m, d] = iso.split('-').map(Number);
+      return '<b>' + d + '</b>' + MONTHS[m - 1];
+    },
     setWindow(w) { this.period = w; this.stopBrief(); this.bm.open = false; this.persist(); this.load(); },
     scheduleLoad() { clearTimeout(this._timer); this._timer = setTimeout(() => this.load(), 350); },
     toggleCategory(key) {
