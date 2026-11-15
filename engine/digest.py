@@ -40,6 +40,7 @@ def build_digest(
     window: str = config.DEFAULT_WINDOW,
     toggles: dict[str, bool] | None = None,
     now: datetime | None = None,
+    tiers: dict[str, str] | None = None,
 ) -> dict:
     """Build the digest for one window. `filings` is the flat list across tickers."""
     if window not in config.WINDOWS_HOURS:
@@ -55,7 +56,7 @@ def build_digest(
         inside = [f for f in past if f["date"][:10] == latest_day]
         widened, as_of = True, latest_day
 
-    groups = _group(rank_filings(inside, alerts_by_ticker, toggles))
+    groups = _group(rank_filings(inside, alerts_by_ticker, toggles, tiers))
     return {
         "window": window,
         "widened": widened,

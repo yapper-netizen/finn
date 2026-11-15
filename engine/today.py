@@ -31,11 +31,12 @@ def build_today(
     volume: float = config.VOLUME_MULTIPLE,
     off: set[str] | None = None,
     now: datetime | None = None,
+    tiers: dict[str, str] | None = None,
 ) -> dict:
     """Return the full JSON-ready payload for the Today screen."""
     alerts = _alerts_by_ticker(data, price, volume)
     toggles = {c: False for c in (off or set())}
-    digest = build_digest(data.filings, alerts, window, toggles, now)
+    digest = build_digest(data.filings, alerts, window, toggles, now, tiers)
 
     for group in ("cards", "summaries", "routine"):
         for item in digest[group]:
@@ -46,7 +47,7 @@ def build_today(
     # High/Medium filings on the alert day suppress the stock from the alert-only list.
     filed_days = {
         (i["ticker"], i["date"][:10])
-        for i in rank_filings(data.filings, alerts, toggles)
+        for i in rank_filings(data.filings, alerts, toggles, tiers)
         if i["tier"] != "Low"
     }
     alert_only = [

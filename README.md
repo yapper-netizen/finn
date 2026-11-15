@@ -71,7 +71,7 @@ Free tiers only (₹0). Each document is read by AI once and the answer is cache
 ```bash
 py -m pip install -r requirements-dev.txt
 py -m uvicorn api:app --port 8000      # open http://localhost:8000 (put GEMINI_API_KEY in .env for live AI)
-py -m pytest -q                        # 243 tests, no network
+py -m pytest -q                        # 245 tests, no network
 ```
 
 Useful scripts: `py refresh_snapshot.py` (freeze prices, filings, cards), `py run_research.py POLYCAB --save` (rebuild one research file), `py run_mgmt_enrich.py` (management-card backgrounds), `py smoke_test_llm.py` (check the models respond). Without a key, everything precomputed still works.

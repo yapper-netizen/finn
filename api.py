@@ -104,17 +104,26 @@ def api_digest(
     price: float = Query(config.PRICE_MOVE_PCT, ge=config.PRICE_PCT_RANGE[0], le=config.PRICE_PCT_RANGE[1]),
     volume: float = Query(config.VOLUME_MULTIPLE, ge=config.VOLUME_X_RANGE[0], le=config.VOLUME_X_RANGE[1]),
     off: str = "",
+    tiers: str = "",
 ):
-    """Today data. `off` = comma-separated categories the user switched off (go to Routine)."""
+    """Today data. `off` = categories switched off (go to Routine). `tiers` = the user's own tier per
+    category, "results:Medium,dividend:High" (Settings; High / Medium / Low = Routine)."""
     if window not in config.WINDOWS_HOURS:
         return error_response(f"Unknown window '{window}'. Use one of: {', '.join(config.WINDOWS_HOURS)}.")
     off_set = {c.strip() for c in off.split(",") if c.strip()}
     unknown = sorted(off_set - set(config.CATEGORY_TIER))
     if unknown:
         return error_response(f"Unknown categories: {', '.join(unknown)}.")
+    tier_map: dict[str, str] = {}
+    for part in (p for p in tiers.split(",") if p.strip()):
+        cat, _, tier = part.partition(":")
+        cat, tier = cat.strip(), tier.strip()
+        if cat not in config.CATEGORY_TIER or tier not in config.TIER_ORDER:
+            return error_response(f"Bad tier setting '{part.strip()[:40]}'. Use category:High|Medium|Low.")
+        tier_map[cat] = tier
     data = feed_cache.get()
     data = replace(data, filings=cards.apply_promotions(data.filings))   # board outcomes holding results (D-087)
-    payload = cards.attach_summaries(build_today(data, window=window, price=price, volume=volume, off=off_set))
+    payload = cards.attach_summaries(build_today(data, window=window, price=price, volume=volume, off=off_set, tiers=tier_map))
     payload["brief"] = brief_me(payload)   # "Brief me": 3 sentences, templates only (D-091)
     return payload
 

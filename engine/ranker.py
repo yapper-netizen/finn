@@ -1,7 +1,8 @@
 """Ranker (EN-3) + category toggles (EN-18): classify, assign a tier, order by what matters.
 
 Order: tier (High > Medium > Low), then "also moved/spiked that day" boost, then newest.
-A toggled-off category drops to Low (Routine). A High category that is toggled on gets an
+A toggled-off category, or one the user moved to Routine, drops to Low (Routine). The user can also
+raise or lower a category's tier in Settings (`tiers`); a category they put in High gets the "alert" chip. A High category that is toggled on gets an
 "alert" chip (D-047). The price/volume boost never changes the tier, only the order and a flag.
 """
 from __future__ import annotations
@@ -22,6 +23,7 @@ def rank_filings(
     filings: list[dict],
     alerts_by_ticker: dict[str, list[dict]] | None = None,
     toggles: dict[str, bool] | None = None,
+    tiers: dict[str, str] | None = None,
 ) -> list[dict]:
     """Return filings enriched with category/tier/chips, most important first.
 
@@ -34,8 +36,9 @@ def rank_filings(
     out: list[dict] = []
     for f in filings:
         kind = classify(f)
-        base = tier_of(kind)
-        muted = not on.get(kind, True)
+        override = (tiers or {}).get(kind)             # the user's own tier for this type (Settings, 10 Nov+)
+        base = override if override in config.TIER_ORDER else tier_of(kind)
+        muted = (not on.get(kind, True)) or override == "Low"
         tier = "Low" if muted else base
         out.append({
             **f,

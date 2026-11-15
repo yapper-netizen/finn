@@ -68,7 +68,7 @@ finn/
 ├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, brief (Brief me), llm, quotes (quote guard), results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs, financials (statements + ratios from XBRL, no AI), profile (what the company does, backed sentences), copilot (Ask about a stock or filing), askfinn (Ask across the portfolio), pulse, links (a results card's matching promises)
 ├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/symbols?q=, /api/research, /api/research/{ticker}, /api/financials/{ticker}, /api/profile/{ticker}, POST /api/ask, /api/pulse, /api/preview
 ├─ web/index.html      one file: Today (+ results sheet), Pulse (heatmap, move vs volume, calendar), Research (company hero, snapshot, trajectory, balance sheet & cash charts, promises, bull/bear, receipts), Settings, Ask sheet (Copilot / Ask FINN, voice); look in design/DESIGN_2.md
-├─ tests/              243 pytest tests (no network)
+├─ tests/              245 pytest tests (no network)
 ├─ snapshot/           frozen prices, filings, results cards, research (3 stocks), financials (3 stocks, XBRL), profiles (3 stocks), events.json, committed
 ├─ design/             DESIGN_1.md (screens), DESIGN_2.md (look), previews and brainstorm history
 ├─ briefs/             one hand-off brief per block (see Working loop)

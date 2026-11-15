@@ -117,7 +117,7 @@ def test_digest_respects_toggles():
 def test_buried_reasons_are_specific_and_honest():
     from engine.classifier import buried_reason
     f = lambda cat, title="x": {"category": cat, "title": title}
-    assert "switched this type off" in buried_reason(f("Dividend"), "dividend", True)
+    assert "moved this type to Routine" in buried_reason(f("Dividend"), "dividend", True)
     assert "Trading-window" in buried_reason(f("Trading Window"), "unclassified", False)
     assert "Employee share-option" in buried_reason(f("ESOP/ESOS/ESPS"), "unclassified", False)
     assert "call notice or transcript" in buried_reason(f("Analysts/Institutional Investor Meet/Con. Call Updates"), "earnings_call", False)
@@ -137,3 +137,24 @@ def test_routine_items_carry_why_and_digest_groups_them():
     assert d["cards"][0]["why"] is None
     assert all(r["why"] for r in d["routine"])
     assert {(g["kind"], g["muted"], g["count"]) for g in d["routine_groups"]} == {("unclassified", False, 1), ("dividend", True, 1)}
+
+
+def test_user_tiers_move_a_category_up_down_or_to_routine():
+    f = {"ticker": "AAA", "date": "2026-11-14T09:00:00", "title": "Dividend declared", "category": "Dividend", "id": "1"}
+    assert rank_filings([f])[0]["tier"] == "Medium"
+    up = rank_filings([f], tiers={"dividend": "High"})[0]
+    assert up["tier"] == "High" and up["alert_chip"]                      # High by the user's choice gets the alert chip
+    down = rank_filings([f], tiers={"dividend": "Low"})[0]
+    assert down["tier"] == "Low" and down["muted"] and "moved this type to Routine" in down["why"]
+    results = {"ticker": "AAA", "date": "2026-11-14T09:00:00", "title": "Outcome of Board Meeting - financial results", "category": "Outcome of Board Meeting", "id": "2"}
+    assert rank_filings([results], tiers={"results": "Medium"})[0]["tier"] == "Medium"
+
+
+def test_api_digest_tiers_param_and_validation():
+    from fastapi.testclient import TestClient
+    import api
+    c = TestClient(api.app)
+    assert c.get("/api/digest?window=7d&tiers=nonsense:High").status_code == 400
+    assert c.get("/api/digest?window=7d&tiers=dividend:Urgent").status_code == 400
+    ok = c.get("/api/digest?window=7d&tiers=press_release:High,earnings_call:High")
+    assert ok.status_code == 200 and "cards" in ok.json()

@@ -148,7 +148,7 @@ def buried_reason(filing: dict, kind: str, muted: bool) -> str:
     window, ESOP, newspaper copy...), else the category's reason.
     """
     if muted:
-        return "You switched this type off in Settings, so it goes to Routine."
+        return "You moved this type to Routine in Settings, so it sits here."
     desc, title = (filing.get("category") or "").strip(), (filing.get("title") or "").strip()
     for pat, why in _WHY_SPECIFIC:
         if pat.search(desc) or pat.search(title):

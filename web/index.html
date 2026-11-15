@@ -418,6 +418,12 @@
     .exitnote.x-immediate { background: var(--warn-tint); color: var(--warn); }
     .lilink { display: flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 10px; padding: 0 12px; border-radius: 12px; border: 1px solid rgba(0,93,163,.25); background: #fff; color: var(--primary-deep); font-weight: 700; font-size: 14.5px; text-decoration: none; }
     .lilink > span:first-child { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 5px; background: #0a66c2; color: #fff; font-size: 12.5px; font-weight: 900; }
+    .tierrow { gap: 8px; align-items: center; }
+    .tierseg { display: inline-flex; flex: none; border-radius: 10px; background: #eef2f7; padding: 3px; gap: 2px; }
+    .tierseg button { min-height: 44px; min-width: 54px; padding: 0 8px; border: 0; border-radius: 8px; background: transparent; font-size: 13.5px; font-weight: 600; color: var(--text-muted); }
+    .tierseg button.dflt { box-shadow: inset 0 -2px 0 rgba(0,93,163,.35); }
+    .tierseg button[aria-pressed="true"] { background: var(--primary); color: #fff; box-shadow: 0 3px 6px -2px rgba(0,93,163,.5); }
+    .tmoved { display: block; width: fit-content; margin-top: 4px; font-size: 12.5px; }
     .dotsbtn { width: 100%; background: none; border: 0; padding: 4px 0; cursor: pointer; }
     .heat { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; }
     .ht { position: relative; min-height: 70px; border: 0; border-radius: 14px; padding: 8px 9px; text-align: left; display: flex; flex-direction: column; justify-content: space-between;
@@ -691,14 +697,14 @@
             <div class="rgroups">
               <p class="rrule">Test: would a long-term fund manager change a hold, buy or sell view because of this? For these, no.</p>
               <template x-for="g in (data.routine_groups || [])" :key="g.kind + g.muted">
-                <span class="chip muted" :class="g.muted ? 'off' : ''" x-text="g.count + ' × ' + kindLabel(g.kind) + (g.muted ? ' (switched off)' : '')"></span>
+                <span class="chip muted" :class="g.muted ? 'off' : ''" x-text="g.count + ' × ' + kindLabel(g.kind) + (g.muted ? ' (moved by you)' : '')"></span>
               </template>
             </div>
             <template x-for="r in data.routine" :key="r.ticker + r.id + r.date">
               <div class="line">
                 <div class="flex-1 min-w-0">
                   <span class="font-bold" x-text="r.ticker"></span>
-                  <span class="chip muted ml-1" x-text="r.muted ? kindLabel(r.kind) + ' (off)' : kindLabel(r.kind)"></span>
+                  <span class="chip muted ml-1" x-text="r.muted ? kindLabel(r.kind) + ' (moved by you)' : kindLabel(r.kind)"></span>
                   <p class="line-title" style="color:var(--text-muted)" x-text="cleanTitle(r)"></p>
                   <p class="whyburied" x-show="r.why"><span aria-hidden="true">↳</span> <span x-text="r.why"></span> <a href="#" class="inlink" x-show="r.muted" @click.prevent="go('settings')">Change in Settings</a></p>
                   <p class="meta dt"><span class="ico" aria-hidden="true" x-html="iconFor('calendar')"></span><span x-text="fmtDateTime(r.date)"></span></p>
@@ -1210,20 +1216,25 @@
     </div>
 
     <div class="section-label">Filing types you care about</div>
-    <p class="meta mb-2">Switch a type off and its filings go to Routine.</p>
+    <p class="meta mb-2">Decide where each type of filing goes on Today: a <b>card</b> (High), a <b>one-liner</b> (Medium) or <b>Routine</b>. FINN's own choice is marked.</p>
     <template x-for="tier in ['High', 'Medium', 'Low']" :key="tier">
       <div>
-        <p class="meta mt-3 mb-1" style="font-weight:700" x-text="tier === 'High' ? 'Can change a view' : tier === 'Medium' ? 'Worth a line' : 'Usually routine'"></p>
+        <p class="meta mt-3 mb-1" style="font-weight:700" x-text="tier === 'High' ? 'FINN puts these on a card' : tier === 'Medium' ? 'FINN gives these a line' : 'FINN calls these routine'"></p>
         <div class="box">
           <template x-for="c in categoriesByTier(tier)" :key="c.key">
-            <div class="setting-row">
-              <span x-text="kindLabel(c.key)"></span>
-              <button class="switch" role="switch" :aria-checked="!settings.off.includes(c.key)" :aria-label="kindLabel(c.key)" @click="toggleCategory(c.key)"></button>
+            <div class="setting-row tierrow">
+              <span class="flex-1 min-w-0"><span x-text="kindLabel(c.key)"></span><span class="chip muted tmoved" x-show="settings.tiers[c.key]" x-text="'moved from ' + tierName(c.tier)"></span></span>
+              <div class="tierseg" role="group" :aria-label="'Where ' + kindLabel(c.key) + ' goes'">
+                <template x-for="t in ['High', 'Medium', 'Low']" :key="t">
+                  <button :aria-pressed="tierOf(c) === t" :class="t === c.tier ? 'dflt' : ''" @click="setTier(c.key, t)" x-text="tierName(t)"></button>
+                </template>
+              </div>
             </div>
           </template>
         </div>
       </div>
     </template>
+    <button class="btn mt-3" x-show="Object.keys(settings.tiers).length" @click="settings.tiers = {}">Reset filing types to FINN's defaults</button>
 
     <div class="section-label">Your portfolio</div>
     <div class="flex flex-wrap gap-2" x-show="cfg">
@@ -1580,7 +1591,7 @@
 
 <script>
 const STORE = 'finn.v1';
-const DEFAULTS = { price: 3, volume: 2, off: [] };   // matches config.py (D-007, D-077)
+const DEFAULTS = { price: 3, volume: 2, off: [], tiers: {} };   // matches config.py (D-007, D-077)
 const KIND_LABELS = {
   results: 'Results', management_change: 'Management change', m_and_a: 'M&A', litigation: 'Litigation',
   credit_rating: 'Credit rating', pledging: 'Pledging', fund_raise: 'Fund raise', capex: 'Capex',
@@ -1884,7 +1895,11 @@ function finn() {
     init() {
       const s = readStore();
       if (s.window && ['24h', '3d', '7d'].includes(s.window)) this.period = s.window;
-      if (s.settings) this.settings = { ...DEFAULTS, ...s.settings, off: Array.isArray(s.settings.off) ? s.settings.off : [] };
+      if (s.settings) {
+        const tiers = s.settings.tiers && typeof s.settings.tiers === 'object' ? { ...s.settings.tiers } : {};
+        for (const k of (Array.isArray(s.settings.off) ? s.settings.off : [])) tiers[k] = 'Low';   // old "switch off" = Routine
+        this.settings = { ...DEFAULTS, ...s.settings, off: [], tiers };
+      }
       this.$watch('settings', () => { this.persist(); this.scheduleLoad(); }, { deep: true });
       fetch('/api/config').then(r => r.json()).then(c => { this.cfg = c; }).catch(() => {});
       this.rstore = readResearchStore();
@@ -1985,7 +2000,15 @@ function finn() {
       off.has(key) ? off.delete(key) : off.add(key);
       this.settings.off = [...off];
     },
-    resetSettings() { this.settings = { ...DEFAULTS, off: [] }; },
+    resetSettings() { this.settings = { ...DEFAULTS, off: [], tiers: {} }; },
+    tierName(t) { return t === 'High' ? 'Card' : t === 'Medium' ? 'Line' : 'Routine'; },
+    tierOf(c) { return this.settings.tiers[c.key] || c.tier; },
+    setTier(key, t) {                      // choosing FINN's own tier clears the override
+      const def = this.cfg && this.cfg.categories.find(c => c.key === key);
+      const next = { ...this.settings.tiers };
+      if (def && def.tier === t) delete next[key]; else next[key] = t;
+      this.settings.tiers = next;
+    },
     categoriesByTier(tier) { return this.cfg ? this.cfg.categories.filter(c => c.tier === tier) : []; },
 
     async load() {
@@ -1995,7 +2018,7 @@ function finn() {
       this.error = null; this.slow = false;
       if (first) this.loading = true; else this.refreshing = true;
       const slowTimer = setTimeout(() => { this.slow = true; }, 4000);
-      const q = new URLSearchParams({ window: this.period, price: this.settings.price, volume: this.settings.volume, off: this.settings.off.join(',') });
+      const q = new URLSearchParams({ window: this.period, price: this.settings.price, volume: this.settings.volume, off: '', tiers: Object.entries(this.settings.tiers).map(([k, t]) => k + ':' + t).join(',') });
       try {
         const r = await fetch('/api/digest?' + q, { signal: ctl.signal });
         const j = await r.json();
