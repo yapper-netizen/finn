@@ -54,8 +54,8 @@ Skip (state in writeup): real push notifications, intraday data, logins, full ba
 - SQLite [single-file database] as cache: each document processed by AI once
 - Frontend: single HTML page, Tailwind CSS + Alpine.js, mobile-first
 - AI routing (D-060, D-061; free tier only, no billing): cheap = `gemini-3.5-flash-lite` (PDF number extraction, quotes, leftovers), strong = `gemini-3.5-flash` (it thinks: promised-vs-delivered verdicts, bull/bear), fallback = `gemini-3.1-flash-lite`. All calls go through `engine/llm.py` (retry once, fallback, token log). Model names live in `config.py`; Google retires models often, so re-run `py smoke_test_llm.py` when a call 404s. Rules, not AI, for alerts and classification.
-- Data: yfinance (.NS) {EOD price & volume}; **NSE corporate-announcements API** {corporate announcements} (BSE's API blocks scripts, D-063/D-064); screener.in links {annual reports, transcripts}
-- Deploy: Render free tier, live at https://finn-viku.onrender.com (`render.yaml`, Python 3.12.8 pinned, auto-deploys on every push to main, UptimeRobot pings /health every 5 min). Keys in .env locally; Render needs none yet.
+- Data: yfinance (.NS) {EOD price & volume}; **NSE corporate-announcements API** {corporate announcements} (BSE's API blocks scripts, D-063/D-064); the same NSE API gives {concall transcripts} and results filings for research (D-079); when a transcript filing is only a cover letter, FINN follows the PDF link inside it to the company's own site (https, public host, PDF only)
+- Deploy: Render free tier, live at https://finn-viku.onrender.com (`render.yaml`, Python 3.12.8 pinned, auto-deploys on every push to main, UptimeRobot pings /health every 5 min). Keys in .env locally; GEMINI_API_KEY is set in the Render dashboard (live cards and live research).
 - Save a JSON snapshot of fetched data so the demo works if a site blocks us (committed under `snapshot/`; Render's disk is wiped on restart).
 
 ## Folder architecture
@@ -64,20 +64,21 @@ finn/
 ├─ CLAUDE.md, PLAN.md, DECISIONS.md, README.md (to write), .env (ignored), .env.example, .gitignore
 ├─ requirements.txt (runtime, what Render installs), requirements-dev.txt (+ pytest, httpx), pytest.ini, render.yaml
 ├─ config.py           tickers, thresholds, category tiers, model names, cache and API limits
-├─ data/               prices.py, filings.py, symbols.py, clock.py, equity_list.csv   (plumbing; docs.py to write)
-├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, llm   (brains; cards.py, research.py to write)
-├─ api.py              FastAPI: /, /health, /api/digest, /api/config (more endpoints to write)
-├─ web/index.html      one file: Today, Research (stub), Settings; look in design/DESIGN_2.md
-├─ tests/              86 pytest tests (no network)
-├─ snapshot/           frozen prices + filings, committed
+├─ data/               prices.py, filings.py, symbols.py, clock.py, docs.py (PDF text), research_docs.py (transcripts + results finder), equity_list.csv
+├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, llm, results (card extractor), cards, research (promise tracker, bull/bear), research_jobs
+├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/research/{ticker}
+├─ web/index.html      one file: Today (+ results sheet), Research (scorecard, receipts, bull/bear), Settings; look in design/DESIGN_2.md
+├─ tests/              148 pytest tests (no network)
+├─ snapshot/           frozen prices, filings, results cards, research (3 stocks), committed
 ├─ design/             DESIGN_1.md (screens), DESIGN_2.md (look), previews and brainstorm history
 ├─ briefs/             one hand-off brief per block (see Working loop)
-├─ run_filings.py, run_digest.py, run_alerts.py, smoke_test_llm.py   (run-and-see scripts)
+├─ run_filings.py, run_digest.py, run_alerts.py, run_cards.py, run_research.py, smoke_test_llm.py   (run-and-see scripts)
 ├─ plan_revamp_v1/     plan audit record
 └─ brief/              ENAM brief PDFs (private repo for now, D-066)
 ```
 Run: `py -m uvicorn api:app --port 8000` (or the `finn-api` entry in `.claude/launch.json` via preview_start) · tests: `py -m pytest -q` · `py run_digest.py 7d` · cards: `py run_cards.py` (`--save` rebuilds `snapshot/cards/` from the cached AI answers).
 Before the code freeze (D-078): `py run_filings.py 7`, then `py run_cards.py --save`, check new cards, commit. New results filings are also prebuilt in the background on the server when GEMINI_API_KEY is set.
+Research: `py run_research.py POLYCAB --save` rebuilds `snapshot/research/POLYCAB.json` (AI answers cached in cache.db; a new ticker costs ~7 AI calls, 1-3 min).
 
 ## Draft portfolio (verify each loads in yfinance; no ITC)
 RELIANCE, HDFCBANK, TCS, INFY, PIDILITIND, LT, BHARTIARTL, SUNPHARMA, ASIANPAINT, TITAN, DMART, TRENT, POLYCAB, DIXON, PERSISTENT, VIJAYA (Vijaya Diagnostic, small-cap, replaced HAL, D-062), DEEPAKNTR, IRCTC

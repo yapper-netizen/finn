@@ -96,12 +96,17 @@ def get_card(
     filing: dict,
     pages_loader: Callable[[str], list[str]] = docs.get_pages,
     builder: Callable[[dict, list[str]], dict] = build_card,
+    require_results: bool = True,
 ) -> dict:
-    """The card for a results filing; builds it on first open (one build at a time per filing)."""
+    """The card for a results filing; builds it on first open (one build at a time per filing).
+
+    `require_results=False` lets research try a bare "Outcome of Board Meeting" filing that may
+    hold results (the statement finder then decides).
+    """
     fid = str(filing.get("id") or "")
     if not valid_id(fid):
         raise ValueError("Unknown filing id.")
-    if classify(filing) != "results":
+    if require_results and classify(filing) != "results":
         raise ValueError("Cards are only built for quarterly results filings.")
     card = stored_card(fid)
     if card:

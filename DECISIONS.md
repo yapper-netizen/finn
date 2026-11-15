@@ -533,3 +533,36 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - Card lookup order: `snapshot/cards/` (committed) → `.cache/cards/` (built on this machine/server; Render's copy is lost on restart) → build.
 - Verified 2026-11-15: live NSE refresh (25 filings in 7 days) found no new results filings, so no new cards to commit today; a test enforces that every saved results filing has a committed card. End to end: with IRCTC's card moved aside, a live feed refresh queued it and the worker rebuilt it unaided (identical verdict). 129 tests pass.
 - Risk: on Render (512 MB) a very large PDF (Infosys, 25 MB, 197 pages) parsed in the background could press memory; pages are parsed one at a time and closed. Not tested on Render yet.
+
+### D-079 · Research documents: NSE transcripts + results; follow cover-letter links · 2026-11-15 · BE-5 (settles D-020) · Status: decided
+- Chosen (user): 1A, NSE corporate announcements for both concall transcripts and results filings (one call covers ~18 months; probed for POLYCAB and PERSISTENT: 5 transcripts + 5 results each). No screener.in, no annual report (business snapshot stays out, D-023).
+- Rules: one transcript per quarter, tied to the latest results published before it, first one after those results (Persistent filed an investor-meet transcript before its Q1 results); 6 results filings (one extra for year-ago and FY totals); a quarter with no `results` filing may use a bare "Outcome of Board Meeting" filed within 75 days (Persistent files results that way; the statement finder decides).
+- Cover letters (user pick, asked mid-build): ASTRAL's NSE "transcript" filings are 1-page letters linking to the PDF on astralltd.com. FINN now follows the PDF link written inside the NSE filing (company's own site = still primary): https only, .pdf path, host must resolve to a public address (no IP literals, private, loopback or link-local: SSRF guard), size cap, %PDF header. Receipts cite the company-site PDF and say "linked from the NSE filing".
+- Gap found: Today's classifier ranks Persistent's results (titled only "Outcome of the Board Meeting") as Medium "board outcome", not High "results". Not fixed in this block.
+
+### D-080 · Promise tracker method: two-pass, Python facts, one verdict call · 2026-11-15 · EN-12, EN-13 (settles D-022) · Status: decided
+- Chosen (user): 2A. Pass 1: one AI call per transcript lists promises with verbatim quote and page. Python: actual numbers ("facts", numbered) come only from the block 7 results cards; each fact uses one card's own columns (same basis); FY totals and FY growth only when all 4 quarter cards of that year exist with the same basis. Pass 2: ONE strong-model call per stock returns Delivered / Partial / Missed / Not checkable with fact ids; Python drops unknown fact ids (no fact = "Not checkable").
+- Python decides timing, not AI: due date after the latest reported quarter, or a promise from the latest call (nothing reported since) = "Too early".
+- Judging rules added after reviewing real verdicts: revenue, growth, margin, profit are higher-is-better (POLYCAB was wrongly "Missed" for margins ABOVE its 11-13% range); standing ranges judged "so far"; directional guidance judged on direction; a "Delivered" whose reason says missed/below/failed is withdrawn ("verdict and reason disagreed").
+- Repeats merged in Python (same target numbers and due date, or similar wording): the first statement keeps its quote; "restated in" lists later calls.
+
+### D-081 · Promise extraction runs on the strong model (deviation from D-022's cheap model) · 2026-11-15 · EN-12 · Status: decided (by measurement)
+- Measured: on the same transcripts, the cheap model's promise list changed run to run (dropped POLYCAB's margin guidance in one run, merged Persistent's "100 bps in FY26, another 100 in FY27" into one FY27 item in another), even at temperature 0 after prompt tweaks. The strong model split multi-period promises and kept them.
+- So: strong model for extraction (5 calls per stock) and verdicts/bull-bear (2 calls); the cheap model still reads every results filing (the bulk of pages). `config.RESEARCH_EXTRACT_STRONG` switches it back. Per stock ≈ 7 calls, 35-45k input tokens; answers cached, so precomputed stocks and repeat runs cost nothing.
+
+### D-082 · What counts as a checkable promise · 2026-11-15 · EN-13 (decision 3A) · Status: decided
+- Chosen (user): 3A. Judged only when it is a company-level revenue, growth, EBITDA-margin or profit promise; everything else (segments, capex, exports, working capital, EBIT/operating margin, acquisitions) is listed under "Not checkable from filings" with the quote. EBIT targets are "other" because cards carry EBITDA (Persistent guides on EBIT).
+- Consequence, stated on screen: companies that guide mostly by segment or far-off targets show few judged promises (POLYCAB 2 judged of 12).
+
+### D-083 · Reading, receipts, unknown tickers · 2026-11-15 · EN-10, EN-15, EN-16, API-4 (settles D-021, D-041, D-024) · Status: decided
+- 4A: keyword-picked transcript pages (guidance, outlook, margin, FYxx, ...), ≤26k characters per transcript.
+- 5A: a quote is shown only if found in the transcript text: verbatim after normalising, or ≥90% fuzzy match; a fuzzy match may never change a number (every number in the quote must be on that page; a test with "35% in FY28" for "20% in FY26" caught this). The page is corrected if the model cited the wrong one. Failed quotes are dropped and counted in the notes.
+- 6A: precomputed set answers at once; any other ticker runs in a background job, one at a time (free tier), and the screen polls `/api/research/{ticker}` (queued / pending with steps / ready / error). Unknown ticker → 404 with a clear message.
+
+### D-084 · Research screen and bull vs bear · 2026-11-15 · FE-4, EN-14 (settles D-023; decisions 7B, 8A) · Status: decided
+- 8A: search + 3 ready chips; hero scorecard (judged count, Delivered / Partial / Missed bar); judged promises as rows; "Too early" and "Not checkable" collapsed; tap → receipt sheet (verbatim quote in serif, transcript page link, the filing figures used with their page links, the verdict reason, and who decided it: AI or FINN's rules).
+- 7B: bull vs bear behind a two-way toggle (one list at a time, so the screen stays short); 3 points each, numbered cards with a green or red edge; each point is kept only with a verified quote or a valid filing figure (one strong call per stock).
+- Checked at 375×812 and 360×740: no horizontal scroll, no text under 12.5px, on the screen, both sheets and the progress list.
+
+### D-085 · Results extractor: unit from the filing's other statements · 2026-11-15 · EN-5 (refines D-077) · Status: decided
+- Persistent's statement pages carry no unit in their text layer (image or garbled "nn,Millionl"), so 3 of its 6 results filings failed. New rule: if the statement page prints no unit, accept the model's unit only when it is the ONE unit named in the headers of the same filing's other pages; the card shows a note saying so. Otherwise still "could not extract".

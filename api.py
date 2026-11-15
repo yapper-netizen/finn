@@ -14,11 +14,13 @@ from fastapi.responses import FileResponse, JSONResponse, Response
 import config
 from data import filings as filings_mod
 from engine import cards
+from engine.research_jobs import ResearchJobs
 from engine.feed import FeedCache, company_name
 from engine.today import build_today
 
 WEB_INDEX = Path(__file__).parent / "web" / "index.html"
 card_prebuilder = cards.CardPrebuilder()
+research_jobs = ResearchJobs()
 feed_cache = FeedCache(on_loaded=card_prebuilder.enqueue_from)
 
 
@@ -81,6 +83,7 @@ def api_config() -> dict:
         "ranges": {"price": config.PRICE_PCT_RANGE, "volume": config.VOLUME_X_RANGE},
         "categories": [{"key": k, "tier": v} for k, v in config.CATEGORY_TIER.items()],
         "portfolio": config.PORTFOLIO,
+        "research_set": config.RESEARCH_SET,
     }
 
 
@@ -133,3 +136,17 @@ def api_card(filing_id: str):
     if card.get("retryable"):
         return JSONResponse({**card, "error": card["reason"], "fallback_used": False}, status_code=503)
     return card
+
+
+@app.get("/api/research/{ticker}")
+def api_research(ticker: str):
+    """Promise tracker + bull vs bear for any NSE ticker (API-4, EN-16).
+
+    Precomputed stocks answer at once (status "ready"). Any other ticker starts a live run in the
+    background; the page polls this endpoint and shows the steps until status is "ready"/"error".
+    """
+    try:
+        result = research_jobs.request(ticker)
+    except ValueError as exc:
+        return error_response(str(exc), 404)
+    return result

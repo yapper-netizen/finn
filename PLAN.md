@@ -134,12 +134,12 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | BE-1 | P0 | [x] {EOD price & volume} via yfinance, .NS → .BO → snapshot | D-003 | done | 18/18 load |
 | BE-2 | P0 | [x] Ticker resolver: NSE symbol → BSE scrip code [BSE's numeric company ID] + company name; reject invalid tickers with a clear message | D-013, D-064 | 1 | Done 2026-11-15: `data/symbols.py`, shipped NSE symbol list (no BSE code needed) |
 | BE-3 | P0 | [x] {Corporate announcements} fetcher: per ticker, date range, returns `{date, title, category, subcategory, pdf_url}`; browser-like headers, timeout, retry, snapshot | D-012, D-064 | 2 | Done 2026-11-15: `data/filings.py` + `py run_filings.py`, NSE API with snapshot |
-| BE-4 | P0 | [ ] Filing PDF downloader + text extractor with page numbers (pdfplumber [PDF text library]) cached by URL hash [short fingerprint of the URL] | D-021 | 1 | Text + page map for a results PDF |
-| BE-5 | P0 | [ ] Fundamentals document finder: last 4 {concall transcripts} + latest {annual report} links, plus last 5 results-filing links (for EN-13 actuals) | D-020, D-049 | 2 | Links for the research set + 1 unknown ticker |
+| BE-4 | P0 | [x] Filing PDF downloader + text extractor with page numbers (pdfplumber [PDF text library]) cached by URL hash [short fingerprint of the URL] | D-021 | 1 | Done 2026-11-15 (block 7): `data/docs.py` |
+| BE-5 | P0 | [x] Fundamentals document finder: last 4 {concall transcripts} + latest {annual report} links, plus last 5 results-filing links (for EN-13 actuals) | D-020, D-049 | 2 | Done 2026-11-15 (block 8): `data/research_docs.py`, NSE transcripts + results (D-079) |
 | ~~BE-6~~ | — | ~~Structured quarterly numbers source~~ — removed: actuals come from the EN-5 extractor on results filings (primary) | D-049 | 0 | — |
 | BE-7 | P0 | [ ] Snapshot refresh script: one command re-freezes prices, filings, docs; **run Sun 13:00 and commit** | D-031, D-053 | 0.5 | `python refresh_snapshot.py` runs clean |
 | BE-8 | P2 | [ ] Market-holiday calendar (exact last trading day) — not needed for D-046 fallback, which uses "last day with filings" | D-046 | 0.5 | Optional |
-| BE-9 | P0 | [ ] Finalise research set of 3 {3–5, may be outside portfolio}: POLYCAB, PERSISTENT, ASTRAL (outside); verify ASTRAL loads; precompute all 3 after EN-16 | D-051 | 0.2 | 3 research views load instantly from cache |
+| BE-9 | P0 | [x] Finalise research set of 3 {3–5, may be outside portfolio}: POLYCAB, PERSISTENT, ASTRAL (outside); verify ASTRAL loads; precompute all 3 after EN-16 | D-051 | 0.2 | Done: POLYCAB, PERSISTENT, ASTRAL precomputed in `snapshot/research/` |
 | BE-10 | P0 | [x] Replace HAL in `config.py` with a non-defence small-cap that loads in yfinance (adds {"sizes"} mix; ENAM values) → VIJAYA; all 19 tickers load | D-055, D-062 | 0.2 | Done 2026-11-15 |
 
 ---
@@ -154,7 +154,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | EN-2 | P0 | [x] Classifier, **rules only**: filing → one of {reference-doc categories} (+ `order_win`) using BSE category + keywords; unmatched → `unclassified` | D-014, D-015, D-043 | 1.5 | ≥90% of a hand-checked sample of 50 correct |
 | EN-3 | P0 | [x] Ranker: tier (High / Medium / Low) from category weights in config; boost if same stock has a price/volume alert that day | D-015, D-040 | 1 | Unit tests: tiers, boost, ties |
 | EN-4 | P0 | [x] {Windowed digest} {24h default} / 3d / 7d: top 3–5 cards + "Routine (N)"; if 24h is empty, widen to the most recent day with filings and return a `widened` flag for the banner | D-045, D-046 | 1 | Tests: counts per window; empty-24h case widens |
-| EN-5 | P0 | [ ] {Results card}: Revenue, EBITDA, PBT, PAT, {QoQ, YoY}; growth % in Python. EBITDA if not printed = PBT + finance cost + D&A − other income, labelled "computed". Banks: Total income / PBT / PAT, EBITDA "n/a for banks". Extractor reused by EN-13 | D-016, D-017, D-048, D-049, D-054 | 4.5 | {Verified vs 2 actual filing PDFs} + 1 bank card |
+| EN-5 | P0 | [x] {Results card}: Revenue, EBITDA, PBT, PAT, {QoQ, YoY}; growth % in Python. EBITDA if not printed = PBT + finance cost + D&A − other income, labelled "computed". Banks: Total income / PBT / PAT, EBITDA "n/a for banks". Extractor reused by EN-13 | D-016, D-017, D-048, D-049, D-054 | 4.5 | Done 2026-11-15 (block 7, D-077): 18 cards; 6 verified against page images |
 | EN-6 | P0 | [ ] {Management change card with incoming person's background} | D-019 | 2 | 1 real example card with source link |
 | EN-7 | P1 | [ ] One-line summary for Medium-tier filings (dividend amount + record date, order value, capex size) — cheap model, cached | D-015 | 1.5 | One line per Medium card |
 | EN-8 | P1 | [ ] "Why it matters" line per top card (rule template first, AI only if needed) | D-011 | 1 | No generic filler text |
@@ -167,14 +167,14 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 
 | ID | P | Task | Decisions | est | Done when |
 |---|---|---|---|---|---|
-| EN-9 | P0 | [ ] `llm.py`: one function per model tier, JSON-only output, schema validation [checking the reply has the right fields and types], one retry, log model + tokens, SQLite cache keyed by (doc hash, prompt version, model) | D-009, D-025, D-026 | 2 | Logged call, cached second call costs 0 tokens |
-| EN-10 | P0 | [ ] Chunker: split transcripts / AR into page-tagged sections; pick relevant sections by keywords (guidance, outlook, margin, capex) | D-021 | 1.5 | Feeds < N tokens per call |
+| EN-9 | P0 | [x] `llm.py`: one function per model tier, JSON-only output, schema validation [checking the reply has the right fields and types], one retry, log model + tokens, SQLite cache keyed by (doc hash, prompt version, model) | D-009, D-025, D-026 | 2 | Done 2026-11-15: schema (structured output), validation, SQLite cache, temperature 0 |
+| EN-10 | P0 | [x] Chunker: split transcripts / AR into page-tagged sections; pick relevant sections by keywords (guidance, outlook, margin, capex) | D-021 | 1.5 | Done: keyword page picker (D-021 = A) |
 | EN-11 | P1 | [ ] {Business snapshot}: what it does, segments, revenue mix — from AR, with page receipts (demoted from P0) | D-023, D-043 | 1.5 | Every bullet has a quote + page |
-| EN-12 | P0 | [ ] Guidance extractor (cheap model): per quarter, list {management's explicit guidance} as `{metric, target, period, quote, page}` | D-022 | 2 | 4 quarters extracted for 1 stock |
-| EN-13 | P0 | [ ] {Promise tracker / narrative vs numbers}: actual numbers from EN-5 extractor on last 4–5 results filings (Python) → strong model gives Delivered / Partial / Missed + reason | D-022, D-049 | 3 | Verdicts cite both quote and number |
-| EN-14 | P1 | [ ] {Bull vs bear}: 3 points each, each tied to a receipt | D-023 | 1 | No claim without a source |
-| EN-15 | P0 | [ ] Grounding guard: reject any claim whose quote isn't found verbatim (fuzzy match) in the source text | D-041 | 1 | Hallucinated quote test is rejected |
-| EN-16 | P0 | [ ] Any-ticker path: unknown ticker → fetch docs live → progress states → cached result; research set (BE-9) precomputed | D-024, D-051 | 1.5 | {Random NSE ticker} works end to end |
+| EN-12 | P0 | [x] Guidance extractor (cheap model): per quarter, list {management's explicit guidance} as `{metric, target, period, quote, page}` | D-022 | 2 | Done: cheap-model promise extraction with verbatim quotes |
+| EN-13 | P0 | [x] {Promise tracker / narrative vs numbers}: actual numbers from EN-5 extractor on last 4–5 results filings (Python) → strong model gives Delivered / Partial / Missed + reason | D-022, D-049 | 3 | Done: Python facts + one strong-model verdict call per stock (D-080) |
+| EN-14 | P1 | [x] {Bull vs bear}: 3 points each, each tied to a receipt | D-023 | 1 | Done (decision 7B): 3 bull + 3 bear, each with a verified quote or filing figure |
+| EN-15 | P0 | [x] Grounding guard: reject any claim whose quote isn't found verbatim (fuzzy match) in the source text | D-041 | 1 | Done: fuzzy quote guard, numbers must match exactly (D-041 = A) |
+| EN-16 | P0 | [x] Any-ticker path: unknown ticker → fetch docs live → progress states → cached result; research set (BE-9) precomputed | D-024, D-051 | 1.5 | Done: live run with progress steps + polling; precomputed set (D-024 = A) |
 | EN-17 | P2 | [ ] Extra research views from the {menu}: financial snapshot / guidance list / cash quality | D-023 | 1–2 each | Optional |
 
 ---
@@ -185,8 +185,8 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 |---|---|---|---|---|
 | API-1 | P0 | [x] `GET /` serves `web/index.html`; `GET /health` | 0.3 | Render health check green |
 | API-2 | P0 | [x] `GET /api/digest?window=24h&price=5&volume=2&off=...` (off = categories switched off; D-067) → cards + routine bucket + alerts + `widened` flag (thresholds and toggles come from the client's localStorage) | 1 | JSON matches the screen |
-| API-3 | P0 | [ ] `GET /api/card/{filing_id}` → results / bank-lite / management / generic detail | 1 | Lazy: AI runs only on first open, then cached |
-| API-4 | P0 | [ ] `GET /api/research/{ticker}` → research JSON; `status: pending/ready/error` for slow live runs | 1.5 | Polling [the page re-asks every few seconds] works |
+| API-3 | P0 | [x] `GET /api/card/{filing_id}` → results / bank-lite / management / generic detail | 1 | Done 2026-11-15: `/api/card/{id}`, precomputed + prebuilt in background (D-078) |
+| API-4 | P0 | [x] `GET /api/research/{ticker}` → research JSON; `status: pending/ready/error` for slow live runs | 1.5 | Done: `/api/research/{ticker}` ready / queued / pending / error |
 | API-5 | P1 | [ ] `GET /api/portfolio`, `GET /api/resolve/{ticker}` (validate a ticker) | 0.5 | Bad ticker → friendly error |
 | API-6 | P1 | [ ] `GET /api/costs` → token totals per model (for the README and an "about" panel) | 0.5 | Numbers match logs |
 | API-7 | P0 | [x] Error handling: every endpoint returns `{error, fallback_used}` instead of a 500 [server crash code] | 0.5 | Kill network → app still renders snapshot |
@@ -203,8 +203,8 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 |---|---|---|---|---|---|
 | FE-1 | P0 | [x] Shell: bottom tab bar (Today · Research · Settings), routing [switching screens without reloading], loading skeletons [grey placeholder shapes while data loads], error and empty states | D-011, D-027 | 1.5 | Usable one-handed at 375px width |
 | FE-2 | P0 | [x] **Today**: window picker (24h/3d/7d), every High filing as a ranked card in priority order (D-065, D-074), alert chips on cards, "Routine (N)" collapsed row, "widened" banner | D-040, D-045, D-046 | 2 | Reads in 10 seconds |
-| FE-3 | P0 | [ ] **Detail**: results table (QoQ / YoY coloured), "computed" badges, bank-lite variant, link to source PDF; management card with bio | D-016, D-019, D-048 | 2 | Every number traceable |
-| FE-4 | P0 | [ ] **Research**: ticker search box → scorecard: promise tracker (Delivered / Partial / Missed chips), snapshot + bull vs bear if built; **receipts included** (tap claim → bottom sheet [panel sliding up from the bottom] with quote, page, link) | D-023, D-024, D-041 | 3 | Works for an unknown ticker; 100% of claims tappable |
+| FE-3 | P0 | [x] **Detail**: results table (QoQ / YoY coloured), "computed" badges, bank-lite variant, link to source PDF; management card with bio | D-016, D-019, D-048 | 2 | Results part done (block 7 sheet); management card is EN-6 (block 9) |
+| FE-4 | P0 | [x] **Research**: ticker search box → scorecard: promise tracker (Delivered / Partial / Missed chips), snapshot + bull vs bear if built; **receipts included** (tap claim → bottom sheet [panel sliding up from the bottom] with quote, page, link) | D-023, D-024, D-041 | 3 | Done: Research screen, receipts sheet, bull vs bear toggle |
 | ~~FE-5~~ | — | ~~Receipts~~ — merged into FE-4 | D-043 | 0 | — |
 | FE-6 | P0 | [x] **Settings**: price %, volume ×, category toggles (EN-18), portfolio list; saved in localStorage | D-029, D-047 | 1 | Change persists after reload |
 | FE-7 | P1 | [x] Visual polish: final look decided and built in light mode (`design/DESIGN_2.md`); dark mode not built | D-028, D-044, D-074 | 1 | Looks deliberate, not template |
@@ -236,9 +236,9 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 |---|---|---|---|---|
 | QA-1 | P0 | [x] Alert tests (7) | done | pass |
 | QA-2 | P0 | [ ] {Unit tests} ranker + classifier + category toggles (fixtures [small saved sample inputs] of real filing titles) | 1 | pass |
-| QA-3 | P0 | [ ] QoQ / YoY / EBITDA-fallback (incl. other income) maths tests, incl. negative and zero bases; bank-lite case | 0.5 | pass |
-| QA-4 | P0 | [ ] {Verify ≥2 results cards against actual filing PDFs}; record in DECISIONS/README | 1 | Numbers match to the crore |
-| QA-5 | P0 | [ ] LLM output validation tests (bad JSON, fake quote) with a fake model [stand-in that returns canned answers, no API cost] | 0.5 | pass |
+| QA-3 | P0 | [x] QoQ / YoY / EBITDA-fallback (incl. other income) maths tests, incl. negative and zero bases; bank-lite case | 0.5 | Done 2026-11-15: `tests/test_results.py` |
+| QA-4 | P0 | [x] {Verify ≥2 results cards against actual filing PDFs}; record in DECISIONS/README | 1 | Done 2026-11-15: IRCTC, TITAN, ASIANPAINT, LT, DIXON, HDFCBANK match to the paisa (D-077) |
+| QA-5 | P0 | [x] LLM output validation tests (bad JSON, fake quote) with a fake model [stand-in that returns canned answers, no API cost] | 0.5 | Done: `tests/test_research.py` (fake quote, bad JSON, invalid fact ids) |
 | QA-6 | P0 | [ ] Offline test: block network → app serves snapshot | 0.3 | Works |
 | QA-7 | P0 | [ ] Real-phone test (Android + iOS if possible) on deployed URL — iPhone Safari checked by the user 2026-11-15 (looks right, PDFs open); Android still to check | 0.5 | No horizontal scroll, taps ≥44px |
 | QA-8 | P0 | [ ] Unknown-ticker test (2 tickers never seen) | 0.5 | Works or fails gracefully |
@@ -323,7 +323,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-037 | Build-history format | Open — export + share links | DEL-3 |
 | D-038 | Repo visibility | **Decided via D-066** — private for now; make public or invite reviewers before sending | OPS-1 |
 | D-040 | Alerts placement | **Decided via D-067** — chip on card + alert-only list | FE-2 |
-| D-041 | Receipts standard | Open — verified quote + page + link | EN-15 |
+| D-041 | Receipts standard | **Decided via D-083** — verified quote + page + link | EN-15 |
 | D-043–D-056 | Audit v1 changes | Decided 2026-11-14 | see DECISIONS.md |
 | D-058 | Screen set | **Decided, on hold for review** — 6 screens, one per brief item; review in FE-12 | FE-1..6 |
 | D-063 | BSE filings API blocks scripts | **Decided via D-064** | BE-2, BE-3 |
@@ -334,3 +334,12 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-059 | Front-end design v1 | **Decided** — `design/DESIGN_1.md` is the current design | FE-1..13 |
 | D-060 | Free-tier-only AI keys | **Decided** — one free Gemini key, no billing, no Anthropic | OPS-6 |
 | D-061 | Free-tier model lineup | **Decided** — cheap 3.5-flash-lite, strong 3.5-flash, fallback 3.1-flash-lite | OPS-6, EN-9 |
+| D-077 | Block 7: results card choices | **Decided** — PDF text + cheap model + Python checks; consolidated first; cards committed; ±3% default | EN-5, API-3, QA-4 |
+| D-078 | New filings' cards | **Decided** — background prebuild + precompute before freeze | EN-5, API-3 |
+| D-079 | Research documents | **Decided** — NSE transcripts + results; follow cover-letter PDF links | BE-5 |
+| D-080 | Promise tracker method | **Decided** — Python facts, one verdict call, Python timing | EN-12, EN-13 |
+| D-081 | Extraction model | **Decided** — strong model (cheap was unstable), deviation from D-022 | EN-12 |
+| D-082 | Checkable promises | **Decided** — company-level revenue/margin/profit only; rest listed | EN-13 |
+| D-083 | Reading, receipts, unknown tickers | **Decided** — keyword pages; verified quotes, numbers exact; jobs + polling | EN-10, EN-15, EN-16, API-4 |
+| D-084 | Research screen, bull vs bear | **Decided** — scorecard + receipt sheet; bull/bear toggle | FE-4, EN-14 |
+| D-085 | Unit from filing's other statements | **Decided** — only when it is the one unit named | EN-5 |

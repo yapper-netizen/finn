@@ -458,11 +458,19 @@ def header_units(page_text: str) -> set[str]:
     return {u for u, pat in _UNIT_PATTERNS.items() if u != "rupees" and re.search(pat, head, re.I)}
 
 
-def pick_unit(model_unit: str, first_page: str, stmt_text: str) -> tuple[str | None, str | None]:
+UNIT_FROM_FILING_NOTE = "read from the other statements in this filing (not printed in this page's text)"
+
+
+def pick_unit(model_unit: str, first_page: str, stmt_text: str,
+              all_pages: list[str] | None = None) -> tuple[str | None, str | None]:
     """Decide the unit. Python reads the header; the model's answer is only a tie-breaker.
 
+    Returns (unit, note): unit None means fail, with the reason in `note`.
     - exactly one unit in the header: use it (even if the model said otherwise)
     - else the model's unit, if that word is printed on the statement page
+    - else, if this page prints no unit at all, the model's unit only when it is the ONE unit named
+      in the headers of the filing's other pages (standalone statement, balance sheet); the note
+      says so and is shown on the card
     - else fail: a 100x unit error is worse than no card
     """
     in_head = header_units(first_page)
@@ -473,6 +481,10 @@ def pick_unit(model_unit: str, first_page: str, stmt_text: str) -> tuple[str | N
         return None, f"Unit not recognised ({model_unit!r}) and not clear from the page header."
     if unit in in_head or (not in_head and unit_on_page(unit, stmt_text)):
         return unit, None
+    if not in_head and all_pages:
+        filing_units = set().union(*(header_units(t) for t in all_pages if t))
+        if filing_units == {unit}:
+            return unit, UNIT_FROM_FILING_NOTE
     return None, f"The unit '{unit}' could not be confirmed on the statement page."
 
 
@@ -524,12 +536,12 @@ def assemble_card(base: dict, pages: list[str], pick: dict, ext: Extraction) -> 
     dates, err = check_columns(ext.columns, filed_on)
     if err:
         return _fail(base, f"Column check failed: {err}.")
-    unit, unit_err = pick_unit(ext.unit, pages[pick["pages"][0]], "\n".join(pages[i] for i in pick["pages"]))
-    if unit_err:
+    unit, unit_err = pick_unit(ext.unit, pages[pick["pages"][0]], "\n".join(pages[i] for i in pick["pages"]), pages)
+    if unit is None:
         return _fail(base, unit_err)
     factor = UNIT_TO_CRORE[unit]
     numbers_by_page = {i: page_numbers(pages[i]) for i in pick["pages"]}
-    warnings: list[str] = []
+    warnings: list[str] = [f"Unit ({unit}): {unit_err}."] if unit_err else []
     # The table's usual decimal places, used to repair a misread decimal point in one cell.
     all_printed = [v for ln in [*ext.lines.values(), *(x for ps in ext.parts.values() for x in ps)]
                    if ln for v in ln.values if v]

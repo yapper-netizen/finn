@@ -1,0 +1,1166 @@
+{
+ "ticker": "ASTRAL",
+ "company": "Astral Limited",
+ "status": "ready",
+ "engine_version": 1,
+ "generated_at": "2026-11-15T14:29:27",
+ "latest_quarter": "Q2 FY27",
+ "counts": {
+  "Delivered": 2,
+  "Partial": 2,
+  "Missed": 0,
+  "Too early": 1,
+  "Not checkable": 9
+ },
+ "promises": [
+  {
+   "id": "P1",
+   "metric": "ebitda_margin",
+   "statement": "Expects consolidated EBITDA margin to remain within the guided 15% to 16% range.",
+   "period_text": "guided margin range",
+   "due": null,
+   "due_label": null,
+   "made_in": "Q2 FY26",
+   "made_on": "2025-11-10",
+   "quarter_end": "2025-09-30",
+   "receipt": {
+    "quote": "above the guided margin range of 15% to 16% EBITDA on a consolidated basis.",
+    "page": 4,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+    "doc": "Q2 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "verdict": "Partial",
+   "fact_ids": [
+    "F9",
+    "F14",
+    "F22"
+   ],
+   "reason": "EBITDA margin reached 15.4% in Q3 FY26 and 18.3% in Q4 FY26, but dropped to 13.1% in Q2 FY27, partially meeting the 15-16% range so far.",
+   "decided_by": "ai",
+   "facts": [
+    {
+     "id": "F9",
+     "metric": "ebitda_margin",
+     "quarter": "Q3 FY26",
+     "text": "EBITDA margin Q3 FY26: 15.4%, −30 bps YoY",
+     "value": 15.4,
+     "source": {
+      "filing_id": "106521666",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
+      "page": 7,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F14",
+     "metric": "ebitda_margin",
+     "quarter": "Q4 FY26",
+     "text": "EBITDA margin Q4 FY26: 18.3%, +30 bps YoY",
+     "value": 18.3,
+     "source": {
+      "filing_id": "106627640",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+      "page": 17,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F22",
+     "metric": "ebitda_margin",
+     "quarter": "Q2 FY27",
+     "text": "EBITDA margin Q2 FY27: 13.1%, −320 bps YoY",
+     "value": 13.1,
+     "source": {
+      "filing_id": "106847370",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+      "page": 12,
+      "basis": "consolidated"
+     }
+    }
+   ]
+  },
+  {
+   "id": "P2",
+   "metric": "revenue_growth",
+   "statement": "Expects H2 performance to be better than H1 for the fiscal year.",
+   "period_text": "H2",
+   "due": "2026-03-31",
+   "due_label": "Q4 FY26",
+   "made_in": "Q2 FY26",
+   "made_on": "2025-11-10",
+   "quarter_end": "2025-09-30",
+   "receipt": {
+    "quote": "So we are also expecting this year also that the H2 should be better than the H1.",
+    "page": 4,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+    "doc": "Q2 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "verdict": "Delivered",
+   "fact_ids": [
+    "F1",
+    "F2",
+    "F3",
+    "F6",
+    "F7",
+    "F8",
+    "F11",
+    "F12",
+    "F13"
+   ],
+   "reason": "H2 FY26 generated ₹3,630 cr revenue and ₹620 cr EBITDA across Q3 and Q4, significantly outperforming H1 based on available figures.",
+   "decided_by": "ai",
+   "facts": [
+    {
+     "id": "F1",
+     "metric": "revenue",
+     "quarter": "Q2 FY26",
+     "text": "Revenue Q2 FY26: ₹1,577 cr, up 15.1% YoY (consolidated)",
+     "value": 15.1,
+     "source": {
+      "filing_id": "106428144",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
+      "page": 11,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F2",
+     "metric": "ebitda_growth",
+     "quarter": "Q2 FY26",
+     "text": "EBITDA Q2 FY26: ₹257 cr, up 22.2% YoY (computed)",
+     "value": 22.2,
+     "source": {
+      "filing_id": "106428144",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
+      "page": 11,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F3",
+     "metric": "pat_growth",
+     "quarter": "Q2 FY26",
+     "text": "PAT Q2 FY26: ₹135 cr, up 22.5% YoY",
+     "value": 22.5,
+     "source": {
+      "filing_id": "106428144",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
+      "page": 11,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F6",
+     "metric": "revenue",
+     "quarter": "Q3 FY26",
+     "text": "Revenue Q3 FY26: ₹1,542 cr, up 10.3% YoY (consolidated)",
+     "value": 10.3,
+     "source": {
+      "filing_id": "106521666",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
+      "page": 7,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F7",
+     "metric": "ebitda_growth",
+     "quarter": "Q3 FY26",
+     "text": "EBITDA Q3 FY26: ₹237 cr, up 8.2% YoY (computed)",
+     "value": 8.2,
+     "source": {
+      "filing_id": "106521666",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
+      "page": 7,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F8",
+     "metric": "pat_growth",
+     "quarter": "Q3 FY26",
+     "text": "PAT Q3 FY26: ₹108 cr, down 5.6% YoY",
+     "value": -5.6,
+     "source": {
+      "filing_id": "106521666",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
+      "page": 7,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F11",
+     "metric": "revenue",
+     "quarter": "Q4 FY26",
+     "text": "Revenue Q4 FY26: ₹2,088 cr, up 24.2% YoY (consolidated)",
+     "value": 24.2,
+     "source": {
+      "filing_id": "106627640",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+      "page": 17,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F12",
+     "metric": "ebitda_growth",
+     "quarter": "Q4 FY26",
+     "text": "EBITDA Q4 FY26: ₹383 cr, up 26.8% YoY (computed)",
+     "value": 26.8,
+     "source": {
+      "filing_id": "106627640",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+      "page": 17,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F13",
+     "metric": "pat_growth",
+     "quarter": "Q4 FY26",
+     "text": "PAT Q4 FY26: ₹213 cr, up 18.8% YoY",
+     "value": 18.8,
+     "source": {
+      "filing_id": "106627640",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+      "page": 17,
+      "basis": "consolidated"
+     }
+    }
+   ]
+  },
+  {
+   "id": "P3",
+   "metric": "revenue_growth",
+   "statement": "Reaffirms double-digit growth guidance for the second half.",
+   "period_text": "second half",
+   "due": "2026-03-31",
+   "due_label": "Q4 FY26",
+   "made_in": "Q2 FY26",
+   "made_on": "2025-11-10",
+   "quarter_end": "2025-09-30",
+   "receipt": {
+    "quote": "whatever the double digit guidance we have given we standby with that and we are confident that we will be delivering the double digit growth.",
+    "page": 5,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+    "doc": "Q2 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "verdict": "Delivered",
+   "fact_ids": [
+    "F6",
+    "F11"
+   ],
+   "reason": "Revenue grew 10.3% YoY in Q3 FY26 and 24.2% YoY in Q4 FY26, fulfilling double-digit growth in the second half.",
+   "decided_by": "ai",
+   "facts": [
+    {
+     "id": "F6",
+     "metric": "revenue",
+     "quarter": "Q3 FY26",
+     "text": "Revenue Q3 FY26: ₹1,542 cr, up 10.3% YoY (consolidated)",
+     "value": 10.3,
+     "source": {
+      "filing_id": "106521666",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
+      "page": 7,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F11",
+     "metric": "revenue",
+     "quarter": "Q4 FY26",
+     "text": "Revenue Q4 FY26: ₹2,088 cr, up 24.2% YoY (consolidated)",
+     "value": 24.2,
+     "source": {
+      "filing_id": "106627640",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+      "page": 17,
+      "basis": "consolidated"
+     }
+    }
+   ]
+  },
+  {
+   "id": "P4",
+   "metric": "other",
+   "statement": "Expects to achieve 20% growth in the paint business for the full year.",
+   "period_text": "full year",
+   "due": "2026-03-31",
+   "due_label": "Q4 FY26",
+   "made_in": "Q2 FY26",
+   "made_on": "2025-11-10",
+   "quarter_end": "2025-09-30",
+   "receipt": {
+    "quote": "This year we have given a guidance of 20% growth for the full year and we are going to achieve it as per the guidance given by us.",
+    "page": 3,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+    "doc": "Q2 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "restated_in": [
+    "Q3 FY26",
+    "Q1 FY27"
+   ],
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  },
+  {
+   "id": "P5",
+   "metric": "other",
+   "statement": "Expects to complete CPVC plant construction and machinery installation by September 2026.",
+   "period_text": "September 2026",
+   "due": "2026-09-30",
+   "due_label": "Q2 FY27",
+   "made_in": "Q2 FY26",
+   "made_on": "2025-11-10",
+   "quarter_end": "2025-09-30",
+   "receipt": {
+    "quote": "we will be finishing the installation of machinery and construction of the CPVC plant by next year, by September 2026",
+    "page": 3,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf",
+    "doc": "Q2 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "restated_in": [
+    "Q2 FY27"
+   ],
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  },
+  {
+   "id": "P6",
+   "metric": "ebitda_margin",
+   "statement": "Management expects across the board growth and margin improvement starting from next quarter.",
+   "period_text": "next quarter onwards",
+   "due": "2026-06-30",
+   "due_label": "Q1 FY27",
+   "made_in": "Q3 FY26",
+   "made_on": "2026-02-10",
+   "quarter_end": "2025-12-31",
+   "receipt": {
+    "quote": "Also all our new verticals have started positive sign and we are confident that from next quarter onwards, you will see across the board growth and the improvement into the margin.",
+    "page": 5,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+    "doc": "Q3 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "verdict": "Partial",
+   "fact_ids": [
+    "F11",
+    "F12",
+    "F14",
+    "F15",
+    "F22",
+    "F23"
+   ],
+   "reason": "Q4 FY26 saw revenue growth of 24.2% and EBITDA margin improvement (+30 bps), but PAT margin declined -50 bps and Q2 FY27 margins contracted.",
+   "decided_by": "ai",
+   "facts": [
+    {
+     "id": "F11",
+     "metric": "revenue",
+     "quarter": "Q4 FY26",
+     "text": "Revenue Q4 FY26: ₹2,088 cr, up 24.2% YoY (consolidated)",
+     "value": 24.2,
+     "source": {
+      "filing_id": "106627640",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+      "page": 17,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F12",
+     "metric": "ebitda_growth",
+     "quarter": "Q4 FY26",
+     "text": "EBITDA Q4 FY26: ₹383 cr, up 26.8% YoY (computed)",
+     "value": 26.8,
+     "source": {
+      "filing_id": "106627640",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+      "page": 17,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F14",
+     "metric": "ebitda_margin",
+     "quarter": "Q4 FY26",
+     "text": "EBITDA margin Q4 FY26: 18.3%, +30 bps YoY",
+     "value": 18.3,
+     "source": {
+      "filing_id": "106627640",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+      "page": 17,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F15",
+     "metric": "pat_margin",
+     "quarter": "Q4 FY26",
+     "text": "PAT margin Q4 FY26: 10.2%, −50 bps YoY",
+     "value": 10.2,
+     "source": {
+      "filing_id": "106627640",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+      "page": 17,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F22",
+     "metric": "ebitda_margin",
+     "quarter": "Q2 FY27",
+     "text": "EBITDA margin Q2 FY27: 13.1%, −320 bps YoY",
+     "value": 13.1,
+     "source": {
+      "filing_id": "106847370",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+      "page": 12,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F23",
+     "metric": "pat_margin",
+     "quarter": "Q2 FY27",
+     "text": "PAT margin Q2 FY27: 6.4%, −210 bps YoY",
+     "value": 6.4,
+     "source": {
+      "filing_id": "106847370",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+      "page": 12,
+      "basis": "consolidated"
+     }
+    }
+   ]
+  },
+  {
+   "id": "P7",
+   "metric": "other",
+   "statement": "Management targets double-digit volume growth and polymer EBITDA margin of 16% to 18% for the full year.",
+   "period_text": "full year",
+   "due": "2026-03-31",
+   "due_label": "Q4 FY26",
+   "made_in": "Q3 FY26",
+   "made_on": "2026-02-10",
+   "quarter_end": "2025-12-31",
+   "receipt": {
+    "quote": "We have given double digit guidance for volume and we are already 12%-13% in 9-month basis and EBITDA margin on polymer, we have given between 16%-18% range and Adhesive and Paint, we have given between 12%-14% margin.",
+    "page": 7,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+    "doc": "Q3 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "restated_in": [],
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  },
+  {
+   "id": "P8",
+   "metric": "other",
+   "statement": "Management guides for full-year CAPEX of around 350 crores.",
+   "period_text": "full year",
+   "due": "2026-03-31",
+   "due_label": "Q4 FY26",
+   "made_in": "Q3 FY26",
+   "made_on": "2026-02-10",
+   "quarter_end": "2025-12-31",
+   "receipt": {
+    "quote": "I think we have given the CAPEX guidance for full year around Rs. 350 crores.",
+    "page": 7,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+    "doc": "Q3 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "restated_in": [
+    "Q1 FY27"
+   ],
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  },
+  {
+   "id": "P9",
+   "metric": "other",
+   "statement": "Management expects the CPVC plant to have trial runs in Q3 FY27 and become operational in Q4 FY27.",
+   "period_text": "Q4 of next fiscal",
+   "due": "2027-03-31",
+   "due_label": "Q4 FY27",
+   "made_in": "Q3 FY26",
+   "made_on": "2026-02-10",
+   "quarter_end": "2025-12-31",
+   "receipt": {
+    "quote": "Complete machinery orders have been placed and we are expecting to have trial runs by this Diwali around the Q3 of the next fiscal and by Q4 of next fiscal, the plant will be operational.",
+    "page": 3,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+    "doc": "Q3 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  },
+  {
+   "id": "P10",
+   "metric": "other",
+   "statement": "Management expects the Bathware business to contribute to EBITDA from next year.",
+   "period_text": "next year",
+   "due": "2027-03-31",
+   "due_label": "Q4 FY27",
+   "made_in": "Q3 FY26",
+   "made_on": "2026-02-10",
+   "quarter_end": "2025-12-31",
+   "receipt": {
+    "quote": "So from next year onward, it will start contributing to the EBITDA level also.",
+    "page": 8,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf",
+    "doc": "Q3 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  },
+  {
+   "id": "P11",
+   "metric": "other",
+   "statement": "Company expects plumbing segment margin to be between 16% and 18% in FY27.",
+   "period_text": "this year",
+   "due": "2027-03-31",
+   "due_label": "Q4 FY27",
+   "made_in": "Q4 FY26",
+   "made_on": "2026-05-25",
+   "quarter_end": "2026-03-31",
+   "receipt": {
+    "quote": "Plumbing plumbing margin will be between 16 to 18%. So that whatever margin guidance we've been given we'll follow the same guidance for this year.",
+    "page": 24,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/05/Analysts-Meet-2026-Transcript.pdf",
+    "doc": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "restated_in": [
+    "Q2 FY27"
+   ],
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  },
+  {
+   "id": "P12",
+   "metric": "other",
+   "statement": "Company targets minimum 15% to 20% growth across adhesives and paints segments combined in FY27.",
+   "period_text": "FY27",
+   "due": "2027-03-31",
+   "due_label": "Q4 FY27",
+   "made_in": "Q4 FY26",
+   "made_on": "2026-05-25",
+   "quarter_end": "2026-03-31",
+   "receipt": {
+    "quote": "FY27 we are targeting at least 15 to 20% kind of growth into this category as a whole. So UK, US, India adhesive paints all put together we are targeting minimum 15 to 20% kind of minimum growth.",
+    "page": 16,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/05/Analysts-Meet-2026-Transcript.pdf",
+    "doc": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  },
+  {
+   "id": "P13",
+   "metric": "revenue_growth",
+   "statement": "Management expects to deliver healthy growth across verticals in the coming quarters.",
+   "period_text": "coming quarters",
+   "due": "2027-03-31",
+   "due_label": "Q4 FY27",
+   "made_in": "Q1 FY27",
+   "made_on": "2026-08-18",
+   "quarter_end": "2026-06-30",
+   "receipt": {
+    "quote": "Overall, industry environment is positive in all vertical, and we are confident that we will be delivering a healthy growth in the coming quarters also.",
+    "page": 7,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+    "doc": "Q1 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "verdict": "Too early",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "reason": "Due by Q4 FY27; latest reported quarter is Q2 FY27.",
+   "facts": []
+  },
+  {
+   "id": "P14",
+   "metric": "other",
+   "statement": "Expects adhesive business EBITDA margins to return to 13% to 15% by the end of FY27.",
+   "period_text": "by the end of this fiscal year",
+   "due": "2027-03-31",
+   "due_label": "Q4 FY27",
+   "made_in": "Q2 FY27",
+   "made_on": "2026-11-11",
+   "quarter_end": "2026-09-30",
+   "receipt": {
+    "quote": "We assure you, and we are very much conscious about bringing this EBITDA margin back to the normal level in this quarter, and by the end of this fiscal year, again, to the margins of 13%, 14%, or up to 15%.",
+    "page": 3,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  }
+ ],
+ "bull": [
+  {
+   "point": "Consolidated revenue demonstrated strong top-line momentum, rising 26.0% YoY to ₹1,988 crore in Q2 FY27.",
+   "receipt": {
+    "quote": "On a consolidated basis, this quarter INR1,988 crores versus last year INR1,577 crores, so an overall growth of 26%.",
+    "page": 5,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "fact_ids": [
+    "F19"
+   ],
+   "facts": [
+    {
+     "id": "F19",
+     "metric": "revenue",
+     "quarter": "Q2 FY27",
+     "text": "Revenue Q2 FY27: ₹1,988 cr, up 26.0% YoY (consolidated)",
+     "value": 26.0,
+     "source": {
+      "filing_id": "106847370",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+      "page": 12,
+      "basis": "consolidated"
+     }
+    }
+   ]
+  },
+  {
+   "point": "Net profit grew significantly by 48.0% YoY to ₹120 crore in Q1 FY27 with PAT margin improving to 7.6%.",
+   "receipt": null,
+   "fact_ids": [
+    "F17",
+    "F18"
+   ],
+   "facts": [
+    {
+     "id": "F17",
+     "metric": "pat_growth",
+     "quarter": "Q1 FY27",
+     "text": "PAT Q1 FY27: ₹120 cr, up 48.0% YoY",
+     "value": 48.0,
+     "source": {
+      "filing_id": "106739054",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf",
+      "page": 7,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F18",
+     "metric": "pat_margin",
+     "quarter": "Q1 FY27",
+     "text": "PAT margin Q1 FY27: 7.6%, +160 bps YoY",
+     "value": 7.6,
+     "source": {
+      "filing_id": "106739054",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf",
+      "page": 7,
+      "basis": "consolidated"
+     }
+    }
+   ]
+  },
+  {
+   "point": "The paint business achieved historic quarterly performance by delivering 48.7% growth in Q1 FY27 following the acquisition of Gem.",
+   "receipt": {
+    "quote": "The key points to note here is that in the history we have first time delivered a highest 48.7% growth in paint after acquisition of Gem.",
+    "page": 6,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf",
+    "doc": "Q1 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "fact_ids": [],
+   "facts": []
+  }
+ ],
+ "bear": [
+  {
+   "point": "Operating profitability faced headwinds in Q2 FY27, with EBITDA margin contracting by 320 bps YoY to 13.1%.",
+   "receipt": {
+    "quote": "During the quarter, margins were under pressure due to high-cost inventories, and pass-through is taking place with a lag effect.",
+    "page": 3,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "fact_ids": [
+    "F20",
+    "F22"
+   ],
+   "facts": [
+    {
+     "id": "F20",
+     "metric": "ebitda_growth",
+     "quarter": "Q2 FY27",
+     "text": "EBITDA Q2 FY27: ₹260 cr, up 1.4% YoY (computed)",
+     "value": 1.4,
+     "source": {
+      "filing_id": "106847370",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+      "page": 12,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F22",
+     "metric": "ebitda_margin",
+     "quarter": "Q2 FY27",
+     "text": "EBITDA margin Q2 FY27: 13.1%, −320 bps YoY",
+     "value": 13.1,
+     "source": {
+      "filing_id": "106847370",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+      "page": 12,
+      "basis": "consolidated"
+     }
+    }
+   ]
+  },
+  {
+   "point": "The paint division incurred operating losses in Q2 FY27, generating a negative EBITDA margin of approximately 5%.",
+   "receipt": {
+    "quote": "Paint business, negative INR4 crores, so roughly about negative 5%.",
+    "page": 5,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "fact_ids": [],
+   "facts": []
+  },
+  {
+   "point": "India adhesive business margins underperformed guidance, reaching only 11.5% in H1 compared to the target range of 14% to 15%.",
+   "receipt": {
+    "quote": "I think India we guided 14%-15% normal EBITDA we are delivering, but in H1 it is 11.5% kind of we have delivered.",
+    "page": 12,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "fact_ids": [],
+   "facts": []
+  }
+ ],
+ "facts": [
+  {
+   "id": "F1",
+   "metric": "revenue",
+   "quarter": "Q2 FY26",
+   "text": "Revenue Q2 FY26: ₹1,577 cr, up 15.1% YoY (consolidated)",
+   "value": 15.1,
+   "source": {
+    "filing_id": "106428144",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
+    "page": 11,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F2",
+   "metric": "ebitda_growth",
+   "quarter": "Q2 FY26",
+   "text": "EBITDA Q2 FY26: ₹257 cr, up 22.2% YoY (computed)",
+   "value": 22.2,
+   "source": {
+    "filing_id": "106428144",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
+    "page": 11,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F3",
+   "metric": "pat_growth",
+   "quarter": "Q2 FY26",
+   "text": "PAT Q2 FY26: ₹135 cr, up 22.5% YoY",
+   "value": 22.5,
+   "source": {
+    "filing_id": "106428144",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
+    "page": 11,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F4",
+   "metric": "ebitda_margin",
+   "quarter": "Q2 FY26",
+   "text": "EBITDA margin Q2 FY26: 16.3%, +100 bps YoY",
+   "value": 16.3,
+   "source": {
+    "filing_id": "106428144",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
+    "page": 11,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F5",
+   "metric": "pat_margin",
+   "quarter": "Q2 FY26",
+   "text": "PAT margin Q2 FY26: 8.5%, +50 bps YoY",
+   "value": 8.5,
+   "source": {
+    "filing_id": "106428144",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf",
+    "page": 11,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F6",
+   "metric": "revenue",
+   "quarter": "Q3 FY26",
+   "text": "Revenue Q3 FY26: ₹1,542 cr, up 10.3% YoY (consolidated)",
+   "value": 10.3,
+   "source": {
+    "filing_id": "106521666",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
+    "page": 7,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F7",
+   "metric": "ebitda_growth",
+   "quarter": "Q3 FY26",
+   "text": "EBITDA Q3 FY26: ₹237 cr, up 8.2% YoY (computed)",
+   "value": 8.2,
+   "source": {
+    "filing_id": "106521666",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
+    "page": 7,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F8",
+   "metric": "pat_growth",
+   "quarter": "Q3 FY26",
+   "text": "PAT Q3 FY26: ₹108 cr, down 5.6% YoY",
+   "value": -5.6,
+   "source": {
+    "filing_id": "106521666",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
+    "page": 7,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F9",
+   "metric": "ebitda_margin",
+   "quarter": "Q3 FY26",
+   "text": "EBITDA margin Q3 FY26: 15.4%, −30 bps YoY",
+   "value": 15.4,
+   "source": {
+    "filing_id": "106521666",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
+    "page": 7,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F10",
+   "metric": "pat_margin",
+   "quarter": "Q3 FY26",
+   "text": "PAT margin Q3 FY26: 7.0%, −120 bps YoY",
+   "value": 7.0,
+   "source": {
+    "filing_id": "106521666",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf",
+    "page": 7,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F11",
+   "metric": "revenue",
+   "quarter": "Q4 FY26",
+   "text": "Revenue Q4 FY26: ₹2,088 cr, up 24.2% YoY (consolidated)",
+   "value": 24.2,
+   "source": {
+    "filing_id": "106627640",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+    "page": 17,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F12",
+   "metric": "ebitda_growth",
+   "quarter": "Q4 FY26",
+   "text": "EBITDA Q4 FY26: ₹383 cr, up 26.8% YoY (computed)",
+   "value": 26.8,
+   "source": {
+    "filing_id": "106627640",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+    "page": 17,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F13",
+   "metric": "pat_growth",
+   "quarter": "Q4 FY26",
+   "text": "PAT Q4 FY26: ₹213 cr, up 18.8% YoY",
+   "value": 18.8,
+   "source": {
+    "filing_id": "106627640",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+    "page": 17,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F14",
+   "metric": "ebitda_margin",
+   "quarter": "Q4 FY26",
+   "text": "EBITDA margin Q4 FY26: 18.3%, +30 bps YoY",
+   "value": 18.3,
+   "source": {
+    "filing_id": "106627640",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+    "page": 17,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F15",
+   "metric": "pat_margin",
+   "quarter": "Q4 FY26",
+   "text": "PAT margin Q4 FY26: 10.2%, −50 bps YoY",
+   "value": 10.2,
+   "source": {
+    "filing_id": "106627640",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf",
+    "page": 17,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F16",
+   "metric": "revenue",
+   "quarter": "Q1 FY27",
+   "text": "Revenue Q1 FY27: ₹1,578 cr, up 15.9% YoY (consolidated)",
+   "value": 15.9,
+   "source": {
+    "filing_id": "106739054",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf",
+    "page": 7,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F17",
+   "metric": "pat_growth",
+   "quarter": "Q1 FY27",
+   "text": "PAT Q1 FY27: ₹120 cr, up 48.0% YoY",
+   "value": 48.0,
+   "source": {
+    "filing_id": "106739054",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf",
+    "page": 7,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F18",
+   "metric": "pat_margin",
+   "quarter": "Q1 FY27",
+   "text": "PAT margin Q1 FY27: 7.6%, +160 bps YoY",
+   "value": 7.6,
+   "source": {
+    "filing_id": "106739054",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf",
+    "page": 7,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F19",
+   "metric": "revenue",
+   "quarter": "Q2 FY27",
+   "text": "Revenue Q2 FY27: ₹1,988 cr, up 26.0% YoY (consolidated)",
+   "value": 26.0,
+   "source": {
+    "filing_id": "106847370",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+    "page": 12,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F20",
+   "metric": "ebitda_growth",
+   "quarter": "Q2 FY27",
+   "text": "EBITDA Q2 FY27: ₹260 cr, up 1.4% YoY (computed)",
+   "value": 1.4,
+   "source": {
+    "filing_id": "106847370",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+    "page": 12,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F21",
+   "metric": "pat_growth",
+   "quarter": "Q2 FY27",
+   "text": "PAT Q2 FY27: ₹127 cr, down 5.6% YoY",
+   "value": -5.6,
+   "source": {
+    "filing_id": "106847370",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+    "page": 12,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F22",
+   "metric": "ebitda_margin",
+   "quarter": "Q2 FY27",
+   "text": "EBITDA margin Q2 FY27: 13.1%, −320 bps YoY",
+   "value": 13.1,
+   "source": {
+    "filing_id": "106847370",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+    "page": 12,
+    "basis": "consolidated"
+   }
+  },
+  {
+   "id": "F23",
+   "metric": "pat_margin",
+   "quarter": "Q2 FY27",
+   "text": "PAT margin Q2 FY27: 6.4%, −210 bps YoY",
+   "value": 6.4,
+   "source": {
+    "filing_id": "106847370",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+    "page": 12,
+    "basis": "consolidated"
+   }
+  }
+ ],
+ "sources": {
+  "transcripts": [
+   {
+    "id": "T1",
+    "label": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "date": "2026-11-11T14:38:10",
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf"
+   },
+   {
+    "id": "T2",
+    "label": "Q1 FY27 earnings call (company website, linked from the NSE filing)",
+    "date": "2026-08-18T18:50:55",
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/08/Equirus-Astral-Aug12-2026-1.pdf"
+   },
+   {
+    "id": "T3",
+    "label": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
+    "date": "2026-05-25T16:37:40",
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/05/Analysts-Meet-2026-Transcript.pdf"
+   },
+   {
+    "id": "T4",
+    "label": "Q3 FY26 earnings call (company website, linked from the NSE filing)",
+    "date": "2026-02-10T16:58:27",
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/02/Investec-Astral-Feb05-2026.pdf"
+   },
+   {
+    "id": "T5",
+    "label": "Q2 FY26 earnings call (company website, linked from the NSE filing)",
+    "date": "2025-11-10T14:43:00",
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2025/11/Transcript.pdf"
+   }
+  ],
+  "results": [
+   {
+    "filing_id": "106847370",
+    "period": "Q2 FY27",
+    "basis": "consolidated",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf"
+   },
+   {
+    "filing_id": "106739054",
+    "period": "Q1 FY27",
+    "basis": "consolidated",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_12082026160146_Outcome_of_BM.pdf"
+   },
+   {
+    "filing_id": "106627640",
+    "period": "Q4 FY26",
+    "basis": "consolidated",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_18052026161239_Results_31032026.pdf"
+   },
+   {
+    "filing_id": "106521666",
+    "period": "Q3 FY26",
+    "basis": "consolidated",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05022026160330_OutcomeBM05022026Final.pdf"
+   },
+   {
+    "filing_id": "106428144",
+    "period": "Q2 FY26",
+    "basis": "consolidated",
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112025161710_Outcome.pdf"
+   }
+  ]
+ },
+ "warnings": [
+  "Results filed 2025-08-11 could not be read: The results pages are scanned images without a text layer; FINN does not read text from images (OCR). Open the filing for the numbers."
+ ],
+ "ai": {
+  "calls": 7,
+  "cached": 0,
+  "tokens_in": 43740,
+  "tokens_out": 28252,
+  "models": [
+   "gemini-3.5-flash"
+  ]
+ }
+}

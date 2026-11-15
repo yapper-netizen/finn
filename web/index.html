@@ -270,6 +270,48 @@
     .sheet .section-label { margin-top: 20px; }
     .fail-box { background: #fdf3e1; color: #5c3900; border-radius: 14px; padding: 12px 14px; font-size: 15px; line-height: 1.45; margin-top: 12px; }
 
+    /* ---------- research (FE-4) ---------- */
+    :root { --ok: #1b6e3a; --ok-tint: #e3f2e8; --warn: #7a4a00; --warn-tint: #fdf1dc; }
+    .rsearch { display: flex; gap: 8px; margin-top: 14px; }
+    .rsearch input { flex: 1; min-width: 0; min-height: 46px; border-radius: 12px; border: 1px solid rgba(0,60,120,.18); background: #fff; padding: 0 14px; font-size: 16px; text-transform: uppercase; letter-spacing: .03em; box-shadow: inset 0 1px 2px rgba(0,40,80,.08); }
+    .rsearch input::placeholder { text-transform: none; letter-spacing: 0; color: #8a8a92; }
+    .rsearch .btn { min-height: 46px; }
+    .rsearch .btn:disabled { opacity: .5; }
+    .rchip { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+    .rdot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px var(--ok-tint); }
+    .rchip[aria-pressed="true"] .rdot { background: #fff; box-shadow: none; }
+    .rsteps ul { list-style: none; margin: 8px 0 10px; padding: 0; }
+    .rsteps li { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 15px; }
+    .rsteps li.done { color: var(--text-muted); }
+    .rsteps .mark { width: 20px; height: 20px; flex: none; display: grid; place-items: center; border-radius: 50%; font-size: 12.5px; background: var(--ok-tint); color: var(--ok); font-weight: 700; }
+    .rsteps li.now .mark { background: transparent; border: 2.5px solid var(--primary-tint); border-top-color: var(--primary); animation: spin .9s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .rsteps li.now .mark { animation: none; } }
+    html:root .rhero { margin-top: 18px; }
+    html:root .rhero .big-n { font-size: 60px; }
+    .vbar { display: flex; height: 12px; border-radius: 99px; overflow: hidden; margin-top: 16px; background: rgba(255,255,255,.2); gap: 2px; }
+    .vbar i { display: block; min-width: 0; }
+    .v-delivered { background: #4cc483; } .v-partial { background: #f2b84b; } .v-missed { background: #ff8a7f; }
+    .vlegend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 14px; color: rgba(255,255,255,.92); }
+    .vlegend > span { display: inline-flex; align-items: center; gap: 6px; }
+    .vlegend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+    .vchip { flex: none; display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border-radius: 99px; font-size: 13px; font-weight: 700; white-space: nowrap; align-self: flex-start; margin-top: 2px; }
+    .vchip.v-delivered { background: var(--ok-tint); color: var(--ok); }
+    .vchip.v-partial { background: var(--warn-tint); color: var(--warn); }
+    .vchip.v-missed { background: var(--alert-tint); color: var(--alert); }
+    .vchip.v-early, .vchip.v-nocheck { background: #eceef2; color: var(--grey); }
+    .pline { width: 100%; background: none; border: 0; border-bottom: 1px solid var(--border-soft); text-align: left; align-items: flex-start; }
+    .box .pline:last-child { border-bottom: 0; }
+    .chev { color: var(--text-muted); font-size: 20px; line-height: 1; align-self: center; flex: none; }
+    html:root .bbseg .pill { font-size: 15px; }
+    .bbcard { width: 100%; display: flex; gap: 12px; align-items: flex-start; text-align: left; background: #fff; border: 1px solid rgba(0,60,120,.07); border-left: 4px solid var(--ok); border-radius: 16px; padding: 12px 14px; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(0,40,80,.06), 0 10px 18px -12px rgba(0,40,80,.25); }
+    .bbcard.bear { border-left-color: var(--alert); }
+    .bbn { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-head); font-weight: 900; font-size: 14px; background: var(--ok-tint); color: var(--ok); }
+    .bbcard.bear .bbn { background: var(--alert-tint); color: var(--alert); }
+    .bbtext { font-size: 15.5px; line-height: 1.4; }
+    .srcline { text-decoration: none; color: var(--text); align-items: center; }
+    .quote { margin: 4px 0 0; padding: 10px 14px; border-left: 3px solid var(--primary-bright); background: #f5f8fc; border-radius: 0 12px 12px 0; font-family: "Newsreader", Georgia, serif; font-size: 17px; line-height: 1.45; font-style: italic; }
+
     .topbar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--primary-bright); transform-origin: left; animation: load 1.2s ease-in-out infinite; z-index: 30; }
     @keyframes load { 0% { transform: scaleX(0); } 70% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
   </style>
@@ -463,14 +505,142 @@
     </div>
   </section>
 
-  <!-- ================= RESEARCH (stub until the research build) ================= -->
+  <!-- ================= RESEARCH (EN-12..16, FE-4) ================= -->
   <section x-show="tab === 'research'" x-cloak>
     <div class="topband"><header class="top-head"><div class="wordmark">FINN</div></header></div>
-    <div class="mt-8 text-center">
+    <div class="mt-5">
       <h1 class="text-2xl">Research</h1>
-      <p class="meta mt-2">Ask about any company. Answers come from annual reports and concall transcripts only, every claim with its source.</p>
-      <p class="meta mt-4">Coming in the next build.</p>
+      <p class="meta mt-1">Did management do what it said? Promises from earnings calls, checked against the reported numbers. Company filings only.</p>
     </div>
+
+    <form class="rsearch" @submit.prevent="research(rs.query)">
+      <label class="sr-only" for="rq">NSE ticker</label>
+      <input id="rq" x-model="rs.query" autocapitalize="characters" autocomplete="off" spellcheck="false" placeholder="Any NSE ticker, e.g. HAVELLS">
+      <button class="btn primary" type="submit" :disabled="!rs.query.trim()">Check</button>
+    </form>
+    <div class="flex flex-wrap gap-2 mt-3" x-show="cfg && cfg.research_set">
+      <template x-for="t in (cfg ? cfg.research_set : [])" :key="t">
+        <button class="pill rchip" :aria-pressed="rs.ticker === t" @click="rs.query = t; research(t)"><span class="rdot" aria-hidden="true"></span><span x-text="t"></span></button>
+      </template>
+    </div>
+
+    <!-- running -->
+    <div class="box mt-5 rsteps" x-show="rs.status === 'pending' || rs.status === 'queued' || rs.status === 'loading'" x-cloak>
+      <p class="font-bold mt-2" x-text="(rs.status === 'queued' ? 'Waiting for another run to finish: ' : 'Researching ') + rs.ticker"></p>
+      <ul>
+        <template x-for="(s, i) in rs.steps" :key="i">
+          <li :class="i === rs.steps.length - 1 ? 'now' : 'done'"><span class="mark" aria-hidden="true" x-text="i === rs.steps.length - 1 ? '' : '✓'"></span><span x-text="s"></span></li>
+        </template>
+        <li class="now" x-show="!rs.steps.length"><span class="mark" aria-hidden="true"></span><span>Starting</span></li>
+      </ul>
+      <p class="meta mb-3">A new company takes 1 to 3 minutes: FINN reads up to 5 call transcripts and 6 results filings once, then keeps the answer.</p>
+    </div>
+
+    <div x-show="rs.status === 'error'" x-cloak class="mt-5">
+      <div class="fail-box" x-text="rs.error"></div>
+      <button class="btn primary mt-3" x-show="rs.retryable" @click="research(rs.ticker)">Try again</button>
+    </div>
+
+    <template x-if="rs.status === 'ready' && rs.data">
+      <div>
+        <!-- scorecard hero -->
+        <div class="hero rhero">
+          <p class="meta" x-text="rs.data.ticker + ' · ' + shortCompany(rs.data.company)"></p>
+          <div class="hero-row mt-1">
+            <span class="big-n" x-text="judgedCount"></span>
+            <div><h2 class="h-rest" x-text="judgedCount === 1 ? 'promise checked' : 'promises checked'"></h2>
+                 <p class="meta sub">against the reported numbers</p></div>
+          </div>
+          <div class="vbar" role="img" :aria-label="verdictSummary" x-show="judgedCount">
+            <template x-for="v in ['Delivered','Partial','Missed']" :key="v">
+              <i :class="'v-' + v.toLowerCase()" :style="'flex:' + (rs.data.counts[v] || 0)"></i>
+            </template>
+          </div>
+          <div class="vlegend">
+            <template x-for="v in ['Delivered','Partial','Missed']" :key="v">
+              <span><i :class="'v-' + v.toLowerCase()"></i><b x-text="rs.data.counts[v] || 0"></b> <span x-text="v"></span></span>
+            </template>
+          </div>
+          <p class="meta strip-cap" x-text="coverageText"></p>
+        </div>
+
+        <div class="section-label"><span>Promise tracker</span><span class="cnt" x-text="judgedCount"></span></div>
+        <p class="meta" x-show="!judgedCount">No company-level promise from these calls could be checked against the results yet. The other promises are listed below.</p>
+        <div class="box" x-show="judgedCount">
+          <template x-for="p in promisesBy(['Delivered','Partial','Missed'])" :key="p.id">
+            <button class="line pline" @click="openReceipt('promise', p)">
+              <span class="vchip" :class="'v-' + vClass(p.verdict)" x-text="p.verdict"></span>
+              <span class="flex-1 min-w-0 text-left">
+                <span class="line-title block" x-text="p.statement"></span>
+                <span class="meta block" x-text="'Said in the ' + p.made_in + ' call' + (p.restated_in ? ' · restated ' + p.restated_in.length + '×' : '')"></span>
+              </span>
+              <span class="chev" aria-hidden="true">›</span>
+            </button>
+          </template>
+        </div>
+
+        <template x-for="grp in [{k:'Too early', t:'Too early to judge'}, {k:'Not checkable', t:'Not checkable from filings'}]" :key="grp.k">
+          <div x-show="(rs.data.counts[grp.k] || 0) > 0">
+            <button class="box routine-btn w-full mt-3 flex items-center justify-between" style="min-height:52px;text-align:left"
+                    @click="rs.open[grp.k] = !rs.open[grp.k]" :aria-expanded="!!rs.open[grp.k]">
+              <span class="text-sm" style="color:var(--text-muted)" x-text="grp.t + ' (' + rs.data.counts[grp.k] + ')'"></span>
+              <span aria-hidden="true" style="color:var(--text-muted)" x-text="rs.open[grp.k] ? '▴' : '▾'"></span>
+            </button>
+            <div class="box mt-2" x-show="rs.open[grp.k]">
+              <template x-for="p in promisesBy([grp.k])" :key="p.id">
+                <button class="line pline" @click="openReceipt('promise', p)">
+                  <span class="flex-1 min-w-0 text-left">
+                    <span class="line-title block" style="color:var(--text-muted)" x-text="p.statement"></span>
+                    <span class="meta block" x-text="'Said in the ' + p.made_in + ' call · ' + (p.due_label ? 'due ' + p.due_label : p.period_text)"></span>
+                  </span>
+                  <span class="chev" aria-hidden="true">›</span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <!-- bull vs bear (D-084) -->
+        <template x-if="rs.data.bull.length || rs.data.bear.length">
+          <div>
+            <div class="section-label"><span>Bull vs bear</span></div>
+            <div class="seg bbseg" role="group" aria-label="Bull or bear case">
+              <button class="pill" :aria-pressed="rs.side === 'bull'" @click="rs.side = 'bull'">▲ Bull case</button>
+              <button class="pill" :aria-pressed="rs.side === 'bear'" @click="rs.side = 'bear'">▼ Bear case</button>
+            </div>
+            <div class="mt-3">
+              <template x-for="(pt, i) in rs.data[rs.side]" :key="rs.side + i">
+                <button class="bbcard" :class="rs.side" @click="openReceipt(rs.side, pt)">
+                  <span class="bbn" x-text="i + 1"></span>
+                  <span class="flex-1 min-w-0 text-left">
+                    <span class="block bbtext" x-text="pt.point"></span>
+                    <span class="meta block mt-1" x-text="pt.receipt ? 'Quote · ' + pt.receipt.doc + ', p. ' + pt.receipt.page : 'From the results filings'"></span>
+                  </span>
+                  <span class="chev" aria-hidden="true">›</span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </template>
+
+        <div class="section-label"><span>Sources</span></div>
+        <div class="box">
+          <template x-for="t in rs.data.sources.transcripts" :key="t.id">
+            <a class="line srcline" :href="t.pdf_url" target="_blank" rel="noopener"><span class="flex-1" x-text="t.label + ' transcript'"></span><span class="meta" x-text="fmtDay(t.date)"></span><span class="chev">↗</span></a>
+          </template>
+          <template x-for="r in rs.data.sources.results" :key="r.filing_id">
+            <a class="line srcline" :href="r.pdf_url" target="_blank" rel="noopener"><span class="flex-1" x-text="r.period + ' results (' + r.basis + ')'"></span><span class="chev">↗</span></a>
+          </template>
+        </div>
+        <p class="meta mt-3">Every quote is matched against the transcript text before it is shown; every number comes from the company's results filings, computed by FINN. Verdicts are by AI from those numbers.
+          <span x-text="rs.data.ai.calls + ' AI calls, ' + Math.round((rs.data.ai.tokens_in + rs.data.ai.tokens_out) / 1000) + 'k tokens.'"></span></p>
+        <template x-if="rs.data.warnings.length">
+          <details class="mt-2 meta"><summary x-text="rs.data.warnings.length + ' note(s) on what could not be read'"></summary>
+            <ul class="mt-1"><template x-for="w in rs.data.warnings" :key="w"><li x-text="'· ' + w"></li></template></ul>
+          </details>
+        </template>
+      </div>
+    </template>
   </section>
 
   <!-- ================= SETTINGS ================= -->
@@ -654,6 +824,60 @@
   </template>
 </section>
 
+<!-- ================= RECEIPT SHEET (research claims, D-041) ================= -->
+<div class="sheet-back" x-show="rc.open" x-cloak @click="closeReceipt()"></div>
+<section class="sheet" x-show="rc.open" x-cloak x-ref="rcsheet" tabindex="-1" role="dialog" aria-modal="true" aria-label="Source for this claim"
+         @keydown.escape.window="rc.open && closeReceipt()">
+  <div class="grab" aria-hidden="true"></div>
+  <template x-if="rc.item">
+    <div>
+      <header class="sheet-head">
+        <span class="vchip" x-show="rc.kind === 'promise'" :class="'v-' + vClass(rc.item.verdict)" x-text="rc.item.verdict"></span>
+        <span class="vchip" x-show="rc.kind !== 'promise'" :class="rc.kind === 'bull' ? 'v-delivered' : 'v-missed'" x-text="rc.kind === 'bull' ? '▲ Bull' : '▼ Bear'"></span>
+        <span class="flex-1"></span>
+        <button class="xbtn" @click="closeReceipt()" aria-label="Close">×</button>
+      </header>
+      <p class="verdict" style="margin-top:4px" x-text="rc.kind === 'promise' ? rc.item.statement : rc.item.point"></p>
+      <p class="ctx" x-show="rc.kind === 'promise'"
+         x-text="'Said in the ' + rc.item.made_in + ' call (' + fmtDay(rc.item.made_on) + ') · period: ' + rc.item.period_text + (rc.item.restated_in ? ' · restated in ' + rc.item.restated_in.join(', ') : '')"></p>
+
+      <template x-if="rc.item.receipt">
+        <div>
+          <div class="section-label"><span>What was said</span></div>
+          <blockquote class="quote" x-text="'“' + rc.item.receipt.quote + '”'"></blockquote>
+          <a class="src" :href="rc.item.receipt.pdf_url + '#page=' + rc.item.receipt.page" target="_blank" rel="noopener">
+            <span class="ico" aria-hidden="true" x-html="iconFor('doc')"></span>
+            <span x-text="rc.item.receipt.doc + ' transcript, page ' + rc.item.receipt.page"></span>
+          </a>
+          <p class="meta" x-text="rc.item.receipt.match >= 0.99 ? 'Quote found word for word in the transcript.' : 'Quote matched to the transcript text (' + Math.round(rc.item.receipt.match * 100) + '%, PDF spacing differs).'"></p>
+        </div>
+      </template>
+
+      <template x-if="rc.item.facts && rc.item.facts.length">
+        <div>
+          <div class="section-label"><span>What the filings show</span></div>
+          <ul class="checks">
+            <template x-for="f in rc.item.facts" :key="f.id">
+              <li class="flex-col" style="gap:2px"><span x-text="f.text"></span>
+                <a class="src" style="margin-top:0" :href="f.source.pdf_url + (f.source.page ? '#page=' + f.source.page : '')" target="_blank" rel="noopener">
+                  <span class="ico" aria-hidden="true" x-html="iconFor('doc')"></span>
+                  <span x-text="'Results filing' + (f.source.page ? ', page ' + f.source.page : '') + ' ↗'"></span></a></li>
+            </template>
+          </ul>
+        </div>
+      </template>
+
+      <template x-if="rc.kind === 'promise' && rc.item.reason">
+        <div>
+          <div class="section-label"><span>FINN's verdict</span></div>
+          <p style="font-size:15px;line-height:1.45" x-text="rc.item.reason"></p>
+        </div>
+      </template>
+      <p class="note" x-text="rc.kind !== 'promise' ? 'Point by AI from the transcripts and results filings only; each one is shown only with a verified quote or figure.' : rc.item.decided_by === 'ai' ? 'Verdict by AI using only the figures above, which FINN computed from the results filings.' : 'Set by FINN's rules, not by AI: only company-level revenue, margin and profit promises whose due date has passed are judged.'"></p>
+    </div>
+  </template>
+</section>
+
 <!-- ================= TAB BAR ================= -->
 <div class="tabbar">
   <nav aria-label="Main">
@@ -741,6 +965,10 @@ function finn() {
     _ctl: null,
     _timer: null,
     sheet: { open: false, loading: false, slow: false, error: null, card: null, filing: null, formula: null },
+    rs: { query: '', ticker: null, status: 'idle', data: null, steps: [], error: null, retryable: true, side: 'bull', open: {} },
+    rc: { open: false, kind: null, item: null },
+    _rsTimer: null,
+    _rsSeq: 0,
     _cardCtl: null,
     init() {
       const s = readStore();
@@ -843,6 +1071,47 @@ function finn() {
       const line = m.source.note ? m.source.note : '"' + (m.source.line || m.label) + '"';
       return 'Page ' + m.source.page + ': ' + (line.length > 60 ? line.slice(0, 57) + '…' : line);
     },
+
+    // ---------- research (FE-4) ----------
+    async research(raw) {
+      const t = (raw || '').trim().toUpperCase();
+      if (!t) return;
+      clearTimeout(this._rsTimer);
+      const seq = ++this._rsSeq;            // a newer search replaces an older one
+      this.rs = { ...this.rs, query: t, ticker: t, status: 'loading', data: null, steps: [], error: null, open: {}, side: 'bull' };
+      const poll = async () => {
+        try {
+          const r = await fetch('/api/research/' + encodeURIComponent(t));
+          const j = await r.json();
+          if (seq !== this._rsSeq) return;
+          if (!r.ok) { this.rs.status = 'error'; this.rs.error = j.error || 'Could not research ' + t + '.'; this.rs.retryable = false; return; }
+          this.rs.ticker = j.ticker || t;
+          if (j.status === 'ready') { this.rs.data = j; this.rs.status = 'ready'; return; }
+          this.rs.status = j.status; this.rs.steps = j.steps || []; this.rs.error = j.error; this.rs.retryable = j.retryable !== false;
+          if (j.status === 'pending' || j.status === 'queued') this._rsTimer = setTimeout(poll, 2500);
+        } catch (e) {
+          if (seq !== this._rsSeq) return;
+          this.rs.status = 'error'; this.rs.retryable = true;
+          this.rs.error = 'No connection to the server. Check your internet and try again.';
+        }
+      };
+      poll();
+    },
+    promisesBy(verdicts) { return this.rs.data ? this.rs.data.promises.filter(p => verdicts.includes(p.verdict)) : []; },
+    get judgedCount() { const c = (this.rs.data && this.rs.data.counts) || {}; return (c.Delivered || 0) + (c.Partial || 0) + (c.Missed || 0); },
+    get verdictSummary() { const c = (this.rs.data && this.rs.data.counts) || {}; return (c.Delivered || 0) + ' delivered, ' + (c.Partial || 0) + ' partial, ' + (c.Missed || 0) + ' missed'; },
+    get coverageText() {
+      const d = this.rs.data; if (!d) return '';
+      const n = d.sources.transcripts.length, total = d.promises.length;
+      return total + ' promise' + (total === 1 ? '' : 's') + ' found in ' + n + ' earnings call' + (n === 1 ? '' : 's') + (d.latest_quarter ? '; results up to ' + d.latest_quarter : '') + '.';
+    },
+    vClass(v) { return { Delivered: 'delivered', Partial: 'partial', Missed: 'missed', 'Too early': 'early', 'Not checkable': 'nocheck' }[v] || 'nocheck'; },
+    openReceipt(kind, item) {
+      this.rc = { open: true, kind, item };
+      document.body.style.overflow = 'hidden';
+      this.$nextTick(() => { const el = this.$refs.rcsheet; if (el) { el.scrollTop = 0; el.focus(); } });
+    },
+    closeReceipt() { this.rc = { ...this.rc, open: false }; document.body.style.overflow = ''; },
 
     // ---------- derived text ----------
     get nMatter() { return this.data ? this.data.cards.length + this.data.alert_only.length : 0; },

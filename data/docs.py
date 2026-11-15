@@ -10,8 +10,10 @@ from __future__ import annotations
 
 import hashlib
 import io
+import ipaddress
 import json
 import re
+import socket
 import time
 from pathlib import Path
 from urllib.parse import urlparse
@@ -45,9 +47,41 @@ def check_url(url: str) -> None:
         raise ValueError("The filing link is not a PDF.")
 
 
-def download_pdf(url: str) -> bytes:
-    """Download a filing PDF (timeout, one retry, size cap). Raises RuntimeError on failure."""
-    check_url(url)
+def check_linked_url(url: str) -> None:
+    """A PDF link found INSIDE an exchange filing (e.g. a transcript on the company's own site).
+
+    Allowed only if https, a .pdf path, and a public host (no IP literal, no private, loopback or
+    link-local address): a server must not be steerable to internal addresses (SSRF).
+    """
+    u = urlparse(url or "")
+    host = (u.hostname or "").lower()
+    if u.scheme != "https" or not host or not u.path.lower().endswith(".pdf"):
+        raise ValueError(f"Not a public https PDF link: {url[:80]!r}")
+    try:
+        ipaddress.ip_address(host)
+        raise ValueError("IP-address links are not followed.")
+    except ValueError as exc:
+        if "not followed" in str(exc):
+            raise
+    try:
+        addrs = {ai[4][0] for ai in socket.getaddrinfo(host, 443)}
+    except OSError as exc:
+        raise ValueError(f"Cannot resolve {host}: {exc}") from exc
+    for a in addrs:
+        ip = ipaddress.ip_address(a)
+        if ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved or ip.is_multicast:
+            raise ValueError(f"{host} resolves to a non-public address; not followed.")
+
+
+def download_pdf(url: str, linked: bool = False) -> bytes:
+    """Download a filing PDF (timeout, one retry, size cap). Raises RuntimeError on failure.
+
+    `linked=True` is for a PDF linked from inside an exchange filing (checked by check_linked_url).
+    """
+    if linked:
+        check_linked_url(url)
+    else:
+        check_url(url)
     errors: list[str] = []
     for attempt in range(1 + config.RETRIES):
         try:
@@ -87,6 +121,50 @@ def extract_pages(pdf_bytes: bytes) -> list[str]:
                 pages.append("")
             finally:
                 page.close()
+    return pages
+
+
+def extract_links(pdf_bytes: bytes) -> list[str]:
+    """The hyperlinks (URIs) printed in a PDF, in page order, without duplicates."""
+    import pdfplumber
+
+    out: list[str] = []
+    with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+        for page in pdf.pages:
+            for h in page.hyperlinks or []:
+                uri = (h.get("uri") or "").strip()
+                if uri and uri not in out:
+                    out.append(uri)
+            page.close()
+    return out
+
+
+def linked_pdf(url: str) -> str | None:
+    """For a short cover letter that points to the real document: the first PDF link in it that
+    is not an exchange site, or None. Cached with the page text."""
+    path = _pages_path(url)
+    cached = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    if "links" not in cached:
+        links = extract_links(download_pdf(url))
+        cached = {**cached, "url": url, "links": links}
+        if "pages" in cached:
+            path.write_text(json.dumps(cached), encoding="utf-8")
+    for link in cached["links"]:
+        host = (urlparse(link).hostname or "").lower()
+        if link.lower().split("?")[0].endswith(".pdf") and not re.search(r"nseindia|bseindia", host):
+            return link.replace("http://", "https://", 1)
+    return None
+
+
+def get_linked_pages(url: str) -> list[str]:
+    """Page texts of a PDF linked from inside a filing (checked, downloaded once, cached)."""
+    cached = load_pages(url)
+    if cached is not None:
+        return cached
+    pages = extract_pages(download_pdf(url, linked=True))
+    path = _pages_path(url)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"url": url, "pages": pages}), encoding="utf-8")
     return pages
 
 

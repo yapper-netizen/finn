@@ -83,3 +83,16 @@ MAX_STATEMENT_CHARS = 14000            # text sent to the model (one statement p
 CARD_PREBUILD = True
 CARD_PREBUILD_PACE_S = 10              # pause between builds (free tier allows a few calls a minute)
 CARD_PREBUILD_MAX_TRIES = 2            # per filing per server run; a failed build is retried once
+
+# Research / promise tracker (block 8, D-079..D-086).
+RESEARCH_SET: list[str] = ["POLYCAB", "PERSISTENT", "ASTRAL"]   # precomputed (D-051)
+RESEARCH_QUARTERS = 5                  # transcripts kept: the latest + 4 whose promises can be judged
+RESEARCH_LOOKBACK_DAYS = 560           # ~18 months of filings covers 5 quarters plus the year-ago data
+RESEARCH_DIR = "snapshot/research"     # precomputed research, committed
+TRANSCRIPT_MAX_CHARS = 26000           # keyword-picked pages sent per transcript (D-021 = A)
+QUOTE_MATCH_MIN = 0.90                 # fuzzy match a quote must reach to count as verified (D-041)
+RESEARCH_PACE_S = 6                    # pause between AI calls in a research run (free tier)
+# Promise extraction model (D-081): the cheap model gave different promise lists run to run on the
+# same transcript (dropped, merged or mis-dated commitments); the strong model is steadier. The
+# cheap model still reads every results filing (the bulk of the pages).
+RESEARCH_EXTRACT_STRONG = True
