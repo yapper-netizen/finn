@@ -359,3 +359,5 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-099 | Push refinements | **Trial** — P1, P2, P4, P6, P8 | 10h |
 | D-100 | Research search | **Decided** — typeahead, recents, kept results | 10c |
 | D-101 | Order of work | **Decided** — 10c → 10h, routing later | 10b |
+| D-102 | NUS lessons | **Decided** — relevance filter, labelled proxies, pledge-style extraction | 10d |
+| D-103 | Statements from XBRL | **Decided** — no AI; reconciled with printed cards; /api/financials | 10d |

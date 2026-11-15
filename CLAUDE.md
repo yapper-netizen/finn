@@ -64,12 +64,12 @@ finn/
 ├─ CLAUDE.md, PLAN.md, DECISIONS.md, README.md (to write), .env (ignored), .env.example, .gitignore
 ├─ requirements.txt (runtime, what Render installs), requirements-dev.txt (+ pytest, httpx), pytest.ini, render.yaml
 ├─ config.py           tickers, thresholds, category tiers, model names, cache and API limits
-├─ data/               prices.py, filings.py, symbols.py, clock.py, docs.py (PDF text), research_docs.py (transcripts + results finder), equity_list.csv
-├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, brief (Brief me), llm, quotes (quote guard), results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs
-├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/symbols?q=, /api/research, /api/research/{ticker}
+├─ data/               prices.py, filings.py, symbols.py, clock.py, docs.py (PDF text), research_docs.py (transcripts + results finder), xbrl.py (NSE XBRL results data, D-103), equity_list.csv
+├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, brief (Brief me), llm, quotes (quote guard), results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs, financials (statements + ratios from XBRL, no AI)
+├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/symbols?q=, /api/research, /api/research/{ticker}, /api/financials/{ticker}
 ├─ web/index.html      one file: Today (+ results sheet), Research (scorecard, receipts, bull/bear), Settings; look in design/DESIGN_2.md
-├─ tests/              183 pytest tests (no network)
-├─ snapshot/           frozen prices, filings, results cards, research (3 stocks), committed
+├─ tests/              196 pytest tests (no network)
+├─ snapshot/           frozen prices, filings, results cards, research (3 stocks), financials (3 stocks, XBRL), committed
 ├─ design/             DESIGN_1.md (screens), DESIGN_2.md (look), previews and brainstorm history
 ├─ briefs/             one hand-off brief per block (see Working loop)
 ├─ refresh_snapshot.py, run_filings.py, run_digest.py, run_alerts.py, run_cards.py, run_research.py, smoke_test_llm.py   (scripts)

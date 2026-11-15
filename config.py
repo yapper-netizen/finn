@@ -32,6 +32,9 @@ SNAPSHOT_DIR = "snapshot"
 # Corporate filings (D-064): NSE announcements API (BSE's API blocks scripts, D-063).
 NSE_ANNOUNCEMENTS_URL = "https://www.nseindia.com/api/corporate-announcements"
 NSE_REFERER = "https://www.nseindia.com/companies-listing/corporate-filings-announcements"
+# XBRL results listings (D-093): integrated filings (2025 on) and older quarterly results.
+NSE_INTEGRATED_URL = "https://www.nseindia.com/api/integrated-filing-results"
+NSE_FIN_RESULTS_URL = "https://www.nseindia.com/api/corporates-financial-results"
 FILINGS_DAYS = 7                       # default look-back window (days)
 EQUITY_LIST_CSV = "data/equity_list.csv"  # NSE's list of listed symbols, refreshed by hand
 
@@ -89,6 +92,7 @@ RESEARCH_SET: list[str] = ["POLYCAB", "PERSISTENT", "ASTRAL"]   # precomputed (D
 RESEARCH_QUARTERS = 5                  # transcripts kept: the latest + 4 whose promises can be judged
 RESEARCH_LOOKBACK_DAYS = 560           # ~18 months of filings covers 5 quarters plus the year-ago data
 RESEARCH_DIR = "snapshot/research"     # precomputed research, committed
+FINANCIALS_DIR = "snapshot/financials" # statements from NSE XBRL for the research set (D-093), committed
 TRANSCRIPT_MAX_CHARS = 26000           # keyword-picked pages sent per transcript (D-021 = A)
 QUOTE_MATCH_MIN = 0.90                 # fuzzy match a quote must reach to count as verified (D-041)
 RESEARCH_PACE_S = 6                    # pause between AI calls in a research run (free tier)

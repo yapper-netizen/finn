@@ -16,7 +16,8 @@ import config
 from data import filings as filings_mod
 from engine import cards
 from engine.brief import brief_me
-from data.symbols import search as search_symbols
+from data.symbols import resolve as resolve_symbol, search as search_symbols
+from engine import financials
 from engine.research import ENGINE_VERSION
 from engine.research_jobs import ResearchJobs, list_stored
 from engine.feed import FeedCache, company_name
@@ -162,6 +163,26 @@ def api_symbols(q: str = Query("", max_length=40)) -> dict:
 def api_research_list() -> dict:
     """Research this server can open at once: precomputed + earlier live runs (D-100)."""
     return {"engine_version": ENGINE_VERSION, "stored": list_stored()}
+
+
+@app.get("/api/financials/{ticker}")
+def api_financials(ticker: str):
+    """Statements, ratios and checks from NSE XBRL (block 10d, D-093). No AI.
+
+    Precomputed stocks answer from `snapshot/financials/`; any other ticker is built on request
+    (13 small XBRL files, ~10-30 s) and kept. NSE down → clear JSON error, never a crash.
+    """
+    try:
+        symbol = resolve_symbol(ticker).symbol
+    except ValueError as exc:
+        return error_response(str(exc), 404)
+    try:
+        return financials.get(symbol)
+    except LookupError as exc:
+        return error_response(str(exc), 404)
+    except Exception as exc:  # network: say so; nothing cached to fall back on
+        return error_response(f"Could not read {symbol}'s results data from NSE right now: {str(exc)[:160]}",
+                              503, fallback_used=False)
 
 
 @app.get("/api/research/{ticker}")
