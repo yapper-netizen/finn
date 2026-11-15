@@ -10,7 +10,7 @@ The user's approved routine (2026-11-15). The loop is: **brief → decide → bu
 ## Writing the brief (step 1)
 
 1. Read PLAN.md §2 (Timeline) for the next unfinished block and its task IDs; read each task row (§4-§9) and every linked `D-NNN` in DECISIONS.md. Read `git log`, `git status`, CLAUDE.md. Check real data and code you will depend on (run a quick probe if a claim in the brief would otherwise be a guess).
-2. Write the brief to `briefs/block-NN-short-name.md` and show it in full in chat. Do not start building.
+2. **Two sizes.** Default (same chat and folder) = a SHORT brief: the sections below without the context pack, about one screen, shown in chat only. Write the EXHAUSTIVE hand-off brief (with the context pack) only when the user says they are changing chats: save it to `briefs/block-NN-short-name.md`, show it, and tell them to paste just one line: "Read CLAUDE.md and briefs/block-NN-....md, then wait for my decisions." Do not start building.
 3. Stop and wait for the user's decisions and approval.
 
 ### Format
