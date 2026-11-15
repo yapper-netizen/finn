@@ -74,7 +74,7 @@ finn/
 ├─ briefs/             one hand-off brief per block (see Working loop)
 ├─ refresh_snapshot.py, run_mgmt_enrich.py, run_filings.py, run_digest.py, run_alerts.py, run_cards.py, run_research.py, smoke_test_llm.py   (scripts)
 ├─ plan_revamp_v1/     plan audit record
-└─ brief/              ENAM brief PDFs (private repo for now, D-066)
+└─ brief/              ENAM brief PDFs (kept locally, not in the public repo, D-110)
 ```
 Run: `py -m uvicorn api:app --port 8000` (or the `finn-api` entry in `.claude/launch.json` via preview_start) · tests: `py -m pytest -q` · `py run_digest.py 7d` · cards: `py run_cards.py` (`--save` rebuilds `snapshot/cards/` from the cached AI answers).
 Before the code freeze (D-078, D-090): `py refresh_snapshot.py` (prices, filings, new cards, research only if new documents), check `git status snapshot/`, run the tests, commit. Frozen at tag `v1.0`: fixes only after it. New results filings are also prebuilt in the background on the server when GEMINI_API_KEY is set.
