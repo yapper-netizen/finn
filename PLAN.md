@@ -364,3 +364,5 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-104 | Research views + company profile | **Decided** — scroll + chips; SVG charts; backed sentences | 10e |
 | D-105 | Narrative vs numbers, deeper | **Decided** — XBRL facts, Python guards, say-do, tone, guidance filter | 10f |
 | D-106 | Backup-model verdicts shipped; push after 10g | **Decided** | 10f |
+| D-107 | 10g decisions: Copilot, Pulse, Ask FINN, voice | **Decided** — 1A 2A 3A 4 all 5A 6A | 10g |
+| D-108 | 10g built | **Decided** — /api/ask, /api/pulse, events snapshot | 10g |

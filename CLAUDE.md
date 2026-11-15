@@ -30,7 +30,7 @@ Act as a senior AI engineer building a production-minded prototype: clean, teste
 - App opens on "Today": every High-tier filing as a card (uncapped, D-065), Medium as one-liners, routine filings collapsed into one row.
 - Research answers = scorecards with receipts (every claim links to its source quote/page).
 - No user accounts; settings saved in browser localStorage.
-- {Interaction experiment}: cards-first Today + "Brief me" (3-sentence summary of Today, read aloud via the browser's free text-to-speech). See D-052.
+- {Interaction experiment}, point of view "Glance, triage, ask": Pulse (glance), cards-first Today + "Brief me" read aloud (triage), Copilot / Ask FINN with receipts and voice (ask). See D-052, D-107, D-108.
 
 ## Ranking rule ("what matters")
 Test: would a long-term fund manager change a hold/buy/sell view because of this?
@@ -64,12 +64,12 @@ finn/
 ├─ CLAUDE.md, PLAN.md, DECISIONS.md, README.md (to write), .env (ignored), .env.example, .gitignore
 ├─ requirements.txt (runtime, what Render installs), requirements-dev.txt (+ pytest, httpx), pytest.ini, render.yaml
 ├─ config.py           tickers, thresholds, category tiers, model names, cache and API limits
-├─ data/               prices.py, filings.py, symbols.py, clock.py, docs.py (PDF text), research_docs.py (transcripts + results finder), xbrl.py (NSE XBRL results data, D-103), equity_list.csv
-├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, brief (Brief me), llm, quotes (quote guard), results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs, financials (statements + ratios from XBRL, no AI), profile (what the company does, backed sentences)
-├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/symbols?q=, /api/research, /api/research/{ticker}, /api/financials/{ticker}, /api/profile/{ticker}
-├─ web/index.html      one file: Today (+ results sheet), Research (company hero, snapshot, trajectory, balance sheet & cash charts, promises, bull/bear, receipts), Settings; look in design/DESIGN_2.md
-├─ tests/              211 pytest tests (no network)
-├─ snapshot/           frozen prices, filings, results cards, research (3 stocks), financials (3 stocks, XBRL), profiles (3 stocks), committed
+├─ data/               prices.py, filings.py, symbols.py, clock.py, docs.py (PDF text), research_docs.py (transcripts + results finder), xbrl.py (NSE XBRL results data, D-103), events.py (NSE event calendar + corporate actions, D-108), equity_list.csv
+├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, brief (Brief me), llm, quotes (quote guard), results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs, financials (statements + ratios from XBRL, no AI), profile (what the company does, backed sentences), copilot (Ask about a stock or filing), askfinn (Ask across the portfolio), pulse
+├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/symbols?q=, /api/research, /api/research/{ticker}, /api/financials/{ticker}, /api/profile/{ticker}, POST /api/ask, /api/pulse
+├─ web/index.html      one file: Today (+ results sheet), Pulse (heatmap, move vs volume, calendar), Research (company hero, snapshot, trajectory, balance sheet & cash charts, promises, bull/bear, receipts), Settings, Ask sheet (Copilot / Ask FINN, voice); look in design/DESIGN_2.md
+├─ tests/              231 pytest tests (no network)
+├─ snapshot/           frozen prices, filings, results cards, research (3 stocks), financials (3 stocks, XBRL), profiles (3 stocks), events.json, committed
 ├─ design/             DESIGN_1.md (screens), DESIGN_2.md (look), previews and brainstorm history
 ├─ briefs/             one hand-off brief per block (see Working loop)
 ├─ refresh_snapshot.py, run_filings.py, run_digest.py, run_alerts.py, run_cards.py, run_research.py, smoke_test_llm.py   (scripts)

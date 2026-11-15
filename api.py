@@ -20,7 +20,7 @@ from engine.brief import brief_me
 from data.symbols import resolve as resolve_symbol, search as search_symbols
 from data.clock import ist_now
 from data.events import EventsCache
-from engine import copilot, financials
+from engine import askfinn, copilot, financials
 from engine.pulse import build_pulse
 from engine import profile as profile_mod
 from engine.research import ENGINE_VERSION
@@ -223,6 +223,18 @@ class AskIn(BaseModel):
     question: str = Field(min_length=1, max_length=copilot.MAX_QUESTION)
     ticker: str | None = Field(default=None, max_length=20)
     filing_id: str | None = Field(default=None, max_length=40)
+    portfolio: bool = False
+
+
+def _ask_company(question: str, symbol: str) -> dict:
+    """Copilot for one stock: figures (stored, else built from XBRL) + research if FINN has it."""
+    fin = financials.stored(symbol)
+    if fin is None:
+        try:
+            fin = financials.get(symbol)          # any NSE ticker: ~6 s of XBRL, kept
+        except Exception:
+            fin = None                            # NSE down: the AI path still works from the calls
+    return copilot.ask_stock(question, symbol, stored_research(symbol), fin)
 
 
 @app.post("/api/ask")
@@ -231,6 +243,14 @@ def api_ask(body: AskIn):
 
     Rules → Python figures → grounded cheap-model answer with verified citations; refuses otherwise.
     """
+    if body.portfolio:
+        try:
+            data = feed_cache.get()
+            pulse = build_pulse(data, events_cache.get(list(config.PORTFOLIO)), ist_now().date())
+            return askfinn.ask_portfolio(body.question, data.filings, pulse, ist_now().replace(tzinfo=None),
+                                         company_asker=_ask_company)
+        except Exception as exc:
+            return error_response(f"FINN could not answer right now: {str(exc)[:160]}", 503)
     try:
         if body.filing_id:
             card = cards.stored_card(body.filing_id)
@@ -243,13 +263,7 @@ def api_ask(body: AskIn):
     except ValueError as exc:
         return error_response(str(exc), 404)
     try:
-        fin = financials.stored(symbol)
-        if fin is None:
-            try:
-                fin = financials.get(symbol)          # any NSE ticker: ~6 s of XBRL, kept
-            except Exception:
-                fin = None                            # NSE down: the AI path still works from the calls
-        return copilot.ask_stock(body.question, symbol, stored_research(symbol), fin)
+        return _ask_company(body.question, symbol)
     except Exception as exc:  # AI quota or network: say so plainly
         return error_response(f"FINN could not answer right now: {str(exc)[:160]}", 503)
 

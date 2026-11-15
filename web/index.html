@@ -395,6 +395,15 @@
     .evd b { display: block; font-family: var(--font-head); font-size: 18px; font-weight: 900; }
     .evd.exp { background: #fff; box-shadow: inset 0 0 0 1.5px rgba(0,93,163,.35); border: 0; }
     .evd.past { background: #eceef2; color: var(--grey); }
+    .askscope { margin: 2px 0 6px; }
+    .micbtn { flex: none; width: 46px; min-height: 46px; border-radius: 12px; border: 1px solid rgba(0,93,163,.3); background: #fff; color: var(--primary); display: grid; place-items: center; }
+    .micbtn svg { width: 22px; height: 22px; }
+    .micbtn.on { background: var(--alert); border-color: var(--alert); color: #fff; animation: micpulse 1.2s ease-in-out infinite; }
+    @keyframes micpulse { 50% { box-shadow: 0 0 0 7px rgba(179,38,30,.18); } }
+    @media (prefers-reduced-motion: reduce) { .micbtn.on { animation: none; } }
+    .aitems { margin-top: 8px; display: flex; flex-direction: column; }
+    .aitem { display: flex; gap: 8px; align-items: baseline; padding: 7px 0; border-top: 1px solid rgba(0,60,120,.08); font-size: 14px; line-height: 1.35; color: var(--text); text-decoration: none; }
+    .aitem b { flex: none; min-width: 64px; color: var(--primary-deep); }
     .askback { z-index: 43; } .asksheet { z-index: 44; display: flex; flex-direction: column; height: 82dvh; }
     .rcback { z-index: 45; } .rcsheet { z-index: 46; }
     .askthread { flex: 1; overflow-y: auto; padding-bottom: 8px; }
@@ -1329,6 +1338,10 @@
     <div class="who"><b x-text="ak.ctx.title"></b><small x-text="ak.ctx.sub"></small></div>
     <button class="xbtn" @click="closeAsk()" aria-label="Close">×</button>
   </header>
+  <div class="seg askscope" role="group" aria-label="Ask about" x-show="ak.stockCtx">
+    <button class="pill" :aria-pressed="!ak.ctx.portfolio" @click="setScope(false)" x-text="ak.stockCtx ? (ak.stockCtx.ticker || 'This filing') : ''"></button>
+    <button class="pill" :aria-pressed="!!ak.ctx.portfolio" @click="setScope(true)">My portfolio</button>
+  </div>
   <div class="askthread" x-ref="askthread">
     <template x-for="(m, i) in ak.thread" :key="i">
       <div>
@@ -1339,6 +1352,14 @@
             <div>
               <span class="aby" x-text="answeredBy(m.a)"></span>
               <p class="atext" x-text="m.a.answer || m.a.error"></p>
+              <div class="aitems" x-show="(m.a.items || []).length">
+                <template x-for="(it, j) in (m.a.items || [])" :key="j">
+                  <a class="aitem" :href="it.url || null" :target="it.url ? '_blank' : null" rel="noopener" @click="!it.url && it.ticker && askItem(it)">
+                    <b x-text="it.ticker"></b><span class="flex-1" x-text="it.text"></span><span class="meta" x-text="it.date ? fmtDay(it.date) : ''"></span>
+                  </a>
+                </template>
+              </div>
+              <p class="meta mt-1" x-show="m.a.parsed_by" x-text="m.a.parsed_by === 'ai' ? 'AI read the question; the answer is FINN\'s own data, worked out in Python.' : 'Answered from FINN\'s own data, worked out in Python.'"></p>
               <div class="cites" x-show="(m.a.citations || []).length">
                 <template x-for="(c, j) in (m.a.citations || []).slice(0, 4)" :key="j">
                   <button class="cite" @click="openCite(c, m.a)" x-text="citeLabel(c, j)"></button>
@@ -1355,9 +1376,15 @@
   </div>
   <form class="askform" @submit.prevent="sendAsk(ak.q)">
     <label class="sr-only" for="askq">Your question</label>
-    <input id="askq" x-model="ak.q" maxlength="300" autocomplete="off" placeholder="Ask about numbers or what management said" :disabled="ak.busy">
+    <input id="askq" x-model="ak.q" maxlength="300" autocomplete="off" :placeholder="ak.listening ? 'Listening…' : 'Ask about numbers or what management said'" :disabled="ak.busy">
+    <button type="button" class="micbtn" x-show="vc.canListen" :class="{ on: ak.listening }" @click="toggleListen()" :disabled="ak.busy"
+            :aria-pressed="ak.listening" :aria-label="ak.listening ? 'Stop listening' : 'Ask by voice'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+    </button>
     <button class="btn primary" type="submit" :disabled="ak.busy || !ak.q.trim()" aria-label="Send">Ask</button>
   </form>
+  <p class="meta mt-2" x-show="!vc.canListen">Voice questions need Chrome or Edge (Android or desktop); this browser can only type.</p>
+  <p class="meta mt-1" x-show="vc.error" x-text="vc.error"></p>
   <p class="meta mt-2">FINN answers only from documents it has read, and shows where each answer comes from. No price targets or advice.</p>
 </section>
 
@@ -1426,6 +1453,9 @@
     </div>
   </template>
 </section>
+
+<button class="askfab" x-show="(tab === 'today' || tab === 'pulse') && !ak.open && !sheet.open" x-cloak
+        @click="openAsk(portfolioCtx())" aria-label="Ask FINN about your portfolio"><span class="spark" aria-hidden="true">✦</span> Ask FINN</button>
 
 <!-- ================= TAB BAR ================= -->
 <div class="tabbar">
@@ -1729,7 +1759,8 @@ function finn() {
     stored: [],                          // research the server can open at once
     engineVersion: null,
     rc: { open: false, kind: null, item: null },
-    ak: { open: false, ctx: {}, thread: [], sugg: [], q: '', busy: false },
+    ak: { open: false, ctx: {}, stockCtx: null, thread: [], sugg: [], q: '', busy: false, listening: false },
+    vc: { canListen: typeof window !== 'undefined' && !!(window.SpeechRecognition || window.webkitSpeechRecognition), error: null, rec: null, spoken: false },
     pl: { data: null, error: null, sel: null, allExp: false, at: 0 },
     bm: { open: false, speaking: false, at: -1, canSpeak: typeof window !== 'undefined' && 'speechSynthesis' in window },
     _rsTimer: null,
@@ -1997,14 +2028,56 @@ function finn() {
       poll();
     },
     // ---------- Copilot (block 10g, D-107) ----------
+    // ---------- voice on the Ask box (D-107, 6A): browser speech recognition in, speech synthesis out ----------
+    toggleListen() {
+      if (this.ak.listening) { if (this.vc.rec) this.vc.rec.stop(); return; }
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SR) return;
+      this.stopBrief(); this.stopSpeaking();
+      const rec = new SR();
+      rec.lang = 'en-IN'; rec.interimResults = true; rec.maxAlternatives = 1;
+      this.vc.error = null; this.vc.rec = rec; this.ak.listening = true;
+      let finalText = '';
+      rec.onresult = e => {
+        let txt = '';
+        for (const r of e.results) { txt += r[0].transcript; if (r.isFinal) finalText = txt; }
+        this.ak.q = txt;
+      };
+      rec.onerror = e => { this.vc.error = e.error === 'not-allowed' ? 'Microphone permission was refused; type instead.' : e.error === 'no-speech' ? 'Heard nothing; try again.' : 'Voice input failed (' + e.error + ').'; };
+      rec.onend = () => {
+        this.ak.listening = false; this.vc.rec = null;
+        const q = (finalText || this.ak.q || '').trim();
+        if (q) { this.vc.spoken = true; this.sendAsk(q); }
+      };
+      try { rec.start(); } catch (e) { this.ak.listening = false; this.vc.error = 'Voice input could not start.'; }
+    },
+    speakAnswer(a) {
+      if (!this.vc.spoken || !this.bm.canSpeak || !a || !a.answer) return;
+      this.vc.spoken = false;
+      const synth = window.speechSynthesis, u = new SpeechSynthesisUtterance(a.answer.replace(/₹/g, 'rupees ').replace(/\bcr\b/g, 'crore'));
+      const voice = synth.getVoices().find(v => /en-IN/i.test(v.lang)) || synth.getVoices().find(v => /^en/i.test(v.lang));
+      if (voice) u.voice = voice;
+      u.lang = voice ? voice.lang : 'en-IN';
+      synth.cancel(); synth.speak(u);
+    },
+    stopSpeaking() { if (this.bm.canSpeak) window.speechSynthesis.cancel(); },
+    portfolioCtx() { return { portfolio: true, title: 'Ask FINN', sub: 'Your ' + ((this.cfg && this.cfg.portfolio.length) || 18) + ' stocks: filings, moves and calendar' }; },
+    portfolioSugg() { return ['Which stocks filed something that matters this week?', 'Top 3 losers on the last session', 'When are the next results?']; },
+    setScope(portfolio) {
+      if (!this.ak.stockCtx || !!this.ak.ctx.portfolio === portfolio) return;
+      this.ak.ctx = portfolio ? { ...this.portfolioCtx(), back: this.ak.stockCtx } : this.ak.stockCtx;
+      this.ak.sugg = portfolio ? this.portfolioSugg() : (this.ak.stockCtx.ticker ? this.defaultSugg() : this.filingSugg());
+    },
+    filingSugg() { return ['How did revenue and profit grow?', 'Were there any exceptional items?', 'What do the notes to the results say?']; },
+    askItem(it) { this.closeAsk(); this.go('pulse'); this.pl.sel = it.ticker; },
     openAsk(ctx) {
-      const same = this.ak.ctx.ticker === ctx.ticker && this.ak.ctx.filing_id === ctx.filing_id;
-      this.ak = { ...this.ak, open: true, ctx, thread: same ? this.ak.thread : [], q: '',
-                  sugg: same ? this.ak.sugg : (ctx.ticker ? this.defaultSugg() : ['How did revenue and profit grow?', 'Were there any exceptional items?', 'What do the notes to the results say?']) };
+      const same = this.ak.ctx.ticker === ctx.ticker && this.ak.ctx.filing_id === ctx.filing_id && !!this.ak.ctx.portfolio === !!ctx.portfolio;
+      this.ak = { ...this.ak, open: true, ctx, stockCtx: ctx.portfolio ? null : ctx, thread: same ? this.ak.thread : [], q: '',
+                  sugg: same ? this.ak.sugg : (ctx.portfolio ? this.portfolioSugg() : ctx.ticker ? this.defaultSugg() : this.filingSugg()) };
       document.body.style.overflow = 'hidden';
       this.$nextTick(() => { const el = document.getElementById('askq'); if (el && window.matchMedia('(pointer: fine)').matches) el.focus(); });
     },
-    closeAsk() { this.ak.open = false; if (!this.sheet.open) document.body.style.overflow = ''; },
+    closeAsk() { if (this.vc.rec) this.vc.rec.abort(); this.ak.listening = false; this.stopSpeaking(); this.ak.open = false; if (!this.sheet.open) document.body.style.overflow = ''; },
     defaultSugg() {
       const f = this.fin, q = f && f.quarters[0], out = [];
       if (q && q.ebitda_margin !== undefined && f.quarters[1]) out.push('Why did EBITDA margin ' + (q.ebitda_margin >= f.quarters[1].ebitda_margin ? 'rise' : 'fall') + ' in ' + q.label + '?');
@@ -2017,7 +2090,8 @@ function finn() {
       this.ak.thread.push({ q, a: null }); this.ak.q = ''; this.ak.busy = true; this.ak.sugg = [];
       const entry = this.ak.thread[this.ak.thread.length - 1];      // the reactive copy, so the answer shows
       this.$nextTick(() => { const t = this.$refs.askthread; if (t) t.scrollTop = t.scrollHeight; });
-      const body = { question: q, ticker: this.ak.ctx.ticker || null, filing_id: this.ak.ctx.filing_id || null };
+      const c = this.ak.ctx;
+      const body = c.portfolio ? { question: q, portfolio: true } : { question: q, ticker: c.ticker || null, filing_id: c.filing_id || null };
       try {
         const r = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
         const j = await r.json();
@@ -2027,9 +2101,11 @@ function finn() {
         entry.a = { refused: true, answer: 'No connection to the server. Try again.', citations: [] };
       }
       this.ak.busy = false;
+      this.speakAnswer(entry.a);
       this.$nextTick(() => { const t = this.$refs.askthread; if (t) t.scrollTop = t.scrollHeight; });
     },
     answeredBy(a) {
+      if (a.parsed_by && !a.refused && a.answered_by === 'python') return 'Your portfolio data · worked out in Python';
       if (a.refused) return a.answered_by === 'rules' ? 'Not answered · FINN\'s rules' : 'Not answered';
       return a.answered_by === 'python' ? 'From the filed figures · no AI' : 'AI, from the documents · sources checked';
     },
