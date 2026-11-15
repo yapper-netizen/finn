@@ -349,3 +349,13 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-089 | Board-outcome results promotion; offline test | **Decided** | EN-2, EN-5, QA-6 |
 | D-090 | Freeze refresh, tag v1.0 | **Decided** | BE-7 |
 | D-091 | "Brief me" | **Decided** — templates + browser speech, no AI | FE-9 |
+| D-092 | v2 plan; research views | **Decided** — snapshots, trajectory, balance sheet + cash, NvN deeper; guidance as filter | Block 10b |
+| D-093 | Numbers for new views | **Decided** — XBRL probe first, results PDFs fallback | 10d |
+| D-094 | Company description | **Decided** — AI summary from documents, each sentence backed | 10e |
+| D-095 | NvN depth | **Decided** — N1-N3, N7 + tone vs numbers | 10f |
+| D-096 | Charts | **Decided** — hand-built SVG in the theme's depth | 10e |
+| D-097 | Research layout | **Decided** — scroll + chips, then trial tabs | 10e |
+| D-098 | Interaction | **Decided** — copilot + Pulse, then chat + voice | 10g |
+| D-099 | Push refinements | **Trial** — P1, P2, P4, P6, P8 | 10h |
+| D-100 | Research search | **Decided** — typeahead, recents, kept results | 10c |
+| D-101 | Order of work | **Decided** — 10c → 10h, routing later | 10b |

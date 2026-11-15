@@ -600,3 +600,35 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 ### D-091 · "Brief me": Today in three sentences, read aloud, no AI · 2026-11-15 · FE-9 (settles D-052, decision 2A) · Status: decided
 - A button on Today's hero card. Python builds three sentences from the digest the screen already shows: (1) how much matters, counted by kind so the parts add up to the headline number ("5 things matter: 3 management changes, 1 results filing and 1 unusual move"); (2) the top card ("Top of the list is a key management change at HDFC Bank: V. Srinivasa Rangan re-appointed as Whole-time Director ... from 23 Nov 2026"); (3) the biggest unexplained move. Read by the browser's free speech engine (Web Speech API, Indian English voice when available), the sentence being read is highlighted, a second tap stops it, switching window or tab stops it; browsers without speech show the text with a note.
 - Why no AI: instant, free, and it cannot say anything the cards do not. Tests caught two wording bugs (counts not adding up; "1 routine filings").
+
+### D-092 · v2 revision plan adopted; research views · 2026-11-15 · Block 10b (decision 1A) · Status: decided
+- Review against both brief PDFs written to `plan_revamp_v2/revision.md` (checklist, hidden cues, push/pull/interaction ideas); routing plan in `plan_revamp_v3/routing.md` (decisions deferred by the user, to be discussed later).
+- Research v2 views: Business snapshot, Financial snapshot, Trajectory, Balance sheet with cash quality folded in (cash flow sits on the same filing page; the reference doc names "profit without matching cash" a red flag), deeper Narrative vs numbers, Bull vs bear kept. Guidance is not a separate view: a "Guidance only" filter inside Narrative vs numbers.
+
+### D-093 · Numbers for the new views: XBRL first, results-filing PDFs as fallback · 2026-11-15 · Block 10b (decision 2: C then A) · Status: decided
+- First probe NSE's XBRL [machine-readable filing data] for results, balance sheet, cash flow and segments; if it is reachable and complete, numbers need no AI. If not, read the same PDFs the results cards already download (half-yearly balance sheet and cash flow under SEBI LODR Reg 33, quarterly segment table, verified present in `.cache/pages`), plus 1-2 older Q4 filings for a multi-year view. No annual-report downloads unless asked.
+
+### D-094 · "What the company does": AI-written from the documents, every sentence backed · 2026-11-15 · Block 10b (decision 3, user's variant of A) · Status: decided
+- The user's call: the description is the model's own summary after reading the primary documents (transcript, results filings, AR if present), not a literal quote, with more depth (segments, customers, model of earning), inspired by the user's NUS project.
+- Guard (keeps {"don't lean on the model's own outside knowledge"}): the model sees only document text; each sentence must return a supporting snippet + page that the quote guard finds in the document; a sentence without support is dropped. The receipt shows the snippet, so the sentence is a paraphrase with evidence.
+
+### D-095 · Narrative vs numbers depth: core four + tone vs numbers · 2026-11-15 · Block 10b (decision 4B) · Status: decided
+- N1 segment-level judging, N2 say-do (promised vs delivered) chart, N3 credibility meter, N7 guidance filter, plus N4 tone vs numbers (confidence of management's remarks per quarter, scored by the cheap model with a quote, against actual YoY growth).
+
+### D-096 · Charts: hand-built SVG in the app's own visual language · 2026-11-15 · Block 10b (decision 5A) · Status: decided
+- Inline SVG, no chart library. Must match the existing theme literally: ENAM tokens, the hero card's depth (layered surfaces, soft shadows, ribbon accents), same type scale; one shared chart style so every view feels part of one product.
+
+### D-097 · Research layout: build A, then try B inside it · 2026-11-15 · Block 10b (decision 6) · Status: decided
+- Build one scroll with sticky section chips first; then trial tabs (B) integrated into it, and keep what reads better on the phone.
+
+### D-098 · Interaction: Copilot in context + Pulse first, then chat and voice · 2026-11-15 · Block 10b (decision 7: A, then B) · Status: decided
+- After the research views. Significant time planned here; Copilot in context (I1) and Pulse dashboard (heatmap + event calendar) first, then fold in chat and voice (I2, I3). Details brainstormed again when the block starts.
+
+### D-099 · Push refinements: build five, judge on screen · 2026-11-15 · Block 10b (decision 8) · Status: decided (trial)
+- Build P1 since-you-last-looked, P2 why-buried, P4 live threshold preview, P6 management headline + LinkedIn search, P8 results card shows the matching promise. The user keeps or drops each after seeing it.
+
+### D-100 · Research search: typeahead, recents, kept results · 2026-11-15 · Block 10b (decision 9A) · Status: decided
+- `/api/symbols?q=` over the shipped NSE list (symbol and company name; portfolio, research set and stored research ranked first); recents in localStorage; the server lists every stored research; the browser keeps a copy of each finished result so it survives Render restarts on that phone; `run_research.py --save` still promotes one to `snapshot/`.
+
+### D-101 · Order of work · 2026-11-15 · Block 10b (decision 10A) · Status: decided
+- 10c search fixes → 10d data layer (XBRL probe, then PDFs) → 10e research views → 10f Narrative vs numbers → 10g interaction → 10h push → routing (decisions later) → tag `v1.1`.
