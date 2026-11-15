@@ -93,6 +93,7 @@ RESEARCH_QUARTERS = 5                  # transcripts kept: the latest + 4 whose 
 RESEARCH_LOOKBACK_DAYS = 560           # ~18 months of filings covers 5 quarters plus the year-ago data
 RESEARCH_DIR = "snapshot/research"     # precomputed research, committed
 FINANCIALS_DIR = "snapshot/financials" # statements from NSE XBRL for the research set (D-093), committed
+PROFILES_DIR = "snapshot/profiles"     # "what the company does", AI-written and verified (D-094), committed
 TRANSCRIPT_MAX_CHARS = 26000           # keyword-picked pages sent per transcript (D-021 = A)
 QUOTE_MATCH_MIN = 0.90                 # fuzzy match a quote must reach to count as verified (D-041)
 RESEARCH_PACE_S = 6                    # pause between AI calls in a research run (free tier)

@@ -358,7 +358,11 @@ def build(symbol: str, index_fetch: Callable[[str], list[dict]] = xbrl.fetch_ind
     sheets = sorted([s for s in (balance_sheet(f) for f in good) if s], key=lambda s: s["as_of"], reverse=True)
     flows = [c for c in (cash_flow(f) for f in good) if c]
     halves = half_years(flows)
-    latest = good and max(good, key=lambda f: f["meta"]["period_end"])
+    # Auditor's line: the latest filing that carries an opinion (quarters under limited review say
+    # "Not applicable"); falls back to the latest filing.
+    with_opinion = [f for f in good if (f["meta"].get("audit_opinion") or "").strip()
+                    and "not applicable" not in f["meta"]["audit_opinion"].lower()]
+    latest = (with_opinion or good) and max(with_opinion or good, key=lambda f: f["meta"]["period_end"])
     return {
         "ticker": symbol, "engine_version": ENGINE_VERSION, "basis": basis, "bank": bool(quarters and quarters[0]["bank"]),
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"), "source": "NSE XBRL results filings",

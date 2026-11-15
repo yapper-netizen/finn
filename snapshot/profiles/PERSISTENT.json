@@ -1,0 +1,118 @@
+{
+ "ticker": "PERSISTENT",
+ "company": "Persistent Systems Limited",
+ "engine_version": 1,
+ "generated_at": "2026-11-15T19:24:39",
+ "status": "ready",
+ "sentences": [
+  {
+   "text": "Persistent Systems builds new software products and modernizes legacy ones for an AI-first world.",
+   "receipt": {
+    "quote": "products as well as modernize their legacy products for an AI first world.",
+    "page": 6,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   }
+  },
+  {
+   "text": "The company serves global clients and large transformation programs, including top enterprise customers.",
+   "receipt": {
+    "quote": "positions us nicely as a truly global partner for large transformation programs with our global 2000 customers and prospects.",
+    "page": 6,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   }
+  },
+  {
+   "text": "Management states the business spans multiple industry verticals and service lines, with high-tech noted as a key disruptive area.",
+   "receipt": {
+    "quote": "the combination provides us with expanded capabilities across multiple industry verticals and service lines, more balanced geographic mix across North America, Europe and rest of the world",
+    "page": 6,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   }
+  },
+  {
+   "text": "The company is investing in AI capabilities, advanced platforms, and its acquisition of Nagarro.",
+   "receipt": {
+    "quote": "Let me now provide you with an update on the agreement to acquire Nagarro that we announced earlier in June this year.",
+    "page": 6,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   }
+  },
+  {
+   "text": "Management says Persistent is significantly ahead of peers in product engineering and software reinvention services.",
+   "receipt": {
+    "quote": "This is traditionally a segment where Persistent has always been significantly ahead of our peers, and we are confident that this offering will drive growth across the business creating a significant mode for us over the next several years.",
+    "page": 6,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   }
+  }
+ ],
+ "segments": [
+  {
+   "text": "Software, Hi-Tech and Emerging Industries vertical focuses on modernizing legacy states and accelerating product development for technology companies.",
+   "receipt": {
+    "quote": "Starting off with Software High-Tech and Emerging Industry vertical. A leading hyperscaler has selected Persistent as a preferred partner for its newly formed forward-deployed engineering organization to scale legacy modernization and transformation programs.",
+    "page": 13,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   },
+   "name": "Hi-Tech"
+  },
+  {
+   "text": "BFSI provides AI-led modernization and policy administration platform solutions for financial services and insurance clients.",
+   "receipt": {
+    "quote": "Moving on to Banking, Financial Services and Insurance. A Fortune 500 US insurer has selected Persistent as its AI-led modernization partner for its personal lines policy administration.",
+    "page": 13,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   },
+   "name": "BFSI"
+  },
+  {
+   "text": "Healthcare and Life Sciences manages clinical applications, enterprise systems, and technology infrastructure for healthcare organizations.",
+   "receipt": {
+    "quote": "Now, coming to our Healthcare and Lifesciences vertical. One of the largest cancer research and treatment organisations in the US has chosen Persistent to manage their technology that supports cancer care across its national network.",
+    "page": 13,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   },
+   "name": "Healthcare & Life Sciences"
+  }
+ ],
+ "dropped": 0,
+ "source": {
+  "doc": "Q2 FY27 earnings call",
+  "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+  "pages_read": [
+   1,
+   2,
+   3,
+   6,
+   10,
+   11,
+   12,
+   13,
+   15,
+   21
+  ]
+ },
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 5372,
+  "tokens_out": 656,
+  "cached": false,
+  "calls": 1
+ }
+}

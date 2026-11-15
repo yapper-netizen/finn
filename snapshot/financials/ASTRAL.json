@@ -3,7 +3,7 @@
  "engine_version": 1,
  "basis": "consolidated",
  "bank": false,
- "generated_at": "2026-11-15T19:19:58",
+ "generated_at": "2026-11-15T19:31:28",
  "source": "NSE XBRL results filings",
  "quarters": [
   {
@@ -735,9 +735,9 @@
  },
  "capex_proxy": null,
  "audit": {
-  "opinion": "Not applicable",
-  "audited": "Unaudited",
-  "label": "Q2 FY27"
+  "opinion": "Declaration of unmodified opinion",
+  "audited": "Audited",
+  "label": "Q4 FY26"
  },
  "checks": [],
  "missing": []

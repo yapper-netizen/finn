@@ -1,0 +1,115 @@
+{
+ "ticker": "ASTRAL",
+ "company": "Astral Limited",
+ "engine_version": 1,
+ "generated_at": "2026-11-15T19:24:41",
+ "status": "ready",
+ "sentences": [
+  {
+   "text": "Astral Limited manufactures and sells polymer pipes, plumbing fittings, bathware, adhesives, and paint products.",
+   "receipt": {
+    "quote": "now let me take you through all our verticals. plumbing. demand was overall good in the industry, and so was the demand for astral.",
+    "page": 2,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   }
+  },
+  {
+   "text": "The company reaches its customers through developers and projects for bathware, while experiencing good response in rural and online channels for adhesives.",
+   "receipt": {
+    "quote": "we are getting a good response in the rural and online business from all our product line and all the segments. at the same time, overseas business is also picking up very well.",
+    "page": 3,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   }
+  },
+  {
+   "text": "The business operates across multiple verticals including plumbing, bathware, adhesives, paint, and a specialty company, with paint delivering robust growth.",
+   "receipt": {
+    "quote": "the paint this quarter once again saw a robust growth of 39.9%, following 48.7% for the first quarter.",
+    "page": 4,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   }
+  },
+  {
+   "text": "Astral is investing in new capacity and plants across all verticals, completing a CPVC plant, and undertaking an expansion plan for its specialty company.",
+   "receipt": {
+    "quote": "as you are aware, astral has spent sizable amount of capex in last four to five years across all verticals, and now it is the time to utilize the same and generate cash flows from there on.",
+    "page": 2,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   }
+  },
+  {
+   "text": "Management says that Astral has been continuously gaining market share and delivers the highest volume growth in the industry.",
+   "receipt": {
+    "quote": "this is not only the highest in the industry, but also comes with a very healthy ebitda margin of 17.4% in h1 against the company's guidance of double-digit volume growth and 16%-18% margin.",
+    "page": 2,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   }
+  }
+ ],
+ "segments": [
+  {
+   "text": "The plumbing segment experienced good demand supported by plant decentralizations and new product baskets.",
+   "receipt": {
+    "quote": "demand was overall good in the industry, and so was the demand for astral. but because of the decentralizations of the plant, our demand was very good",
+    "page": 2,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "name": "Plumbing"
+  },
+  {
+   "text": "The paints division achieved strong growth while working to stabilize geographies and improve margins.",
+   "receipt": {
+    "quote": "the paint this quarter once again saw a robust growth of 39.9%, following 48.7% for the first quarter.",
+    "page": 4,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "name": "Paints"
+  },
+  {
+   "text": "The adhesive division delivered strong growth both in India and overseas markets.",
+   "receipt": {
+    "quote": "this quarter was once again excellent for adhesive business in india and overseas. we have delivered a robust growth of 25.3% and 30.10% respectively.",
+    "page": 3,
+    "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+    "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+    "match": 1.0
+   },
+   "name": "Adhesives"
+  }
+ ],
+ "dropped": 0,
+ "source": {
+  "doc": "Q2 FY27 earnings call (company website, linked from the NSE filing)",
+  "pdf_url": "https://www.astralltd.com/wp-content/uploads/2026/11/Equirus-Astral-Nov05-2026-1.pdf",
+  "pages_read": [
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   11
+  ]
+ },
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 5657,
+  "tokens_out": 703,
+  "cached": false,
+  "calls": 1
+ }
+}

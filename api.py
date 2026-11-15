@@ -18,8 +18,9 @@ from engine import cards
 from engine.brief import brief_me
 from data.symbols import resolve as resolve_symbol, search as search_symbols
 from engine import financials
+from engine import profile as profile_mod
 from engine.research import ENGINE_VERSION
-from engine.research_jobs import ResearchJobs, list_stored
+from engine.research_jobs import ResearchJobs, list_stored, stored as stored_research
 from engine.feed import FeedCache, company_name
 from engine.today import build_today
 
@@ -183,6 +184,34 @@ def api_financials(ticker: str):
     except Exception as exc:  # network: say so; nothing cached to fall back on
         return error_response(f"Could not read {symbol}'s results data from NSE right now: {str(exc)[:160]}",
                               503, fallback_used=False)
+
+
+@app.get("/api/profile/{ticker}")
+def api_profile(ticker: str):
+    """'What the company does' (D-094): AI-written from the latest transcript, every sentence backed.
+
+    Needs the stock's research (it names the transcripts). One cheap AI call, then kept.
+    """
+    try:
+        symbol = resolve_symbol(ticker).symbol
+    except ValueError as exc:
+        return error_response(str(exc), 404)
+    done = profile_mod.stored(symbol)
+    if done:
+        return done
+    research = stored_research(symbol)
+    if not research:
+        return error_response(f"Research for {symbol} is not ready yet.", 409)
+    try:
+        fin = financials.stored(symbol)
+        segs = [s["name"] for s in fin["quarters"][0].get("segments", [])] if fin and fin.get("quarters") else []
+        result = profile_mod.build(research, segs)
+    except LookupError as exc:
+        return error_response(str(exc), 404)
+    except Exception as exc:  # AI quota or network: the rest of the research still shows
+        return error_response(f"Could not write the company profile right now: {str(exc)[:160]}", 503)
+    profile_mod.save(result)
+    return result
 
 
 @app.get("/api/research/{ticker}")
