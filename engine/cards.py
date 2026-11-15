@@ -10,10 +10,15 @@ Lookup order (D-078):
 from __future__ import annotations
 
 import json
+import os
+import queue
 import re
 import threading
+import time
 from pathlib import Path
 from typing import Callable
+
+from dotenv import load_dotenv
 
 import config
 from data import docs
@@ -124,3 +129,87 @@ def _not_saved(filing: dict, reason: str, retryable: bool) -> dict:
         "status": "could not extract", "reason": reason, "retryable": retryable,
         "metrics": [], "checks": [], "warnings": [], "engine_version": config.CARD_ENGINE_VERSION,
     }
+
+
+class CardPrebuilder:
+    """Builds cards for new results filings in the background (D-078).
+
+    The feed calls `enqueue_from` after each refresh. One worker thread builds one card at a
+    time and sleeps between builds, so a burst of results days never exceeds the free tier.
+    Filings that already have a card are skipped (no AI call, no download). Requests never
+    wait for this: a tap on a card that is still queued simply builds it on demand (the
+    per-filing lock prevents a double build).
+    """
+
+    def __init__(
+        self,
+        build: Callable[[dict], dict] = get_card,
+        pace_s: float = config.CARD_PREBUILD_PACE_S,
+        max_tries: int = config.CARD_PREBUILD_MAX_TRIES,
+        enabled: bool | None = None,
+        sleep: Callable[[float], None] = time.sleep,
+    ) -> None:
+        self._build, self._pace, self._max_tries, self._sleep = build, pace_s, max_tries, sleep
+        if enabled is None:
+            load_dotenv(".env")  # locally the key lives in .env; on Render it is a dashboard variable
+            enabled = config.CARD_PREBUILD and bool(os.environ.get("GEMINI_API_KEY"))
+        self.enabled = enabled
+        self._queue: queue.Queue[dict] = queue.Queue()
+        self._queued: set[str] = set()
+        self._tries: dict[str, int] = {}
+        self._guard = threading.Lock()
+        self._worker: threading.Thread | None = None
+        self.built: list[str] = []          # ids built this run (for /health and tests)
+
+    def enqueue_from(self, data) -> int:
+        """Queue every results filing in the feed that has no stored card. Returns how many."""
+        if not self.enabled:
+            return 0
+        added = 0
+        for f in data.filings:
+            fid = str(f.get("id") or "")
+            if not valid_id(fid) or classify(f) != "results" or stored_card(fid):
+                continue
+            with self._guard:
+                if fid in self._queued or self._tries.get(fid, 0) >= self._max_tries:
+                    continue
+                self._queued.add(fid)
+            self._queue.put(f)
+            added += 1
+        if added:
+            self._start()
+        return added
+
+    def _start(self) -> None:
+        with self._guard:
+            if self._worker is None or not self._worker.is_alive():
+                self._worker = threading.Thread(target=self._run, daemon=True)
+                self._worker.start()
+
+    def run_pending(self) -> None:
+        """Build everything queued, in this thread (the worker's loop; tests call it directly)."""
+        while True:
+            try:
+                f = self._queue.get_nowait()
+            except queue.Empty:
+                return
+            self._build_one(f)
+
+    def _run(self) -> None:
+        self.run_pending()
+
+    def _build_one(self, f: dict) -> None:
+        fid = str(f["id"])
+        with self._guard:
+            self._tries[fid] = self._tries.get(fid, 0) + 1
+        try:
+            card = self._build(f)
+            if not card.get("retryable"):
+                self.built.append(fid)
+            print(f"[cards] prebuilt {f.get('ticker')} {fid}: {card.get('status')}")
+        except Exception as exc:  # never let one filing stop the worker
+            print(f"[cards] prebuild failed {f.get('ticker')} {fid}: {type(exc).__name__}: {exc}")
+        finally:
+            with self._guard:
+                self._queued.discard(fid)
+            self._sleep(self._pace)

@@ -77,3 +77,9 @@ LLM_CACHE_DB = "cache.db"              # SQLite answer cache: each document is r
 CARDS_DIR = "snapshot/cards"           # precomputed cards, committed so the demo works offline
 CARD_ENGINE_VERSION = 1                # bump to invalidate cached cards after an extractor change
 MAX_STATEMENT_CHARS = 14000            # text sent to the model (one statement page, maybe two)
+
+# Background card building (D-078): when the feed finds a new results filing, build its card
+# once, one at a time, paced for the free Gemini tier. Off if GEMINI_API_KEY is not set.
+CARD_PREBUILD = True
+CARD_PREBUILD_PACE_S = 10              # pause between builds (free tier allows a few calls a minute)
+CARD_PREBUILD_MAX_TRIES = 2            # per filing per server run; a failed build is retried once

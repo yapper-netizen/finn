@@ -18,7 +18,8 @@ from engine.feed import FeedCache, company_name
 from engine.today import build_today
 
 WEB_INDEX = Path(__file__).parent / "web" / "index.html"
-feed_cache = FeedCache()
+card_prebuilder = cards.CardPrebuilder()
+feed_cache = FeedCache(on_loaded=card_prebuilder.enqueue_from)
 
 
 @asynccontextmanager
@@ -52,7 +53,8 @@ async def _unexpected(request: Request, exc: Exception) -> JSONResponse:
 @app.get("/health")
 def health() -> dict:
     """Render's health check; also says whether live data has finished its first load."""
-    return {"status": "ok", "data_ready": feed_cache.ready, "last_error": feed_cache.last_error}
+    return {"status": "ok", "data_ready": feed_cache.ready, "last_error": feed_cache.last_error,
+            "cards_prebuild": card_prebuilder.enabled, "cards_built": len(card_prebuilder.built)}
 
 
 @app.get("/")

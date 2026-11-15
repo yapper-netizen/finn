@@ -104,8 +104,10 @@ class FeedCache:
         ttl: float = config.CACHE_TTL_S,
         wait: float = config.WARM_WAIT_S,
         clock: Callable[[], float] = time.monotonic,
+        on_loaded: Callable[[FeedData], None] | None = None,
     ) -> None:
         self._loader, self._snapshot_loader = loader, snapshot_loader
+        self._on_loaded = on_loaded  # e.g. queue new results filings for card building (D-078)
         self._ttl, self._wait, self._clock = ttl, wait, clock
         self._data: FeedData | None = None
         self._loaded_at = 0.0
@@ -127,6 +129,12 @@ class FeedCache:
             self.last_error = None
         except Exception as exc:  # any failure: keep serving what we have
             self.last_error = f"{type(exc).__name__}: {exc}"
+        else:
+            if self._on_loaded is not None:
+                try:
+                    self._on_loaded(self._data)
+                except Exception as exc:  # a hook must never break the feed
+                    print(f"[feed] on_loaded hook failed: {type(exc).__name__}: {exc}")
         finally:
             self._ready.set()
             self._busy.release()

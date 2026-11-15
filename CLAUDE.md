@@ -38,7 +38,7 @@ Test: would a long-term fund manager change a hold/buy/sell view because of this
 - Medium (one-line summary): fund_raise, capex, dividend, bonus_split, insider_trading, order wins
 - Low (collapse to "Routine (N)"): call notices, investor meetings, AGM/EGM, postal ballot, unclassified
 - Boost to top if the same stock also crossed a price/volume alert that day.
-- {Alerts with user-configurable thresholds}: volume > 2x 20-day avg (default); daily price move beyond ±5% (default, ±3% still being decided).
+- {Alerts with user-configurable thresholds}: volume > 2x 20-day avg (default); daily price move beyond ±3% (default, D-077).
 
 ## Build scope
 Build:
@@ -76,7 +76,8 @@ finn/
 ├─ plan_revamp_v1/     plan audit record
 └─ brief/              ENAM brief PDFs (private repo for now, D-066)
 ```
-Run: `py -m uvicorn api:app --port 8000` (or the `finn-api` entry in `.claude/launch.json` via preview_start) · tests: `py -m pytest -q` · `py run_digest.py 7d`.
+Run: `py -m uvicorn api:app --port 8000` (or the `finn-api` entry in `.claude/launch.json` via preview_start) · tests: `py -m pytest -q` · `py run_digest.py 7d` · cards: `py run_cards.py` (`--save` rebuilds `snapshot/cards/` from the cached AI answers).
+Before the code freeze (D-078): `py run_filings.py 7`, then `py run_cards.py --save`, check new cards, commit. New results filings are also prebuilt in the background on the server when GEMINI_API_KEY is set.
 
 ## Draft portfolio (verify each loads in yfinance; no ITC)
 RELIANCE, HDFCBANK, TCS, INFY, PIDILITIND, LT, BHARTIARTL, SUNPHARMA, ASIANPAINT, TITAN, DMART, TRENT, POLYCAB, DIXON, PERSISTENT, VIJAYA (Vijaya Diagnostic, small-cap, replaced HAL, D-062), DEEPAKNTR, IRCTC
