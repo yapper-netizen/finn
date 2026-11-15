@@ -256,7 +256,8 @@ def ai_answer(question: str, company: str, docs_pages: list[dict], facts: list[d
                     "FINN could not verify a source for this answer, so it is not shown.")
         r["ai"], r["answered_by"] = ai_meta, "ai"
         return r
-    return {"answer": out.answer.strip(), "refused": False, "answered_by": "ai", "citations": cites, "suggestions": [], "ai": ai_meta}
+    text = re.sub(r"\s*\[(P|F)\d+(,\s*(P|F)\d+)*\]", "", out.answer).strip()     # ids are for FINN, not the reader
+    return {"answer": text, "refused": False, "answered_by": "ai", "citations": cites, "suggestions": [], "ai": ai_meta}
 
 
 # ------------------------------------------------------------------ context + entry point
@@ -342,7 +343,7 @@ def ask_filing(question: str, card: dict, ask: Callable[..., Any] | None = None,
                loader: Callable[[str], list[str]] = _load) -> dict:
     """Copilot on one results filing: the card's figures + the filing's own pages."""
     question = (question or "").strip()[:MAX_QUESTION]
-    sugg = ["What drove the change in profit?", "Were there any exceptional items?", "What do the notes to the results say?"]
+    sugg = ["How did revenue and profit grow?", "Were there any exceptional items?", "What do the notes to the results say?"]
     if not words(question):
         return refusal("Ask about this results filing.", sugg)
     if REFUSE.search(question):

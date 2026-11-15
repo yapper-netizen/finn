@@ -380,6 +380,27 @@
     .tchip { flex: none; min-width: 34px; height: 26px; border-radius: 99px; display: grid; place-items: center; font-weight: 800; font-size: 13px; background: #eceef2; color: var(--grey); }
     .tchip.up { background: var(--primary-tint); color: var(--primary-deep); } .tchip.down { background: var(--warn-tint); color: var(--warn); }
     .gapnote { color: var(--alert); font-size: 13.5px; font-weight: 600; margin-top: 2px; }
+    .askback { z-index: 43; } .asksheet { z-index: 44; display: flex; flex-direction: column; height: 82dvh; }
+    .rcback { z-index: 45; } .rcsheet { z-index: 46; }
+    .askthread { flex: 1; overflow-y: auto; padding-bottom: 8px; }
+    .askfab { position: fixed; right: max(16px, calc(50% - 224px)); bottom: calc(96px + env(safe-area-inset-bottom)); z-index: 18; min-height: 48px; padding: 0 18px;
+              border-radius: 99px; border: 0; color: #fff; font-weight: 800; font-size: 15px; display: inline-flex; align-items: center; gap: 8px;
+              background: linear-gradient(180deg, var(--primary-bright), var(--primary-deep)); box-shadow: 0 12px 22px -8px rgba(0,65,114,.7), inset 0 1px 0 rgba(255,255,255,.3); }
+    .askbtn.inline { width: 100%; min-height: 46px; margin: 4px 0 10px; border-radius: 14px; border: 1px solid rgba(0,93,163,.25); background: var(--primary-tint); color: var(--primary-deep); font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .spark { font-size: 15px; line-height: 1; }
+    .qbubble { margin: 14px 0 6px auto; max-width: 85%; width: fit-content; background: var(--primary); color: #fff; padding: 9px 13px; border-radius: 16px 16px 4px 16px; font-size: 15px; line-height: 1.4; }
+    .abubble { max-width: 94%; background: #f3f6fa; border: 1px solid rgba(0,60,120,.08); padding: 10px 13px; border-radius: 16px 16px 16px 4px; }
+    .abubble.refused { background: #fbf7ee; border-color: rgba(122,74,0,.15); }
+    .aby { display: inline-block; font-size: 12.5px; font-weight: 700; color: var(--primary-deep); background: var(--primary-tint); border-radius: 99px; padding: 2px 8px; }
+    .abubble.refused .aby { color: var(--warn); background: var(--warn-tint); }
+    .atext { font-size: 15.5px; line-height: 1.45; margin: 6px 0 0; }
+    .cites { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .cite { font-size: 13px; font-weight: 600; min-height: 32px; padding: 0 10px; border-radius: 99px; border: 1px solid rgba(0,93,163,.25); background: #fff; color: var(--primary); }
+    .pill.sugg { text-align: left; min-height: 40px; font-size: 14px; line-height: 1.3; padding: 6px 12px; }
+    .askform { display: flex; gap: 8px; padding-top: 10px; border-top: 1px solid var(--border-soft); }
+    .askform input { flex: 1; min-width: 0; min-height: 46px; border-radius: 12px; border: 1px solid rgba(0,60,120,.18); padding: 0 12px; font-size: 16px; }
+    .dotdot::after { content: "…"; animation: blink 1s steps(2) infinite; }
+    @keyframes blink { 50% { opacity: .2; } }
     .big-fig { font-family: var(--font-head); font-weight: 900; font-size: 30px; margin: 6px 0 0; color: var(--primary-deep); }
     .rdot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px var(--ok-tint); }
     .rchip[aria-pressed="true"] .rdot { background: #fff; box-shadow: none; }
@@ -721,6 +742,9 @@
             <button class="pill" :aria-pressed="rs.sec === s.id" @click="jump(s.id)" x-text="s.t"></button>
           </template>
         </nav>
+
+        <button class="askfab" @click="openAsk({ ticker: rs.data.ticker, title: 'Ask about ' + rs.data.ticker, sub: 'Answers from its filings and calls only' })" aria-label="Ask FINN about this company">
+          <span class="spark" aria-hidden="true">✦</span> Ask</button>
 
         <!-- ===== Snapshot: what they do + headline numbers + segment mix ===== -->
         <section id="sec-snapshot" class="rsec" data-sec="snapshot">
@@ -1082,6 +1106,9 @@
 
   <template x-if="sheet.card && !sheet.loading">
     <div>
+      <button class="askbtn inline" x-show="sheet.card.kind === 'results' && ['ok', 'partial'].includes(sheet.card.status)"
+              @click="openAsk({ filing_id: sheet.card.filing_id, title: (sheet.card.ticker || '') + ' results', sub: 'Answers from this filing only' })">
+        <span class="spark" aria-hidden="true">✦</span> Ask about this filing</button>
       <!-- could not extract: say why, never guess -->
       <template x-if="sheet.card.status === 'could not extract'">
         <div>
@@ -1199,9 +1226,51 @@
   </template>
 </section>
 
+<!-- ================= ASK SHEET (Copilot, D-107) ================= -->
+<div class="sheet-back askback" x-show="ak.open" x-cloak @click="closeAsk()"></div>
+<section class="sheet asksheet" x-show="ak.open" x-cloak x-ref="asksheet" tabindex="-1" role="dialog" aria-modal="true" aria-label="Ask FINN"
+         @keydown.escape.window="ak.open && !rc.open && closeAsk()">
+  <div class="grab" aria-hidden="true"></div>
+  <header class="sheet-head">
+    <span class="tile sm" aria-hidden="true"><span class="spark">✦</span></span>
+    <div class="who"><b x-text="ak.ctx.title"></b><small x-text="ak.ctx.sub"></small></div>
+    <button class="xbtn" @click="closeAsk()" aria-label="Close">×</button>
+  </header>
+  <div class="askthread" x-ref="askthread">
+    <template x-for="(m, i) in ak.thread" :key="i">
+      <div>
+        <p class="qbubble" x-text="m.q"></p>
+        <div class="abubble" :class="m.a && m.a.refused ? 'refused' : ''">
+          <template x-if="!m.a"><p class="meta"><span class="dotdot">Reading the documents</span></p></template>
+          <template x-if="m.a">
+            <div>
+              <span class="aby" x-text="answeredBy(m.a)"></span>
+              <p class="atext" x-text="m.a.answer || m.a.error"></p>
+              <div class="cites" x-show="(m.a.citations || []).length">
+                <template x-for="(c, j) in (m.a.citations || []).slice(0, 4)" :key="j">
+                  <button class="cite" @click="openCite(c, m.a)" x-text="citeLabel(c, j)"></button>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </template>
+    <div class="flex flex-wrap gap-2 mt-2" x-show="ak.sugg.length && !ak.busy">
+      <template x-for="sq in ak.sugg" :key="sq"><button class="pill sugg" @click="sendAsk(sq)" x-text="sq"></button></template>
+    </div>
+  </div>
+  <form class="askform" @submit.prevent="sendAsk(ak.q)">
+    <label class="sr-only" for="askq">Your question</label>
+    <input id="askq" x-model="ak.q" maxlength="300" autocomplete="off" placeholder="Ask about numbers or what management said" :disabled="ak.busy">
+    <button class="btn primary" type="submit" :disabled="ak.busy || !ak.q.trim()" aria-label="Send">Ask</button>
+  </form>
+  <p class="meta mt-2">FINN answers only from documents it has read, and shows where each answer comes from. No price targets or advice.</p>
+</section>
+
 <!-- ================= RECEIPT SHEET (research claims, D-041) ================= -->
-<div class="sheet-back" x-show="rc.open" x-cloak @click="closeReceipt()"></div>
-<section class="sheet" x-show="rc.open" x-cloak x-ref="rcsheet" tabindex="-1" role="dialog" aria-modal="true" aria-label="Source for this claim"
+<div class="sheet-back rcback" x-show="rc.open" x-cloak @click="closeReceipt()"></div>
+<section class="sheet rcsheet" x-show="rc.open" x-cloak x-ref="rcsheet" tabindex="-1" role="dialog" aria-modal="true" aria-label="Source for this claim"
          @keydown.escape.window="rc.open && closeReceipt()">
   <div class="grab" aria-hidden="true"></div>
   <template x-if="rc.item">
@@ -1542,6 +1611,7 @@ function finn() {
     stored: [],                          // research the server can open at once
     engineVersion: null,
     rc: { open: false, kind: null, item: null },
+    ak: { open: false, ctx: {}, thread: [], sugg: [], q: '', busy: false },
     bm: { open: false, speaking: false, at: -1, canSpeak: typeof window !== 'undefined' && 'speechSynthesis' in window },
     _rsTimer: null,
     _rsSeq: 0,
@@ -1774,6 +1844,54 @@ function finn() {
       };
       poll();
     },
+    // ---------- Copilot (block 10g, D-107) ----------
+    openAsk(ctx) {
+      const same = this.ak.ctx.ticker === ctx.ticker && this.ak.ctx.filing_id === ctx.filing_id;
+      this.ak = { ...this.ak, open: true, ctx, thread: same ? this.ak.thread : [], q: '',
+                  sugg: same ? this.ak.sugg : (ctx.ticker ? this.defaultSugg() : ['How did revenue and profit grow?', 'Were there any exceptional items?', 'What do the notes to the results say?']) };
+      document.body.style.overflow = 'hidden';
+      this.$nextTick(() => { const el = document.getElementById('askq'); if (el && window.matchMedia('(pointer: fine)').matches) el.focus(); });
+    },
+    closeAsk() { this.ak.open = false; if (!this.sheet.open) document.body.style.overflow = ''; },
+    defaultSugg() {
+      const f = this.fin, q = f && f.quarters[0], out = [];
+      if (q && q.ebitda_margin !== undefined && f.quarters[1]) out.push('Why did EBITDA margin ' + (q.ebitda_margin >= f.quarters[1].ebitda_margin ? 'rise' : 'fall') + ' in ' + q.label + '?');
+      if (q && q.segments && q.segments.length) out.push('What did management say about ' + q.segments.reduce((a, b) => (b.revenue > a.revenue ? b : a)).name + '?');
+      out.push('What is the cash cycle?');
+      return out.slice(0, 3);
+    },
+    async sendAsk(text) {
+      const q = (text || '').trim(); if (!q || this.ak.busy) return;
+      this.ak.thread.push({ q, a: null }); this.ak.q = ''; this.ak.busy = true; this.ak.sugg = [];
+      const entry = this.ak.thread[this.ak.thread.length - 1];      // the reactive copy, so the answer shows
+      this.$nextTick(() => { const t = this.$refs.askthread; if (t) t.scrollTop = t.scrollHeight; });
+      const body = { question: q, ticker: this.ak.ctx.ticker || null, filing_id: this.ak.ctx.filing_id || null };
+      try {
+        const r = await fetch('/api/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        const j = await r.json();
+        entry.a = r.ok ? j : { refused: true, answer: j.error || 'FINN could not answer right now.', citations: [] };
+        if (r.ok && j.suggestions) this.ak.sugg = j.suggestions.filter(x => !this.ak.thread.some(t => t.q === x));
+      } catch (e) {
+        entry.a = { refused: true, answer: 'No connection to the server. Try again.', citations: [] };
+      }
+      this.ak.busy = false;
+      this.$nextTick(() => { const t = this.$refs.askthread; if (t) t.scrollTop = t.scrollHeight; });
+    },
+    answeredBy(a) {
+      if (a.refused) return a.answered_by === 'rules' ? 'Not answered · FINN\'s rules' : 'Not answered';
+      return a.answered_by === 'python' ? 'From the filed figures · no AI' : 'AI, from the documents · sources checked';
+    },
+    citeLabel(c, j) {
+      if (c.kind === 'quote') return (j + 1) + ' · ' + c.doc.replace(' earnings call', ' call').replace(/ \(.*\)$/, '') + ', p. ' + c.page;
+      if (c.kind === 'figure') return (j + 1) + ' · ' + c.title;
+      return (j + 1) + ' · ' + (c.text || 'Figure').slice(0, 36) + (c.text && c.text.length > 36 ? '…' : '');
+    },
+    openCite(c, a) {
+      if (c.kind === 'quote') return this.openReceipt('profile', { text: a.answer, receipt: c });
+      if (c.kind === 'figure') return this.openReceipt('figure', c);
+      this.openReceipt('figure', { title: c.text, value: '', formula: 'A figure from the company\'s results filings, computed by FINN.', inputs: [], url: c.pdf_url, src: 'Results filing' });
+    },
+
     // ---------- research v2: financials + profile (block 10e) ----------
     get fin() { return this.rs.fin; },
     get prof() { return this.rs.prof; },
@@ -2001,7 +2119,7 @@ function finn() {
       document.body.style.overflow = 'hidden';
       this.$nextTick(() => { const el = this.$refs.rcsheet; if (el) { el.scrollTop = 0; el.focus(); } });
     },
-    closeReceipt() { this.rc = { ...this.rc, open: false }; document.body.style.overflow = ''; },
+    closeReceipt() { this.rc = { ...this.rc, open: false }; document.body.style.overflow = (this.ak.open || this.sheet.open) ? 'hidden' : ''; },
 
     // ---------- derived text ----------
     get nMatter() { return this.data ? this.data.cards.length + this.data.alert_only.length : 0; },

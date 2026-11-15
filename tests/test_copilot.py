@@ -99,3 +99,10 @@ def test_unexplained_why_falls_back_to_the_figure():
     ask, _ = fake({"answer": "Not in the documents FINN read.", "found": False, "citations": []})
     a = C.ask_stock("Why did operating cash flow fall?", "XYZ", RESEARCH, FIN, ask=ask, loader=lambda u: PAGES)
     assert not a["refused"] and a["answer"].startswith("Management did not explain this") and "₹160 cr" in a["answer"]
+
+
+def test_passage_ids_are_removed_from_answer_text():
+    ask, _ = fake({"answer": "Margins expanded on a better mix [P1].", "found": True,
+                   "citations": [{"passage": "P1", "quote": "Our EBITDA margin expanded because of a better product mix"}]})
+    a = C.ask_stock("Why did margins expand?", "XYZ", RESEARCH, FIN, ask=ask, loader=lambda u: PAGES)
+    assert a["answer"] == "Margins expanded on a better mix."
