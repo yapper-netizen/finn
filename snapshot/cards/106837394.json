@@ -1,0 +1,185 @@
+{
+ "filing_id": "106837394",
+ "ticker": "RELIANCE",
+ "company": "Reliance Industries Limited",
+ "filing_date": "2026-10-30T19:40:11",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/kavinavora_30102026193935_SE_30102026_Results.pdf",
+ "title": "In continuation of our letter dated October 27, 2026, we wish to inform you that the Board of Directors of the Company, at its meeting held today, has, inter alia:1. approved the unaudited Financial Results (Consolidated and Standalone) for the quarter and half year ended September 30, 2026; and2. passed an enabling resolution authorising the issuance of listed, secured / unsecured, redeemable non-convertible debentures up to Rs. 15,000 crore, in one or more tranches, on private placement basis.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  10
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 332861.0,
+    "prev_quarter": 311850.0,
+    "year_ago": 258898.0
+   },
+   "qoq_pct": 6.7,
+   "qoq_note": null,
+   "yoy_pct": 28.6,
+   "yoy_note": null,
+   "source": {
+    "line": "Revenue from Operations",
+    "printed": [
+     "332,861",
+     "311,850",
+     "258,898"
+    ],
+    "page": 10
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 56616.0,
+    "prev_quarter": 47517.0,
+    "year_ago": 45885.0
+   },
+   "qoq_pct": 19.1,
+   "qoq_note": null,
+   "yoy_pct": 23.4,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "pbt": {
+     "current": 38613.0,
+     "prev_quarter": 30630.0,
+     "year_ago": 29124.0
+    },
+    "finance_cost": {
+     "current": 8481.0,
+     "prev_quarter": 8337.0,
+     "year_ago": 6827.0
+    },
+    "depreciation": {
+     "current": 15315.0,
+     "prev_quarter": 15100.0,
+     "year_ago": 14416.0
+    },
+    "other_income": {
+     "current": 5793.0,
+     "prev_quarter": 6550.0,
+     "year_ago": 4482.0
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 10
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 38613.0,
+    "prev_quarter": 30630.0,
+    "year_ago": 29124.0
+   },
+   "qoq_pct": 26.1,
+   "qoq_note": null,
+   "yoy_pct": 32.6,
+   "yoy_note": null,
+   "source": {
+    "line": "Profit Before Tax",
+    "printed": [
+     "38,613",
+     "30,630",
+     "29,124"
+    ],
+    "page": 10
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 25548.0,
+    "prev_quarter": 20946.0,
+    "year_ago": 18165.0
+   },
+   "qoq_pct": 22.0,
+   "qoq_note": null,
+   "yoy_pct": 40.6,
+   "yoy_note": null,
+   "source": {
+    "line": "a) Owners of the Company",
+    "printed": [
+     "25,548",
+     "20,946",
+     "18,165"
+    ],
+    "page": 10
+   },
+   "note": "attributable to owners"
+  }
+ ],
+ "verdict": "All 4 lines up year on year.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 17.0,
+    "prev_quarter": 15.2,
+    "year_ago": 17.7
+   },
+   "yoy_bps": -70
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 7.7,
+    "prev_quarter": 6.7,
+    "year_ago": 7.0
+   },
+   "yoy_bps": 70
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 2688,
+  "tokens_out": 959
+ }
+}

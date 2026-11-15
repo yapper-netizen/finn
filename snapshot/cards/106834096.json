@@ -1,0 +1,190 @@
+{
+ "filing_id": "106834096",
+ "ticker": "ASIANPAINT",
+ "company": "Asian Paints Limited",
+ "filing_date": "2026-10-29T14:10:22",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/ASIANPAINT_29102026140936_OutcomeofBM29102026signed.pdf",
+ "title": "The Board of Directors at its meeting held today i.e., 29th October 2026, has, inter alia, approved the audited standalone and unaudited consolidated financial results of the Company for the quarter and half year ended 30th September 2026 and payment of interim dividend of Rs. 5.75 (Rupees five and paise seventy-five only) per equity share of the face value of Re. 1 each for the financial year ending 31st March 2027",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:50",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  12
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 9976.51,
+    "prev_quarter": 10541.94,
+    "year_ago": 8531.27
+   },
+   "qoq_pct": -5.4,
+   "qoq_note": null,
+   "yoy_pct": 16.9,
+   "yoy_note": null,
+   "source": {
+    "line": "1 Revenue from operations",
+    "printed": [
+     "9,976.51",
+     "10,541.94",
+     "8,531.27"
+    ],
+    "page": 12
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 1599.06,
+    "prev_quarter": 2206.92,
+    "year_ago": 1541.68
+   },
+   "qoq_pct": -27.5,
+   "qoq_note": null,
+   "yoy_pct": 3.7,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before exceptional items and tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "profit_before_exceptional": {
+     "current": 1477.78,
+     "prev_quarter": 2095.75,
+     "year_ago": 1391.52
+    },
+    "finance_cost": {
+     "current": 55.4,
+     "prev_quarter": 47.83,
+     "year_ago": 43.87
+    },
+    "depreciation": {
+     "current": 313.67,
+     "prev_quarter": 304.19,
+     "year_ago": 304.93
+    },
+    "other_income": {
+     "current": 247.79,
+     "prev_quarter": 240.85,
+     "year_ago": 198.64
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 12
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 1477.78,
+    "prev_quarter": 2095.75,
+    "year_ago": 1391.52
+   },
+   "qoq_pct": -29.5,
+   "qoq_note": null,
+   "yoy_pct": 6.2,
+   "yoy_note": null,
+   "source": {
+    "line": "9 Profit before tax (7-8)",
+    "printed": [
+     "1,477.78",
+     "2,095.75",
+     "1,391.52"
+    ],
+    "page": 12
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 1067.63,
+    "prev_quarter": 1539.25,
+    "year_ago": 993.59
+   },
+   "qoq_pct": -30.6,
+   "qoq_note": null,
+   "yoy_pct": 7.5,
+   "yoy_note": null,
+   "source": {
+    "line": "-Owners of the Company",
+    "printed": [
+     "1,067.63",
+     "1,539.25",
+     "993.59"
+    ],
+    "page": 12
+   },
+   "note": "attributable to owners"
+  }
+ ],
+ "verdict": "All 4 lines up year on year. EBITDA margin down 210 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 16.0,
+    "prev_quarter": 20.9,
+    "year_ago": 18.1
+   },
+   "yoy_bps": -210
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 10.7,
+    "prev_quarter": 14.6,
+    "year_ago": 11.6
+   },
+   "yoy_bps": -90
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 3140,
+  "tokens_out": 1096
+ }
+}

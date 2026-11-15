@@ -1,0 +1,192 @@
+{
+ "filing_id": "106857040",
+ "ticker": "IRCTC",
+ "company": "Indian Railway Catering And Tourism Corporation Limited",
+ "filing_date": "2026-11-12T17:32:14",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/IRCTC_12112026173058_Outcomeofboardmeeting12112026.pdf",
+ "title": "Indian Railway Catering And Tourism Corporation Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "lakh",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  10
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 1333.07,
+    "prev_quarter": 1369.53,
+    "year_ago": 1145.99
+   },
+   "qoq_pct": -2.7,
+   "qoq_note": null,
+   "yoy_pct": 16.3,
+   "yoy_note": null,
+   "source": {
+    "line": "Revenue from operations",
+    "printed": [
+     "133,307.49",
+     "136,952.93",
+     "114,599.01"
+    ],
+    "page": 10
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 407.96,
+    "prev_quarter": 386.68,
+    "year_ago": 404.23
+   },
+   "qoq_pct": 5.5,
+   "qoq_note": null,
+   "yoy_pct": 0.9,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before exceptional items and tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "profit_before_exceptional": {
+     "current": 472.25,
+     "prev_quarter": 441.68,
+     "year_ago": 451.41
+    },
+    "finance_cost": {
+     "current": 4.29,
+     "prev_quarter": 4.32,
+     "year_ago": 4.39
+    },
+    "depreciation": {
+     "current": 12.0,
+     "prev_quarter": 12.39,
+     "year_ago": 11.42
+    },
+    "other_income": {
+     "current": 80.58,
+     "prev_quarter": 71.71,
+     "year_ago": 62.98
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 10
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 355.95,
+    "prev_quarter": 441.68,
+    "year_ago": 457.21
+   },
+   "qoq_pct": -19.4,
+   "qoq_note": null,
+   "yoy_pct": -22.1,
+   "yoy_note": null,
+   "source": {
+    "line": "Profit before tax (V + VI)",
+    "printed": [
+     "35,595.31",
+     "44,168.41",
+     "45,721.06"
+    ],
+    "page": 10
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 263.56,
+    "prev_quarter": 330.16,
+    "year_ago": 342.02
+   },
+   "qoq_pct": -20.2,
+   "qoq_note": null,
+   "yoy_pct": -22.9,
+   "yoy_note": null,
+   "source": {
+    "line": "Profit After Tax for the period/year",
+    "printed": [
+     "26,356.21",
+     "33,015.88",
+     "34,202.43"
+    ],
+    "page": 10
+   },
+   "note": null
+  }
+ ],
+ "verdict": "Revenue up 16% year on year; PAT down 23%. EBITDA margin down 470 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 30.6,
+    "prev_quarter": 28.2,
+    "year_ago": 35.3
+   },
+   "yoy_bps": -470
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 19.8,
+    "prev_quarter": 24.1,
+    "year_ago": 29.8
+   },
+   "yoy_bps": -1000
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [
+  "Exceptional items took ₹116.3 crore off PBT this quarter; see the notes in the filing."
+ ],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 3347,
+  "tokens_out": 813
+ }
+}

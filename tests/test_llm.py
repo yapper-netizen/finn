@@ -11,14 +11,14 @@ def _ok(model: str, text: str = "OK") -> LLMResult:
 
 
 def test_cheap_call_uses_cheap_model(monkeypatch):
-    monkeypatch.setattr(llm, "_call_once", lambda m, p, j: _ok(m))
+    monkeypatch.setattr(llm, "_call_once", lambda m, p, j, s=None: _ok(m))
     assert llm.ask("hi").model == config.CHEAP_MODEL
 
 
 def test_strong_retries_then_falls_back(monkeypatch):
     seen: list[str] = []
 
-    def fake(model, prompt, as_json):
+    def fake(model, prompt, as_json, schema=None):
         seen.append(model)
         if model == config.STRONG_MODEL:
             raise RuntimeError("503")
@@ -32,7 +32,7 @@ def test_strong_retries_then_falls_back(monkeypatch):
 
 
 def test_all_failures_raise_clear_error(monkeypatch):
-    def boom(model, prompt, as_json):
+    def boom(model, prompt, as_json, schema=None):
         raise RuntimeError("down")
 
     monkeypatch.setattr(llm, "_call_once", boom)
@@ -42,8 +42,8 @@ def test_all_failures_raise_clear_error(monkeypatch):
 
 
 def test_ask_json_parses_and_rejects_bad_json(monkeypatch):
-    monkeypatch.setattr(llm, "_call_once", lambda m, p, j: _ok(m, '{"a": 1}'))
+    monkeypatch.setattr(llm, "_call_once", lambda m, p, j, s=None: _ok(m, '{"a": 1}'))
     assert llm.ask_json("x") == {"a": 1}
-    monkeypatch.setattr(llm, "_call_once", lambda m, p, j: _ok(m, "not json"))
+    monkeypatch.setattr(llm, "_call_once", lambda m, p, j, s=None: _ok(m, "not json"))
     with pytest.raises(ValueError):
         llm.ask_json("x")

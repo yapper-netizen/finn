@@ -20,7 +20,7 @@ HISTORY_DAYS = 60
 # Alert thresholds (user-configurable later via Settings screen).
 VOLUME_MULTIPLE = 2.0      # alert if volume > 2x the 20-day average
 VOLUME_AVG_WINDOW = 20     # trading days used for the average
-PRICE_MOVE_PCT = 5.0       # alert if daily close-to-close move beyond +/-5%
+PRICE_MOVE_PCT = 3.0       # alert if daily close-to-close move beyond +/-3% (D-007, D-077)
 
 # Network behaviour for every external call.
 REQUEST_TIMEOUT_S = 15
@@ -67,3 +67,13 @@ CHEAP_MODEL = "gemini-3.5-flash-lite"   # bulk: classification leftovers, PDF nu
 STRONG_MODEL = "gemini-3.5-flash"       # reasoning (thinks before answering): promise verdicts, bull/bear
 FALLBACK_MODEL = "gemini-3.1-flash-lite"  # used if the strong model is capped or fails (D-061)
 LLM_TIMEOUT_S = 60
+
+# Filing PDFs and results cards (BE-4, EN-5, D-077).
+CACHE_DIR = ".cache"                   # local, git-ignored: page text and computed cards
+PDF_ALLOWED_HOSTS = {"nsearchives.nseindia.in", "archives.nseindia.com", "www.bseindia.com"}
+PDF_TIMEOUT_S = 60
+PDF_MAX_BYTES = 30 * 2**20             # 30 MB; results PDFs seen so far are 1-10 MB
+LLM_CACHE_DB = "cache.db"              # SQLite answer cache: each document is read by AI once (D-026)
+CARDS_DIR = "snapshot/cards"           # precomputed cards, committed so the demo works offline
+CARD_ENGINE_VERSION = 1                # bump to invalidate cached cards after an extractor change
+MAX_STATEMENT_CHARS = 14000            # text sent to the model (one statement page, maybe two)

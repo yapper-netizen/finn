@@ -151,4 +151,4 @@ def test_config_endpoint_lists_categories_and_ranges(client):
     j = client.get("/api/config").json()
     keys = {c["key"] for c in j["categories"]}
     assert keys == set(config.CATEGORY_TIER) and j["windows"] == ["24h", "3d", "7d"]
-    assert j["defaults"] == {"price": 5.0, "volume": 2.0}
+    assert j["defaults"] == {"price": 3.0, "volume": 2.0}  # D-077

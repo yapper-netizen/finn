@@ -1,0 +1,190 @@
+{
+ "filing_id": "106811186",
+ "ticker": "TCS",
+ "company": "Tata Consultancy Services Limited",
+ "filing_date": "2026-10-08T15:40:12",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/TCS_CORPCS_08102026153124_Post_BM_SE_Letter_fin.pdf",
+ "title": "Tata Consultancy Services Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  8
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 73188.0,
+    "prev_quarter": 72275.0,
+    "year_ago": 65799.0
+   },
+   "qoq_pct": 1.3,
+   "qoq_note": null,
+   "yoy_pct": 11.2,
+   "yoy_note": null,
+   "source": {
+    "line": "Revenue from operations",
+    "printed": [
+     "73,188",
+     "72,275",
+     "65,799"
+    ],
+    "page": 8
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 18815.0,
+    "prev_quarter": 18556.0,
+    "year_ago": 17978.0
+   },
+   "qoq_pct": 1.4,
+   "qoq_note": null,
+   "yoy_pct": 4.7,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before exceptional items and tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "profit_before_exceptional": {
+     "current": 18638.0,
+     "prev_quarter": 18612.0,
+     "year_ago": 17203.0
+    },
+    "finance_cost": {
+     "current": 252.0,
+     "prev_quarter": 273.0,
+     "year_ago": 229.0
+    },
+    "depreciation": {
+     "current": 1262.0,
+     "prev_quarter": 1239.0,
+     "year_ago": 1413.0
+    },
+    "other_income": {
+     "current": 1337.0,
+     "prev_quarter": 1568.0,
+     "year_ago": 867.0
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 8
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 18638.0,
+    "prev_quarter": 17944.0,
+    "year_ago": 16068.0
+   },
+   "qoq_pct": 3.9,
+   "qoq_note": null,
+   "yoy_pct": 16.0,
+   "yoy_note": null,
+   "source": {
+    "line": "PROFIT BEFORE TAX",
+    "printed": [
+     "18,638",
+     "17,944",
+     "16,068"
+    ],
+    "page": 8
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 13884.0,
+    "prev_quarter": 13349.0,
+    "year_ago": 12075.0
+   },
+   "qoq_pct": 4.0,
+   "qoq_note": null,
+   "yoy_pct": 15.0,
+   "yoy_note": null,
+   "source": {
+    "line": "Shareholders of the Company",
+    "printed": [
+     "13,884",
+     "13,349",
+     "12,075"
+    ],
+    "page": 8
+   },
+   "note": "attributable to owners"
+  }
+ ],
+ "verdict": "All 4 lines up year on year. EBITDA margin down 160 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 25.7,
+    "prev_quarter": 25.7,
+    "year_ago": 27.3
+   },
+   "yoy_bps": -160
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 19.0,
+    "prev_quarter": 18.5,
+    "year_ago": 18.4
+   },
+   "yoy_bps": 60
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 2822,
+  "tokens_out": 1020
+ }
+}

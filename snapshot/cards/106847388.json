@@ -1,0 +1,174 @@
+{
+ "filing_id": "106847388",
+ "ticker": "BHARTIARTL",
+ "company": "Bharti Airtel Limited",
+ "filing_date": "2026-11-05T16:20:40",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/BHARTIARTL_05112026162023_FR.pdf",
+ "title": "Bharti Airtel Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "standalone",
+ "basis_note": "Standalone (the consolidated statement in this filing could not be read)",
+ "unit": "Rs crore",
+ "source_unit": "million",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  7
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 33371.7,
+    "prev_quarter": 32356.6,
+    "year_ago": 30092.3
+   },
+   "qoq_pct": 3.1,
+   "qoq_note": null,
+   "yoy_pct": 10.9,
+   "yoy_note": null,
+   "source": {
+    "line": "Revenue from operations",
+    "printed": [
+     "333,717",
+     "323,566",
+     "300,923"
+    ],
+    "page": 7
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 22840.7,
+    "prev_quarter": 19498.1,
+    "year_ago": 18554.6
+   },
+   "qoq_pct": 17.1,
+   "qoq_note": null,
+   "yoy_pct": 23.1,
+   "yoy_note": null,
+   "computed": false,
+   "source": {
+    "line": "Profit before depreciation, amortisation, fmance costs, exceptionaJ items and tax",
+    "printed": [
+     "228,407",
+     "194,981",
+     "185,546"
+    ],
+    "page": 7
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 9837.4,
+    "prev_quarter": 6743.3,
+    "year_ago": 6077.6
+   },
+   "qoq_pct": 45.9,
+   "qoq_note": null,
+   "yoy_pct": 61.9,
+   "yoy_note": null,
+   "source": {
+    "line": "Profit before tax",
+    "printed": [
+     "98,374",
+     "67,433",
+     "60,776"
+    ],
+    "page": 7
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 7933.0,
+    "prev_quarter": 5427.5,
+    "year_ago": 4544.8
+   },
+   "qoq_pct": 46.2,
+   "qoq_note": null,
+   "yoy_pct": 74.6,
+   "yoy_note": null,
+   "source": {
+    "line": "Profit for the period / year",
+    "printed": [
+     "79,330",
+     "54,275",
+     "45,448"
+    ],
+    "page": 7
+   },
+   "note": null
+  }
+ ],
+ "verdict": "All 4 lines up year on year. EBITDA margin up 670 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 68.4,
+    "prev_quarter": 60.3,
+    "year_ago": 61.7
+   },
+   "yoy_bps": 670
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 23.8,
+    "prev_quarter": 16.8,
+    "year_ago": 15.1
+   },
+   "yoy_bps": 870
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": false,
+   "detail": "this quarter: off by ₹80.0 crore"
+  }
+ ],
+ "warnings": [
+  "Consolidated statement: The unit 'million' could not be confirmed on the statement page."
+ ],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 5929,
+  "tokens_out": 1719
+ }
+}

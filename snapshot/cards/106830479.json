@@ -1,0 +1,190 @@
+{
+ "filing_id": "106830479",
+ "ticker": "LT",
+ "company": "Larsen & Toubro Limited",
+ "filing_date": "2026-10-27T17:13:09",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/PAM_27102026171156_LTSep2026.pdf",
+ "title": "Larsen & Toubro Limited has submitted to the Exchange, the consolidated and standalone un-audited financial results of the Company for the quarter and half-year ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  11
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 78749.94,
+    "prev_quarter": 67941.74,
+    "year_ago": 67983.53
+   },
+   "qoq_pct": 15.9,
+   "qoq_note": null,
+   "yoy_pct": 15.8,
+   "yoy_note": null,
+   "source": {
+    "line": "a) Revenue from operations",
+    "printed": [
+     "78749.94",
+     "67941.74",
+     "67983.53"
+    ],
+    "page": 11
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 6844.65,
+    "prev_quarter": 6116.48,
+    "year_ago": 6806.41
+   },
+   "qoq_pct": 11.9,
+   "qoq_note": null,
+   "yoy_pct": 0.6,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before exceptional items and tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "profit_before_exceptional": {
+     "current": 7641.06,
+     "prev_quarter": 6922.26,
+     "year_ago": 6336.11
+    },
+    "finance_cost": {
+     "current": 472.94,
+     "prev_quarter": 538.67,
+     "year_ago": 762.81
+    },
+    "depreciation": {
+     "current": 1036.91,
+     "prev_quarter": 1032.28,
+     "year_ago": 1091.77
+    },
+    "other_income": {
+     "current": 2306.26,
+     "prev_quarter": 2376.73,
+     "year_ago": 1384.28
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 11
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 7641.06,
+    "prev_quarter": 6922.26,
+    "year_ago": 6336.11
+   },
+   "qoq_pct": 10.4,
+   "qoq_note": null,
+   "yoy_pct": 20.6,
+   "yoy_note": null,
+   "source": {
+    "line": "5 Profit before tax (3+4)",
+    "printed": [
+     "7641.06",
+     "6922.26",
+     "6336.11"
+    ],
+    "page": 11
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 5202.1,
+    "prev_quarter": 4122.85,
+    "year_ago": 3926.09
+   },
+   "qoq_pct": 26.2,
+   "qoq_note": null,
+   "yoy_pct": 32.5,
+   "yoy_note": null,
+   "source": {
+    "line": "Attributable to: Owners of the Company",
+    "printed": [
+     "5202.10",
+     "4122.85",
+     "3926.09"
+    ],
+    "page": 11
+   },
+   "note": "attributable to owners"
+  }
+ ],
+ "verdict": "All 4 lines up year on year. EBITDA margin down 130 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 8.7,
+    "prev_quarter": 9.0,
+    "year_ago": 10.0
+   },
+   "yoy_bps": -130
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 6.6,
+    "prev_quarter": 6.1,
+    "year_ago": 5.8
+   },
+   "yoy_bps": 80
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 3592,
+  "tokens_out": 1058
+ }
+}

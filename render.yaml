@@ -15,3 +15,5 @@ services:
         value: 3.12.8
       # No secrets yet: Today runs on rules, not AI. GEMINI_API_KEY is added here
       # (sync: false, value entered in the Render dashboard) when the research build needs it.
+      # Live results cards for NEW filings need the AI key (precomputed cards do not):
+      # set GEMINI_API_KEY in the Render dashboard (Environment), never in this file.

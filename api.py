@@ -12,7 +12,9 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse, Response
 
 import config
-from engine.feed import FeedCache
+from data import filings as filings_mod
+from engine import cards
+from engine.feed import FeedCache, company_name
 from engine.today import build_today
 
 WEB_INDEX = Path(__file__).parent / "web" / "index.html"
@@ -94,4 +96,38 @@ def api_digest(
     unknown = sorted(off_set - set(config.CATEGORY_TIER))
     if unknown:
         return error_response(f"Unknown categories: {', '.join(unknown)}.")
-    return build_today(feed_cache.get(), window=window, price=price, volume=volume, off=off_set)
+    return cards.attach_summaries(
+        build_today(feed_cache.get(), window=window, price=price, volume=volume, off=off_set))
+
+
+def _find_filing(filing_id: str) -> dict | None:
+    """A filing by NSE id: from the live feed, else from the saved snapshots (incl. research stocks)."""
+    for f in feed_cache.get().filings:
+        if f.get("id") == filing_id:
+            return f
+    for ticker in config.PORTFOLIO + config.RESEARCH_EXTRA:
+        for f in filings_mod.load_snapshot(ticker) or []:
+            if f.get("id") == filing_id:
+                return {**f, "ticker": ticker, "company": company_name(ticker)}
+    return None
+
+
+@app.get("/api/card/{filing_id}")
+def api_card(filing_id: str):
+    """Results card for a filing (API-3). Precomputed cards answer at once; a new filing is read
+    by AI the first time it is opened (10-40 s) and kept, so the next open is instant."""
+    if not cards.valid_id(filing_id):
+        return error_response("Unknown filing id.", 404)
+    card = cards.stored_card(filing_id)
+    if card:
+        return card
+    filing = _find_filing(filing_id)
+    if filing is None:
+        return error_response("Unknown filing id.", 404)
+    try:
+        card = cards.get_card(filing)
+    except ValueError as exc:
+        return error_response(str(exc), 400)
+    if card.get("retryable"):
+        return JSONResponse({**card, "error": card["reason"], "fallback_used": False}, status_code=503)
+    return card

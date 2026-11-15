@@ -7,8 +7,9 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
-# local AI answer cache (rebuilt on demand)
+# local AI answer cache and PDF page text (rebuilt on demand)
 cache.db
+.cache/
 
 # OS / editor
 .DS_Store

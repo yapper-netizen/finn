@@ -221,6 +221,55 @@
       html:root .card .when { margin-left: 6px; }
     }
 
+    /* ---------- results summary on a Today card (tap opens the sheet) ---------- */
+    html:root .card { grid-template-areas: "strip strip strip" "tile who link" "title title title" "res res res" "stat stat stat" "gauge gauge gauge" "why why why"; }
+    html:root .card.tappable { cursor: pointer; }
+    html:root .card.tappable:active { transform: scale(.995); }
+    html:root .card .rsum { grid-area: res; margin: 10px var(--px) 0; font-size: 15px; line-height: 1.4; }
+    html:root .card .rsum .cue { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; min-height: 32px; color: var(--primary); font-weight: 700; }
+
+    /* ---------- results bottom sheet (EN-5 / API-3) ---------- */
+    .sheet-back { position: fixed; inset: 0; background: rgba(8,24,44,.46); z-index: 40; }
+    .sheet { position: fixed; left: 0; right: 0; bottom: 0; max-width: 480px; margin: 0 auto; max-height: 90dvh; overflow-y: auto; overscroll-behavior: contain; z-index: 41; background: #fff; border-radius: 24px 24px 0 0; padding: 6px 16px calc(24px + env(safe-area-inset-bottom)); box-shadow: 0 -14px 34px rgba(0,40,80,.32); }
+    .sheet:focus { outline: none; }
+    .grab { width: 42px; height: 5px; border-radius: 99px; background: #d3dae4; margin: 6px auto 8px; }
+    .sheet-head { display: flex; align-items: center; gap: 12px; position: sticky; top: -6px; background: #fff; padding: 6px 0 10px; z-index: 1; }
+    .sheet-head .who { flex: 1; min-width: 0; }
+    .sheet-head .who b { display: block; font-size: 17px; }
+    .sheet-head .who small { display: block; font-size: 14px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .xbtn { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-soft); background: #f4f6f9; font-size: 22px; line-height: 1; color: var(--text); flex: none; }
+    .sheet .ctx { font-size: 14px; color: var(--text-muted); margin: 2px 0 0; line-height: 1.45; }
+    .sheet .verdict { font-family: var(--font-head); font-weight: 700; font-size: 18px; line-height: 1.35; margin: 12px 0 4px; }
+    .mrow { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+    .mtop { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+    .mlabel { font-family: var(--font-head); font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .mval { font-family: var(--font-head); font-weight: 700; font-size: 22px; letter-spacing: -.01em; white-space: nowrap; }
+    .mbody { display: grid; grid-template-columns: 58px 1fr 1fr; gap: 12px; align-items: end; margin-top: 8px; }
+    .bars { display: flex; align-items: flex-end; gap: 4px; height: 38px; border-bottom: 1px solid #c8d3e0; }
+    .bars i { flex: 1; min-height: 3px; border-radius: 3px 3px 0 0; background: #c3d6ea; }
+    .bars i.cur { background: linear-gradient(180deg, var(--primary-bright), var(--primary)); }
+    .bars i.neg { background: #ecb5af; }
+    .g { font-size: 13px; color: var(--text-muted); line-height: 1.3; }
+    .g b { display: block; font-size: 16px; color: var(--text); }
+    .g b.up { color: #1b6e3a; } .g b.down { color: var(--alert); } .g b.na { font-size: 14px; color: var(--text-muted); font-weight: 600; }
+    .badge { font-family: var(--font-body); font-size: 12.5px; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: #fdf3e1; color: #7a4a00; border: 1px solid #f0d9ae; }
+    button.badge { cursor: pointer; }
+    .formula { margin-top: 10px; background: #f5f8fc; border-radius: 12px; padding: 10px 12px; font-size: 14px; line-height: 1.45; }
+    .formula table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 13px; }
+    .formula td { padding: 3px 0; } .formula td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+    .src { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; min-height: 32px; font-size: 13px; color: var(--primary); font-weight: 600; text-decoration: none; }
+    .src .ico svg { width: 14px; height: 14px; }
+    .na-note { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
+    .mgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+    .mgrid div { background: #f5f8fc; border-radius: 12px; padding: 10px 12px; font-size: 13px; color: var(--text-muted); }
+    .mgrid b { display: block; font-size: 18px; color: var(--text); font-family: var(--font-head); }
+    .checks { list-style: none; margin: 6px 0 0; padding: 0; font-size: 14px; line-height: 1.4; }
+    .checks li { display: flex; gap: 8px; padding: 6px 0; }
+    .checks .ok { color: #1b6e3a; font-weight: 700; } .checks .bad { color: #7a4a00; font-weight: 700; }
+    .sheet .note { font-size: 13px; color: var(--text-muted); line-height: 1.45; margin-top: 14px; }
+    .sheet .section-label { margin-top: 20px; }
+    .fail-box { background: #fdf3e1; color: #5c3900; border-radius: 14px; padding: 12px 14px; font-size: 15px; line-height: 1.45; margin-top: 12px; }
+
     .topbar { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: var(--primary-bright); transform-origin: left; animation: load 1.2s ease-in-out infinite; z-index: 30; }
     @keyframes load { 0% { transform: scaleX(0); } 70% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
   </style>
@@ -295,7 +344,10 @@
           <!-- High cards, in priority order: tier, then "stock also moved that day", then newest -->
           <div class="section-label" x-show="data.cards.length"><span>What matters</span><span class="cnt" x-text="data.cards.length"></span></div>
           <template x-for="(c, i) in data.cards" :key="c.ticker + c.id + c.date">
-            <article class="card" :class="[c.moved_same_day ? 'alert' : '', i === 0 ? 'lead' : '']">
+            <article class="card" :class="[c.moved_same_day ? 'alert' : '', i === 0 ? 'lead' : '', c.kind === 'results' ? 'tappable' : '']"
+                     :role="c.kind === 'results' ? 'button' : null" :tabindex="c.kind === 'results' ? 0 : null"
+                     :aria-label="c.kind === 'results' ? 'Open results numbers for ' + c.ticker : null"
+                     @click="c.kind === 'results' && openCard(c)" @keydown.enter="c.kind === 'results' && openCard(c)" @keydown.space.prevent="c.kind === 'results' && openCard(c)">
               <div class="card-strip">
                 <span class="when dt"><span class="ico" aria-hidden="true" x-html="iconFor('calendar')"></span><span class="wtxt"><span class="wd" x-text="fmtDay(c.date)"></span><span class="wsep">, </span><span class="wt" x-text="fmtTime(c.date)"></span></span></span>
                 <div class="chips">
@@ -310,9 +362,13 @@
                 <div class="who"><b x-text="c.ticker"></b><small x-text="shortCompany(c.company)"></small></div>
               </div>
               <h3 x-text="cleanTitle(c)"></h3>
+              <div class="rsum" x-show="c.kind === 'results'">
+                <span x-text="c.results && c.results.verdict ? (c.results.period ? c.results.period + ': ' : '') + c.results.verdict : 'Revenue, EBITDA, PBT and PAT, with QoQ and YoY growth.'"></span>
+                <span class="cue" style="display:flex">See the numbers <span aria-hidden="true">›</span></span>
+              </div>
               <p class="why alert" x-show="c.moved_same_day">The stock also moved on the day of this filing.</p>
               <div class="card-foot">
-                <a class="link filebtn" x-show="c.pdf_url" :href="c.pdf_url" target="_blank" rel="noopener" aria-label="Open filing"><span class="ico ico-doc" aria-hidden="true" x-html="iconFor('doc')"></span><span class="lbl">Open filing</span><span class="arr" aria-hidden="true" x-html="iconFor('arrow')"></span></a>
+                <a class="link filebtn" x-show="c.pdf_url" :href="c.pdf_url" target="_blank" rel="noopener" aria-label="Open filing" @click.stop @keydown.enter.stop><span class="ico ico-doc" aria-hidden="true" x-html="iconFor('doc')"></span><span class="lbl">Open filing</span><span class="arr" aria-hidden="true" x-html="iconFor('arrow')"></span></a>
               </div>
             </article>
           </template>
@@ -480,6 +536,124 @@
   </section>
 </div>
 
+<!-- ================= RESULTS SHEET (EN-5, API-3) ================= -->
+<div class="sheet-back" x-show="sheet.open" x-cloak @click="closeCard()"></div>
+<section class="sheet" x-show="sheet.open" x-cloak x-ref="sheet" tabindex="-1" role="dialog" aria-modal="true"
+         :aria-label="sheet.filing ? sheet.filing.ticker + ' results' : 'Results'" @keydown.escape.window="sheet.open && closeCard()">
+  <div class="grab" aria-hidden="true"></div>
+  <template x-if="sheet.filing">
+    <header class="sheet-head">
+      <span class="tile sm" aria-hidden="true" x-html="iconFor('results')"></span>
+      <div class="who"><b x-text="sheet.filing.ticker"></b><small x-text="shortCompany(sheet.filing.company)"></small></div>
+      <button class="xbtn" @click="closeCard()" aria-label="Close">×</button>
+    </header>
+  </template>
+
+  <!-- loading (x-if, not x-show: a stored card answers within one tick) -->
+  <template x-if="sheet.loading">
+    <div aria-busy="true">
+      <div class="skel mt-2" style="height:22px;width:75%"></div>
+      <div class="skel mt-4" style="height:74px"></div>
+      <div class="skel mt-3" style="height:74px"></div>
+      <div class="skel mt-3" style="height:74px"></div>
+      <p class="ctx mt-3" x-show="sheet.slow">Reading the filing for the first time. FINN reads it once and keeps the numbers, so this can take up to 40 seconds now and is instant later.</p>
+    </div>
+  </template>
+
+  <!-- request failed (network, AI busy) -->
+  <template x-if="sheet.error && !sheet.loading">
+    <div>
+      <div class="fail-box" x-text="sheet.error"></div>
+      <div class="flex gap-2 mt-4">
+        <button class="btn primary" @click="openCard(sheet.filing)">Try again</button>
+        <a class="btn inline-flex items-center" x-show="sheet.filing && sheet.filing.pdf_url" :href="sheet.filing ? sheet.filing.pdf_url : '#'" target="_blank" rel="noopener">Open filing</a>
+      </div>
+    </div>
+  </template>
+
+  <template x-if="sheet.card && !sheet.loading">
+    <div>
+      <!-- could not extract: say why, never guess -->
+      <template x-if="sheet.card.status === 'could not extract'">
+        <div>
+          <div class="fail-box"><b>FINN could not read the numbers reliably.</b> <span x-text="sheet.card.reason"></span></div>
+          <a class="btn primary inline-flex items-center mt-4" :href="sheet.card.pdf_url" target="_blank" rel="noopener">Open the filing</a>
+        </div>
+      </template>
+
+      <template x-if="sheet.card.status !== 'could not extract'">
+        <div>
+          <p class="ctx" x-text="cardContext(sheet.card)"></p>
+          <p class="verdict" x-show="sheet.card.verdict" x-text="sheet.card.verdict"></p>
+          <div class="banner warn mt-2" x-show="sheet.card.status === 'partial'" x-text="sheet.card.reason"></div>
+
+          <template x-for="m in sheet.card.metrics" :key="m.key">
+            <div class="mrow">
+              <div class="mtop">
+                <span class="mlabel">
+                  <span x-text="m.label + (m.note === 'attributable to owners' ? ' (owners)' : '')"></span>
+                  <template x-if="m.computed && m.available">
+                    <button class="badge" @click="sheet.formula = sheet.formula === m.key ? null : m.key"
+                            :aria-expanded="sheet.formula === m.key" aria-label="computed: show how">computed</button>
+                  </template>
+                </span>
+                <span class="mval" x-text="m.available ? fmtCr(m.values.current) : 'n/a'"></span>
+              </div>
+              <template x-if="m.available">
+                <div>
+                  <div class="mbody">
+                    <div class="bars" role="img" :aria-label="barsLabel(m)">
+                      <template x-for="(b, j) in bars(m)" :key="j"><i :class="[j === 2 ? 'cur' : '', b.neg ? 'neg' : '']" :style="'height:' + b.h + '%'"></i></template>
+                    </div>
+                    <div class="g">QoQ <b :class="growthClass(m.qoq_pct)" x-text="growthText(m.qoq_pct, m.qoq_note)"></b><span x-text="'vs ' + fmtCr(m.values.prev_quarter)"></span></div>
+                    <div class="g">YoY <b :class="growthClass(m.yoy_pct)" x-text="growthText(m.yoy_pct, m.yoy_note)"></b><span x-text="'vs ' + fmtCr(m.values.year_ago)"></span></div>
+                  </div>
+                  <div class="formula" x-show="m.computed && sheet.formula === m.key" x-cloak>
+                    <div><b>EBITDA is not printed in this filing</b>, so FINN computes it: <span x-text="m.formula"></span>.</div>
+                    <table>
+                      <template x-for="(v, k) in (m.inputs || {})" :key="k">
+                        <tr><td x-text="inputLabel(k)"></td><td x-text="fmtCr(v.current)"></td></tr>
+                      </template>
+                    </table>
+                  </div>
+                  <a class="src" x-show="m.source && m.source.page" :href="pageLink(sheet.card, m.source && m.source.page)" target="_blank" rel="noopener">
+                    <span class="ico" aria-hidden="true" x-html="iconFor('doc')"></span>
+                    <span x-text="sourceText(m)"></span>
+                  </a>
+                </div>
+              </template>
+              <p class="na-note" x-show="!m.available" x-text="m.note"></p>
+            </div>
+          </template>
+
+          <template x-if="sheet.card.margins && sheet.card.margins.length">
+            <div>
+              <div class="section-label"><span>Margins</span></div>
+              <div class="mgrid">
+                <template x-for="g in sheet.card.margins" :key="g.key">
+                  <div><span x-text="g.label"></span><b x-text="g.values.current == null ? 'n/a' : g.values.current.toFixed(1) + '%'"></b><span x-text="g.yoy_bps == null ? '' : (g.yoy_bps >= 0 ? '+' : '−') + Math.abs(g.yoy_bps) + ' bps YoY'"></span></div>
+                </template>
+              </div>
+            </div>
+          </template>
+
+          <div class="section-label"><span>Checks by FINN</span></div>
+          <ul class="checks">
+            <template x-for="ck in sheet.card.checks" :key="ck.name">
+              <li><span :class="ck.passed ? 'ok' : 'bad'" x-text="ck.passed ? '✓' : '!'" aria-hidden="true"></span>
+                  <span><span x-text="ck.name"></span><span x-show="!ck.passed" x-text="': ' + ck.detail"></span></span></li>
+            </template>
+            <li><span class="ok" aria-hidden="true">✓</span><span>Every number shown was found on the filing page it cites.</span></li>
+            <template x-for="w in sheet.card.warnings" :key="w"><li><span class="bad" aria-hidden="true">!</span><span x-text="w"></span></li></template>
+          </ul>
+          <p class="note">Figures are copied from the exchange filing by AI and then checked by FINN: each one must appear on the cited page, rows must add up, and growth and margins are computed by FINN, not the AI. Amounts in ₹ crore.</p>
+          <a class="btn inline-flex items-center mt-4" :href="sheet.card.pdf_url" target="_blank" rel="noopener">Open the full filing</a>
+        </div>
+      </template>
+    </div>
+  </template>
+</section>
+
 <!-- ================= TAB BAR ================= -->
 <div class="tabbar">
   <nav aria-label="Main">
@@ -497,7 +671,7 @@
 
 <script>
 const STORE = 'finn.v1';
-const DEFAULTS = { price: 5, volume: 2, off: [] };
+const DEFAULTS = { price: 3, volume: 2, off: [] };   // matches config.py (D-007, D-077)
 const KIND_LABELS = {
   results: 'Results', management_change: 'Management change', m_and_a: 'M&A', litigation: 'Litigation',
   credit_rating: 'Credit rating', pledging: 'Pledging', fund_raise: 'Fund raise', capex: 'Capex',
@@ -561,11 +735,13 @@ function finn() {
     settings: { ...DEFAULTS, off: [] },
     presets: [
       { name: 'Calm', price: 5, volume: 3 },
-      { name: 'Balanced', price: 5, volume: 2 },
-      { name: 'Watchful', price: 3, volume: 1.5 },
+      { name: 'Balanced', price: 3, volume: 2 },
+      { name: 'Watchful', price: 2, volume: 1.5 },
     ],
     _ctl: null,
     _timer: null,
+    sheet: { open: false, loading: false, slow: false, error: null, card: null, filing: null, formula: null },
+    _cardCtl: null,
     init() {
       const s = readStore();
       if (s.window && ['24h', '3d', '7d'].includes(s.window)) this.period = s.window;
@@ -607,6 +783,65 @@ function finn() {
         clearTimeout(slowTimer);
         if (this._ctl === ctl) { this.loading = false; this.refreshing = false; this.slow = false; }
       }
+    },
+
+    // ---------- results sheet ----------
+    async openCard(c) {
+      if (this._cardCtl) this._cardCtl.abort();
+      const ctl = this._cardCtl = new AbortController();
+      this.sheet = { open: true, loading: true, slow: false, error: null, card: null, filing: c, formula: null };
+      document.body.style.overflow = 'hidden';
+      this.$nextTick(() => this.$refs.sheet && this.$refs.sheet.focus());
+      const slowTimer = setTimeout(() => { this.sheet.slow = true; }, 2500);
+      try {
+        const r = await fetch('/api/card/' + encodeURIComponent(c.id), { signal: ctl.signal });
+        const j = await r.json();
+        if (!r.ok) throw new Error(j.error || 'Could not load the results card.');
+        this.sheet.card = j;
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+        this.sheet.error = e.message === 'Failed to fetch' ? 'No connection to the server. Check your internet and try again.' : e.message;
+      } finally {
+        clearTimeout(slowTimer);
+        if (this._cardCtl === ctl) { this.sheet.loading = false; this.sheet.slow = false; }
+      }
+    },
+    closeCard() {
+      if (this._cardCtl) this._cardCtl.abort();
+      this.sheet = { ...this.sheet, open: false, loading: false };
+      document.body.style.overflow = '';
+    },
+    cardContext(card) {
+      const p = card.period || {};
+      return [p.label ? p.label + ' (quarter to ' + this.fmtDay(p.current) + ')' : null, card.basis_note, '₹ crore'].filter(Boolean).join(' · ');
+    },
+    fmtCr(v) {
+      if (v == null) return 'n/a';
+      const a = Math.abs(v);
+      const s = a.toLocaleString('en-IN', { maximumFractionDigits: a < 100 ? 1 : 0, minimumFractionDigits: a < 100 ? 1 : 0 });
+      return (v < 0 ? '−₹' : '₹') + s + ' cr';
+    },
+    growthText(p, note) { return p == null ? (note || 'n/a') : (p > 0 ? '+' : p < 0 ? '−' : '') + Math.abs(p).toFixed(1) + '%'; },
+    growthClass(p) { return p == null ? 'na' : p > 0 ? 'up' : p < 0 ? 'down' : ''; },
+    bars(m) {  // oldest to newest: year-ago quarter, previous quarter, this quarter
+      const vals = [m.values.year_ago, m.values.prev_quarter, m.values.current];
+      const max = Math.max(...vals.map(v => Math.abs(v || 0))) || 1;
+      return vals.map(v => ({ h: v == null ? 0 : Math.max(6, Math.abs(v) / max * 100), neg: v < 0 }));
+    },
+    barsLabel(m) {
+      const p = (this.sheet.card && this.sheet.card.period) || {};
+      return m.label + ': ' + [[p.year_ago_label, m.values.year_ago], [p.prev_label, m.values.prev_quarter], [p.label, m.values.current]]
+        .map(([l, v]) => (l || '') + ' ' + this.fmtCr(v)).join(', ');
+    },
+    inputLabel(k) {
+      return { profit_before_exceptional: 'Profit before exceptional items and tax', pbt: 'Profit before tax', finance_cost: '+ Finance costs',
+               depreciation: '+ Depreciation and amortisation', other_income: '− Other income' }[k] || k;
+    },
+    pageLink(card, page) { return card.pdf_url + (page ? '#page=' + page : ''); },
+    sourceText(m) {
+      if (m.computed) return 'Inputs on page ' + m.source.page + ' of the filing';
+      const line = m.source.note ? m.source.note : '"' + (m.source.line || m.label) + '"';
+      return 'Page ' + m.source.page + ': ' + (line.length > 60 ? line.slice(0, 57) + '…' : line);
     },
 
     // ---------- derived text ----------

@@ -1,0 +1,187 @@
+{
+ "filing_id": "106847532",
+ "ticker": "TITAN",
+ "company": "Titan Company Limited",
+ "filing_date": "2026-11-05T16:50:49",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/TITAN_05112026165028_SEoutcomeQ227.pdf",
+ "title": "Titan Company Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  10
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 20614.0,
+    "prev_quarter": 21356.0,
+    "year_ago": 18725.0
+   },
+   "qoq_pct": -3.5,
+   "qoq_note": null,
+   "yoy_pct": 10.1,
+   "yoy_note": null,
+   "source": {
+    "line": "-Sale of products/ services + -Other operating revenues",
+    "printed": null,
+    "page": 10,
+    "note": "sum of 2 printed lines (no total row is printed)"
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 3654.0,
+    "prev_quarter": 2892.0,
+    "year_ago": 1876.0
+   },
+   "qoq_pct": 26.3,
+   "qoq_note": null,
+   "yoy_pct": 94.8,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before exceptional items and tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "profit_before_exceptional": {
+     "current": 3000.0,
+     "prev_quarter": 2429.0,
+     "year_ago": 1522.0
+    },
+    "finance_cost": {
+     "current": 536.0,
+     "prev_quarter": 353.0,
+     "year_ago": 277.0
+    },
+    "depreciation": {
+     "current": 263.0,
+     "prev_quarter": 256.0,
+     "year_ago": 189.0
+    },
+    "other_income": {
+     "current": 145.0,
+     "prev_quarter": 146.0,
+     "year_ago": 112.0
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 10
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 3000.0,
+    "prev_quarter": 2429.0,
+    "year_ago": 1522.0
+   },
+   "qoq_pct": 23.5,
+   "qoq_note": null,
+   "yoy_pct": 97.1,
+   "yoy_note": null,
+   "source": {
+    "line": "X. Profit before tax (VIII -IX)",
+    "printed": [
+     "3,000",
+     "2,429",
+     "1,522"
+    ],
+    "page": 10
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 2393.0,
+    "prev_quarter": 1777.0,
+    "year_ago": 1120.0
+   },
+   "qoq_pct": 34.7,
+   "qoq_note": null,
+   "yoy_pct": 113.7,
+   "yoy_note": null,
+   "source": {
+    "line": "-Owners of the Group",
+    "printed": [
+     "2,393",
+     "1,777",
+     "1,120"
+    ],
+    "page": 10
+   },
+   "note": "attributable to owners"
+  }
+ ],
+ "verdict": "All 4 lines up year on year. EBITDA margin up 770 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 17.7,
+    "prev_quarter": 13.5,
+    "year_ago": 10.0
+   },
+   "yoy_bps": 770
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 11.6,
+    "prev_quarter": 8.3,
+    "year_ago": 6.0
+   },
+   "yoy_bps": 560
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": false,
+   "detail": "this quarter: off by ₹671.0 crore"
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": false,
+   "detail": "this quarter: off by ₹6.0 crore"
+  }
+ ],
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 2689,
+  "tokens_out": 940
+ }
+}

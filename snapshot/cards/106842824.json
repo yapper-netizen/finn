@@ -1,0 +1,185 @@
+{
+ "filing_id": "106842824",
+ "ticker": "VIJAYA",
+ "company": "Vijaya Diagnostic Centre Limited",
+ "filing_date": "2026-11-03T19:57:59",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/VIJAYA_03112026195557_VDCL_BM_Ootcome_03112026.pdf",
+ "title": "Vijaya Diagnostic Centre Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "standalone",
+ "basis_note": "Standalone (the consolidated statement in this filing could not be read)",
+ "unit": "Rs crore",
+ "source_unit": "lakh",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  6
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 242.0,
+    "prev_quarter": 218.54,
+    "year_ago": 189.96
+   },
+   "qoq_pct": 10.7,
+   "qoq_note": null,
+   "yoy_pct": 27.4,
+   "yoy_note": null,
+   "source": {
+    "line": "(a) Revenue from operations",
+    "printed": [
+     "24,200.20",
+     "21,853.71",
+     "18,996.41"
+    ],
+    "page": 6
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 107.29,
+    "prev_quarter": 94.64,
+    "year_ago": 78.91
+   },
+   "qoq_pct": 13.4,
+   "qoq_note": null,
+   "yoy_pct": 36.0,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "pbt": {
+     "current": 77.93,
+     "prev_quarter": 70.92,
+     "year_ago": 57.47
+    },
+    "finance_cost": {
+     "current": 10.82,
+     "prev_quarter": 10.42,
+     "year_ago": 7.21
+    },
+    "depreciation": {
+     "current": 23.99,
+     "prev_quarter": 22.33,
+     "year_ago": 19.4
+    },
+    "other_income": {
+     "current": 5.45,
+     "prev_quarter": 9.02,
+     "year_ago": 5.17
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 6
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 77.93,
+    "prev_quarter": 70.92,
+    "year_ago": 57.47
+   },
+   "qoq_pct": 9.9,
+   "qoq_note": null,
+   "yoy_pct": 35.6,
+   "yoy_note": null,
+   "source": {
+    "line": "3 Profit before tax [1 - 2]",
+    "printed": [
+     "7,792.65",
+     "7,091.61",
+     "5,746.72"
+    ],
+    "page": 6
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 57.92,
+    "prev_quarter": 53.15,
+    "year_ago": 42.98
+   },
+   "qoq_pct": 9.0,
+   "qoq_note": null,
+   "yoy_pct": 34.8,
+   "yoy_note": null,
+   "source": {
+    "line": "5 Profit for the period/year [3 - 4]",
+    "printed": [
+     "5,792.46",
+     "5,314.76",
+     "4,297.80"
+    ],
+    "page": 6
+   },
+   "note": null
+  }
+ ],
+ "verdict": "All 4 lines up year on year. EBITDA margin up 280 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 44.3,
+    "prev_quarter": 43.3,
+    "year_ago": 41.5
+   },
+   "yoy_bps": 280
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 23.9,
+    "prev_quarter": 24.3,
+    "year_ago": 22.6
+   },
+   "yoy_bps": 130
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 3382,
+  "tokens_out": 684
+ }
+}

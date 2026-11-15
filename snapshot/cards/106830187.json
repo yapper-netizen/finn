@@ -1,0 +1,23 @@
+{
+ "filing_id": "106830187",
+ "ticker": "MARUTI",
+ "company": "Maruti Suzuki India Limited",
+ "filing_date": "2026-10-27T15:27:51",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/MARUTI_27102026152412_QuickResults_27Oct2026_signed.pdf",
+ "title": "Maruti Suzuki India Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "could not extract",
+ "reason": "The unit 'million' could not be confirmed on the statement page.",
+ "metrics": [],
+ "checks": [],
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 3531,
+  "tokens_out": 948
+ },
+ "basis": "standalone"
+}

@@ -1,0 +1,187 @@
+{
+ "filing_id": "106813548",
+ "ticker": "DMART",
+ "company": "Avenue Supermarts Limited",
+ "filing_date": "2026-10-10T15:22:43",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/DMART_10102026151828_ASLOutcomeofBM10102026.pdf",
+ "title": "Avenue Supermarts Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  9
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 19644.01,
+    "prev_quarter": 18794.53,
+    "year_ago": 16676.3
+   },
+   "qoq_pct": 4.5,
+   "qoq_note": null,
+   "yoy_pct": 17.8,
+   "yoy_note": null,
+   "source": {
+    "line": "a) Revenue from operations",
+    "printed": [
+     "19,644.01",
+     "18,794.53",
+     "16,676.30"
+    ],
+    "page": 9
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 1392.96,
+    "prev_quarter": 1499.34,
+    "year_ago": 1213.65
+   },
+   "qoq_pct": -7.1,
+   "qoq_note": null,
+   "yoy_pct": 14.8,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "pbt": {
+     "current": 1024.84,
+     "prev_quarter": 1183.14,
+     "year_ago": 944.79
+    },
+    "finance_cost": {
+     "current": 63.9,
+     "prev_quarter": 54.28,
+     "year_ago": 34.96
+    },
+    "depreciation": {
+     "current": 317.75,
+     "prev_quarter": 287.7,
+     "year_ago": 253.47
+    },
+    "other_income": {
+     "current": 13.53,
+     "prev_quarter": 25.78,
+     "year_ago": 19.57
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 9
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 1024.84,
+    "prev_quarter": 1183.14,
+    "year_ago": 944.79
+   },
+   "qoq_pct": -13.4,
+   "qoq_note": null,
+   "yoy_pct": 8.5,
+   "yoy_note": null,
+   "source": {
+    "line": "3 Profit before tax",
+    "printed": [
+     "1,024.84",
+     "1,183.14",
+     "944.79"
+    ],
+    "page": 9
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 743.57,
+    "prev_quarter": 860.61,
+    "year_ago": 685.01
+   },
+   "qoq_pct": -13.6,
+   "qoq_note": null,
+   "yoy_pct": 8.5,
+   "yoy_note": null,
+   "source": {
+    "line": "Equity holders of the Company",
+    "printed": [
+     "743.57",
+     "860.61",
+     "685.01"
+    ],
+    "page": 9
+   },
+   "note": "attributable to owners"
+  }
+ ],
+ "verdict": "All 4 lines up year on year.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 7.1,
+    "prev_quarter": 8.0,
+    "year_ago": 7.3
+   },
+   "yoy_bps": -20
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 3.8,
+    "prev_quarter": 4.6,
+    "year_ago": 4.1
+   },
+   "yoy_bps": -30
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [
+  "4 Tax expenses: a value is not printed on the page; row ignored."
+ ],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 3284,
+  "tokens_out": 894
+ }
+}

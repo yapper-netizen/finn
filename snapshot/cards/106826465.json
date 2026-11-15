@@ -1,0 +1,188 @@
+{
+ "filing_id": "106826465",
+ "ticker": "INFY",
+ "company": "Infosys Limited",
+ "filing_date": "2026-10-23T16:08:26",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/Infosys_23102026160704_BM_Outcome_Oct232026_1.pdf",
+ "title": "Infosys Limited has submitted to the Exchange, Financial Results for the quarter and half year ended September 30, 2026 and declaration of interim dividend",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "standalone",
+ "basis_note": "Standalone (the consolidated statement in this filing could not be read)",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  22
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 40719.0,
+    "prev_quarter": 39957.0,
+    "year_ago": 36907.0
+   },
+   "qoq_pct": 1.9,
+   "qoq_note": null,
+   "yoy_pct": 10.3,
+   "yoy_note": null,
+   "source": {
+    "line": "Revenue from operations",
+    "printed": [
+     "40,719",
+     "39,957",
+     "36,907"
+    ],
+    "page": 22
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 9923.0,
+    "prev_quarter": 9961.0,
+    "year_ago": 8848.0
+   },
+   "qoq_pct": -0.4,
+   "qoq_note": null,
+   "yoy_pct": 12.1,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before exceptional items and tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "profit_before_exceptional": {
+     "current": 10905.0,
+     "prev_quarter": 10161.0,
+     "year_ago": 10469.0
+    },
+    "finance_cost": {
+     "current": 58.0,
+     "prev_quarter": 61.0,
+     "year_ago": 52.0
+    },
+    "depreciation": {
+     "current": 662.0,
+     "prev_quarter": 613.0,
+     "year_ago": 595.0
+    },
+    "other_income": {
+     "current": 1702.0,
+     "prev_quarter": 874.0,
+     "year_ago": 2268.0
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 22
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 10905.0,
+    "prev_quarter": 10161.0,
+    "year_ago": 10469.0
+   },
+   "qoq_pct": 7.3,
+   "qoq_note": null,
+   "yoy_pct": 4.2,
+   "yoy_note": null,
+   "source": {
+    "line": "Profit before tax",
+    "printed": [
+     "10,905",
+     "10,161",
+     "10,469"
+    ],
+    "page": 22
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 7893.0,
+    "prev_quarter": 7249.0,
+    "year_ago": 7759.0
+   },
+   "qoq_pct": 8.9,
+   "qoq_note": null,
+   "yoy_pct": 1.7,
+   "yoy_note": null,
+   "source": {
+    "line": "Profit for the period",
+    "printed": [
+     "7,893",
+     "7,249",
+     "7,759"
+    ],
+    "page": 22
+   },
+   "note": null
+  }
+ ],
+ "verdict": "All 4 lines up year on year.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 24.4,
+    "prev_quarter": 24.9,
+    "year_ago": 24.0
+   },
+   "yoy_bps": 40
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 19.4,
+    "prev_quarter": 18.1,
+    "year_ago": 21.0
+   },
+   "yoy_bps": -160
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [
+  "Consolidated statement: The unit 'crore' could not be confirmed on the statement page.",
+  "Deferred tax: not a number: '(129}'; row ignored."
+ ],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 5790,
+  "tokens_out": 1495
+ }
+}

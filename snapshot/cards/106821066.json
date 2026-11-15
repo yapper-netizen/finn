@@ -1,0 +1,123 @@
+{
+ "filing_id": "106821066",
+ "ticker": "HDFCBANK",
+ "company": "HDFC Bank Limited",
+ "filing_date": "2026-10-17T13:56:22",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/HDFCBANK_17102026135520_OutcomeofBMResults_17oct2026.pdf",
+ "title": "HDFC Bank Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "bank",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  9
+ ],
+ "metrics": [
+  {
+   "key": "total_income",
+   "label": "Total income",
+   "available": true,
+   "values": {
+    "current": 129358.69,
+    "prev_quarter": 133110.36,
+    "year_ago": 118560.63
+   },
+   "qoq_pct": -2.8,
+   "qoq_note": null,
+   "yoy_pct": 9.1,
+   "yoy_note": null,
+   "source": {
+    "line": "3 Total Income (1)+(2)",
+    "printed": [
+     "129358.69",
+     "133110.36",
+     "118560.63"
+    ],
+    "page": 9
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": false,
+   "note": "n/a for banks"
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 28662.54,
+    "prev_quarter": 27193.16,
+    "year_ago": 26658.89
+   },
+   "qoq_pct": 5.4,
+   "qoq_note": null,
+   "yoy_pct": 7.5,
+   "yoy_note": null,
+   "source": {
+    "line": "10 Profit from ordinary activities before tax and minority Interest (7)-(8)-(9)",
+    "printed": [
+     "28662.54",
+     "27193.16",
+     "26658.89"
+    ],
+    "page": 9
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 20700.03,
+    "prev_quarter": 19244.71,
+    "year_ago": 19610.67
+   },
+   "qoq_pct": 7.6,
+   "qoq_note": null,
+   "yoy_pct": 5.6,
+   "yoy_note": null,
+   "source": {
+    "line": "16 Net profit for the period (14)-(15)",
+    "printed": [
+     "20700.03",
+     "19244.71",
+     "19610.67"
+    ],
+    "page": 9
+   },
+   "note": null
+  }
+ ],
+ "verdict": "All 3 lines up year on year.",
+ "margins": [],
+ "checks": [
+  {
+   "name": "PBT − tax matches a printed profit row",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 3028,
+  "tokens_out": 868
+ }
+}

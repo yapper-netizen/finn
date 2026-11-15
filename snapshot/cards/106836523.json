@@ -1,0 +1,188 @@
+{
+ "filing_id": "106836523",
+ "ticker": "DIXON",
+ "company": "Dixon Technologies (India) Limited",
+ "filing_date": "2026-10-30T16:07:23",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/DIXON_30102026160547_Outcome30102026.pdf",
+ "title": "Dixon Technologies (India) Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  11,
+  12
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 21793.64,
+    "prev_quarter": 15547.66,
+    "year_ago": 14855.04
+   },
+   "qoq_pct": 40.2,
+   "qoq_note": null,
+   "yoy_pct": 46.7,
+   "yoy_note": null,
+   "source": {
+    "line": "Revenue from operrattions",
+    "printed": [
+     "21,793.64",
+     "15,547.66",
+     "14,855.04"
+    ],
+    "page": 11
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 599.63,
+    "prev_quarter": 471.76,
+    "year_ago": 562.48
+   },
+   "qoq_pct": 27.1,
+   "qoq_note": null,
+   "yoy_pct": 6.6,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before exceptional items and tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "profit_before_exceptional": {
+     "current": 532.35,
+     "prev_quarter": 868.98,
+     "year_ago": 923.59
+    },
+    "finance_cost": {
+     "current": 25.95,
+     "prev_quarter": 24.12,
+     "year_ago": 38.35
+    },
+    "depreciation": {
+     "current": 110.06,
+     "prev_quarter": 106.95,
+     "year_ago": 96.28
+    },
+    "other_income": {
+     "current": 68.73,
+     "prev_quarter": 528.29,
+     "year_ago": 495.74
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 11
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 532.35,
+    "prev_quarter": 868.98,
+    "year_ago": 923.59
+   },
+   "qoq_pct": -38.7,
+   "qoq_note": null,
+   "yoy_pct": -42.4,
+   "yoy_note": null,
+   "source": {
+    "line": "Proffiit before tax ( 7 + 8)",
+    "printed": [
+     "532.35",
+     "868.98",
+     "923.59"
+    ],
+    "page": 11
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 343.66,
+    "prev_quarter": 663.42,
+    "year_ago": 670.0
+   },
+   "qoq_pct": -48.2,
+   "qoq_note": null,
+   "yoy_pct": -48.7,
+   "yoy_note": null,
+   "source": {
+    "line": "Ownneerrs of the Company",
+    "printed": [
+     "343.66",
+     "663.42",
+     "670.00"
+    ],
+    "page": 11
+   },
+   "note": "attributable to owners"
+  }
+ ],
+ "verdict": "Revenue up 47% year on year; PAT down 49%. EBITDA margin down 100 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 2.8,
+    "prev_quarter": 3.0,
+    "year_ago": 3.8
+   },
+   "yoy_bps": -100
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 1.6,
+    "prev_quarter": 4.3,
+    "year_ago": 4.5
+   },
+   "yoy_bps": -290
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [
+  "Tottall tax expenses: ambiguous separator in '121.488'; row ignored."
+ ],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 4393,
+  "tokens_out": 823
+ }
+}

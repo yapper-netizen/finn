@@ -1,0 +1,16 @@
+{
+ "filing_id": "106835025",
+ "ticker": "DEEPAKNTR",
+ "company": "Deepak Nitrite Limited",
+ "filing_date": "2026-10-29T18:41:23",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/DEEPAKNTR_29102026183918_NSE-29-10-2026-bm-ufr.pdf",
+ "title": "Deepak Nitrite Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "could not extract",
+ "reason": "The results pages are scanned images without a text layer; FINN does not read text from images (OCR). Open the filing for the numbers.",
+ "metrics": [],
+ "checks": [],
+ "warnings": []
+}

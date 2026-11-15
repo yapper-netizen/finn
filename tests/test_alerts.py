@@ -21,7 +21,7 @@ def test_price_alert_up_and_down():
 
 
 def test_price_exactly_at_threshold_does_not_fire():
-    assert check_alerts("X", make_df([100.0] * 25 + [105.0], [1000] * 26)) == []
+    assert check_alerts("X", make_df([100.0] * 25 + [103.0], [1000] * 26)) == []  # default is ±3% (D-077)
 
 
 def test_volume_alert_uses_prior_20_days_only():

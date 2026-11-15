@@ -1,0 +1,190 @@
+{
+ "filing_id": "106832949",
+ "ticker": "PIDILITIND",
+ "company": "Pidilite Industries Limited",
+ "filing_date": "2026-10-28T18:54:17",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/Nisha_28102026185331_SEIntimationUFRfinalsigned.pdf",
+ "title": "Pidilite Industries Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  13
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 4297.59,
+    "prev_quarter": 4551.55,
+    "year_ago": 3554.44
+   },
+   "qoq_pct": -5.6,
+   "qoq_note": null,
+   "yoy_pct": 20.9,
+   "yoy_note": null,
+   "source": {
+    "line": "a) Revenue from Operations",
+    "printed": [
+     "4297.59",
+     "4551.55",
+     "3554.44"
+    ],
+    "page": 13
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 882.4,
+    "prev_quarter": 1196.21,
+    "year_ago": 850.38
+   },
+   "qoq_pct": -26.2,
+   "qoq_note": null,
+   "yoy_pct": 3.8,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before exceptional items and tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "profit_before_exceptional": {
+     "current": 834.23,
+     "prev_quarter": 1177.58,
+     "year_ago": 787.31
+    },
+    "finance_cost": {
+     "current": 12.7,
+     "prev_quarter": 13.34,
+     "year_ago": 13.28
+    },
+    "depreciation": {
+     "current": 100.06,
+     "prev_quarter": 97.29,
+     "year_ago": 99.95
+    },
+    "other_income": {
+     "current": 64.59,
+     "prev_quarter": 92.0,
+     "year_ago": 50.16
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 13
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 834.23,
+    "prev_quarter": 1191.99,
+    "year_ago": 787.31
+   },
+   "qoq_pct": -30.0,
+   "qoq_note": null,
+   "yoy_pct": 6.0,
+   "yoy_note": null,
+   "source": {
+    "line": "7 Profit before tax (6-6)",
+    "printed": [
+     "834.23",
+     "1191.99",
+     "787.31"
+    ],
+    "page": 13
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 614.53,
+    "prev_quarter": 872.41,
+    "year_ago": 579.23
+   },
+   "qoq_pct": -29.6,
+   "qoq_note": null,
+   "yoy_pct": 6.1,
+   "yoy_note": null,
+   "source": {
+    "line": "Shareholders of the Company",
+    "printed": [
+     "614.53",
+     "872 41",
+     "579.23"
+    ],
+    "page": 13
+   },
+   "note": "attributable to owners"
+  }
+ ],
+ "verdict": "All 4 lines up year on year. EBITDA margin down 340 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 20.5,
+    "prev_quarter": 26.3,
+    "year_ago": 23.9
+   },
+   "yoy_bps": -340
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 14.3,
+    "prev_quarter": 19.2,
+    "year_ago": 16.3
+   },
+   "yoy_bps": -200
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": false,
+   "detail": "year-ago quarter: off by ₹100.0 crore"
+  }
+ ],
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 2875,
+  "tokens_out": 897
+ }
+}

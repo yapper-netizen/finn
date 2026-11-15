@@ -1,0 +1,185 @@
+{
+ "filing_id": "106818441",
+ "ticker": "POLYCAB",
+ "company": "Polycab India Limited",
+ "filing_date": "2026-10-15T12:58:53",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_15102026125737_OutcomeofBoardMeeting.pdf",
+ "title": "Polycab India Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "million",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  4
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 9898.9,
+    "prev_quarter": 8209.73,
+    "year_ago": 6477.21
+   },
+   "qoq_pct": 20.6,
+   "qoq_note": null,
+   "yoy_pct": 52.8,
+   "yoy_note": null,
+   "source": {
+    "line": "Revenue from operations",
+    "printed": [
+     "98,989.01",
+     "82,097.32",
+     "64,772.11"
+    ],
+    "page": 4
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 1422.5,
+    "prev_quarter": 1136.2,
+    "year_ago": 1020.75
+   },
+   "qoq_pct": 25.2,
+   "qoq_note": null,
+   "yoy_pct": 39.4,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "pbt": {
+     "current": 1306.22,
+     "prev_quarter": 1058.22,
+     "year_ago": 921.0
+    },
+    "finance_cost": {
+     "current": 93.6,
+     "prev_quarter": 80.02,
+     "year_ago": 48.41
+    },
+    "depreciation": {
+     "current": 111.04,
+     "prev_quarter": 102.87,
+     "year_ago": 96.78
+    },
+    "other_income": {
+     "current": 88.37,
+     "prev_quarter": 104.92,
+     "year_ago": 45.43
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 4
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 1306.22,
+    "prev_quarter": 1058.22,
+    "year_ago": 921.0
+   },
+   "qoq_pct": 23.4,
+   "qoq_note": null,
+   "yoy_pct": 41.8,
+   "yoy_note": null,
+   "source": {
+    "line": "Profit before tax(3+4)",
+    "printed": [
+     "13,062.20",
+     "10,582.23",
+     "9,210.01"
+    ],
+    "page": 4
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 977.37,
+    "prev_quarter": 784.34,
+    "year_ago": 685.46
+   },
+   "qoq_pct": 24.6,
+   "qoq_note": null,
+   "yoy_pct": 42.6,
+   "yoy_note": null,
+   "source": {
+    "line": "Equity shareholders of parent company",
+    "printed": [
+     "9,773.74",
+     "7,843.37",
+     "6,854.56"
+    ],
+    "page": 4
+   },
+   "note": "attributable to owners"
+  }
+ ],
+ "verdict": "All 4 lines up year on year. EBITDA margin down 140 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 14.4,
+    "prev_quarter": 13.8,
+    "year_ago": 15.8
+   },
+   "yoy_bps": -140
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 9.9,
+    "prev_quarter": 9.6,
+    "year_ago": 10.6
+   },
+   "yoy_bps": -70
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 3740,
+  "tokens_out": 894
+ }
+}

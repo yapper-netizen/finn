@@ -1,0 +1,192 @@
+{
+ "filing_id": "106847370",
+ "ticker": "ASTRAL",
+ "company": "Astral Limited",
+ "filing_date": "2026-11-05T16:17:02",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026161523_OutcomeofBoardMeeting.pdf",
+ "title": "Astral Limited has submitted to the Exchange, the financial results for the period ended September 30, 2026.",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T07:00:51",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "million",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  12
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 1988.3,
+    "prev_quarter": 1578.0,
+    "year_ago": 1577.4
+   },
+   "qoq_pct": 26.0,
+   "qoq_note": null,
+   "yoy_pct": 26.0,
+   "yoy_note": null,
+   "source": {
+    "line": "1 Revenue from Operations",
+    "printed": [
+     "19,883",
+     "15,780",
+     "15,774"
+    ],
+    "page": 12
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 260.5,
+    "prev_quarter": 231.2,
+    "year_ago": 256.8
+   },
+   "qoq_pct": 12.7,
+   "qoq_note": null,
+   "yoy_pct": 1.4,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before exceptional items and tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "profit_before_exceptional": {
+     "current": 181.4,
+     "prev_quarter": 162.8,
+     "year_ago": 179.9
+    },
+    "finance_cost": {
+     "current": 12.2,
+     "prev_quarter": 5.8,
+     "year_ago": 16.0
+    },
+    "depreciation": {
+     "current": 78.7,
+     "prev_quarter": 75.4,
+     "year_ago": 72.3
+    },
+    "other_income": {
+     "current": 11.8,
+     "prev_quarter": 12.8,
+     "year_ago": 11.4
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 12
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 171.9,
+    "prev_quarter": 162.8,
+    "year_ago": 179.9
+   },
+   "qoq_pct": 5.6,
+   "qoq_note": null,
+   "yoy_pct": -4.4,
+   "yoy_note": null,
+   "source": {
+    "line": "9 Profit before tax (7-8)",
+    "printed": [
+     "1,719",
+     "1,628",
+     "1,799"
+    ],
+    "page": 12
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 127.2,
+    "prev_quarter": 120.0,
+    "year_ago": 134.8
+   },
+   "qoq_pct": 6.0,
+   "qoq_note": null,
+   "yoy_pct": -5.6,
+   "yoy_note": null,
+   "source": {
+    "line": "Owners of the Company",
+    "printed": [
+     "1,272",
+     "1,200",
+     "1,348"
+    ],
+    "page": 12
+   },
+   "note": "attributable to owners"
+  }
+ ],
+ "verdict": "Revenue up 26% year on year; PAT down 6%. EBITDA margin down 320 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 13.1,
+    "prev_quarter": 14.7,
+    "year_ago": 16.3
+   },
+   "yoy_bps": -320
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 6.4,
+    "prev_quarter": 7.6,
+    "year_ago": 8.5
+   },
+   "yoy_bps": -210
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [
+  "Exceptional items took ₹9.5 crore off PBT this quarter; see the notes in the filing."
+ ],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 2559,
+  "tokens_out": 862
+ }
+}
