@@ -1,0 +1,15 @@
+{
+ "filing_id": "106815039",
+ "ticker": "SUNPHARMA",
+ "company": "Sun Pharmaceutical Industries Limited",
+ "filing_date": "2026-10-12T20:34:43",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/SUNPHARMA_ROID_100278_KMP_Doc.zip",
+ "kind": "results",
+ "status": "could not extract",
+ "reason": "The filing link is not a PDF.",
+ "retryable": false,
+ "metrics": [],
+ "checks": [],
+ "warnings": [],
+ "engine_version": 1
+}

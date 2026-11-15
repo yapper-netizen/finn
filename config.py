@@ -96,3 +96,4 @@ RESEARCH_PACE_S = 6                    # pause between AI calls in a research ru
 # same transcript (dropped, merged or mis-dated commitments); the strong model is steadier. The
 # cheap model still reads every results filing (the bulk of the pages).
 RESEARCH_EXTRACT_STRONG = True
+LLM_BACKOFF_S = (4, 12)                # waits between tries when a model is overloaded (503) (D-088)

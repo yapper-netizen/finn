@@ -1,0 +1,39 @@
+{
+ "filing_id": "106815017",
+ "ticker": "SUNPHARMA",
+ "company": "Sun Pharmaceutical Industries Limited",
+ "filing_date": "2026-10-12T20:05:00",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/SUNSEC_12102026200413_BMOutcome12October2026.pdf",
+ "title": "Resignation of Director of the Company",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:20:12",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "resignation",
+   "label": "Resigned",
+   "person": "Gautam Doshi",
+   "role": "Non-Executive, Independent Director",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-10-12",
+   "reason": "Personal reasons and commitments",
+   "profile": null,
+   "key_role": false,
+   "page": 1
+  }
+ ],
+ "key_role": false,
+ "headline": "Resigned: Gautam Doshi, Non-Executive, Independent Director, from 12 Oct 2026",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 1475,
+  "tokens_out": 114,
+  "cached": false
+ }
+}

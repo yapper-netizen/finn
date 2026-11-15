@@ -1,0 +1,57 @@
+{
+ "filing_id": "106836401",
+ "ticker": "SUNPHARMA",
+ "company": "Sun Pharmaceutical Industries Limited",
+ "filing_date": "2026-10-30T15:18:46",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/SUNSEC_30102026151827_BMOutcome30102026_Conclusion.pdf",
+ "title": "Appointment of Statutory Auditors Pursuant to Mandatory Auditor Rotation",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:20:11",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "cessation",
+   "label": "Ceases",
+   "person": "S R B C & CO LLP",
+   "role": "Statutory Auditors",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": null,
+   "reason": "Completion of its second consecutive term of five years under mandatory auditor rotation.",
+   "profile": null,
+   "key_role": false,
+   "page": 1
+  },
+  {
+   "event": "auditor_change",
+   "label": "Auditor change",
+   "person": "Deloitte Haskins & Sells Chartered Accountants LLP",
+   "role": "Statutory Auditors",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": null,
+   "reason": "Appointment as Statutory Auditors consequent upon completion of second consecutive term of existing auditors.",
+   "profile": {
+    "quote": "Deloitte Haskins & Sells Chartered Accountants LLP (Firm Registration No. 117364W/W100739) is a firm of Chartered Accountants registered with the Institute of Chartered Accountants of India (“ICAI”) and is part of the Deloitte network of professional services firms. The firm has extensive experience in providing audit and assurance services to large listed and multinational companies across various sectors, including pharmaceuticals, life sciences and healthcare.",
+    "page": 2,
+    "match": 1.0,
+    "summary": "Deloitte Haskins & Sells Chartered Accountants LLP is an ICAI-registered chartered accountancy firm and part of the Deloitte network, possessing extensive audit and assurance experience with large listed and multinational companies across sectors such as pharmaceuticals, life sciences, and healthcare."
+   },
+   "key_role": false,
+   "page": 2
+  }
+ ],
+ "key_role": false,
+ "headline": "Ceases: S R B C & CO LLP, Statutory Auditors (+1 more)",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 1534,
+  "tokens_out": 359,
+  "cached": true
+ }
+}

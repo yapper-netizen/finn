@@ -1,0 +1,44 @@
+{
+ "filing_id": "106848291",
+ "ticker": "TITAN",
+ "company": "Titan Company Limited",
+ "filing_date": "2026-11-05T18:36:30",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/TITAN_05112026183608_SEappoinmentofstatutoryauditor.pdf",
+ "title": "Titan Company Limited has informed the Exchange regarding Change in Auditors of the company.",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:20:20",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "auditor_change",
+   "label": "Auditor change",
+   "person": "Price Waterhouse Chartered Accountants LLP",
+   "role": "Statutory Auditors",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": null,
+   "reason": "Completion of second consecutive term of 5 years by current auditor.",
+   "profile": {
+    "quote": "Price Waterhouse Chartered Accountants LLP, (the “Firm”) having a Firm Registration No. 012754N/N500016, is a firm of Chartered Accountants registered with the Institute of Chartered Accountants of India. The Firm was established in the year 1991 and was converted into a limited liability partnership in the year 2014.",
+    "page": 2,
+    "match": 0.97,
+    "summary": "Price Waterhouse Chartered Accountants LLP is a chartered accountant firm registered in India, originally established in 1991 and converted to an LLP in 2014."
+   },
+   "key_role": false,
+   "page": 2
+  }
+ ],
+ "key_role": false,
+ "headline": "Auditor change: Price Waterhouse Chartered Accountants LLP, Statutory Auditors",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 1985,
+  "tokens_out": 225,
+  "cached": true
+ }
+}

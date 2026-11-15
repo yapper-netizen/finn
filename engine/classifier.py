@@ -92,7 +92,13 @@ _COMPILED = [
 
 
 def classify(filing: dict) -> str:
-    """Return one category key (a key of config.CATEGORY_TIER) for a filing dict."""
+    """Return one category key (a key of config.CATEGORY_TIER) for a filing dict.
+
+    `kind_override` wins: set when FINN read the PDF and found results inside a filing whose
+    title said only "Outcome of Board Meeting" (D-087).
+    """
+    if filing.get("kind_override") in config.CATEGORY_TIER:
+        return filing["kind_override"]
     desc = (filing.get("category") or "").strip()
     title = (filing.get("title") or "").strip()
     for category, d, t, nd in _COMPILED:

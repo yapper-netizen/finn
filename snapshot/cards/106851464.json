@@ -1,0 +1,44 @@
+{
+ "filing_id": "106851464",
+ "ticker": "WIPRO",
+ "company": "Wipro Limited",
+ "filing_date": "2026-11-06T19:05:22",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/Wipro_Secretarial_06112026190358_SEintimation06112026.pdf",
+ "title": "Wipro Limited has informed the Exchange regarding Appointment of Mr. Angan Guha as President and Chief Executive Officer for Americas 2 Strategic Market Unit of the company w.e.f. December 08, 2026.",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:20:21",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Angan Guha",
+   "role": "President and Chief Executive Officer for Americas 2 Strategic Market Unit",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-12-08",
+   "reason": "Appointment",
+   "profile": {
+    "quote": "Angan Guha is a seasoned technology and business leader with over 34 years of experience driving growth, digital transformation, and client success across multiple geographies. He is known for his results-oriented leadership with a focus on building growth-oriented organizations.",
+    "page": 3,
+    "match": 1.0,
+    "summary": "Angan Guha is a seasoned technology and business leader with over 34 years of experience in driving growth, digital transformation, and client success."
+   },
+   "key_role": false,
+   "page": 3
+  }
+ ],
+ "key_role": false,
+ "headline": "Appointed: Angan Guha, President and Chief Executive Officer for Americas 2 Strategic Market Unit, from 8 Dec 2026",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 1019,
+  "tokens_out": 195,
+  "cached": true
+ }
+}

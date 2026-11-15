@@ -155,7 +155,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | EN-3 | P0 | [x] Ranker: tier (High / Medium / Low) from category weights in config; boost if same stock has a price/volume alert that day | D-015, D-040 | 1 | Unit tests: tiers, boost, ties |
 | EN-4 | P0 | [x] {Windowed digest} {24h default} / 3d / 7d: top 3–5 cards + "Routine (N)"; if 24h is empty, widen to the most recent day with filings and return a `widened` flag for the banner | D-045, D-046 | 1 | Tests: counts per window; empty-24h case widens |
 | EN-5 | P0 | [x] {Results card}: Revenue, EBITDA, PBT, PAT, {QoQ, YoY}; growth % in Python. EBITDA if not printed = PBT + finance cost + D&A − other income, labelled "computed". Banks: Total income / PBT / PAT, EBITDA "n/a for banks". Extractor reused by EN-13 | D-016, D-017, D-048, D-049, D-054 | 4.5 | Done 2026-11-15 (block 7, D-077): 18 cards; 6 verified against page images |
-| EN-6 | P0 | [ ] {Management change card with incoming person's background} | D-019 | 2 | 1 real example card with source link |
+| EN-6 | P0 | [x] {Management change card with incoming person's background} | D-019 | 2 | Done 2026-11-15 (D-087): 25 cards precomputed, verified fields, Key role badge |
 | EN-7 | P1 | [ ] One-line summary for Medium-tier filings (dividend amount + record date, order value, capex size) — cheap model, cached | D-015 | 1.5 | One line per Medium card |
 | EN-8 | P1 | [ ] "Why it matters" line per top card (rule template first, AI only if needed) | D-011 | 1 | No generic filler text |
 | EN-18 | P0 | [x] Category toggles {"a material announcement of a type I care about"}: toggled-off category → Routine; toggled-on High category → "alert" chip; toggles passed from localStorage via API-2 | D-047 | 0.5 | Ranker tests cover on/off |
@@ -224,7 +224,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | OPS-1 | P0 | [x] GitHub repo (push existing history), `.env.example` [template listing key names without values] | D-008, D-038 | 0.3 | Repo visible, no secrets in history |
 | OPS-2 | P0 | [x] Render web service (live: https://finn-viku.onrender.com, 2026-11-15): build `pip install -r requirements.txt`, start `uvicorn api:app` [uvicorn = the server program that runs FastAPI], env vars for keys, Python version pinned | D-032, D-034 | 1 | Public URL loads on phone |
 | OPS-3 | P0 | [x] Ship precomputed `cache.db` / snapshot in repo (Render free disk is wiped on every restart) | D-006, D-032 | 0.5 | Fresh deploy shows full demo instantly |
-| OPS-4 | P0 | [ ] Cold-start mitigation [Render free sleeps after ~15 min idle; first visit waits ~1 min] | D-032 | 0.3 | Plan written into the email |
+| OPS-4 | P0 | [x] Cold-start mitigation [Render free sleeps after ~15 min idle; first visit waits ~1 min] | D-032 | 0.3 | UptimeRobot pings /health every 5 min (user); cold-start note for the writeup |
 | OPS-5 | P2 | [ ] Nightly refresh (GitHub Actions [free scheduled jobs on GitHub] runs refresh script, commits snapshot) | D-031 | 1 | Optional |
 | OPS-6 | P0 | [x] API keys: free Gemini key only (D-060) → `.env` locally; Render env var still to set at deploy; smoke test `py smoke_test_llm.py` passes (cheap via 3.5-flash-lite; strong fell back to 3.1-flash-lite under overload). `engine/llm.py` basic version (retry, fallback, token log) exists; EN-9 still owns JSON schema + SQLite cache | D-009, D-050, D-060, D-061 | 0.3 | Done 2026-11-14 |
 
@@ -239,9 +239,9 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | QA-3 | P0 | [x] QoQ / YoY / EBITDA-fallback (incl. other income) maths tests, incl. negative and zero bases; bank-lite case | 0.5 | Done 2026-11-15: `tests/test_results.py` |
 | QA-4 | P0 | [x] {Verify ≥2 results cards against actual filing PDFs}; record in DECISIONS/README | 1 | Done 2026-11-15: IRCTC, TITAN, ASIANPAINT, LT, DIXON, HDFCBANK match to the paisa (D-077) |
 | QA-5 | P0 | [x] LLM output validation tests (bad JSON, fake quote) with a fake model [stand-in that returns canned answers, no API cost] | 0.5 | Done: `tests/test_research.py` (fake quote, bad JSON, invalid fact ids) |
-| QA-6 | P0 | [ ] Offline test: block network → app serves snapshot | 0.3 | Works |
+| QA-6 | P0 | [x] Offline test: block network → app serves snapshot | 0.3 | Done: tests/test_mgmt.py blocks prices, filings, PDFs and AI; Today, cards, research still answer |
 | QA-7 | P0 | [ ] Real-phone test (Android + iOS if possible) on deployed URL — iPhone Safari checked by the user 2026-11-15 (looks right, PDFs open); Android still to check | 0.5 | No horizontal scroll, taps ≥44px |
-| QA-8 | P0 | [ ] Unknown-ticker test (2 tickers never seen) | 0.5 | Works or fails gracefully |
+| QA-8 | P0 | [x] Unknown-ticker test (2 tickers never seen) | 0.5 | Done (D-086): HAVELLS, NAUKRI end to end, locally and HAVELLS on Render |
 | QA-9 | P1 | [ ] {Cost report}: tokens per model, cost per research run, cache hit rate | 0.5 | Table in README |
 
 ---
@@ -305,7 +305,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-016 | Results numbers source | Open — PDF extraction with arithmetic checks; screener option dropped (D-049) | EN-5 |
 | D-017 | Consolidated vs standalone | Open — consolidated, fallback standalone, labelled | EN-5 |
 | D-018 | Bank results | **Decided via D-048** — bank-lite card | EN-5 |
-| D-019 | Management bio source | Open — filing's brief profile, AI-condensed | EN-6 |
+| D-019 | Management bio source | **Decided via D-087** — filing's brief profile, quote-verified | EN-6 |
 | D-020 | Fundamentals source | Open — screener.in links, BSE fallback | BE-5 |
 | D-021 | Document chunking | Open — page-tagged sections + keywords | EN-10 |
 | D-022 | Promise-tracker method | Open — two-pass | EN-13 |
@@ -343,3 +343,7 @@ Principles: rules before AI · Python does arithmetic, never the model · each d
 | D-083 | Reading, receipts, unknown tickers | **Decided** — keyword pages; verified quotes, numbers exact; jobs + polling | EN-10, EN-15, EN-16, API-4 |
 | D-084 | Research screen, bull vs bear | **Decided** — scorecard + receipt sheet; bull/bear toggle | FE-4, EN-14 |
 | D-085 | Unit from filing's other statements | **Decided** — only when it is the one unit named | EN-5 |
+| D-086 | Block 8 results, quote-states-target rule | **Decided** | EN-15, QA-8 |
+| D-087 | Management-change card | **Decided** — annexure only, Python-verified, Key role badge | EN-6 |
+| D-088 | AI retries and fallback label | **Decided** — back off on 503, skip on 429, label | EN-9 |
+| D-089 | Board-outcome results promotion; offline test | **Decided** | EN-2, EN-5, QA-6 |

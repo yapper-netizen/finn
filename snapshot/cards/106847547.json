@@ -1,0 +1,62 @@
+{
+ "filing_id": "106847547",
+ "ticker": "ASTRAL",
+ "company": "Astral Limited",
+ "filing_date": "2026-11-05T16:53:39",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/ASTRAL_05112026165329_Reg30.pdf",
+ "title": "Astral Limited has informed the Exchange about change in Management - Senior Management Personnel",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:18:56",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Ritesh Patel",
+   "role": "Senior Management Personnel",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-11-05",
+   "reason": "Based on the recommendation of the Nomination and Remuneration committee",
+   "profile": {
+    "quote": "Mr Ritesh Patel is BE in Chemical Engineering with 24 years of extensive experience in the plastic piping systems industry, with in-depth knowledge of various polymer-based materials, like CPVC, PVC, PE and PP.",
+    "page": 2,
+    "match": 0.9,
+    "summary": "Ritesh Patel holds a BE in Chemical Engineering and has 24 years of extensive experience in the plastic piping systems industry with in-depth knowledge of polymer-based materials."
+   },
+   "key_role": false,
+   "page": 2
+  },
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Pritesh Shah",
+   "role": "Senior Management Personnel",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-11-05",
+   "reason": "Based on the recommendation of the Nomination and Remuneration committee",
+   "profile": {
+    "quote": "Mr. Pritesh Shah is Qualified Chartered Accountant (CA) since 1998. Over 26 years of progressive experience in Finance & Accounts within the manufacturing industry.",
+    "page": 2,
+    "match": 0.9,
+    "summary": "Pritesh Shah is a qualified Chartered Accountant since 1998 with over 26 years of progressive experience in Finance and Accounts within the manufacturing industry."
+   },
+   "key_role": false,
+   "page": 2
+  }
+ ],
+ "key_role": false,
+ "headline": "Appointed: Ritesh Patel, Senior Management Personnel, from 5 Nov 2026 (+1 more)",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 1616,
+  "tokens_out": 370,
+  "cached": true
+ }
+}

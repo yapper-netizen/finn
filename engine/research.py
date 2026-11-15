@@ -593,7 +593,9 @@ def build_research(
         "ai": {"calls": len(calls), "cached": sum(1 for m in calls if m.get("cached")),
                "tokens_in": sum(m.get("tokens_in") or 0 for m in calls),
                "tokens_out": sum(m.get("tokens_out") or 0 for m in calls),
-               "models": sorted({m.get("model") for m in calls if m.get("model")})},
+               "models": sorted({m.get("model") for m in calls if m.get("model")}),
+               # D-088: say so when the weaker fallback model answered instead of the strong one
+               "fallback_used": any(m.get("model") == config.FALLBACK_MODEL for m in calls)},
     }
 
 

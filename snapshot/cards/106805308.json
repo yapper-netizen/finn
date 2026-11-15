@@ -1,0 +1,77 @@
+{
+ "filing_id": "106805308",
+ "ticker": "HDFCBANK",
+ "company": "HDFC Bank Limited",
+ "filing_date": "2026-10-01T18:23:52",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/HDFCBANK3_01102026182319_SE_Intimation-_Anup_Bagchi.pdf",
+ "title": "HDFC Bank Limited has informed the Exchange regarding Change in Director(s) of the company.",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:18:57",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Anup Bagchi",
+   "role": "Managing Director & Chief Executive Officer",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-10-27",
+   "reason": "Consequent to the retirement of Mr. Sashidhar Jagdishan.",
+   "profile": {
+    "quote": "Mr. Anup Bagchi holds Management degree from Indian Institute of Management, Bangalore and an Engineering degree from Indian Institute of Technology, Kanpur.",
+    "page": 3,
+    "match": 1.0,
+    "summary": "He holds a management degree from the Indian Institute of Management, Bangalore, and an engineering degree from the Indian Institute of Technology, Kanpur."
+   },
+   "key_role": true,
+   "page": 3
+  },
+  {
+   "event": "cessation",
+   "label": "Ceases",
+   "person": "Sashidhar Jagdishan",
+   "role": "Managing Director & Chief Executive Officer",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": null,
+   "reason": "Will complete his tenure as the MD & CEO of the Bank.",
+   "profile": null,
+   "key_role": true,
+   "page": 4
+  },
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Anup Bagchi",
+   "role": "Additional Director",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-10-02",
+   "reason": "Appointment as Additional Director.",
+   "profile": {
+    "quote": "Mr. Anup Bagchi is a seasoned financial services leader with over three decades of experience across banking, capital markets, wealth management and insurance. A member of the ICICI Group since 1992, he has built a diverse career spanning treasury, retail banking, wholesale banking, investment banking, and digital financial services.",
+    "page": 3,
+    "match": 1.0,
+    "summary": "Anup Bagchi is an experienced financial services leader with over thirty years of expertise across banking, capital markets, wealth management, and insurance."
+   },
+   "key_role": false,
+   "page": 3
+  }
+ ],
+ "key_role": true,
+ "headline": "Appointed: Anup Bagchi, Managing Director & Chief Executive Officer, from 27 Oct 2026 (+2 more)",
+ "warnings": [
+  "Sashidhar Jagdishan: the date 26 Oct 2026 is not printed in the filing; not shown."
+ ],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 2150,
+  "tokens_out": 475,
+  "cached": false
+ }
+}

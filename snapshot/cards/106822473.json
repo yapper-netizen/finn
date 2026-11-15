@@ -1,0 +1,39 @@
+{
+ "filing_id": "106822473",
+ "ticker": "IRCTC",
+ "company": "Indian Railway Catering And Tourism Corporation Limited",
+ "filing_date": "2026-10-19T22:05:06",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/IRCTC_19102026220457_stxintimationggmservices19102026.pdf",
+ "title": "Indian Railway Catering And Tourism Corporation Limited has informed the Exchange about change in Management",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:19:11",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "cessation",
+   "label": "Ceases",
+   "person": "Suresh Kumar Sharma",
+   "role": "Group General Manager/Services",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-10-19",
+   "reason": "Repatriated prematurely on his own request.",
+   "profile": null,
+   "key_role": false,
+   "page": 1
+  }
+ ],
+ "key_role": false,
+ "headline": "Ceases: Suresh Kumar Sharma, Group General Manager/Services, from 19 Oct 2026",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 650,
+  "tokens_out": 116,
+  "cached": true
+ }
+}

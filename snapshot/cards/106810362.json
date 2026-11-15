@@ -1,0 +1,98 @@
+{
+ "filing_id": "106810362",
+ "ticker": "LT",
+ "company": "Larsen & Toubro Limited",
+ "filing_date": "2026-10-07T21:29:23",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/PAM_07102026212904_IntimationSRMGT07102026.pdf",
+ "title": "Larsen & Toubro Limited has informed the Exchange about change in Management",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:19:27",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "role_change",
+   "label": "New role",
+   "person": "C Jayakumar",
+   "role": "Senior Vice President & Head - Corporate Human Resources",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-07-01",
+   "reason": "Promoted as Senior Vice President",
+   "profile": {
+    "quote": "Dr. C. Jayakumar is a distinguished HR leader with over 38 years of rich and diverse experience in strategic HRM & organizational transformation. As the CHRO of L&T Ltd., he has played a pivotal role in shaping the people agenda of one of India's top conglomerates. An alumnus of LBS, Dr. Jayakumar holds a doctorate in leadership, certification in executive coaching from CFI.",
+    "page": 2,
+    "match": 0.9,
+    "summary": "C Jayakumar is an experienced HR leader with over 38 years of expertise in strategic HRM and organizational transformation, currently serving as CHRO at L&T."
+   },
+   "key_role": false,
+   "page": 2
+  },
+  {
+   "event": "role_change",
+   "label": "New role",
+   "person": "Suresh Kumar Narang",
+   "role": "Senior Vice President & IC Head - CarbonLite Solutions IC & Chief Executive – LMB",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-07-01",
+   "reason": "Promoted as Senior Vice President",
+   "profile": {
+    "quote": "Mr. Suresh Kumar Narang, Sr. Vice President & Head – L&T Energy-CarbonLite Solutions, has over four decades of experience across the power sector, spanning thermal power project design, EPC execution, operations, commercial management, coal mining, and consulting. Since joining L&T in 2010, he has led several landmark initiatives, including the execution of India’s first Ultra Supercritical Power Project at Khargone for NTPC.",
+    "page": 2,
+    "match": 0.9,
+    "summary": "Suresh Kumar Narang has over 40 years of experience in the power sector, including project design, EPC execution, and operations, and has led significant initiatives at L&T since 2010."
+   },
+   "key_role": false,
+   "page": 2
+  },
+  {
+   "event": "role_change",
+   "label": "New role",
+   "person": "S Ramkumar",
+   "role": "Senior Vice President & IC Head - Transportation Infrastructure IC",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-07-01",
+   "reason": "Promoted as Senior Vice President",
+   "profile": {
+    "quote": "Mr. S. Ramkumar is an Electrical Engineer from NIT Durgapur and an alumnus of the London Business School Senior Executive Programme. With over three decades at Larsen & Toubro, he currently heads the Transportation Infrastructure Division, encompassing the Roads, Bridges & Formations (RBF) and Railway Business Groups (RBG).",
+    "page": 3,
+    "match": 0.9,
+    "summary": "S Ramkumar is an electrical engineer with over 30 years of experience at L&T, currently leading the Transportation Infrastructure Division."
+   },
+   "key_role": false,
+   "page": 3
+  },
+  {
+   "event": "role_change",
+   "label": "New role",
+   "person": "Sriraman T",
+   "role": "Senior Vice President & IC Head - Residential, Commercial Buildings & Factories IC",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-07-01",
+   "reason": "Promoted as Senior Vice President",
+   "profile": {
+    "quote": "Mr. T. Sriraman joined L&T as a Graduate Engineer Trainee in 1992 and has over 34 years of experience across diverse functions and business verticals within L&T Construction. His areas of expertise include project execution, contracts, procurement, business development, and business strategy.",
+    "page": 3,
+    "match": 0.9,
+    "summary": "Sriraman T has over 34 years of experience at L&T Construction, specializing in project execution, contracts, procurement, and business strategy."
+   },
+   "key_role": false,
+   "page": 3
+  }
+ ],
+ "key_role": false,
+ "headline": "New role: C Jayakumar, Senior Vice President & Head - Corporate Human Resources, from 1 Jul 2026 (+3 more)",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.1-flash-lite",
+  "tokens_in": 2522,
+  "tokens_out": 885,
+  "cached": false
+ }
+}

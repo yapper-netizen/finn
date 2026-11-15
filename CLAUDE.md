@@ -65,10 +65,10 @@ finn/
 ├─ requirements.txt (runtime, what Render installs), requirements-dev.txt (+ pytest, httpx), pytest.ini, render.yaml
 ├─ config.py           tickers, thresholds, category tiers, model names, cache and API limits
 ├─ data/               prices.py, filings.py, symbols.py, clock.py, docs.py (PDF text), research_docs.py (transcripts + results finder), equity_list.csv
-├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, llm, results (card extractor), cards, research (promise tracker, bull/bear), research_jobs
+├─ engine/             alerts, classifier, ranker, digest, feed (cache), today, llm, results (card extractor), mgmt (management card), cards, research (promise tracker, bull/bear), research_jobs
 ├─ api.py              FastAPI: /, /health, /api/digest, /api/config, /api/card/{id}, /api/research/{ticker}
 ├─ web/index.html      one file: Today (+ results sheet), Research (scorecard, receipts, bull/bear), Settings; look in design/DESIGN_2.md
-├─ tests/              148 pytest tests (no network)
+├─ tests/              166 pytest tests (no network)
 ├─ snapshot/           frozen prices, filings, results cards, research (3 stocks), committed
 ├─ design/             DESIGN_1.md (screens), DESIGN_2.md (look), previews and brainstorm history
 ├─ briefs/             one hand-off brief per block (see Working loop)

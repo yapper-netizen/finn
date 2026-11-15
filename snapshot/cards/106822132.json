@@ -1,0 +1,15 @@
+{
+ "filing_id": "106822132",
+ "ticker": "TRENT",
+ "company": "Trent Limited",
+ "filing_date": "2026-10-19T17:25:08",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/TRENT_ROID_100856_KMP_Doc.zip",
+ "kind": "results",
+ "status": "could not extract",
+ "reason": "The filing link is not a PDF.",
+ "retryable": false,
+ "metrics": [],
+ "checks": [],
+ "warnings": [],
+ "engine_version": 1
+}

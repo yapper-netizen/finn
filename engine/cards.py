@@ -10,6 +10,7 @@ Lookup order (D-078):
 from __future__ import annotations
 
 import json
+from datetime import datetime
 import os
 import queue
 import re
@@ -23,7 +24,15 @@ from dotenv import load_dotenv
 import config
 from data import docs
 from engine.classifier import classify
+from engine.mgmt import build_mgmt_card
 from engine.results import build_card
+
+CARD_KINDS = ("results", "management_change")
+
+
+def card_kind(filing: dict) -> str:
+    """The filing's category, honouring a promotion (a board outcome found to hold results)."""
+    return filing.get("kind_override") or classify(filing)
 
 _locks: dict[str, threading.Lock] = {}
 _locks_guard = threading.Lock()
@@ -77,14 +86,63 @@ def summary(card: dict) -> dict:
 
 
 def attach_summaries(payload: dict) -> dict:
-    """Add `results` (a stored card's summary) to every Results item on Today; never builds cards."""
+    """Add a stored card's summary to Results (`results`) and management (`mgmt`) items on Today.
+
+    Never builds cards; a card still being built simply has no summary yet.
+    """
     for group in ("cards", "summaries", "routine"):
         for item in payload.get(group, []):
-            if item.get("kind") == "results" and valid_id(str(item.get("id") or "")):
-                card = stored_card(str(item["id"]))
-                if card:
-                    item["results"] = summary(card)
+            fid = str(item.get("id") or "")
+            if item.get("kind") not in ("results", "management_change") or not valid_id(fid):
+                continue
+            card = stored_card(fid)
+            if not card:
+                continue
+            if card.get("kind") == "management":
+                item["mgmt"] = {"status": card.get("status"), "headline": card.get("headline"),
+                                "key_role": card.get("key_role", False)}
+            else:
+                item["results"] = summary(card)
     return payload
+
+
+def is_results_candidate(filing: dict) -> bool:
+    """A bare "Outcome of Board Meeting" filed within 75 days of a quarter end may hold results."""
+    from data.research_docs import quarter_end_before
+    if classify(filing) != "board_outcome":
+        return False
+    try:
+        filed = datetime.fromisoformat(filing["date"]).date()
+    except (KeyError, ValueError):
+        return False
+    return (filed - quarter_end_before(filed)).days <= 75
+
+
+def promote_if_results(filing: dict, pages_loader: Callable[[str], list[str]] = docs.get_pages) -> dict:
+    """Open a candidate filing (no AI): if it holds a results statement, build its results card."""
+    from engine.results import find_statements
+    try:
+        pages = pages_loader(filing.get("pdf_url") or "")
+    except ValueError:            # not a PDF link: nothing to read, so not a results filing
+        return {"status": "not results"}
+    except RuntimeError as exc:   # download failed: try again on a later refresh
+        return {"status": "could not extract", "retryable": True, "reason": str(exc)}
+    if not find_statements(pages):
+        return {"status": "not results"}
+    return get_card({**filing, "kind_override": "results"}, pages_loader=lambda url: pages)
+
+
+def apply_promotions(filings: list[dict]) -> list[dict]:
+    """Filings whose stored card shows results get `kind_override="results"` (copies, not in place)."""
+    out = []
+    for f in filings:
+        fid = str(f.get("id") or "")
+        if classify(f) == "board_outcome" and valid_id(fid):
+            card = stored_card(fid)
+            if card and card.get("kind") == "results" and card.get("status") in ("ok", "partial"):
+                f = {**f, "kind_override": "results"}
+        out.append(f)
+    return out
 
 
 def _lock_for(filing_id: str) -> threading.Lock:
@@ -95,7 +153,7 @@ def _lock_for(filing_id: str) -> threading.Lock:
 def get_card(
     filing: dict,
     pages_loader: Callable[[str], list[str]] = docs.get_pages,
-    builder: Callable[[dict, list[str]], dict] = build_card,
+    builder: Callable[[dict, list[str]], dict] | None = None,
     require_results: bool = True,
 ) -> dict:
     """The card for a results filing; builds it on first open (one build at a time per filing).
@@ -106,8 +164,9 @@ def get_card(
     fid = str(filing.get("id") or "")
     if not valid_id(fid):
         raise ValueError("Unknown filing id.")
-    if require_results and classify(filing) != "results":
-        raise ValueError("Cards are only built for quarterly results filings.")
+    kind = card_kind(filing)
+    if require_results and kind not in CARD_KINDS:
+        raise ValueError("Cards are built for results and management-change filings only.")
     card = stored_card(fid)
     if card:
         return card
@@ -121,7 +180,8 @@ def get_card(
             return _not_saved(filing, str(exc), retryable=False)
         except RuntimeError as exc:
             return _not_saved(filing, str(exc), retryable=True)
-        card = builder(filing, pages)
+        build = builder or (build_mgmt_card if kind == "management_change" else build_card)
+        card = build(filing, pages)
         if not card.get("retryable"):
             save_card(card, _cache_path(fid))
         return card
@@ -149,12 +209,14 @@ class CardPrebuilder:
     def __init__(
         self,
         build: Callable[[dict], dict] = get_card,
+        promote: Callable[[dict], dict] = promote_if_results,
         pace_s: float = config.CARD_PREBUILD_PACE_S,
         max_tries: int = config.CARD_PREBUILD_MAX_TRIES,
         enabled: bool | None = None,
         sleep: Callable[[float], None] = time.sleep,
     ) -> None:
         self._build, self._pace, self._max_tries, self._sleep = build, pace_s, max_tries, sleep
+        self._promote = promote
         if enabled is None:
             load_dotenv(".env")  # locally the key lives in .env; on Render it is a dashboard variable
             enabled = config.CARD_PREBUILD and bool(os.environ.get("GEMINI_API_KEY"))
@@ -173,7 +235,10 @@ class CardPrebuilder:
         added = 0
         for f in data.filings:
             fid = str(f.get("id") or "")
-            if not valid_id(fid) or classify(f) != "results" or stored_card(fid):
+            kind = card_kind(f)
+            if not valid_id(fid) or stored_card(fid):
+                continue
+            if kind not in CARD_KINDS and not is_results_candidate(f):
                 continue
             with self._guard:
                 if fid in self._queued or self._tries.get(fid, 0) >= self._max_tries:
@@ -208,7 +273,7 @@ class CardPrebuilder:
         with self._guard:
             self._tries[fid] = self._tries.get(fid, 0) + 1
         try:
-            card = self._build(f)
+            card = self._promote(f) if card_kind(f) == "board_outcome" else self._build(f)
             if not card.get("retryable"):
                 self.built.append(fid)
             print(f"[cards] prebuilt {f.get('ticker')} {fid}: {card.get('status')}")

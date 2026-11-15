@@ -1,0 +1,65 @@
+{
+ "filing_id": "106851770",
+ "ticker": "ASIANPAINT",
+ "company": "Asian Paints Limited",
+ "filing_date": "2026-11-06T22:06:58",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/ASIANPAINT_06112026220521_SE_intimation_-_Appointment_of_ID.pdf",
+ "title": "Asian Paints Limited has informed the Exchange regarding Appointment of Mr Leo Puri as Independent Director of the company w.e.f. September 07, 2026.",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:18:55",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "role_change",
+   "label": "New role",
+   "person": "Leo Puri",
+   "role": "Chairman of the Board",
+   "role_unverified": false,
+   "previous_role": "Independent Director",
+   "effective_date": "2027-01-23",
+   "reason": null,
+   "profile": null,
+   "key_role": true,
+   "page": 1
+  },
+  {
+   "event": "cessation",
+   "label": "Ceases",
+   "person": "R. Seshasayee",
+   "role": "Chairman and Independent Director",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2027-01-22",
+   "reason": "Completion of term",
+   "profile": null,
+   "key_role": true,
+   "page": 1
+  },
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Leo Puri",
+   "role": "Independent Director",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-09-07",
+   "reason": null,
+   "profile": null,
+   "key_role": false,
+   "page": 1
+  }
+ ],
+ "key_role": true,
+ "headline": "New role: Leo Puri, Chairman of the Board, from 23 Jan 2027 (+2 more)",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 1113,
+  "tokens_out": 298,
+  "cached": true
+ }
+}

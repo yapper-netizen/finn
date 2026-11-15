@@ -1,0 +1,44 @@
+{
+ "filing_id": "106842881",
+ "ticker": "VIJAYA",
+ "company": "Vijaya Diagnostic Centre Limited",
+ "filing_date": "2026-11-03T20:19:26",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/VIJAYA_03112026201817_Signed_VDCL_CS_appointment_03112026.pdf",
+ "title": "Vijaya Diagnostic Centre Limited has informed the Exchange regarding Appointment of Mr Rahul Jain as Company Secretary & Compliance Officer of the company w.e.f. November 03, 2026.",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:20:21",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Rahul Jain",
+   "role": "Company Secretary and Compliance Officer",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-11-03",
+   "reason": "Appointment as Company Secretary and Compliance Officer.",
+   "profile": {
+    "quote": "Mr. Rahul Jain is a qualified Company Secretary and an Associate Member of the Institute of Company Secretaries of India (ICSI). He has over six years of professional experience in the field of Corporate secretarial functions, Corporate Governance and regulatory compliances, with extensive exposure to the regulatory framework applicable to listed companies.",
+    "page": 2,
+    "match": 1.0,
+    "summary": "Rahul Jain is a qualified Company Secretary with over six years of professional experience in corporate secretarial functions, governance, and regulatory compliances for listed companies."
+   },
+   "key_role": false,
+   "page": 2
+  }
+ ],
+ "key_role": false,
+ "headline": "Appointed: Rahul Jain, Company Secretary and Compliance Officer, from 3 Nov 2026",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 1170,
+  "tokens_out": 201,
+  "cached": true
+ }
+}

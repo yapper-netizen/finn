@@ -1,0 +1,192 @@
+{
+ "filing_id": "106818661",
+ "ticker": "PERSISTENT",
+ "company": "Persistent Systems Limited",
+ "filing_date": "2026-10-15T15:56:36",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
+ "title": "Outcome of the Board Meeting",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:19:58",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "million",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  19
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 4663.9,
+    "prev_quarter": 4303.23,
+    "year_ago": 3580.72
+   },
+   "qoq_pct": 8.4,
+   "qoq_note": null,
+   "yoy_pct": 30.3,
+   "yoy_note": null,
+   "source": {
+    "line": "1 Revenue from operations",
+    "printed": [
+     "46,639.04",
+     "43,032.27",
+     "35,807.20"
+    ],
+    "page": 19
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 633.48,
+    "prev_quarter": 696.9,
+    "year_ago": 683.08
+   },
+   "qoq_pct": -9.1,
+   "qoq_note": null,
+   "yoy_pct": -7.3,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before exceptional items and tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "profit_before_exceptional": {
+     "current": 453.68,
+     "prev_quarter": 623.1,
+     "year_ago": 616.83
+    },
+    "finance_cost": {
+     "current": 37.57,
+     "prev_quarter": 29.14,
+     "year_ago": 17.98
+    },
+    "depreciation": {
+     "current": 166.67,
+     "prev_quarter": 115.29,
+     "year_ago": 100.05
+    },
+    "other_income": {
+     "current": 24.45,
+     "prev_quarter": 70.64,
+     "year_ago": 51.78
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 19
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 453.68,
+    "prev_quarter": 623.1,
+    "year_ago": 616.83
+   },
+   "qoq_pct": -27.2,
+   "qoq_note": null,
+   "yoy_pct": -26.4,
+   "yoy_note": null,
+   "source": {
+    "line": "7 Profit before tax (5-6)",
+    "printed": [
+     "4,536.84",
+     "6,231.01",
+     "6,168.32"
+    ],
+    "page": 19
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 351.51,
+    "prev_quarter": 483.04,
+    "year_ago": 471.47
+   },
+   "qoq_pct": -27.2,
+   "qoq_note": null,
+   "yoy_pct": -25.4,
+   "yoy_note": null,
+   "source": {
+    "line": "9 Profit for the period / year (7-8)",
+    "printed": [
+     "3,515.14",
+     "4,830.43",
+     "4,714.70"
+    ],
+    "page": 19
+   },
+   "note": null
+  }
+ ],
+ "verdict": "Revenue up 30% year on year; PAT down 25%. EBITDA margin down 550 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 13.6,
+    "prev_quarter": 16.2,
+    "year_ago": 19.1
+   },
+   "yoy_bps": -550
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 7.5,
+    "prev_quarter": 11.2,
+    "year_ago": 13.2
+   },
+   "yoy_bps": -570
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PBT = profit before exceptional items ± exceptional items",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [
+  "Unit (million): read from the other statements in this filing (not printed in this page's text)."
+ ],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "cached": true,
+  "tokens_in": 2795,
+  "tokens_out": 936
+ }
+}

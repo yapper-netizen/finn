@@ -66,22 +66,49 @@ def _call_once(model: str, prompt: str, as_json: bool, schema: type | None = Non
     )
 
 
+def _is_quota(e: Exception) -> bool:
+    """Daily/minute quota used up: retrying the same model is pointless."""
+    t = str(e)
+    return "429" in t or "RESOURCE_EXHAUSTED" in t
+
+
+def _is_overloaded(e: Exception) -> bool:
+    """Temporary overload (503): worth waiting a little and trying the same model again."""
+    t = str(e)
+    return "503" in t or "UNAVAILABLE" in t or "overloaded" in t.lower()
+
+
 def ask(prompt: str, strong: bool = False, as_json: bool = False, schema: type | None = None) -> LLMResult:
-    """Call the cheap or strong model; retry once, then fall back to FALLBACK_MODEL."""
+    """Call the cheap or strong model, then fall back to FALLBACK_MODEL (D-061, D-088).
+
+    - overloaded (503): wait LLM_BACKOFF_S between tries (the strong model gets one extra try,
+      because falling back to a weaker model costs answer quality)
+    - quota used up (429): go straight to the fallback model
+    - anything else: retry once, then fall back
+    """
     model = config.STRONG_MODEL if strong else config.CHEAP_MODEL
-    chain = [model] * (1 + config.RETRIES)
-    if config.FALLBACK_MODEL != model:
-        chain.append(config.FALLBACK_MODEL)
+    tries = 1 + config.RETRIES + (1 if strong else 0)
     last: Exception | None = None
-    for m in chain:
+    for attempt in range(tries):
         try:
-            res = _call_once(m, prompt, as_json, schema)
+            res = _call_once(model, prompt, as_json, schema)
             _log(res)
             return res
-        except Exception as e:  # network, quota, bad key: try the next link in the chain
+        except Exception as e:  # network, quota, overload, bad key
             last = e
-            print(f"[llm] {m} failed: {type(e).__name__}: {str(e)[:160]}")
-            time.sleep(1)
+            print(f"[llm] {model} failed: {type(e).__name__}: {str(e)[:160]}")
+            if _is_quota(e):
+                break
+            if attempt + 1 < tries:
+                time.sleep(config.LLM_BACKOFF_S[min(attempt, len(config.LLM_BACKOFF_S) - 1)] if _is_overloaded(e) else 1)
+    if config.FALLBACK_MODEL != model:
+        try:
+            res = _call_once(config.FALLBACK_MODEL, prompt, as_json, schema)
+            _log(res)
+            return res
+        except Exception as e:
+            last = e
+            print(f"[llm] {config.FALLBACK_MODEL} failed: {type(e).__name__}: {str(e)[:160]}")
     raise RuntimeError(f"All AI calls failed; last error: {last}")
 
 

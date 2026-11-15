@@ -1,0 +1,39 @@
+{
+ "filing_id": "106848400",
+ "ticker": "TITAN",
+ "company": "Titan Company Limited",
+ "filing_date": "2026-11-05T18:51:55",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/TITAN_05112026185140_SENNTata.pdf",
+ "title": "Titan Company Limited has informed the Exchange about Retirement of Mr. Noel N. Tata as Director and Vice-Chairman",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:20:20",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "retirement",
+   "label": "Retiring",
+   "person": "Noel N. Tata",
+   "role": "Non- Executive, Non-Independent Director and Vice-Chairman",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-11-12",
+   "reason": "Retirement in accordance with the Tata Group Governance Guidelines",
+   "profile": null,
+   "key_role": true,
+   "page": 2
+  }
+ ],
+ "key_role": true,
+ "headline": "Retiring: Noel N. Tata, Non- Executive, Non-Independent Director and Vice-Chairman, from 12 Nov 2026",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 1187,
+  "tokens_out": 125,
+  "cached": true
+ }
+}

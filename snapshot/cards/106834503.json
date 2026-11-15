@@ -1,0 +1,101 @@
+{
+ "filing_id": "106834503",
+ "ticker": "TRENT",
+ "company": "Trent Limited",
+ "filing_date": "2026-10-29T16:32:13",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/TRENT_29102026163044_AppointmentofDirector.pdf",
+ "title": "Trent Limited has informed the Exchange regarding Appointment of Mr Rajiv Dube as Non- Executive Director of the company w.e.f. October 30, 2026.",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:20:21",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "retirement",
+   "label": "Retiring",
+   "person": "Noel N. Tata",
+   "role": "Chairman and Director",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-11-11",
+   "reason": "Retirement of Mr. Noel N. Tata as a Director and Chairman of the Company.",
+   "profile": null,
+   "key_role": true,
+   "page": 3
+  },
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Noel N. Tata",
+   "role": "Chairman Emeritus",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-11-12",
+   "reason": null,
+   "profile": null,
+   "key_role": true,
+   "page": 1
+  },
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Bahram Vakil",
+   "role": "Chairman",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-11-12",
+   "reason": "Change in designation / Appointment of Mr. Bahram Vakil as the Chairman of the Company.",
+   "profile": null,
+   "key_role": true,
+   "page": 3
+  },
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Rajiv Dube",
+   "role": "Additional Director (Non-Executive, Non-Independent)",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-10-30",
+   "reason": "Appointment of Mr. Rajiv Dube as an Additional Director.",
+   "profile": {
+    "quote": "Mr. Rajiv Dube is an Indian industry veteran with over 40 years of multi-sector experience, having served at the highest echelons of two Indian conglomerates - Tata and Aditya Birla. An engineer and a post-graduate in Business Management, he began his career on the shop floor of Tata Motors and rose to be President of its car business before joining the group board of the Aditya Birla group as an executive director, on which he remained for nearly nine years.",
+    "page": 4,
+    "match": 1.0,
+    "summary": "Rajiv Dube is an industry veteran with over 40 years of experience across the Tata and Aditya Birla conglomerates. He is an engineer and business management post-graduate who has held high-level executive and board positions."
+   },
+   "key_role": false,
+   "page": 4
+  },
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Kalpana Merchant",
+   "role": "Independent Director",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-10-30",
+   "reason": "Appointment of Ms. Kalpana Merchant as an Additional Director. Further, the Board also approved her appointment as an Independent Director, for a period of three years.",
+   "profile": {
+    "quote": "Ms. Kalpana Merchant has over 45 years of experience in the legal profession. She has significant experience in dealing with the commercial property matters. Her experience also spans diverse practice areas, including infrastructure, project finance and banking, dispute resolution, capital markets, and mergers and acquisitions, including joint ventures.",
+    "page": 4,
+    "match": 1.0,
+    "summary": "Kalpana Merchant has over 45 years of legal experience, specializing in commercial property, infrastructure, project finance, dispute resolution, and mergers and acquisitions."
+   },
+   "key_role": false,
+   "page": 4
+  }
+ ],
+ "key_role": true,
+ "headline": "Retiring: Noel N. Tata, Chairman and Director, from 11 Nov 2026 (+4 more)",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 2131,
+  "tokens_out": 787,
+  "cached": true
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "filing_id": "106858492",
+ "ticker": "DMART",
+ "company": "Avenue Supermarts Limited",
+ "filing_date": "2026-11-13T13:17:44",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/DMART_13112026131650_ChangeinManagement13112026.pdf",
+ "title": "Avenue Supermarts Limited has informed the Exchange about Changes in Senior Management Personnel of the Company",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:18:56",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Sanjeev Shankaran",
+   "role": "Vice President - General Merchandising",
+   "role_unverified": false,
+   "previous_role": "Vice President - Operations",
+   "effective_date": "2026-11-16",
+   "reason": "Appointment as Senior Management Personnel of the Company",
+   "profile": {
+    "quote": "Mr. Sanjeev Shankaran is a commerce graduate and completed his PGDM (part time) from AIMA Delhi in 2005. He joined Dmart in September 2021 with over two decades of prior work experience, having worked with major FMCG companies such as Dabur & Kellogs. In his last role at Dabur, he was National Key Account Manager, MT & Ecom Head, Dabur India Ltd",
+    "page": 2,
+    "match": 1.0,
+    "summary": "Sanjeev Shankaran is a commerce graduate with a PGDM from AIMA Delhi and brings over two decades of experience with major FMCG companies like Dabur and Kellogg's."
+   },
+   "key_role": false,
+   "page": 2
+  },
+  {
+   "event": "role_change",
+   "label": "New role",
+   "person": "Dastgir Shaikh",
+   "role": "Vice President - FMCG",
+   "role_unverified": false,
+   "previous_role": "Vice President - General Merchandising",
+   "effective_date": "2026-11-16",
+   "reason": "Assume the role of Vice President - FMCG",
+   "profile": null,
+   "key_role": false,
+   "page": 2
+  },
+  {
+   "event": "cessation",
+   "label": "Ceases",
+   "person": "Sachin Jaolekar",
+   "role": "Vice President - Category Management",
+   "role_unverified": false,
+   "previous_role": "Vice President - FMCG",
+   "effective_date": "2026-11-16",
+   "reason": "Take up position at subsidiary Avenue E-Commerce Limited",
+   "profile": null,
+   "key_role": false,
+   "page": 3
+  }
+ ],
+ "key_role": false,
+ "headline": "Appointed: Sanjeev Shankaran, Vice President - General Merchandising, from 16 Nov 2026 (+2 more)",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 1458,
+  "tokens_out": 474,
+  "cached": true
+ }
+}

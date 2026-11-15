@@ -5,6 +5,7 @@ Every error comes back as JSON {error, fallback_used}, never a crash page (API-7
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+from dataclasses import replace
 from pathlib import Path
 
 from fastapi import FastAPI, Query, Request
@@ -101,13 +102,14 @@ def api_digest(
     unknown = sorted(off_set - set(config.CATEGORY_TIER))
     if unknown:
         return error_response(f"Unknown categories: {', '.join(unknown)}.")
-    return cards.attach_summaries(
-        build_today(feed_cache.get(), window=window, price=price, volume=volume, off=off_set))
+    data = feed_cache.get()
+    data = replace(data, filings=cards.apply_promotions(data.filings))   # board outcomes holding results (D-087)
+    return cards.attach_summaries(build_today(data, window=window, price=price, volume=volume, off=off_set))
 
 
 def _find_filing(filing_id: str) -> dict | None:
     """A filing by NSE id: from the live feed, else from the saved snapshots (incl. research stocks)."""
-    for f in feed_cache.get().filings:
+    for f in cards.apply_promotions(feed_cache.get().filings):
         if f.get("id") == filing_id:
             return f
     for ticker in config.PORTFOLIO + config.RESEARCH_EXTRA:

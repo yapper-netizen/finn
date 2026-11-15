@@ -1,0 +1,44 @@
+{
+ "filing_id": "106812169",
+ "ticker": "PIDILITIND",
+ "company": "Pidilite Industries Limited",
+ "filing_date": "2026-10-09T11:31:45",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/Nisha_09102026112953_SEIntimationAppointmentofSMPsigned.pdf",
+ "title": "Pidilite Industries Limited has informed the Exchange about Appointment of Senior Management Personnel",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:19:59",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "Amit Agarwal",
+   "role": "Chief Financial Officer – Designate",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-10-09",
+   "reason": null,
+   "profile": {
+    "quote": "Shri Amit Agarwal has more than 22 years of experience in the areas of Finance functions including Accounting, Reporting, Audit, Control etc. He has worked in reputed Companies like Pfizer Limited, Hindustan Unilever Limited and Vedanta Resources Limited. He is a Chartered Accountant, a Cost Accountant and a Company Secretary.",
+    "page": 1,
+    "match": 1.0,
+    "summary": "Amit Agarwal brings over 22 years of financial experience across major companies and holds professional qualifications as a Chartered Accountant, Cost Accountant, and Company Secretary."
+   },
+   "key_role": true,
+   "page": 1
+  }
+ ],
+ "key_role": true,
+ "headline": "Appointed: Amit Agarwal, Chief Financial Officer – Designate, from 9 Oct 2026",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 844,
+  "tokens_out": 196,
+  "cached": false
+ }
+}

@@ -1,0 +1,187 @@
+{
+ "filing_id": "106834418",
+ "ticker": "TRENT",
+ "company": "Trent Limited",
+ "filing_date": "2026-10-29T16:08:05",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/TRENT_29102026160446_DraftOutcomeofBM.pdf",
+ "title": "Trent Limited has submitted to the Exchange about Outcome of Board Meeting held today i.e. 29th October 2026",
+ "kind": "results",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:20:21",
+ "status": "ok",
+ "reason": null,
+ "card_type": "company",
+ "basis": "consolidated",
+ "basis_note": "Consolidated (standalone also in the filing)",
+ "unit": "Rs crore",
+ "source_unit": "crore",
+ "period": {
+  "current": "2026-09-30",
+  "prev_quarter": "2026-06-30",
+  "year_ago": "2025-09-30",
+  "label": "Q2 FY27",
+  "prev_label": "Q1 FY27",
+  "year_ago_label": "Q2 FY26"
+ },
+ "pages": [
+  10
+ ],
+ "metrics": [
+  {
+   "key": "revenue",
+   "label": "Revenue",
+   "available": true,
+   "values": {
+    "current": 5873.14,
+    "prev_quarter": 5754.71,
+    "year_ago": 4817.6
+   },
+   "qoq_pct": 2.1,
+   "qoq_note": null,
+   "yoy_pct": 21.9,
+   "yoy_note": null,
+   "source": {
+    "line": "Revenue from operations",
+    "printed": [
+     "5,873.14",
+     "5,754.71",
+     "4,817.60"
+    ],
+    "page": 10
+   }
+  },
+  {
+   "key": "ebitda",
+   "label": "EBITDA",
+   "available": true,
+   "values": {
+    "current": 1057.03,
+    "prev_quarter": 1119.16,
+    "year_ago": 815.98
+   },
+   "qoq_pct": -5.6,
+   "qoq_note": null,
+   "yoy_pct": 29.5,
+   "yoy_note": null,
+   "computed": true,
+   "formula": "Profit before tax + finance costs + depreciation and amortisation − other income",
+   "inputs": {
+    "pbt": {
+     "current": 619.06,
+     "prev_quarter": 691.84,
+     "year_ago": 476.98
+    },
+    "finance_cost": {
+     "current": 44.28,
+     "prev_quarter": 46.99,
+     "year_ago": 41.62
+    },
+    "depreciation": {
+     "current": 419.8,
+     "prev_quarter": 410.16,
+     "year_ago": 324.93
+    },
+    "other_income": {
+     "current": 26.11,
+     "prev_quarter": 29.83,
+     "year_ago": 27.55
+    }
+   },
+   "source": {
+    "line": "computed",
+    "page": 10
+   }
+  },
+  {
+   "key": "pbt",
+   "label": "PBT",
+   "available": true,
+   "values": {
+    "current": 619.06,
+    "prev_quarter": 691.84,
+    "year_ago": 476.98
+   },
+   "qoq_pct": -10.5,
+   "qoq_note": null,
+   "yoy_pct": 29.8,
+   "yoy_note": null,
+   "source": {
+    "line": "Pro1lt/(Loss] before tax",
+    "printed": [
+     "619.06",
+     "691.84",
+     "476.98"
+    ],
+    "page": 10
+   }
+  },
+  {
+   "key": "pat",
+   "label": "PAT",
+   "available": true,
+   "values": {
+    "current": 468.09,
+    "prev_quarter": 518.07,
+    "year_ago": 373.42
+   },
+   "qoq_pct": -9.6,
+   "qoq_note": null,
+   "yoy_pct": 25.4,
+   "yoy_note": null,
+   "source": {
+    "line": "Net Proflt/(Loss) for the quarter/ year",
+    "printed": [
+     "468.09",
+     "518.07",
+     "373.42"
+    ],
+    "page": 10
+   },
+   "note": null
+  }
+ ],
+ "verdict": "All 4 lines up year on year. EBITDA margin up 110 bps.",
+ "margins": [
+  {
+   "key": "ebitda_margin",
+   "label": "EBITDA margin",
+   "values": {
+    "current": 18.0,
+    "prev_quarter": 19.4,
+    "year_ago": 16.9
+   },
+   "yoy_bps": 110
+  },
+  {
+   "key": "pat_margin",
+   "label": "PAT margin",
+   "values": {
+    "current": 8.0,
+    "prev_quarter": 9.0,
+    "year_ago": 7.8
+   },
+   "yoy_bps": 20
+  }
+ ],
+ "checks": [
+  {
+   "name": "Total income = revenue + other income",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "name": "PAT = PBT − tax",
+   "passed": true,
+   "detail": ""
+  }
+ ],
+ "warnings": [
+  "Prof 1t/(Lass] hefore exceptional Item and tax: not a number: '47B.08'; row ignored."
+ ],
+ "ai": {
+  "model": "gemini-3.1-flash-lite",
+  "cached": true,
+  "tokens_in": 2429,
+  "tokens_out": 747
+ }
+}

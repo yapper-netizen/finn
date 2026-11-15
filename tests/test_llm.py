@@ -15,20 +15,37 @@ def test_cheap_call_uses_cheap_model(monkeypatch):
     assert llm.ask("hi").model == config.CHEAP_MODEL
 
 
-def test_strong_retries_then_falls_back(monkeypatch):
+def test_strong_overloaded_waits_retries_then_falls_back(monkeypatch):
+    seen: list[str] = []
+    waits: list[float] = []
+
+    def fake(model, prompt, as_json, schema=None):
+        seen.append(model)
+        if model == config.STRONG_MODEL:
+            raise RuntimeError("503 UNAVAILABLE")
+        return _ok(model)
+
+    monkeypatch.setattr(llm, "_call_once", fake)
+    monkeypatch.setattr(llm.time, "sleep", waits.append)
+    res = llm.ask("hi", strong=True)
+    assert seen == [config.STRONG_MODEL] * (2 + config.RETRIES) + [config.FALLBACK_MODEL]
+    assert waits == list(config.LLM_BACKOFF_S[: len(waits)]) and waits     # backed off, not 1 s
+    assert res.model == config.FALLBACK_MODEL
+
+
+def test_quota_exhausted_goes_straight_to_fallback(monkeypatch):
     seen: list[str] = []
 
     def fake(model, prompt, as_json, schema=None):
         seen.append(model)
         if model == config.STRONG_MODEL:
-            raise RuntimeError("503")
+            raise RuntimeError("429 RESOURCE_EXHAUSTED")
         return _ok(model)
 
     monkeypatch.setattr(llm, "_call_once", fake)
     monkeypatch.setattr(llm.time, "sleep", lambda s: None)
-    res = llm.ask("hi", strong=True)
-    assert seen == [config.STRONG_MODEL] * (1 + config.RETRIES) + [config.FALLBACK_MODEL]
-    assert res.model == config.FALLBACK_MODEL
+    assert llm.ask("hi", strong=True).model == config.FALLBACK_MODEL
+    assert seen == [config.STRONG_MODEL, config.FALLBACK_MODEL]
 
 
 def test_all_failures_raise_clear_error(monkeypatch):

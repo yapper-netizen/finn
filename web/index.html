@@ -270,6 +270,15 @@
     .sheet .section-label { margin-top: 20px; }
     .fail-box { background: #fdf3e1; color: #5c3900; border-radius: 14px; padding: 12px 14px; font-size: 15px; line-height: 1.45; margin-top: 12px; }
 
+    /* ---------- management change sheet (EN-6) ---------- */
+    .mchange { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+    .mchange:last-of-type { border-bottom: 0; }
+    .mname { font-family: var(--font-head); font-weight: 700; font-size: 18px; margin: 8px 0 2px; }
+    .mrole { font-size: 15px; line-height: 1.4; margin: 0; }
+    .mmeta { font-size: 14px; color: var(--text-muted); line-height: 1.4; margin: 4px 0 0; }
+    .mbio { font-size: 15px; line-height: 1.45; margin: 0 0 6px; }
+    .quote.qsm { font-size: 15px; }
+
     /* ---------- research (FE-4) ---------- */
     :root { --ok: #1b6e3a; --ok-tint: #e3f2e8; --warn: #7a4a00; --warn-tint: #fdf1dc; }
     .rsearch { display: flex; gap: 8px; margin-top: 14px; }
@@ -386,10 +395,10 @@
           <!-- High cards, in priority order: tier, then "stock also moved that day", then newest -->
           <div class="section-label" x-show="data.cards.length"><span>What matters</span><span class="cnt" x-text="data.cards.length"></span></div>
           <template x-for="(c, i) in data.cards" :key="c.ticker + c.id + c.date">
-            <article class="card" :class="[c.moved_same_day ? 'alert' : '', i === 0 ? 'lead' : '', c.kind === 'results' ? 'tappable' : '']"
-                     :role="c.kind === 'results' ? 'button' : null" :tabindex="c.kind === 'results' ? 0 : null"
-                     :aria-label="c.kind === 'results' ? 'Open results numbers for ' + c.ticker : null"
-                     @click="c.kind === 'results' && openCard(c)" @keydown.enter="c.kind === 'results' && openCard(c)" @keydown.space.prevent="c.kind === 'results' && openCard(c)">
+            <article class="card" :class="[c.moved_same_day ? 'alert' : '', i === 0 ? 'lead' : '', hasCard(c) ? 'tappable' : '']"
+                     :role="hasCard(c) ? 'button' : null" :tabindex="hasCard(c) ? 0 : null"
+                     :aria-label="hasCard(c) ? (c.kind === 'results' ? 'Open results numbers for ' : 'Open management change details for ') + c.ticker : null"
+                     @click="hasCard(c) && openCard(c)" @keydown.enter="hasCard(c) && openCard(c)" @keydown.space.prevent="hasCard(c) && openCard(c)">
               <div class="card-strip">
                 <span class="when dt"><span class="ico" aria-hidden="true" x-html="iconFor('calendar')"></span><span class="wtxt"><span class="wd" x-text="fmtDay(c.date)"></span><span class="wsep">, </span><span class="wt" x-text="fmtTime(c.date)"></span></span></span>
                 <div class="chips">
@@ -407,6 +416,10 @@
               <div class="rsum" x-show="c.kind === 'results'">
                 <span x-text="c.results && c.results.verdict ? (c.results.period ? c.results.period + ': ' : '') + c.results.verdict : 'Revenue, EBITDA, PBT and PAT, with QoQ and YoY growth.'"></span>
                 <span class="cue" style="display:flex">See the numbers <span aria-hidden="true">›</span></span>
+              </div>
+              <div class="rsum" x-show="c.kind === 'management_change'">
+                <span class="badge" style="margin-right:6px" x-show="c.mgmt && c.mgmt.key_role">Key role</span><span x-text="c.mgmt && c.mgmt.headline ? c.mgmt.headline : 'Who changed, in what role, from when, and their background.'"></span>
+                <span class="cue" style="display:flex">See who and why <span aria-hidden="true">›</span></span>
               </div>
               <p class="why alert" x-show="c.moved_same_day">The stock also moved on the day of this filing.</p>
               <div class="card-foot">
@@ -633,7 +646,8 @@
           </template>
         </div>
         <p class="meta mt-3">Every quote is matched against the transcript text before it is shown; every number comes from the company's results filings, computed by FINN. Verdicts are by AI from those numbers.
-          <span x-text="rs.data.ai.calls + ' AI calls, ' + Math.round((rs.data.ai.tokens_in + rs.data.ai.tokens_out) / 1000) + 'k tokens.'"></span></p>
+          <span x-text="rs.data.ai.calls + ' AI calls, ' + Math.round((rs.data.ai.tokens_in + rs.data.ai.tokens_out) / 1000) + 'k tokens.'"></span>
+          <span x-show="rs.data.ai.fallback_used" class="font-bold">Part of this answer came from the backup AI model (the main one was busy or at its free limit), so verdicts may be less careful.</span></p>
         <template x-if="rs.data.warnings.length">
           <details class="mt-2 meta"><summary x-text="rs.data.warnings.length + ' note(s) on what could not be read'"></summary>
             <ul class="mt-1"><template x-for="w in rs.data.warnings" :key="w"><li x-text="'· ' + w"></li></template></ul>
@@ -713,7 +727,7 @@
   <div class="grab" aria-hidden="true"></div>
   <template x-if="sheet.filing">
     <header class="sheet-head">
-      <span class="tile sm" aria-hidden="true" x-html="iconFor('results')"></span>
+      <span class="tile sm" aria-hidden="true" x-html="iconFor(sheet.filing.kind || 'results')"></span>
       <div class="who"><b x-text="sheet.filing.ticker"></b><small x-text="shortCompany(sheet.filing.company)"></small></div>
       <button class="xbtn" @click="closeCard()" aria-label="Close">×</button>
     </header>
@@ -751,7 +765,43 @@
         </div>
       </template>
 
-      <template x-if="sheet.card.status !== 'could not extract'">
+      <!-- management change (EN-6) -->
+      <template x-if="sheet.card.status !== 'could not extract' && sheet.card.kind === 'management'">
+        <div>
+          <p class="ctx" x-text="'Filed ' + fmtDateTime(sheet.card.filing_date) + ' · ' + sheet.card.changes.length + (sheet.card.changes.length === 1 ? ' change' : ' changes')"></p>
+          <template x-for="(ch, j) in sheet.card.changes" :key="j">
+            <div class="mchange">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="vchip" :class="eventClass(ch.event)" x-text="ch.label"></span>
+                <span class="badge" x-show="ch.key_role">Key role</span>
+              </div>
+              <p class="mname" x-text="ch.person"></p>
+              <p class="mrole" x-show="ch.role" x-text="ch.role"></p>
+              <p class="mmeta" x-show="ch.previous_role" x-text="'Previously: ' + ch.previous_role"></p>
+              <p class="mmeta" x-show="ch.effective_date" x-text="'From ' + fmtDay(ch.effective_date) + ' ' + (ch.effective_date || '').slice(0, 4)"></p>
+              <p class="mmeta" x-show="ch.reason" x-text="'Reason: ' + ch.reason"></p>
+              <template x-if="ch.profile">
+                <div class="mt-2">
+                  <p class="mbio" x-show="ch.profile.summary" x-text="ch.profile.summary"></p>
+                  <blockquote class="quote qsm" x-text="'“' + ch.profile.quote + '”'"></blockquote>
+                  <a class="src" :href="pageLink(sheet.card, ch.profile.page)" target="_blank" rel="noopener">
+                    <span class="ico" aria-hidden="true" x-html="iconFor('doc')"></span>
+                    <span x-text="'Brief profile, page ' + ch.profile.page + ' of the filing'"></span>
+                  </a>
+                </div>
+              </template>
+              <p class="na-note" x-show="!ch.profile && ['appointment','reappointment','role_change'].includes(ch.event)">No profile in this filing.</p>
+            </div>
+          </template>
+          <template x-if="sheet.card.warnings.length">
+            <ul class="checks mt-2"><template x-for="w in sheet.card.warnings" :key="w"><li><span class="bad" aria-hidden="true">!</span><span x-text="w"></span></li></template></ul>
+          </template>
+          <p class="note">Copied from the exchange filing by AI, then checked by FINN: each name, date and profile quote must appear in the filing, or it is not shown. No outside sources.</p>
+          <a class="btn inline-flex items-center mt-4" :href="sheet.card.pdf_url" target="_blank" rel="noopener">Open the full filing</a>
+        </div>
+      </template>
+
+      <template x-if="sheet.card.status !== 'could not extract' && sheet.card.kind !== 'management'">
         <div>
           <p class="ctx" x-text="cardContext(sheet.card)"></p>
           <p class="verdict" x-show="sheet.card.verdict" x-text="sheet.card.verdict"></p>
@@ -1071,6 +1121,9 @@ function finn() {
       const line = m.source.note ? m.source.note : '"' + (m.source.line || m.label) + '"';
       return 'Page ' + m.source.page + ': ' + (line.length > 60 ? line.slice(0, 57) + '…' : line);
     },
+
+    hasCard(c) { return c.kind === 'results' || c.kind === 'management_change'; },
+    eventClass(e) { return ['appointment', 'reappointment'].includes(e) ? 'v-delivered' : ['resignation', 'retirement', 'cessation'].includes(e) ? 'v-missed' : 'v-early'; },
 
     // ---------- research (FE-4) ----------
     async research(raw) {

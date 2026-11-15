@@ -1,0 +1,39 @@
+{
+ "filing_id": "106857049",
+ "ticker": "HDFCBANK",
+ "company": "HDFC Bank Limited",
+ "filing_date": "2026-11-12T17:33:25",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/HDFCBANK3_12112026173223_SE_Intimation-_VSR.pdf",
+ "title": "HDFC Bank Limited has informed the Exchange about Approval from the Reserve Bank of India for re-appointment of Mr. V. Srinivasa Rangan asthe Whole-time Director (designated as Executive Director) of HDFC Bank Limited",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:18:56",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "reappointment",
+   "label": "Re-appointed",
+   "person": "V. Srinivasa Rangan",
+   "role": "Whole-time Director (designated as Executive Director)",
+   "role_unverified": false,
+   "previous_role": "Whole-time Director (designated as Executive Director)",
+   "effective_date": "2026-11-23",
+   "reason": null,
+   "profile": null,
+   "key_role": true,
+   "page": 1
+  }
+ ],
+ "key_role": true,
+ "headline": "Re-appointed: V. Srinivasa Rangan, Whole-time Director (designated as Executive Director), from 23 Nov 2026",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 942,
+  "tokens_out": 123,
+  "cached": true
+ }
+}

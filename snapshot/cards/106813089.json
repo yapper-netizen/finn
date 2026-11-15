@@ -1,0 +1,15 @@
+{
+ "filing_id": "106813089",
+ "ticker": "PERSISTENT",
+ "company": "Persistent Systems Limited",
+ "filing_date": "2026-10-09T19:57:29",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENT_ROID_100125_KMP_Doc.zip",
+ "kind": "results",
+ "status": "could not extract",
+ "reason": "The filing link is not a PDF.",
+ "retryable": false,
+ "metrics": [],
+ "checks": [],
+ "warnings": [],
+ "engine_version": 1
+}

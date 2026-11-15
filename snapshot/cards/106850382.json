@@ -1,0 +1,44 @@
+{
+ "filing_id": "106850382",
+ "ticker": "HDFCBANK",
+ "company": "HDFC Bank Limited",
+ "filing_date": "2026-11-06T15:21:56",
+ "pdf_url": "https://nsearchives.nseindia.in/corporate/HDFCBANK3_06112026152141_SE_Intimation-Srivatsan.pdf",
+ "title": "HDFC Bank Limited has informed the Exchange about change in Management",
+ "kind": "management",
+ "engine_version": 1,
+ "extracted_at": "2026-11-15T15:18:56",
+ "metrics": [],
+ "checks": [],
+ "status": "ok",
+ "reason": null,
+ "changes": [
+  {
+   "event": "appointment",
+   "label": "Appointed",
+   "person": "V.N. Srivatsan",
+   "role": "Chief Compliance Officer",
+   "role_unverified": false,
+   "previous_role": null,
+   "effective_date": "2026-11-06",
+   "reason": "Appointment as the Chief Compliance Officer of the Bank.",
+   "profile": {
+    "quote": "Mr. V. N. Srivatsan has approximately 34 years of overall professional experience, including around 25 years in the BFSI sector and close to 10 years of direct experience in Compliance and Regulatory Inspection. Prior to joining the Bank, he served as Head – Compliance: Overseas Banking and Subsidiaries & Data Privacy Officer at ICICI Bank Limited.",
+    "page": 3,
+    "match": 0.98,
+    "summary": "V. N. Srivatsan has around 34 years of professional experience, with about 25 years in the BFSI sector and nearly 10 years in compliance. Before joining the bank, he worked as Head – Compliance: Overseas Banking and Subsidiaries & Data Privacy Officer at ICICI Bank Limited."
+   },
+   "key_role": false,
+   "page": 3
+  }
+ ],
+ "key_role": false,
+ "headline": "Appointed: V.N. Srivatsan, Chief Compliance Officer, from 6 Nov 2026",
+ "warnings": [],
+ "ai": {
+  "model": "gemini-3.5-flash-lite",
+  "tokens_in": 1416,
+  "tokens_out": 267,
+  "cached": true
+ }
+}
