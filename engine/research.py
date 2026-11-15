@@ -146,6 +146,7 @@ double-digit growth this year", "profitability will recover in H2").
 Rules:
 - Only statements made by company management, never by analysts asking questions.
 - "quote": copy the management sentence(s) VERBATIM from the text (max 60 words). Do not edit.
+  The quote must itself state the target (its numbers), not just agree with an analyst.
 - "page": the PAGE number the quote is on.
 - "metric": revenue_growth, revenue, ebitda_margin, ebitda_growth, pat_growth or pat_margin when
   the commitment is about that number for the whole company; otherwise "other" (capex, volumes,
@@ -399,6 +400,23 @@ def bull_bear(ask: Ask, company: str, facts: list[dict], transcripts: list[dict]
 
 # ---------------------------------------------------------------- the pipeline (EN-16)
 
+_NUMBER_WORDS = {w: str(i) for i, w in enumerate(
+    "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen "
+    "sixteen seventeen eighteen nineteen twenty".split())}
+_NUMBER_WORDS.update({"double": "2", "twice": "2", "doubling": "2", "half": "50"})
+
+
+def _with_digits(text: str) -> str:
+    """'two percentage points' -> '2 percentage points', so words and digits compare equal."""
+    return re.sub(r"[A-Za-z]+", lambda m: _NUMBER_WORDS.get(m.group(0).lower(), m.group(0)), text or "")
+
+
+def quote_states_target(statement: str, quote: str) -> bool:
+    """If the promise names target numbers, at least one must be in the quote itself."""
+    nums = _numbers(_with_digits(statement))
+    return not nums or bool(nums & set(re.findall(r"\d+(?:\.\d+)?", _with_digits(quote))))
+
+
 def is_cover_letter(pages: list[str]) -> bool:
     """A 1-2 page letter that says the transcript is elsewhere, not the transcript itself."""
     text = " ".join(pages)
@@ -486,6 +504,10 @@ def build_research(
             page, score = verify_quote(p["quote"], pages, p.get("page"))
             if page is None:
                 warnings.append(f"Dropped a promise from the {label}: its quote was not found in the transcript.")
+                continue
+            if not quote_states_target(p["statement"], p["quote"]):
+                warnings.append(f"Dropped a promise from the {label}: the quote does not state its target "
+                                f"(\"{p['statement'][:60]}\").")
                 continue
             due = _parse_due(p.get("due_quarter_end"))
             promises.append({

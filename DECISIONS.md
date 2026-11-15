@@ -566,3 +566,9 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 
 ### D-085 · Results extractor: unit from the filing's other statements · 2026-11-15 · EN-5 (refines D-077) · Status: decided
 - Persistent's statement pages carry no unit in their text layer (image or garbled "nn,Millionl"), so 3 of its 6 results filings failed. New rule: if the statement page prints no unit, accept the model's unit only when it is the ONE unit named in the headers of the same filing's other pages; the card shows a note saying so. Otherwise still "could not extract".
+
+### D-086 · Block 8 results and the receipts rule for targets · 2026-11-15 · EN-15, QA-8 · Status: decided
+- Rule added after review: if a promise names target numbers (digits or words like "two", "double"), at least one must be in the quote itself; else the promise is dropped with a note. Seen on HAVELLS: a verbatim quote "No, that remains as is..." whose target sat in the analyst's question.
+- Precomputed (snapshot/research): POLYCAB 12 promises, 2 judged (both Delivered: EBITDA margin at or above the 11-13% and 12-14% guidance); PERSISTENT 11, 1 judged (Delivered: FY26 margin +100 bps); ASTRAL 13, 0 judged (its guidance is by segment and volume; transcripts fetched from the company site via the NSE filings' links).
+- Unknown tickers (QA-8), live through the HTTP API and the Research screen: HAVELLS (13 promises, 1 judged Missed, ~7 AI calls, slowed by free-tier 503 retries) and NAUKRI (11 promises, 0 judgeable, ~4 min; 2 of 6 results filings unreadable, shown as notes). Both end to end, no crash.
+- Limitation, stated on screen: segment-level guidance is listed but not judged (results filings do print segment tables; reading them is the main next step). Promise selection by the model still varies when its prompt changes; answers are cached, so a given prompt gives a stable result.

@@ -3,14 +3,14 @@
  "company": "Persistent Systems Limited",
  "status": "ready",
  "engine_version": 1,
- "generated_at": "2026-11-15T08:45:53",
+ "generated_at": "2026-11-15T14:42:25",
  "latest_quarter": "Q2 FY27",
  "counts": {
   "Delivered": 1,
   "Partial": 0,
   "Missed": 0,
   "Too early": 3,
-  "Not checkable": 6
+  "Not checkable": 7
  },
  "promises": [
   {
@@ -24,14 +24,15 @@
    "made_on": "2025-07-29",
    "quarter_end": "2025-06-30",
    "receipt": {
-    "quote": "We have to get to $2 billion by FY27, which is ending in March, 2027. We need a compounded annual growth rate in the range of 19%-20%. We are tracking to that",
+    "quote": "So, if you look at it, where we are today, we have to get to $2 billion by FY27, which is ending in March, 2027.",
     "page": 31,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_29072025232737_PSLTranscript_of_Investors_call_recordingsigned.pdf",
     "doc": "Q1 FY26 earnings call",
     "match": 1.0
    },
    "restated_in": [
-    "Q3 FY26"
+    "Q3 FY26",
+    "Q4 FY26"
    ],
    "verdict": "Too early",
    "fact_ids": [],
@@ -64,7 +65,7 @@
   },
   {
    "id": "P3",
-   "metric": "pat_margin",
+   "metric": "other",
    "statement": "The company expects the effective tax rate for the year to be 22.5% to 23.5%.",
    "period_text": "the year",
    "due": "2026-03-31",
@@ -84,9 +85,9 @@
     "Q3 FY26"
    ],
    "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
-   "reason": "The provided facts do not contain information regarding the effective tax rate for the company.",
-   "decided_by": "ai",
+   "decided_by": "rules",
    "facts": []
   },
   {
@@ -100,7 +101,7 @@
    "made_on": "2025-07-29",
    "quarter_end": "2025-06-30",
    "receipt": {
-    "quote": "geographies like Europe, where we have clearly said that we want to be 15% in revenue terms as we go ahead in the next 2-3 years",
+    "quote": "we have clearly said that we want to be 15% in revenue terms as we go ahead in the next 2-3 years",
     "page": 31,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_29072025232737_PSLTranscript_of_Investors_call_recordingsigned.pdf",
     "doc": "Q1 FY26 earnings call",
@@ -126,7 +127,7 @@
    "made_on": "2025-10-20",
    "quarter_end": "2025-09-30",
    "receipt": {
-    "quote": "on an overall note, if we are looking at our current trajectory, we are looking at 100 basis point improvement in FY26",
+    "quote": "But on an overall note, if we are looking at our current trajectory, we are looking at 100 basis point improvement in FY26, and probably another 100 basis point in FY27.",
     "page": 19,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20102025194609_PSLEarningscallTranscriptQ2FY26.pdf",
     "doc": "Q2 FY26 earnings call",
@@ -185,42 +186,42 @@
   },
   {
    "id": "P6",
-   "metric": "other",
-   "statement": "We anticipate an impact of 180 basis points on next quarter's margins due to wage hikes.",
-   "period_text": "next quarter",
-   "due": "2025-12-31",
-   "due_label": "Q3 FY26",
-   "made_in": "Q2 FY26",
-   "made_on": "2025-10-20",
-   "quarter_end": "2025-09-30",
+   "metric": "revenue_growth",
+   "statement": "Company expects to achieve decent revenue growth in the coming year.",
+   "period_text": "coming year",
+   "due": "2027-03-31",
+   "due_label": "Q4 FY27",
+   "made_in": "Q4 FY26",
+   "made_on": "2026-04-28",
+   "quarter_end": "2026-03-31",
    "receipt": {
-    "quote": "We anticipate an impact of 180 basis points on next quarter's margins due to wage hikes.",
-    "page": 7,
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20102025194609_PSLEarningscallTranscriptQ2FY26.pdf",
-    "doc": "Q2 FY26 earnings call",
+    "quote": "From what we see today, we should be able to have a decent growth in the coming year.",
+    "page": 26,
+    "pdf_url": "https://www.persistent.com/wp-content/uploads/2026/04/Analyst-Call-Transcript-Q4FY26.pdf",
+    "doc": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
     "match": 1.0
    },
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
+   "verdict": "Too early",
    "fact_ids": [],
    "decided_by": "rules",
+   "reason": "Due by Q4 FY27; latest reported quarter is Q2 FY27.",
    "facts": []
   },
   {
    "id": "P7",
    "metric": "other",
-   "statement": "Up to 80 to 100 basis points of the wage hike impact is expected to be offset.",
-   "period_text": "next quarter",
-   "due": "2025-12-31",
-   "due_label": "Q3 FY26",
-   "made_in": "Q2 FY26",
-   "made_on": "2025-10-20",
-   "quarter_end": "2025-09-30",
+   "statement": "Company aspires to maintain operating margin in the 16% to 17% range.",
+   "period_text": "medium term",
+   "due": null,
+   "due_label": null,
+   "made_in": "Q4 FY26",
+   "made_on": "2026-04-28",
+   "quarter_end": "2026-03-31",
    "receipt": {
-    "quote": "However, on an overall basis, up to 80 to 100 basis points of this impact is expected to get offset through a combination of other margin levers",
-    "page": 7,
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20102025194609_PSLEarningscallTranscriptQ2FY26.pdf",
-    "doc": "Q2 FY26 earnings call",
+    "quote": "Our aspiration continues to be in the 16 to 17% range. But remember in this environment our first priority is growth, our first priority is investing back into business and developing capabilities.",
+    "page": 26,
+    "pdf_url": "https://www.persistent.com/wp-content/uploads/2026/04/Analyst-Call-Transcript-Q4FY26.pdf",
+    "doc": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
     "match": 1.0
    },
    "verdict": "Not checkable",
@@ -231,25 +232,25 @@
   },
   {
    "id": "P8",
-   "metric": "ebitda_margin",
-   "statement": "We aspire to achieve an EBITDA margin in the 16% to 17% range.",
-   "period_text": "medium term",
-   "due": null,
-   "due_label": null,
-   "made_in": "Q2 FY27",
-   "made_on": "2026-10-23",
-   "quarter_end": "2026-09-30",
+   "metric": "other",
+   "statement": "Company expects operational cash flow to PAT ratio to normalize in the next quarter.",
+   "period_text": "next quarter",
+   "due": "2026-06-30",
+   "due_label": "Q1 FY27",
+   "made_in": "Q4 FY26",
+   "made_on": "2026-04-28",
+   "quarter_end": "2026-03-31",
    "receipt": {
-    "quote": "So, from our perspective we have said we want to be in the 16 to 17 % range, that is our aspiration. That will be our endeavour but we'll let the quarters pan by. We don't give forward looking guidance. Please take this as an aspirational goal.",
-    "page": 19,
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
-    "doc": "Q2 FY27 earnings call",
+    "quote": "This decline in Operational Cash Flow to PAT was primarily on account of higher proportion of unbilled revenue in this quarter, which we expect to normalize in the next quarter.",
+    "page": 9,
+    "pdf_url": "https://www.persistent.com/wp-content/uploads/2026/04/Analyst-Call-Transcript-Q4FY26.pdf",
+    "doc": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
     "match": 1.0
    },
-   "verdict": "Too early",
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
    "decided_by": "rules",
-   "reason": "Said in the latest call; no quarter has been reported since (Q2 FY27 is the latest).",
    "facts": []
   },
   {
@@ -278,7 +279,30 @@
   {
    "id": "P10",
    "metric": "other",
-   "statement": "We expect to incur an incremental $25 to $30 million in transaction costs over the next two quarters.",
+   "statement": "We are expecting one-time expenses to the tune of approximately $50 million spread over three to four quarters.",
+   "period_text": "three to four quarters",
+   "due": "2027-09-30",
+   "due_label": "Q2 FY28",
+   "made_in": "Q2 FY27",
+   "made_on": "2026-10-23",
+   "quarter_end": "2026-09-30",
+   "receipt": {
+    "quote": "Overall, we are expecting one-time expenses to the tune of approximately $50 million spread over three to four quarters.",
+    "page": 7,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   },
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  },
+  {
+   "id": "P11",
+   "metric": "other",
+   "statement": "We expect an incremental amount ranging between USD 25 to 30 million to be incurred towards the Nagarro transaction.",
    "period_text": "next two quarters",
    "due": "2027-03-31",
    "due_label": "Q4 FY27",
@@ -301,7 +325,91 @@
  ],
  "bull": [
   {
-   "point": "Persistent Systems demonstrated strong revenue momentum with consolidated revenue growing 30.3% year-on-year to ₹4,664 crore in Q2 FY27.",
+   "point": "The company has demonstrated consistent revenue growth, achieving 26 consecutive quarters of sequential growth as of Q2 FY27.",
+   "receipt": {
+    "quote": "This marks our 26th sequential quarter of revenue growth.",
+    "page": 4,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   },
+   "fact_ids": [
+    "F1",
+    "F6",
+    "F11",
+    "F16",
+    "F21"
+   ],
+   "facts": [
+    {
+     "id": "F1",
+     "metric": "revenue",
+     "quarter": "Q2 FY26",
+     "text": "Revenue Q2 FY26: ₹3,581 cr, up 23.6% YoY (consolidated)",
+     "value": 23.6,
+     "source": {
+      "filing_id": "106407160",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_14102025154025_PSLBMOutcomeResults141025signed.pdf",
+      "page": 9,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F6",
+     "metric": "revenue",
+     "quarter": "Q3 FY26",
+     "text": "Revenue Q3 FY26: ₹3,778 cr, up 23.4% YoY (consolidated)",
+     "value": 23.4,
+     "source": {
+      "filing_id": "106502144",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_20012026154513_PSLQ3FY26FinancialResults.pdf",
+      "page": 10,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F11",
+     "metric": "revenue",
+     "quarter": "Q4 FY26",
+     "text": "Revenue Q4 FY26: ₹4,056 cr, up 25.1% YoY (consolidated)",
+     "value": 25.1,
+     "source": {
+      "filing_id": "106595548",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_21042026153058_PSLBMOutcomeQ4FY26April212026sd.pdf",
+      "page": 10,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F16",
+     "metric": "revenue",
+     "quarter": "Q1 FY27",
+     "text": "Revenue Q1 FY27: ₹4,303 cr, up 29.1% YoY (consolidated)",
+     "value": 29.1,
+     "source": {
+      "filing_id": "106721243",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_02082026144059_PSLBMOutcomeJune302026093signed.pdf",
+      "page": 15,
+      "basis": "consolidated"
+     }
+    },
+    {
+     "id": "F21",
+     "metric": "revenue",
+     "quarter": "Q2 FY27",
+     "text": "Revenue Q2 FY27: ₹4,664 cr, up 30.3% YoY (consolidated)",
+     "value": 30.3,
+     "source": {
+      "filing_id": "106818661",
+      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
+      "page": 19,
+      "basis": "consolidated"
+     }
+    }
+   ]
+  },
+  {
+   "point": "Persistent Systems is successfully scaling its business, evidenced by a 30.3% year-on-year revenue growth in Q2 FY27.",
    "receipt": {
     "quote": "In rupee terms, the growth for the quarter came in at 8.4% quarter-on-quarter and 30.3% year-on-year.",
     "page": 4,
@@ -329,62 +437,32 @@
    ]
   },
   {
-   "point": "The company maintained strong deal momentum, achieving an annual contract value of $481 million in Q2 FY27 bookings.",
+   "point": "The company is actively investing in high-growth areas like AI and data modernization to maintain its competitive edge.",
    "receipt": {
-    "quote": "The annual contract value of bookings for this quarter was USD 481 million, out of which the annual contract value from new bookings contributed to USD 262.3 million.",
-    "page": 4,
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
-    "doc": "Q2 FY27 earnings call",
+    "quote": "We are building and investing in capabilities on the AI front and otherwise.",
+    "page": 26,
+    "pdf_url": "https://www.persistent.com/wp-content/uploads/2026/04/Analyst-Call-Transcript-Q4FY26.pdf",
+    "doc": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
     "match": 1.0
    },
    "fact_ids": [],
    "facts": []
-  },
-  {
-   "point": "Persistent delivered strong operational profitability in Q2 FY26, with EBITDA margin expanding by 250 basis points to 19.1%.",
-   "receipt": null,
-   "fact_ids": [
-    "F4"
-   ],
-   "facts": [
-    {
-     "id": "F4",
-     "metric": "ebitda_margin",
-     "quarter": "Q2 FY26",
-     "text": "EBITDA margin Q2 FY26: 19.1%, +250 bps YoY",
-     "value": 19.1,
-     "source": {
-      "filing_id": "106407160",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_14102025154025_PSLBMOutcomeResults141025signed.pdf",
-      "page": 9,
-      "basis": "consolidated"
-     }
-    }
-   ]
   }
  ],
  "bear": [
   {
-   "point": "Operating profitability declined significantly in Q2 FY27 as EBITDA margin contracted 550 basis points year-on-year to 13.6%.",
-   "receipt": null,
+   "point": "EBIT margins have faced significant pressure, declining to 13.6% in Q2 FY27, a 550 basis point drop year-on-year.",
+   "receipt": {
+    "quote": "EBIT margins for Q2 FY27 came in at 15%, 130 basis points declined year-on-year.",
+    "page": 8,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   },
    "fact_ids": [
-    "F22",
     "F24"
    ],
    "facts": [
-    {
-     "id": "F22",
-     "metric": "ebitda_growth",
-     "quarter": "Q2 FY27",
-     "text": "EBITDA Q2 FY27: ₹633 cr, down 7.3% YoY (computed)",
-     "value": -7.3,
-     "source": {
-      "filing_id": "106818661",
-      "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_15102026155331_PSLBMOutcomeOctober152026159signed.pdf",
-      "page": 19,
-      "basis": "consolidated"
-     }
-    },
     {
      "id": "F24",
      "metric": "ebitda_margin",
@@ -401,10 +479,10 @@
    ]
   },
   {
-   "point": "Reported PAT fell 25.4% year-on-year in Q2 FY27, negatively impacted by exceptional one-time Nagarro acquisition expenses.",
+   "point": "Profitability has been impacted by rising costs, including wage hikes and amortization expenses from large deal acquisitions.",
    "receipt": {
-    "quote": "I would like to point out that the reported PAT includes exceptional one-time expenses as part of Nagarro acquisition, resulting in approximately 3.1% impact for the quarter.",
-    "page": 4,
+    "quote": "As you would remember, this is the quarter when we have the yearly wage hike coming into effect. This impacted our margins by 180 basis points.",
+    "page": 8,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
     "doc": "Q2 FY27 earnings call",
     "match": 1.0
@@ -443,9 +521,9 @@
    ]
   },
   {
-   "point": "Management observed apparent client decision-making slowdowns and softer deal wins on a year-on-year basis due to macroeconomic dynamics.",
+   "point": "Management acknowledged that macroeconomic uncertainty and geopolitical dynamics are causing slower decision-making and impacting deal flow.",
    "receipt": {
-    "quote": "The slowdown of decision making in the last few weeks was pretty apparent.",
+    "quote": "The slowdown of decision making in the last few weeks was pretty apparent. And it was not the productivity side of it. It is just the nature of the deals.",
     "page": 19,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_23102026204328_PSLTranscriptSubmissionOctober2026Sd.pdf",
     "doc": "Q2 FY27 earnings call",
@@ -792,9 +870,9 @@
    },
    {
     "id": "T2",
-    "label": "Q4 FY26 earnings call",
+    "label": "Q4 FY26 earnings call (company website, linked from the NSE filing)",
     "date": "2026-04-28T16:54:21",
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/PERSISTENTUSER1_28042026165400_PSLTranscriptSubmissionApril282026Sd.pdf"
+    "pdf_url": "https://www.persistent.com/wp-content/uploads/2026/04/Analyst-Call-Transcript-Q4FY26.pdf"
    },
    {
     "id": "T3",
@@ -853,9 +931,9 @@
  ],
  "ai": {
   "calls": 7,
-  "cached": 1,
-  "tokens_in": 34599,
-  "tokens_out": 5023,
+  "cached": 0,
+  "tokens_in": 45032,
+  "tokens_out": 5340,
   "models": [
    "gemini-3.1-flash-lite",
    "gemini-3.5-flash"

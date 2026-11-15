@@ -260,3 +260,11 @@ def test_linked_pdf_must_be_public_https(monkeypatch):
     monkeypatch.setattr(docs.socket, "getaddrinfo", lambda h, p: [(0, 0, 0, "", ("10.0.0.5", 443))])
     with pytest.raises(ValueError, match="non-public"):
         docs.check_linked_url("https://intranet.example.com/t.pdf")
+
+
+def test_quote_must_state_the_target():
+    # verbatim but empty: the target was in the analyst's question (seen on HAVELLS)
+    assert not R.quote_states_target("Over two percentage points margin improvement", "No, that remains as is.")
+    assert R.quote_states_target("EBITDA margin 11% to 13%", "we should expect 11% to 13% EBITDA margin")
+    assert R.quote_states_target("Double revenue by FY30", "we aim to double our revenue by 2030")
+    assert R.quote_states_target("Growth momentum to continue", "we are confident of the momentum")   # no number

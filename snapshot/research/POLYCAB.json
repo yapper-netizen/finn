@@ -3,7 +3,7 @@
  "company": "Polycab India Limited",
  "status": "ready",
  "engine_version": 1,
- "generated_at": "2026-11-15T08:44:46",
+ "generated_at": "2026-11-15T14:40:51",
  "latest_quarter": "Q2 FY27",
  "counts": {
   "Delivered": 2,
@@ -24,13 +24,14 @@
    "made_on": "2025-10-28",
    "quarter_end": "2025-09-30",
    "receipt": {
-    "quote": "The guidance of 11% to 13% of margins is a 5-year guidance. It is not something that we believe will be the case immediately next quarter or the quarter after that.",
+    "quote": "Achal, the guidance of 11% to 13% of margins is a 5-year guidance. It is not something that we believe will be the case immediately next quarter or the quarter after that.",
     "page": 12,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_28102025211243_SEintimationearningscall17102025.pdf",
     "doc": "Q2 FY26 earnings call",
     "match": 1.0
    },
    "restated_in": [
+    "Q3 FY26",
     "Q4 FY26",
     "Q1 FY27",
     "Q2 FY27"
@@ -44,7 +45,7 @@
     "F21",
     "F24"
    ],
-   "reason": "EBITDA margins in the quarters following the guidance were 13.1%, 13.8%, and 14.4%, all of which are at or above the 11-13% range.",
+   "reason": "EBITDA margins in the quarters following the Q2 FY26 call were 13.1%, 13.8%, and 14.4%, consistently meeting or exceeding the 11-13% long-term guidance range.",
    "decided_by": "ai",
    "facts": [
     {
@@ -131,14 +132,14 @@
    "id": "P2",
    "metric": "other",
    "statement": "The company expects to invest ₹ 12 billion to ₹ 16 billion annually in capex through FY 2030.",
-   "period_text": "annually through to FY 2030",
+   "period_text": "through to FY 2030",
    "due": "2030-03-31",
    "due_label": "Q4 FY30",
    "made_in": "Q2 FY26",
    "made_on": "2025-10-28",
    "quarter_end": "2025-09-30",
    "receipt": {
-    "quote": "in line with our Project Spring guidance of investing ₹ 12 billion - ₹ 16 billion annually through to FY 2030.",
+    "quote": "Capital expenditure for the quarter was at ₹ 3.3 billion, taking the H1 FY 2026 expenditure to around ₹ 7.5 billion, in line with our Project Spring guidance of investing ₹ 12 billion - ₹ 16 billion annually through to FY 2030.",
     "page": 6,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_28102025211243_SEintimationearningscall17102025.pdf",
     "doc": "Q2 FY26 earnings call",
@@ -146,7 +147,7 @@
    },
    "restated_in": [
     "Q3 FY26",
-    "Q4 FY26"
+    "Q2 FY27"
    ],
    "verdict": "Not checkable",
    "reason": "Not a company-level number in the results filings.",
@@ -165,15 +166,13 @@
    "made_on": "2025-10-28",
    "quarter_end": "2025-09-30",
    "receipt": {
-    "quote": "in line with our goal of crossing 30% dividend payout by FY 2030.",
+    "quote": "For FY 2025, we raised our dividend payout to 26.3% from 25.5% last year, in line with our goal of crossing 30% dividend payout by FY 2030.",
     "page": 8,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_28102025211243_SEintimationearningscall17102025.pdf",
     "doc": "Q2 FY26 earnings call",
     "match": 1.0
    },
-   "restated_in": [
-    "Q4 FY26"
-   ],
+   "restated_in": [],
    "verdict": "Not checkable",
    "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
@@ -183,10 +182,10 @@
   {
    "id": "P4",
    "metric": "other",
-   "statement": "Working capital cycle will normalize to the long-term steady range of 50 to 55 days.",
+   "statement": "We expect working capital cycle to normalize to 50 to 55 days.",
    "period_text": "coming quarters",
-   "due": null,
-   "due_label": null,
+   "due": "2026-06-30",
+   "due_label": "Q1 FY27",
    "made_in": "Q3 FY26",
    "made_on": "2026-01-22",
    "quarter_end": "2025-12-31",
@@ -197,10 +196,6 @@
     "doc": "Q3 FY26 earnings call",
     "match": 1.0
    },
-   "restated_in": [
-    "Q1 FY27",
-    "Q2 FY27"
-   ],
    "verdict": "Not checkable",
    "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
@@ -210,30 +205,7 @@
   {
    "id": "P5",
    "metric": "other",
-   "statement": "FMEG segment aims for 1.5x - 2x industry growth and 8% to 10% EBITDA margins by FY30.",
-   "period_text": "by FY30",
-   "due": "2030-03-31",
-   "due_label": "Q4 FY30",
-   "made_in": "Q3 FY26",
-   "made_on": "2026-01-22",
-   "quarter_end": "2025-12-31",
-   "receipt": {
-    "quote": "remain on track to achieve our Project Spring targets of 1.5x - 2x industry growth and EBITDA margins in the range of 8% to 10% by FY30",
-    "page": 7,
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_22012026193636_Intimation_of_Earnings_Call_Transcript.pdf",
-    "doc": "Q3 FY26 earnings call",
-    "match": 1.0
-   },
-   "verdict": "Not checkable",
-   "reason": "Not a company-level number in the results filings.",
-   "fact_ids": [],
-   "decided_by": "rules",
-   "facts": []
-  },
-  {
-   "id": "P6",
-   "metric": "other",
-   "statement": "EPC business annual sustainable operating margin is expected to remain in the high single digits.",
+   "statement": "EPC annual sustainable operating margin is expected to remain in the high single digits.",
    "period_text": "mid- to long term",
    "due": null,
    "due_label": null,
@@ -247,10 +219,6 @@
     "doc": "Q3 FY26 earnings call",
     "match": 0.98
    },
-   "restated_in": [
-    "Q1 FY27",
-    "Q2 FY27"
-   ],
    "verdict": "Not checkable",
    "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
@@ -258,9 +226,9 @@
    "facts": []
   },
   {
-   "id": "P7",
+   "id": "P6",
    "metric": "ebitda_margin",
-   "statement": "We expect EBITDA margins of 12-14% in the near to mid term.",
+   "statement": "Management expects near to mid-term company EBITDA margin to be between 12% and 14%.",
    "period_text": "near to mid term",
    "due": null,
    "due_label": null,
@@ -268,16 +236,12 @@
    "made_on": "2026-05-08",
    "quarter_end": "2026-03-31",
    "receipt": {
-    "quote": "and in the near to mid term, we may expect 12% to 14% EBITDA. And we'll continue to deliver that kind of margins.",
+    "quote": "in the near to mid term, we may expect 12% to 14% EBITDA.",
     "page": 13,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_08052026185934_Intimation_of_Earnings_Call_Transcript.pdf",
     "doc": "Q4 FY26 earnings call",
     "match": 1.0
    },
-   "restated_in": [
-    "Q1 FY27",
-    "Q2 FY27"
-   ],
    "verdict": "Delivered",
    "fact_ids": [
     "F16",
@@ -285,7 +249,7 @@
     "F21",
     "F24"
    ],
-   "reason": "EBITDA margins in the quarters following the guidance were 13.8% and 14.4%, which are within or above the 12-14% range.",
+   "reason": "EBITDA margins in the quarters following the Q4 FY26 call were 13.8% and 14.4%, which are within or above the 12-14% near to mid-term guidance range.",
    "decided_by": "ai",
    "facts": [
     {
@@ -343,59 +307,33 @@
    ]
   },
   {
-   "id": "P8",
-   "metric": "ebitda_margin",
-   "statement": "We aim to achieve 8% to 10% EBITDA margins in FMEG by FY2030.",
-   "period_text": "FY2030",
-   "due": "2030-03-31",
-   "due_label": "Q4 FY30",
-   "made_in": "Q4 FY26",
-   "made_on": "2026-05-08",
-   "quarter_end": "2026-03-31",
-   "receipt": {
-    "quote": "EBIT margins for the quarter stood at 4.1%, in line with our Project Spring trajectory of achieving 8% to 10% EBITDA margins by financial year 2030.",
-    "page": 8,
-    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_08052026185934_Intimation_of_Earnings_Call_Transcript.pdf",
-    "doc": "Q4 FY26 earnings call",
-    "match": 1.0
-   },
-   "verdict": "Too early",
-   "fact_ids": [],
-   "decided_by": "rules",
-   "reason": "Due by Q4 FY30; latest reported quarter is Q2 FY27.",
-   "facts": []
-  },
-  {
-   "id": "P9",
-   "metric": "revenue_growth",
-   "statement": "We target 1.5x to 2x of industry growth for the Wires & Cables segment.",
-   "period_text": "medium term",
+   "id": "P7",
+   "metric": "other",
+   "statement": "Management expects annual capex to be between INR 12 billion and INR 16 billion.",
+   "period_text": "annual",
    "due": null,
    "due_label": null,
    "made_in": "Q4 FY26",
    "made_on": "2026-05-08",
    "quarter_end": "2026-03-31",
    "receipt": {
-    "quote": "So if market grows, we will deliver 1.5x of that growth. If we are expecting 12% market growth, then we should deliver 18% and plus.",
-    "page": 13,
+    "quote": "in line with our annual guidance of INR 12 billion to INR 16 billion per annum.",
+    "page": 9,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_08052026185934_Intimation_of_Earnings_Call_Transcript.pdf",
     "doc": "Q4 FY26 earnings call",
     "match": 1.0
    },
-   "restated_in": [
-    "Q2 FY27"
-   ],
    "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
    "fact_ids": [],
-   "reason": "The provided facts do not contain industry growth data required to verify the target of 1.5x to 2x industry growth.",
-   "decided_by": "ai",
+   "decided_by": "rules",
    "facts": []
   },
   {
-   "id": "P10",
+   "id": "P8",
    "metric": "other",
-   "statement": "We target greater than 10% contribution from exports by FY2030.",
-   "period_text": "FY2030",
+   "statement": "Management targets exports to contribute greater than 10% of revenue by FY30.",
+   "period_text": "financial year 2030",
    "due": "2030-03-31",
    "due_label": "Q4 FY30",
    "made_in": "Q4 FY26",
@@ -418,9 +356,9 @@
    "facts": []
   },
   {
-   "id": "P11",
+   "id": "P9",
    "metric": "revenue_growth",
-   "statement": "We will continue to grow at 1.5x of market growth until FY30.",
+   "statement": "Management expects the company to grow at 1.5x of market growth until FY30.",
    "period_text": "until FY30",
    "due": "2030-03-31",
    "due_label": "Q4 FY30",
@@ -441,18 +379,64 @@
    "facts": []
   },
   {
-   "id": "P12",
-   "metric": "other",
-   "statement": "We expect the EHV plant to be commissioned in FY28.",
-   "period_text": "FY28",
-   "due": "2028-03-31",
-   "due_label": "Q4 FY28",
+   "id": "P10",
+   "metric": "revenue_growth",
+   "statement": "The company expects healthy growth in the second half of FY27.",
+   "period_text": "second half",
+   "due": "2027-03-31",
+   "due_label": "Q4 FY27",
    "made_in": "Q2 FY27",
    "made_on": "2026-10-19",
    "quarter_end": "2026-09-30",
    "receipt": {
-    "quote": "I would like to take this opportunity to sort of also let the investor community know that in terms of our EHV plant timelines, we are expecting the EHV plant to now commission somewhere in FY 2028, the next year, though, so FY28.",
-    "page": 18,
+    "quote": "We are seeing healthy growth in the second half as well.",
+    "page": 11,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_19102026163912_Intimation_of_Earnings_Call_Transcript.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   },
+   "verdict": "Too early",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "reason": "Said in the latest call; no quarter has been reported since (Q2 FY27 is the latest).",
+   "facts": []
+  },
+  {
+   "id": "P11",
+   "metric": "other",
+   "statement": "The company aims for cable and wires volume growth at 1.5x the market growth rate.",
+   "period_text": "long-term",
+   "due": null,
+   "due_label": null,
+   "made_in": "Q2 FY27",
+   "made_on": "2026-10-19",
+   "quarter_end": "2026-09-30",
+   "receipt": {
+    "quote": "What we have called out already, as an anchor to look into the volume growth, is that whatever the market grows, we will do 1.5x of that in cable and wires.",
+    "page": 13,
+    "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_19102026163912_Intimation_of_Earnings_Call_Transcript.pdf",
+    "doc": "Q2 FY27 earnings call",
+    "match": 1.0
+   },
+   "verdict": "Not checkable",
+   "reason": "Not a company-level number in the results filings.",
+   "fact_ids": [],
+   "decided_by": "rules",
+   "facts": []
+  },
+  {
+   "id": "P12",
+   "metric": "other",
+   "statement": "The company expects long-term EBITDA margins for the FMEG segment to reach 8% to 10%.",
+   "period_text": "longer term",
+   "due": null,
+   "due_label": null,
+   "made_in": "Q2 FY27",
+   "made_on": "2026-10-19",
+   "quarter_end": "2026-09-30",
+   "receipt": {
+    "quote": "So over the longer term, I believe we would end up in that kind of a range of 8% to 10% of the EBITDA margin.",
+    "page": 9,
     "pdf_url": "https://nsearchives.nseindia.in/corporate/POLYCAB_19102026163912_Intimation_of_Earnings_Call_Transcript.pdf",
     "doc": "Q2 FY27 earnings call",
     "match": 1.0
@@ -1037,8 +1021,8 @@
  "ai": {
   "calls": 7,
   "cached": 1,
-  "tokens_in": 42014,
-  "tokens_out": 8561,
+  "tokens_in": 42076,
+  "tokens_out": 16996,
   "models": [
    "gemini-3.1-flash-lite",
    "gemini-3.5-flash"
