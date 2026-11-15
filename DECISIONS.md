@@ -668,3 +668,11 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 ### D-106 · Ship 10f verdicts from the backup model; push after 10g · 2026-11-15 · Block 10f follow-up (decision A) · Status: decided
 - The precomputed research keeps today's verdicts and bull/bear from the backup model (`gemini-3.1-flash-lite`): they pass the Python guards (D-105) and the screen already labels them. The writeup names it as a free-tier limit. No rebuild after the quota resets unless the user asks.
 - Push to `main` (Render redeploy) once block 10g is built, together with 10c-10f.
+
+### D-107 · Block 10g decisions: Copilot, Pulse, Ask FINN, voice · 2026-11-15 · D-098 (decisions 1A, 2A, 3A, 4 all, 5A, 6A) · Status: decided
+- 1A Copilot answers: Python answers number questions from the stock's figures (no AI); other questions go to the cheap model with only the best-matching transcript passages and figures; every claim must carry a verified quote or a figure id, else FINN refuses. Price targets, buy/sell and news are refused by rule.
+- 2A Copilot lives in the research view and the results-card sheet, with 3 suggested questions each.
+- 3A Pulse is a new tab; the app still opens on Today; Today's signal strip opens Pulse.
+- 4 Pulse shows a portfolio heatmap (DB1), a 14-day event calendar from NSE's event-calendar and corporate-actions APIs (DB2, JSON, snapshot fallback), and a price-move vs volume scatter with the Settings thresholds (DB6).
+- 5A Ask FINN across the portfolio: the cheap model turns the question into a structured query; Python answers from the digest, alerts and calendar. Same box as the Copilot, with a "This stock / My portfolio" switch.
+- 6A Voice: mic on the Ask box (browser speech recognition, free), answer read aloud; typed fallback where unsupported.

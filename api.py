@@ -11,13 +11,14 @@ from pathlib import Path
 from fastapi import FastAPI, Query, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse, Response
+from pydantic import BaseModel, Field
 
 import config
 from data import filings as filings_mod
 from engine import cards
 from engine.brief import brief_me
 from data.symbols import resolve as resolve_symbol, search as search_symbols
-from engine import financials
+from engine import copilot, financials
 from engine import profile as profile_mod
 from engine.research import ENGINE_VERSION
 from engine.research_jobs import ResearchJobs, list_stored, stored as stored_research
@@ -212,6 +213,41 @@ def api_profile(ticker: str):
         return error_response(f"Could not write the company profile right now: {str(exc)[:160]}", 503)
     profile_mod.save(result)
     return result
+
+
+class AskIn(BaseModel):
+    question: str = Field(min_length=1, max_length=copilot.MAX_QUESTION)
+    ticker: str | None = Field(default=None, max_length=20)
+    filing_id: str | None = Field(default=None, max_length=40)
+
+
+@app.post("/api/ask")
+def api_ask(body: AskIn):
+    """Copilot (D-107): ask about one stock (`ticker`) or one results filing (`filing_id`).
+
+    Rules → Python figures → grounded cheap-model answer with verified citations; refuses otherwise.
+    """
+    try:
+        if body.filing_id:
+            card = cards.stored_card(body.filing_id)
+            if not card or card.get("kind") != "results":
+                return error_response("Open the results card first; FINN answers from its figures and pages.", 404)
+            return copilot.ask_filing(body.question, card)
+        if not body.ticker:
+            return error_response("Say which stock (ticker) or filing the question is about.", 400)
+        symbol = resolve_symbol(body.ticker).symbol
+    except ValueError as exc:
+        return error_response(str(exc), 404)
+    try:
+        fin = financials.stored(symbol)
+        if fin is None:
+            try:
+                fin = financials.get(symbol)          # any NSE ticker: ~6 s of XBRL, kept
+            except Exception:
+                fin = None                            # NSE down: the AI path still works from the calls
+        return copilot.ask_stock(body.question, symbol, stored_research(symbol), fin)
+    except Exception as exc:  # AI quota or network: say so plainly
+        return error_response(f"FINN could not answer right now: {str(exc)[:160]}", 503)
 
 
 @app.get("/api/research/{ticker}")
