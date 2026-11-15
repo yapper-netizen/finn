@@ -664,3 +664,7 @@ Source: [plan_revamp_v1/audit.md](plan_revamp_v1/audit.md). All recommendations 
 - N7 guidance filter: "All promises / Headline guidance" (company-level metric, or a stated figure for revenue, growth, margin, profit or capex).
 - Research ENGINE_VERSION 2; saved v1 results still open (without these parts). Strong-tier answers that came from the backup model are no longer cached, so a rebuild retries the strong model (the free strong quota was exhausted again today; the screen says when the backup answered; 23 cached backup answers removed).
 - Bug fixed from v1.0: an unescaped apostrophe ("FINN's rules") broke the receipt note for rule-decided promises (blank note + console error).
+
+### D-106 · Ship 10f verdicts from the backup model; push after 10g · 2026-11-15 · Block 10f follow-up (decision A) · Status: decided
+- The precomputed research keeps today's verdicts and bull/bear from the backup model (`gemini-3.1-flash-lite`): they pass the Python guards (D-105) and the screen already labels them. The writeup names it as a free-tier limit. No rebuild after the quota resets unless the user asks.
+- Push to `main` (Render redeploy) once block 10g is built, together with 10c-10f.
